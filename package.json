@@ -1,0 +1,56 @@
+{
+  "name": "bc-minecraft-bedrock-diagnoser",
+  "version": "1.0.0",
+  "description": "A typescript package library that provides diagnostics for minecraft bedrock projects",
+  "main": "./lib/main.js",
+  "types": "./lib/main.d.ts",
+  "scripts": {
+    "compile": "tsc -b",
+    "build": "npm run clean && npm run compile",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "test": "mocha --debug-brk",
+    "clean": "rimraf lib",
+    "pretest": "npm run compile",
+    "prepublishOnly": "npm test && npm run compile",
+    "preversion": "",
+    "postversion": "git push && git push --tags",
+    "version": "git add -A src",
+    "watch": "tsc -w -p ./src"
+  },
+  "files": [
+    "lib/src/**/*.js",
+    "lib/src/**/*.js.map",
+    "lib/src/**/*.d.ts"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Blockception/BC-Minecraft-Bedrock-Diagnoser.git"
+  },
+  "keywords": [
+    "diagnoser",
+    "diagnostics",
+    "minecraft",
+    "bedrock"
+  ],
+  "author": "BlockceptionLtd",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/Blockception/BC-Minecraft-Bedrock-Diagnoser/issues"
+  },
+  "homepage": "https://github.com/Blockception/BC-Minecraft-Bedrock-Diagnoser#readme",
+  "dependencies": {
+    "bc-minecraft-bedrock-project": "^1.0.1",
+    "bc-minecraft-bedrock-vanilla-data": "^1.1.2",
+    "bc-minecraft-project": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.19",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "^15.12.4",
+    "chai": "^4.3.4",
+    "mocha": "^9.0.1",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.4"
+  }
+}
