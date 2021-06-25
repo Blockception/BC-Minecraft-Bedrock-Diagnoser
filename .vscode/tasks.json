@@ -1,0 +1,38 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "compile",
+      "isBackground": false,
+      "group": "build",
+      "presentation": { "reveal": "silent", "panel": "dedicated" },
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "type": "npm",
+      "script": "test",
+      "isBackground": false,
+      "group": "build",
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "type": "shell",
+      "label": "Format workspace",
+      "command": "Powershell.exe -executionpolicy remotesigned -File ./scripts/format_documents.ps1",
+      "problemMatcher": "$tsc"
+    },
+    {
+      "type": "shell",
+      "label": "install project extension",
+      "command": "Powershell.exe -executionpolicy remotesigned -File ./scripts/install.ps1",
+      "problemMatcher": "$tsc"
+    },
+    {
+      "type": "shell",
+      "label": "update project extension",
+      "command": "Powershell.exe -executionpolicy remotesigned -File ./scripts/update.ps1",
+      "problemMatcher": "$tsc"
+    }
+  ]
+}

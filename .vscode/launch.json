@@ -1,0 +1,22 @@
+{
+  "version": "0.1.0",
+  "configurations": [
+    {
+      "name": "Attach",
+      "type": "node",
+      "request": "attach",
+      "port": 6004,
+      "sourceMaps": true,
+      "outFiles": ["${workspaceRoot}/lib/**/*.js"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Mocha all tests",
+      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+      "args": ["${workspaceRoot}/lib/test/**/*.test.js"],
+      "cwd": "${workspaceRoot}",
+      "internalConsoleOptions": "openOnSessionStart"
+    }
+  ]
+}
