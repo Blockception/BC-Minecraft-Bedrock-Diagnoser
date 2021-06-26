@@ -1,4 +1,4 @@
-import { DiagnoserContext } from "../Types/Context/DiagnoserContext";
+import { DiagnoserContext } from "../Context/DiagnoserContext";
 
 export class Diagnoser {
   readonly context: DiagnoserContext;
