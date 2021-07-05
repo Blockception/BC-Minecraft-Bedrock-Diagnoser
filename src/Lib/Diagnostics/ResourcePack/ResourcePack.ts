@@ -2,56 +2,95 @@ import { TextDocument } from "bc-minecraft-bedrock-project";
 import { FileType } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/ResourcePack/include";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 
+import * as Animation from "./Animation/entry";
+import * as AnimationController from "./Animation Controller/entry";
+import * as Attachable from "./Attachable/entry";
+import * as BiomesClient from "./Biomes Client/entry";
+import * as Block from "./Block/entry";
+import * as Entity from "./Entity/entry";
+import * as Fog from "./Fog/entry";
+import * as Item from "./Item/entry";
+import * as Manifest from "./Manifest/entry";
+import * as Material from "./Material/entry";
+import * as Model from "./Model/entry";
+import * as MusicDefinitions from "./Music Definitions/entry";
+import * as Particle from "./Particle/entry";
+import * as RenderController from "./Render Controller/entry";
+import * as Sounds from "./Sounds/entry";
+import * as SoundsDefinitions from "./Sounds Definitions/entry";
+import * as SpawnRule from "./Spawn Rule/entry";
+import * as Texture from "./Texture/entry";
+import * as TextureAtlas from "./Texture Atlas/entry";
+
 export namespace ResourcePack {
   export function Process(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
     const Type = FileType.detect(doc.uri);
 
     switch (Type) {
       case FileType.animation:
-        break;
+        return Animation.Diagnose(doc, diagnoser);
+
       case FileType.animation_controller:
-        break;
+        return AnimationController.Diagnose(doc, diagnoser);
+
       case FileType.attachable:
-        break;
+        return Attachable.Diagnose(doc, diagnoser);
+
       case FileType.biomes_client:
-        break;
+        return BiomesClient.Diagnose(doc, diagnoser);
+
       case FileType.block:
-        break;
+        return Block.Diagnose(doc, diagnoser);
+
       case FileType.entity:
-        break;
+        return Entity.Diagnose(doc, diagnoser);
+
       case FileType.fog:
-        break;
+        return Fog.Diagnose(doc, diagnoser);
+
       case FileType.item:
-        break;
+        return Item.Diagnose(doc, diagnoser);
+
       case FileType.manifest:
-        break;
+        return Manifest.Diagnose(doc, diagnoser);
+
       case FileType.material:
-        break;
+        return Material.Diagnose(doc, diagnoser);
+
       case FileType.model:
-        break;
+        return Model.Diagnose(doc, diagnoser);
+
       case FileType.music_definitions:
-        break;
+        return MusicDefinitions.Diagnose(doc, diagnoser);
+
       case FileType.particle:
-        break;
+        return Particle.Diagnose(doc, diagnoser);
+
       case FileType.render_controller:
-        break;
+        return RenderController.Diagnose(doc, diagnoser);
+
       case FileType.sounds:
-        break;
+        return Sounds.Diagnose(doc, diagnoser);
+
       case FileType.sounds_definitions:
-        break;
+        return SoundsDefinitions.Diagnose(doc, diagnoser);
+
       case FileType.spawn_rule:
-        break;
+        return SpawnRule.Diagnose(doc, diagnoser);
+
       case FileType.texture:
-        break;
+        return Texture.Diagnose(doc, diagnoser);
+
       case FileType.texture_flipbook_atlas:
-        break;
+        return TextureAtlas.DiagnoseFlipbook(doc, diagnoser);
+
       case FileType.texture_item_atlas:
-        break;
       case FileType.texture_terrain_atlas:
-        break;
+        return TextureAtlas.DiagnoseAtlas(doc, diagnoser);
+
       default:
       case FileType.unknown:
-        break;
+        return;
     }
   }
 }
