@@ -16,13 +16,12 @@ export interface DiagnosticsBuilder {
    */
   project: MCProject;
 
-  /**
-   *
-   * @param position
-   * @param message
-   * @param severity
-   */
-  Add(position: Position | JsonPath | number, message: string, severity: DiagnosticSeverity): void;
+  /**Adds the diagnostics following message to the specified location in the document.
+   * @param position The position in the document to add this message to
+   * @param message The message to add
+   * @param severity The severity of the issue
+   * @param code The code of the diagnostic error*/
+  Add(position: Position | JsonPath | number, message: string, severity: DiagnosticSeverity, code: string | number): void;
 }
 
 /**
