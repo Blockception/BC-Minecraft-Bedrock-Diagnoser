@@ -41,6 +41,7 @@ function DiagnoseUsing(using: DefinedUsing<string>, definer: Defined<string>, di
 
     if (defined1.includes(check) || defined2.includes(check)) {
       //Valid
+      continue;
     } else {
       diagnoser.Add(check, `Missing molang defintion: ${name}.${check}`, DiagnosticSeverity.error, `molang.${name}.missing`);
     }

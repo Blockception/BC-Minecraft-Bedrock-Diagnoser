@@ -41,7 +41,8 @@
   "dependencies": {
     "bc-minecraft-bedrock-project": "^1.0.9",
     "bc-minecraft-bedrock-vanilla-data": "^1.1.2",
-    "bc-minecraft-project": "^1.0.0"
+    "bc-minecraft-project": "^1.0.0",
+    "jsonc": "^2.0.0"
   },
   "devDependencies": {
     "@types/chai": "^4.2.19",
