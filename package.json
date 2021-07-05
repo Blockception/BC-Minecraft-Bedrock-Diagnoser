@@ -2,8 +2,8 @@
   "name": "bc-minecraft-bedrock-diagnoser",
   "version": "0.0.2",
   "description": "A typescript package library that provides diagnostics for minecraft bedrock projects",
-  "main": "./lib/main.js",
-  "types": "./lib/main.d.ts",
+  "main": "./lib/src/main.js",
+  "types": "./lib/src/main.d.ts",
   "scripts": {
     "compile": "tsc -b",
     "build": "npm run clean && npm run compile",
