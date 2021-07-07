@@ -20,7 +20,9 @@ export class TestDiagnoser implements DiagnosticsBuilder {
     if (!context) {
       //Empty context
       context = {
-        cache: new ProjectData(),
+        getCache: () => {
+          return new ProjectData();
+        },
         getDocument: (uri: string) => {
           return undefined;
         },

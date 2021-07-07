@@ -3,6 +3,9 @@ import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/Diagnostic
 import { Json } from "../../Json/Json";
 import { entity_resourcepack_check } from "../../ResourcePack/Entity/Resourcepack Check";
 
+/**Diagnoses the given document as an bp entity
+ * @param doc The text document to diagnose
+ * @param diagnoser The diagnoser builder to receive the errors*/
 export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
   const entity = Json.LoadReport<Internal.BehaviorPack.Entity>(doc, diagnoser);
 

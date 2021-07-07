@@ -21,6 +21,7 @@ export namespace Json {
       //cast object
       out = <T>temp;
     } catch (err) {
+      //TODO add parsing of error to possible retrieve the position of the error?
       diagnoser.Add(0, `Invalid json: ${JSON.stringify(err)}`, DiagnosticSeverity.error, "json.invalid");
     }
 

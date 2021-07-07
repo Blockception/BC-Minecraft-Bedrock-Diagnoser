@@ -1,11 +1,11 @@
-/** */
+/**The severity of an error */
 export enum DiagnosticSeverity {
-	/** */
-	none,
-	/** */
-	info,
-	/** */
-	warning,
-	/** */
-	error
+  /**The error is not an issue, but preferably not there*/
+  none,
+  /**The error is a possible issue, could be improved or a suggestion*/
+  info,
+  /**The error is an issue, but code can continu as normal*/
+  warning,
+  /**The error is an issue and can cause problems during runtime*/
+  error,
 }

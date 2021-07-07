@@ -2,18 +2,12 @@ import { DiagnosticSeverity } from "./Severity";
 import { Position, JsonPath, TextDocument, ProjectData } from "bc-minecraft-bedrock-project";
 import { MCIgnore, MCProject } from "bc-minecraft-project";
 
-/**
- *
- */
+/**The interface of a diagnostics builder*/
 export interface DiagnosticsBuilder {
-  /**
-   *
-   */
+  /**The context of the given */
   context: DiagnosticsBuilderContent;
 
-  /**
-   *
-   */
+  /**The project settings for this given document*/
   project: MCProject;
 
   /**Adds the diagnostics following message to the specified location in the document.
@@ -24,16 +18,14 @@ export interface DiagnosticsBuilder {
   Add(position: Position | JsonPath | number, message: string, severity: DiagnosticSeverity, code: string | number): void;
 }
 
-/**
- *
- */
+/**The context of a diagnostics builder*/
 export interface DiagnosticsBuilderContent {
-  /** */
+  /**Returns a textdocument object or undefined if something went wrong*/
   getDocument(uri: string): TextDocument | undefined;
 
-  /** */
+  /**Returns all files in the given directory and sub directories*/
   getFiles(folder: string, ignores: MCIgnore): string[];
 
-  /** */
-  cache: ProjectData;
+  /**The project cache data*/
+  getCache(): ProjectData;
 }

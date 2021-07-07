@@ -18,79 +18,96 @@ import * as Particle from "./Particle/entry";
 import * as RenderController from "./Render Controller/entry";
 import * as Sounds from "./Sounds/entry";
 import * as SoundsDefinitions from "./Sounds Definitions/entry";
-import * as SpawnRule from "./Spawn Rule/entry";
 import * as Texture from "./Texture/entry";
 import * as TextureAtlas from "./Texture Atlas/entry";
 
 export namespace ResourcePack {
-  export function Process(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
+  export function Process(doc: TextDocument, diagnoser: DiagnosticsBuilder): boolean {
     const Type = FileType.detect(doc.uri);
 
     switch (Type) {
       case FileType.animation:
-        return Animation.Diagnose(doc, diagnoser);
+        Animation.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.animation_controller:
-        return AnimationController.Diagnose(doc, diagnoser);
+        AnimationController.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.attachable:
-        return Attachable.Diagnose(doc, diagnoser);
+        Attachable.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.biomes_client:
-        return BiomesClient.Diagnose(doc, diagnoser);
+        BiomesClient.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.block:
-        return Block.Diagnose(doc, diagnoser);
+        Block.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.entity:
-        return Entity.Diagnose(doc, diagnoser);
+        Entity.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.fog:
-        return Fog.Diagnose(doc, diagnoser);
+        Fog.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.item:
-        return Item.Diagnose(doc, diagnoser);
+        Item.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.manifest:
-        return Manifest.Diagnose(doc, diagnoser);
+        Manifest.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.material:
-        return Material.Diagnose(doc, diagnoser);
+        Material.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.model:
-        return Model.Diagnose(doc, diagnoser);
+        Model.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.music_definitions:
-        return MusicDefinitions.Diagnose(doc, diagnoser);
+        MusicDefinitions.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.particle:
-        return Particle.Diagnose(doc, diagnoser);
+        Particle.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.render_controller:
-        return RenderController.Diagnose(doc, diagnoser);
+        RenderController.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.sounds:
-        return Sounds.Diagnose(doc, diagnoser);
+        Sounds.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.sounds_definitions:
-        return SoundsDefinitions.Diagnose(doc, diagnoser);
-
-      case FileType.spawn_rule:
-        return SpawnRule.Diagnose(doc, diagnoser);
+        SoundsDefinitions.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.texture:
-        return Texture.Diagnose(doc, diagnoser);
+        Texture.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.texture_flipbook_atlas:
-        return TextureAtlas.DiagnoseFlipbook(doc, diagnoser);
+        TextureAtlas.DiagnoseFlipbook(doc, diagnoser);
+        break;
 
       case FileType.texture_item_atlas:
       case FileType.texture_terrain_atlas:
-        return TextureAtlas.DiagnoseAtlas(doc, diagnoser);
+        TextureAtlas.DiagnoseAtlas(doc, diagnoser);
+        break;
 
       default:
       case FileType.unknown:
-        return;
+        return false;
     }
+
+    return true;
   }
 }

@@ -16,50 +16,68 @@ import * as Structure from "./Structure/entry";
 import * as Trading from "./Trading/entry";
 
 export namespace BehaviorPack {
-  export function Process(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
-    //Filter doc type
+  /**Processes and diagnoses the given textdocument
+   * @param doc The document to process / diagnose
+   * @param diagnoser The diagnoser to report to
+   * @returns `true` or `false` whenever or not it was succesfull*/
+  export function Process(doc: TextDocument, diagnoser: DiagnosticsBuilder): boolean {
+    //retrieve filter doc type
     const Type = FileType.detect(doc.uri);
 
     switch (Type) {
       case FileType.animation:
-        return Animation.Diagnose(doc, diagnoser);
+        Animation.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.animation_controller:
-        return AnimationController.Diagnose(doc, diagnoser);
+        AnimationController.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.block:
-        return Block.Diagnose(doc, diagnoser);
+        Block.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.entity:
-        return Entity.Diagnose(doc, diagnoser);
+        Entity.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.function:
-        return Mcfunction.Diagnose(doc, diagnoser);
+        Mcfunction.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.item:
-        return Item.Diagnose(doc, diagnoser);
+        Item.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.loot_table:
-        return LootTable.Diagnose(doc, diagnoser);
+        LootTable.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.manifest:
-        return Manifest.Diagnose(doc, diagnoser);
+        Manifest.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.script:
-        return Script.Diagnose(doc, diagnoser);
+        Script.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.spawn_rule:
-        return SpawnRule.Diagnose(doc, diagnoser);
+        SpawnRule.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.structure:
-        return Structure.Diagnose(doc, diagnoser);
+        Structure.Diagnose(doc, diagnoser);
+        break;
 
       case FileType.trading:
-        return Trading.Diagnose(doc, diagnoser);
+        Trading.Diagnose(doc, diagnoser);
+        break;
 
       default:
       case FileType.unknown:
-        return;
+        return false;
     }
+
+    return true;
   }
 }

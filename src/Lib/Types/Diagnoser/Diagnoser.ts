@@ -4,28 +4,20 @@ import { BehaviorPack } from "../../Diagnostics/BehaviorPack/BehaviorPack";
 import { ResourcePack } from "../../Diagnostics/ResourcePack/ResourcePack";
 import { DiagnoserContext } from "./DiagnoserContext";
 
-/**
- *
- */
+/**The object that is responsible for diagnosing minecraft bedrock files*/
 export class Diagnoser {
-  /**
-   *
-   */
+  /**The context needed to perform diagnostics*/
   readonly context: DiagnoserContext;
 
-  /**
-   *
-   * @param context
-   */
+  /**Create a new instance of Diagnoser
+   * @param context The context needed to perform diagnostics*/
   constructor(context: DiagnoserContext) {
     this.context = context;
   }
 
-  /**
-   *
-   * @param doc
-   * @returns
-   */
+  /** Process and diagnoses the given document
+   * @param doc The textdocument to process or the uri to the document
+   * @returns `true` or `false` if the diagnostics was successfull*/
   Process(doc: TextDocument | string): boolean {
     if (typeof doc === "string") {
       const temp = this.context.getDocument(doc);
@@ -34,7 +26,7 @@ export class Diagnoser {
       doc = temp;
     }
 
-    const pack = this.context.cache.get(doc);
+    const pack = this.context.getCache().get(doc);
     if (!pack) return false;
 
     const diagnoser = this.context.getDiagnoser(doc, pack.context);
@@ -55,11 +47,9 @@ export class Diagnoser {
     return true;
   }
 
-  /**
-   *
-   * @param folder
-   * @param ignores
-   */
+  /**Diagnoses the entire given folder
+   * @param folder The folder to retrieve files of
+   * @param ignores The pattern to ignore on files*/
   ProcessFolder(folder: string, ignores: MCIgnore): void {
     const files = this.context.getFiles(folder, ignores);
 
