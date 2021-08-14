@@ -1,5 +1,5 @@
 import { Command, Parameter, ParameterType } from "bc-minecraft-bedrock-command";
-import { CommandInfo, ParameterInfo } from "bc-minecraft-bedrock-command/lib/src/Lib/Data/CommandInfo";
+import { ParameterInfo } from "bc-minecraft-bedrock-command/lib/src/Lib/Data/CommandInfo";
 import { TextDocument } from "bc-minecraft-bedrock-project";
 import { DiagnosticsBuilder } from "../../../../main";
 import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";

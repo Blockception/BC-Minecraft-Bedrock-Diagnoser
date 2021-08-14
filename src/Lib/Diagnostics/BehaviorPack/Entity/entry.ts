@@ -1,7 +1,8 @@
 import { Internal, TextDocument } from "bc-minecraft-bedrock-project";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { Json } from "../../Json/Json";
-import { entity_resourcepack_check } from "../../ResourcePack/Entity/Resourcepack Check";
+import { entity_resourcepack_check } from "../../ResourcePack/Entity/check";
+import { behaviorpack_entity_components_dependencies } from "./components";
 
 /**Diagnoses the given document as an bp entity
  * @param doc The text document to diagnose
@@ -11,8 +12,7 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
 
   if (!Internal.BehaviorPack.Entity.is(entity)) return;
 
-  const identifier = entity["minecraf:entity"].description.identifier;
+  //No resourcepack check, entities can exist without their rp side
 
-  //Check if the resourcepack has the same entity
-  entity_resourcepack_check(identifier, diagnoser);
+  behaviorpack_entity_components_dependencies(entity, diagnoser);
 }

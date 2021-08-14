@@ -4,7 +4,10 @@ import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
 import { hasPattern } from "../../../Types/Patterns/Checks";
 import { getUsedComponents } from "./Entity";
 
-export function entity_behaviorpack_components_dependencies(entity: Internal.BehaviorPack.Entity, diagnoser: DiagnosticsBuilder) {
+/**Checks if components dependencies are present, a component might need others to be present
+ * @param entity The entity to check
+ * @param diagnoser The diagnoser to report to*/
+export function behaviorpack_entity_components_dependencies(entity: Internal.BehaviorPack.Entity, diagnoser: DiagnosticsBuilder) {
   const components = getUsedComponents(entity);
 
   checkMovements(diagnoser, components);
@@ -30,7 +33,7 @@ function checkAll(diagnoser: DiagnosticsBuilder, components: string[], dependent
     const need = needs[I];
 
     if (!components.includes(need)) {
-      diagnoser.Add(dependent, `Component: '${dependent}' requires a ${need} component to be present`, DiagnosticSeverity.error, "entity.component.missing");
+      diagnoser.Add(dependent, `Component: '${dependent}' requires a ${need} component to be present`, DiagnosticSeverity.error, "behaviorpack.entity.component.missing");
     }
   }
 }
@@ -55,7 +58,7 @@ function checkAny(diagnoser: DiagnosticsBuilder, components: string[], dependent
         dependent,
         `Component: '${dependent}' requires one of the following components: ${JSON.stringify(needs)}`,
         DiagnosticSeverity.error,
-        "entity.component.missing"
+        "behaviorpack.entity.component.missing"
       );
     }
   }
@@ -72,7 +75,7 @@ function checkPatternAny(diagnoser: DiagnosticsBuilder, components: string[], de
         dependent,
         `Component that follows pattern: '${dependent}' requires one of the following components that follows the pattern(s): ${JSON.stringify(needs)}`,
         DiagnosticSeverity.error,
-        "entity.component.missing"
+        "behaviorpack.entity.component.missing"
       );
     }
   }
@@ -87,15 +90,20 @@ function checkMovements(diagnoser: DiagnosticsBuilder, components: string[]): vo
 
   if (Count > 0 && Count != 3) {
     if (hasMovement == 0)
-      diagnoser.Add("minecraft:movement", `Missing a movement component such as: 'minecraft:movement.basic'`, DiagnosticSeverity.error, "entity.component.missing");
+      diagnoser.Add("minecraft:movement", `Missing a movement component such as: 'minecraft:movement.basic'`, DiagnosticSeverity.error, "behaviorpack.entity.component.missing");
     if (hasNavigation == 0)
-      diagnoser.Add("minecraft:movement", `Missing a movement component such as: 'minecraft:navigation.generic'`, DiagnosticSeverity.error, "entity.component.missing");
+      diagnoser.Add(
+        "minecraft:movement",
+        `Missing a movement component such as: 'minecraft:navigation.generic'`,
+        DiagnosticSeverity.error,
+        "behaviorpack.entity.component.missing"
+      );
     if (hasBaseMovement == 0)
       diagnoser.Add(
         "components",
         `Navigation and movement has been specified, but the following base component is missing: 'minecraft:movement'`,
         DiagnosticSeverity.error,
-        "entity.component.missing.minecraft:movement"
+        "behaviorpack.entity.component.missing.minecraft:movement"
       );
   }
 }
