@@ -3,6 +3,7 @@ import { ParameterInfo } from "bc-minecraft-bedrock-command/lib/src/Lib/Data/Com
 import { TextDocument } from "bc-minecraft-bedrock-project";
 import { DiagnosticsBuilder } from "../../../../main";
 import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
+import { behaviorpack_check_blockdescriptor, behaviorpack_check_blockid } from "../Block/check";
 
 export function mcfunction_commandscheck(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
   const edu = diagnoser.project.attributes["diagnostic.enable"] === "true";
@@ -60,7 +61,7 @@ function mcfunction_diagnoseparameter(pattern: ParameterInfo, data: Parameter, b
 
   switch (pattern.type) {
     case ParameterType.block:
-      return Block.ProvideDiagnostic(data, builder);
+      return behaviorpack_check_blockdescriptor(data.text, builder);
 
     case ParameterType.blockStates:
       return BlockStates.ProvideDiagnostic(data, builder);
