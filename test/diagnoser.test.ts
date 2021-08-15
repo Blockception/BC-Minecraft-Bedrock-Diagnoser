@@ -1,10 +1,12 @@
-import { Position, ProjectData } from "bc-minecraft-bedrock-project";
+import { ProjectData } from "bc-minecraft-bedrock-project";
+import { Position } from "bc-minecraft-bedrock-types/lib/src/Types/include";
 import { MCIgnore, MCProject } from "bc-minecraft-project";
 import { DiagnosticsBuilder, DiagnosticsBuilderContent } from "../src/Lib/Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../src/Lib/Types/DiagnosticsBuilder/Severity";
+import { DocumentLocation } from "../src/Lib/Types/DocumentLocation/DocumentLocation";
 
 export interface Error {
-  position: string | number | Position;
+  position: DocumentLocation;
   message: string;
   severity: DiagnosticSeverity;
   code: string | number;

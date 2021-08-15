@@ -3,10 +3,39 @@ import { ParameterInfo } from "bc-minecraft-bedrock-command/lib/src/Lib/Data/Com
 import { TextDocument } from "bc-minecraft-bedrock-project";
 import { DiagnosticsBuilder } from "../../../../main";
 import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
-import { behaviorpack_check_blockdescriptor, behaviorpack_check_blockid } from "../Block/check";
+import { education_enabled } from "../../Definitions";
+import { general_boolean_diagnose } from "../../General/Boolean";
+import { general_coordinate_diagnose } from "../../General/Coordinate";
+import { general_float_diagnose } from "../../General/Float";
+import { general_integer_diagnose } from "../../General/Integer";
+import {
+  mode_camerashake_diagnose,
+  mode_clone_diagnose,
+  mode_fill_diagnose,
+  mode_gamemode_diagnose,
+  mode_locatefeature_diagnose,
+  mode_mask_diagnose,
+  mode_mirror_diagnose,
+  mode_musicrepeat_diagnose,
+  mode_oldblock_diagnose,
+  mode_operation_diagnose,
+  mode_replace_diagnose,
+  mode_riderules_diagnose,
+  mode_rotation_diagnose,
+  mode_save_diagnose,
+  mode_slottype_diagnose,
+  mode_structureanimation_diagnose,
+  mode_teleportrules_diagnose,
+} from "../../Mode/diagnose";
+import { behaviorpack_check_blockdescriptor, behaviorpack_check_blockstates } from "../Block/check";
 
+/**
+ *
+ * @param doc
+ * @param diagnoser
+ */
 export function mcfunction_commandscheck(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
-  const edu = diagnoser.project.attributes["diagnostic.enable"] === "true";
+  const edu = education_enabled(diagnoser);
   const text = doc.getText();
   const lines = text.split("/n");
 
@@ -26,6 +55,13 @@ export function mcfunction_commandscheck(doc: TextDocument, diagnoser: Diagnosti
   }
 }
 
+/**
+ *
+ * @param command
+ * @param diagnoser
+ * @param edu
+ * @returns
+ */
 function mcfunction_commandcheck(command: Command, diagnoser: DiagnosticsBuilder, edu: boolean): void {
   const info = command.getBestMatch(edu);
 
@@ -42,6 +78,15 @@ function mcfunction_commandcheck(command: Command, diagnoser: DiagnosticsBuilder
   }
 }
 
+/**
+ *
+ * @param pattern
+ * @param data
+ * @param builder
+ * @param Com
+ * @param edu
+ * @returns
+ */
 function mcfunction_diagnoseparameter(pattern: ParameterInfo, data: Parameter, builder: DiagnosticsBuilder, Com: Command, edu: boolean): void {
   if (pattern === undefined || data === undefined) return;
 
@@ -64,126 +109,126 @@ function mcfunction_diagnoseparameter(pattern: ParameterInfo, data: Parameter, b
       return behaviorpack_check_blockdescriptor(data.text, builder);
 
     case ParameterType.blockStates:
-      return BlockStates.ProvideDiagnostic(data, builder);
+      return behaviorpack_check_blockstates(data.text, builder);
 
     case ParameterType.boolean:
-      return Boolean.ProvideDiagnostic(data, builder);
+      return general_boolean_diagnose(data, builder);
 
     case ParameterType.cameraShakeType:
-      return CameraShakeMode.ProvideDiagnostic(data, builder);
+      return mode_camerashake_diagnose(data, builder);
 
     case ParameterType.cloneMode:
-      return CloneMode.ProvideDiagnostic(data, builder);
+      return mode_clone_diagnose(data, builder);
 
     case ParameterType.command:
       return Command.DiagnoseCommandParameter(data, builder, edu);
 
     case ParameterType.coordinate:
-      return Coordinate.ProvideDiagnostic(data, builder);
+      return general_coordinate_diagnose(data, builder);
 
     case ParameterType.effect:
-      return Effect.ProvideDiagnostic(data, builder);
+      return general_effect_diagnose(data, builder);
 
     case ParameterType.entity:
-      return Entity.ProvideDiagnostic(data, builder);
+      return general_entity_diagnose(data, builder);
 
     case ParameterType.event:
-      return Event.ProvideDiagnostic(data, builder); //TODO provide entity ID
+      return general_event_diagnose(data, builder); //TODO provide entity ID
 
     case ParameterType.fillMode:
-      return FillMode.ProvideDiagnostic(data, builder);
+      return mode_fill_diagnose(data, builder);
 
     case ParameterType.float:
-      return Float.ProvideDiagnostic(data, builder);
+      return general_float_diagnose(data, builder);
 
     case ParameterType.function:
-      return Functions.ProvideDiagnostic(data, builder);
+      return behaviorpack_functions_diagnose(data, builder);
 
     case ParameterType.gamemode:
-      return Gamemode.ProvideDiagnostic(data, builder);
+      return mode_gamemode_diagnose(data, builder);
 
     case ParameterType.integer:
-      return Integer.ProvideDiagnostic(data, builder);
+      return general_integer_diagnose(data, builder);
 
     case ParameterType.item:
-      return Item.ProvideDiagnostic(data, builder);
+      return behaviorpack_check_item(data, builder);
 
     case ParameterType.jsonItem:
+      return general_jsonitem_diagnose(data, builder);
+
     case ParameterType.jsonRawText:
-      //TODO
-      return;
+      return general_jsonrawtext_diagnose(data, builder);
 
     case ParameterType.keyword:
-      return Keyword.ProvideDiagnostic(pattern, data, builder);
+      return general_keyword_diagnose(pattern, data, builder);
 
     case ParameterType.locateFeature:
-      return LocateFeature.ProvideDiagnostic(data, builder);
+      return mode_locatefeature_diagnose(data, builder);
 
     case ParameterType.maskMode:
-      return MaskMode.ProvideDiagnostic(data, builder);
+      return mode_mask_diagnose(data, builder);
 
     case ParameterType.mirror:
-      return MirrorMode.ProvideDiagnostic(data, builder);
+      return mode_mirror_diagnose(data, builder);
 
     case ParameterType.musicRepeatMode:
-      return MusicRepeatMode.ProvideDiagnostic(data, builder);
+      return mode_musicrepeat_diagnose(data, builder);
 
     case ParameterType.oldBlockMode:
-      return OldBlockMode.ProvideDiagnostic(data, builder);
+      return mode_oldblock_diagnose(data, builder);
 
     case ParameterType.objective:
-      return Objectives.ProvideDiagnostic(data, builder);
+      return general_objectives_diagnose(data, builder);
 
     case ParameterType.operation:
-      return OperationMode.ProvideDiagnostic(data, builder);
+      return mode_operation_diagnose(data, builder);
 
     case ParameterType.particle:
-      return Particle.ProvideDiagnostic(data, builder);
+      return resourcepack_particle_diagnose(data, builder);
 
     case ParameterType.replaceMode:
-      return ReplaceMode.ProvideDiagnostic(data, builder);
+      return mode_replace_diagnose(data, builder);
 
     case ParameterType.rideRules:
-      return RideRulesMode.ProvideDiagnostic(data, builder);
+      return mode_riderules_diagnose(data, builder);
 
     case ParameterType.rotation:
-      return RotationMode.ProvideDiagnostic(data, builder);
+      return mode_rotation_diagnose(data, builder);
 
     case ParameterType.saveMode:
-      return SaveMode.ProvideDiagnostic(data, builder);
+      return mode_save_diagnose(data, builder);
 
     case ParameterType.selector:
-      return Selector.ProvideDiagnostic(pattern, data, builder);
+      return minecraft_selector_diagnose(pattern, data, builder);
 
     case ParameterType.slotID:
-      return Slot_id.ProvideDiagnostic(data, Com, builder);
+      return mode_slotid_diagnose(data, Com, builder);
 
     case ParameterType.slotType:
-      return Slot_type.ProvideDiagnostic(data, builder);
+      return mode_slottype_diagnose(data, builder);
 
     case ParameterType.sound:
-      return Sound.ProvideDiagnostic(data, builder);
+      return resourcepack_sound_diagnose(data, builder);
 
     case ParameterType.string:
-      return String.ProvideDiagnostic(data, builder);
+      return general_string_diagnose(data, builder);
 
     case ParameterType.structureAnimationMode:
-      return StructureAnimationMode.ProvideDiagnostic(data, builder);
+      return mode_structureanimation_diagnose(data, builder);
 
     case ParameterType.tag:
-      return Tag.ProvideDiagnostic(data, builder);
+      return general_Tag_diagnose(data, builder);
 
     case ParameterType.teleportRules:
-      return TeleportRulesMode.ProvideDiagnostic(data, builder);
+      return mode_teleportrules_diagnose(data, builder);
 
     case ParameterType.tickingarea:
-      return Tickingarea.ProvideDiagnostic(data, builder);
+      return general_tickingarea_diagnose(data, builder);
 
     case ParameterType.unknown:
       return;
 
     case ParameterType.xp:
-      Xp.ProvideDiagnostic(data, builder);
-      return;
+      return general_xp_diagnose(data, builder);
   }
 }

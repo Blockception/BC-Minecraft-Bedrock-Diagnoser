@@ -1,7 +1,7 @@
 import { DiagnosticSeverity } from "./Severity";
 import { TextDocument, ProjectData } from "bc-minecraft-bedrock-project";
 import { MCIgnore, MCProject } from "bc-minecraft-project";
-import { DocumentLocation } from "../DocumentLocation/DocumentLocation";
+import { DocumentLocation } from "bc-minecraft-bedrock-types/lib/src/Types/include";
 
 /**The interface of a diagnostics builder*/
 export interface DiagnosticsBuilder {

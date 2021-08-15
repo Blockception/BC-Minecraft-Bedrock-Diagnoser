@@ -1,7 +1,6 @@
 import { Internal, TextDocument } from "bc-minecraft-bedrock-project";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { Json } from "../../Json/Json";
-import { entity_resourcepack_check } from "../../ResourcePack/Entity/check";
 import { behaviorpack_entity_components_dependencies } from "./components";
 
 /**Diagnoses the given document as an bp entity
