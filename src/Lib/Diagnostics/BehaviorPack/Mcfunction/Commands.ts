@@ -8,6 +8,7 @@ import { general_boolean_diagnose } from "../../General/Boolean";
 import { general_coordinate_diagnose } from "../../General/Coordinate";
 import { general_float_diagnose } from "../../General/Float";
 import { general_integer_diagnose } from "../../General/Integer";
+import { minecraft_check_command } from "../../Minecraft/Commands";
 import {
   mode_camerashake_diagnose,
   mode_clone_diagnose,
@@ -121,7 +122,7 @@ function mcfunction_diagnoseparameter(pattern: ParameterInfo, data: Parameter, b
       return mode_clone_diagnose(data, builder);
 
     case ParameterType.command:
-      return Command.DiagnoseCommandParameter(data, builder, edu);
+      return minecraft_check_command(data, builder, edu);
 
     case ParameterType.coordinate:
       return general_coordinate_diagnose(data, builder);
