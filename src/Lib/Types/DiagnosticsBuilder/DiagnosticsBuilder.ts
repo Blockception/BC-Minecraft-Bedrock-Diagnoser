@@ -21,7 +21,7 @@ export interface DiagnosticsBuilder {
 
 /**The context of a diagnostics builder*/
 export interface DiagnosticsBuilderContent {
-  /**Returns a textdocument object or undefined if something went wrong*/
+  /**Returns a textdocument object or undefined if something went wrong or nothing exists*/
   getDocument(uri: string): TextDocument | undefined;
 
   /**Returns all files in the given directory and sub directories*/
