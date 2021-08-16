@@ -12,5 +12,5 @@ import { education_enabled } from "../Definitions";
 export function minecraft_check_command(command: OffsetWord, diagnoser: DiagnosticsBuilder, edu: boolean): void {
   if (Data.hasCommandData(command.text, edu)) return;
 
-  diagnoser.Add(command.offset, "Command does not exist: " + command.text, DiagnosticSeverity.error, "command.missing");
+  diagnoser.Add(command.offset, "Command does not exist: " + command.text, DiagnosticSeverity.error, "command.invalid");
 }
