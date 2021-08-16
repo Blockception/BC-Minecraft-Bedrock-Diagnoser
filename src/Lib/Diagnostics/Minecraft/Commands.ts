@@ -1,8 +1,7 @@
-import { Command, Data } from "bc-minecraft-bedrock-command";
+import { Data } from "bc-minecraft-bedrock-command";
 import { DiagnosticSeverity } from "../../../main";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { OffsetWord } from "../../Types/OffsetWord";
-import { education_enabled } from "../Definitions";
 
 /**
  *

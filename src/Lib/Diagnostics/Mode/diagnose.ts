@@ -1,3 +1,4 @@
+import { Command } from "bc-minecraft-bedrock-command";
 import { Modes } from "bc-minecraft-bedrock-types";
 import { ModeHandler } from "bc-minecraft-bedrock-types/lib/src/Modes/ModeHandler";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
@@ -140,7 +141,7 @@ export function mode_slottype_diagnose(value: OffsetWord, diagnoser: Diagnostics
 /**Diagnoses the value as a value in the mode: slotid
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to*/
-export function mode_slotid_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): void {
+export function mode_slotid_diagnose(value: OffsetWord, Com: Command, diagnoser: DiagnosticsBuilder): void {
   //TODO add data to bedrock types
 }
 
