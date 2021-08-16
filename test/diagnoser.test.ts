@@ -1,6 +1,8 @@
 import { ProjectData } from "bc-minecraft-bedrock-project";
 import { Types } from "bc-minecraft-bedrock-types";
 import { MCIgnore, MCProject } from "bc-minecraft-project";
+import { expect } from "chai";
+import { stringify } from "querystring";
 import { DiagnosticsBuilder, DiagnosticsBuilderContent } from "../src/Lib/Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../src/Lib/Types/DiagnosticsBuilder/Severity";
 
@@ -49,6 +51,25 @@ export class TestDiagnoser implements DiagnosticsBuilder {
       position: position,
       severity: severity,
     });
+  }
+
+  expectEmpty(): void {
+    expect(this.items.length).to.lessThanOrEqual(0, `Expected no errors/warnings, but has received ${this.items.length}: ${JSON.stringify(this.items)}`);
+  }
+
+  expectAmount(number: number): void {
+    expect(this.items.length).to.equal(number, `Expected ${number} errors/warnings, but has received ${this.items.length}: ${JSON.stringify(this.items)}`);
+  }
+
+  expectGreaterThan(number: number): void {
+    expect(this.items.length).to.greaterThan(number, `Expected more ${number} errors/warnings, but has received ${this.items.length}: ${JSON.stringify(this.items)}`);
+  }
+
+  expectGreaterThanOrEqual(number: number): void {
+    expect(this.items.length).to.greaterThanOrEqual(
+      number,
+      `Expected more or equal ${number} errors/warnings, but has received ${this.items.length}: ${JSON.stringify(this.items)}`
+    );
   }
 
   /**Gets the first matching message
