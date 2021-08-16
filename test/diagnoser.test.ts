@@ -1,10 +1,10 @@
+import { DiagnosticsBuilder, DiagnosticsBuilderContent } from "../src/Lib/Types/DiagnosticsBuilder/DiagnosticsBuilder";
+import { DiagnosticSeverity } from "../src/Lib/Types/DiagnosticsBuilder/Severity";
 import { ProjectData } from "bc-minecraft-bedrock-project";
 import { Types } from "bc-minecraft-bedrock-types";
 import { MCIgnore, MCProject } from "bc-minecraft-project";
 import { expect } from "chai";
-import { stringify } from "querystring";
-import { DiagnosticsBuilder, DiagnosticsBuilderContent } from "../src/Lib/Types/DiagnosticsBuilder/DiagnosticsBuilder";
-import { DiagnosticSeverity } from "../src/Lib/Types/DiagnosticsBuilder/Severity";
+import { DiagnoserContext } from "../src/main";
 
 export interface Error {
   position: Types.DocumentLocation;
@@ -20,30 +20,18 @@ export class TestDiagnoser implements DiagnosticsBuilder {
   public project: MCProject;
 
   constructor(context: DiagnosticsBuilderContent | undefined = undefined, project: MCProject | undefined = undefined) {
-    if (!context) {
-      //Empty context
-      context = {
-        getCache: () => {
-          return new ProjectData();
-        },
-        getDocument: (uri: string) => {
-          return undefined;
-        },
-        getFiles: (folder: string, ignores: MCIgnore) => {
-          return [];
-        },
-      };
-    }
-
-    if (!project) {
-      project = MCProject.createEmpty();
-    }
-
-    this.context = context;
-    this.project = project;
+    this.context = context ?? TestDiagnoser.emptyContext();
+    this.project = project ?? MCProject.createEmpty();
     this.items = [];
   }
 
+  /**
+   *
+   * @param position
+   * @param message
+   * @param severity
+   * @param code
+   */
   Add(position: Types.DocumentLocation, message: string, severity: DiagnosticSeverity, code: string | number): void {
     this.items.push({
       code: code,
@@ -53,18 +41,33 @@ export class TestDiagnoser implements DiagnosticsBuilder {
     });
   }
 
+  /**
+   *
+   */
   expectEmpty(): void {
     expect(this.items.length).to.lessThanOrEqual(0, `Expected no errors/warnings, but has received ${this.items.length}: ${JSON.stringify(this.items)}`);
   }
 
+  /**
+   *
+   * @param number
+   */
   expectAmount(number: number): void {
     expect(this.items.length).to.equal(number, `Expected ${number} errors/warnings, but has received ${this.items.length}: ${JSON.stringify(this.items)}`);
   }
 
+  /**
+   *
+   * @param number
+   */
   expectGreaterThan(number: number): void {
     expect(this.items.length).to.greaterThan(number, `Expected more ${number} errors/warnings, but has received ${this.items.length}: ${JSON.stringify(this.items)}`);
   }
 
+  /**
+   *
+   * @param number
+   */
   expectGreaterThanOrEqual(number: number): void {
     expect(this.items.length).to.greaterThanOrEqual(
       number,
@@ -154,5 +157,29 @@ export class TestDiagnoser implements DiagnosticsBuilder {
    */
   hasCode(code: string | number): boolean {
     return this.getCode(code) !== undefined;
+  }
+}
+
+export namespace TestDiagnoser {
+  export function createFromProjectData(data: ProjectData): TestDiagnoser {
+    var context = emptyContext();
+
+    context.getCache = () => data;
+
+    return new TestDiagnoser(context, undefined);
+  }
+
+  export function emptyContext(): DiagnosticsBuilderContent {
+    return {
+      getCache: () => {
+        return new ProjectData();
+      },
+      getDocument: (uri: string) => {
+        return undefined;
+      },
+      getFiles: (folder: string, ignores: MCIgnore) => {
+        return [];
+      },
+    };
   }
 }

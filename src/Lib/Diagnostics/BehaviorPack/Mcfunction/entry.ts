@@ -1,6 +1,6 @@
 import { TextDocument } from "bc-minecraft-bedrock-project";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
-import { mcfunction_commandscheck } from "./Commands";
+import { mcfunction_commandscheck } from "./commands";
 
 /**Diagnoses the given document as an mcfunction
  * @param doc The text document to diagnose

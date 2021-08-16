@@ -7,5 +7,5 @@ export function minecraft_effect_diagnose(value: OffsetWord, diagnoser: Diagnost
   //Check if minecraft has effect data
   if (MinecraftData.General.Effects.includes(value.text)) return;
 
-  diagnoser.Add(value.offset, "Effect does not exist: " + value.text, DiagnosticSeverity.error, "effect.invalid");
+  diagnoser.Add(value.offset, "Effect does not exist: " + value.text, DiagnosticSeverity.error, "minecraft.effect.invalid");
 }
