@@ -18,6 +18,6 @@ describe("Keyword", () => {
     general_keyword_diagnose("@s", OffsetWord.create("@a"), B);
     general_keyword_diagnose("invalid keyword but still expect to work", OffsetWord.create("I am different"), B);
 
-    B.expectAmount(4);
+    B.expectAmount(3);
   });
 });

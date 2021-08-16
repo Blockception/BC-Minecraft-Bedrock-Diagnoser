@@ -14,11 +14,10 @@ describe("String", () => {
 
   it("diagnose with errors", () => {
     const B = new TestDiagnoser();
-    general_string_diagnose(OffsetWord.create("data"), B);
     general_string_diagnose(OffsetWord.create('I am a invalid minecraft string"'), B);
     general_string_diagnose(OffsetWord.create('"I am a invalid minecraft string'), B);
     general_string_diagnose(OffsetWord.create("I am a invalid minecraft string"), B);
 
-    B.expectAmount(4);
+    B.expectAmount(3);
   });
 });
