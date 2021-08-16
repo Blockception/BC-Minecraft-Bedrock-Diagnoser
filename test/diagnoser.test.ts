@@ -1,12 +1,11 @@
 import { ProjectData } from "bc-minecraft-bedrock-project";
-import { Position } from "bc-minecraft-bedrock-types/lib/src/Types/include";
+import { Types } from "bc-minecraft-bedrock-types";
 import { MCIgnore, MCProject } from "bc-minecraft-project";
 import { DiagnosticsBuilder, DiagnosticsBuilderContent } from "../src/Lib/Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../src/Lib/Types/DiagnosticsBuilder/Severity";
-import { DocumentLocation } from "../src/Lib/Types/DocumentLocation/DocumentLocation";
 
 export interface Error {
-  position: DocumentLocation;
+  position: Types.DocumentLocation;
   message: string;
   severity: DiagnosticSeverity;
   code: string | number;
@@ -43,7 +42,7 @@ export class TestDiagnoser implements DiagnosticsBuilder {
     this.items = [];
   }
 
-  Add(position: string | number | Position, message: string, severity: DiagnosticSeverity, code: string | number): void {
+  Add(position: Types.DocumentLocation, message: string, severity: DiagnosticSeverity, code: string | number): void {
     this.items.push({
       code: code,
       message: message,
@@ -68,7 +67,7 @@ export class TestDiagnoser implements DiagnosticsBuilder {
   /**Gets the first matching position
    * @param message
    * @returns*/
-  getPosition(position: string | number | Position): Error | undefined {
+  getPosition(position: Types.DocumentLocation): Error | undefined {
     for (let I = 0; I < this.items.length; I++) {
       const elem = this.items[I];
 
@@ -116,7 +115,7 @@ export class TestDiagnoser implements DiagnosticsBuilder {
    * @param position
    * @returns
    */
-  hasPosition(position: string | number | Position): boolean {
+  hasPosition(position: Types.DocumentLocation): boolean {
     return this.getPosition(position) !== undefined;
   }
 
