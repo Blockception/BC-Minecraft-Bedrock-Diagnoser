@@ -1,7 +1,7 @@
 import { DiagnosticSeverity } from "./Severity";
 import { TextDocument, ProjectData } from "bc-minecraft-bedrock-project";
 import { MCIgnore, MCProject } from "bc-minecraft-project";
-import { DocumentLocation } from "bc-minecraft-bedrock-types/lib/src/Types/include";
+import { Types } from "bc-minecraft-bedrock-types";
 
 /**The interface of a diagnostics builder*/
 export interface DiagnosticsBuilder {
@@ -16,7 +16,7 @@ export interface DiagnosticsBuilder {
    * @param message The message to add
    * @param severity The severity of the issue
    * @param code The code of the diagnostic error*/
-  Add(position: DocumentLocation, message: string, severity: DiagnosticSeverity, code: string | number): void;
+  Add(position: Types.DocumentLocation, message: string, severity: DiagnosticSeverity, code: string | number): void;
 }
 
 /**The context of a diagnostics builder*/
