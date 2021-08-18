@@ -15,3 +15,37 @@ export interface InternalDiagnosticsBuilder extends DiagnosticsBuilder {
   /**Marks that this builder is done*/
   done(): void;
 }
+
+/**
+ *
+ */
+export namespace DiagnoserContext {
+  /**
+   *
+   * @param value
+   */
+  export function is(value: any): value is DiagnoserContext {
+    if (typeof value === "object") {
+      if (value.getDiagnoser) return true;
+    }
+
+    return false;
+  }
+}
+
+/**
+ *
+ */
+export namespace InternalDiagnosticsBuilder {
+  /**
+   *
+   * @param value
+   */
+  export function is(value: any): value is InternalDiagnosticsBuilder {
+    if (typeof value === "object") {
+      if (value.done) return true;
+    }
+
+    return false;
+  }
+}

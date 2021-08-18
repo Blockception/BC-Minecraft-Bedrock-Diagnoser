@@ -21,10 +21,13 @@ export interface DiagnosticsBuilder {
 
 /**The context of a diagnostics builder*/
 export interface DiagnosticsBuilderContent {
-  /**Returns a textdocument object or undefined if something went wrong or nothing exists*/
+  /**Returns a textdocument object or undefined if something went wrong or nothing exists
+   * @param uri The document uri to read*/
   getDocument(uri: string): TextDocument | undefined;
 
-  /**Returns all files in the given directory and sub directories*/
+  /**Returns all files in the given directory and sub directories.
+   * @param folder The folder to start the search from
+   * @param ignores The project settings for ignores or includements*/
   getFiles(folder: string, ignores: MCIgnore): string[];
 
   /**The project cache data*/

@@ -34,12 +34,10 @@ export class Diagnoser {
 
     switch (PackType.detect(doc.uri)) {
       case PackType.behavior_pack:
-        BehaviorPack.Process(doc, diagnoser);
-        break;
+        return BehaviorPack.Process(doc, diagnoser);
 
       case PackType.resource_pack:
-        ResourcePack.Process(doc, diagnoser);
-        break;
+        return ResourcePack.Process(doc, diagnoser);
     }
 
     diagnoser.done();
@@ -50,19 +48,21 @@ export class Diagnoser {
   /**Diagnoses the entire given folder
    * @param folder The folder to retrieve files of
    * @param ignores The pattern to ignore on files*/
-  ProcessFolder(folder: string, ignores: MCIgnore): void {
+  ProcessFolder(folder: string, ignores: MCIgnore): boolean {
     const files = this.context.getFiles(folder, ignores);
+    let out = false;
 
     for (let I = 0; I < files.length; I++) {
-      this.Process(files[I]);
+      out ||= this.Process(files[I]);
     }
+
+    return out;
   }
 
-  /**
-   *
-   * @param pack
-   */
-  ProcessPack(pack: Pack): void {
-    this.ProcessFolder(pack.folder, pack.context.ignores);
+  /**Process the entire given pack
+   * @param pack The pack to process
+   * @returns True or false is something was processed*/
+  ProcessPack(pack: Pack): boolean {
+    return this.ProcessFolder(pack.folder, pack.context.ignores);
   }
 }

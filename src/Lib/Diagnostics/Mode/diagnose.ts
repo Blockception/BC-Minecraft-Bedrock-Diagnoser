@@ -159,11 +159,19 @@ export function mode_teleportrules_diagnose(value: OffsetWord, diagnoser: Diagno
   mode_generic_diagnose(value, Modes.TeleportRules, diagnoser);
 }
 
+/**
+ *
+ * @param value
+ * @param Mode
+ * @param diagnoser
+ * @returns
+ */
 function mode_generic_diagnose(value: OffsetWord, Mode: ModeHandler, diagnoser: DiagnosticsBuilder): void {
   const m = Mode.get(value.text);
 
   //Mode returned then it is valid
   if (m) return;
 
-  diagnoser.Add(value.offset, `value: '${value.text}' is not defined in mode: '${Mode.name}'`, DiagnosticSeverity.error, `mode.${Mode.name}.missing`);
+  const name = Mode.name.toLowerCase();
+  diagnoser.Add(value.offset, `value: '${value.text}' is not defined in mode: '${name}'`, DiagnosticSeverity.error, `minecraft.mode.${name}.invalid`);
 }
