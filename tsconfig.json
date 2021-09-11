@@ -1,6 +1,6 @@
 {
   "include": ["src", "test"],
-  "exclude": ["node_modules", "**/__tests__/*"],
+  "exclude": ["node_modules", "**/__tests__/*", "TODO"],
   "compilerOptions": {
     "target": "es2019",
     "module": "commonjs",
