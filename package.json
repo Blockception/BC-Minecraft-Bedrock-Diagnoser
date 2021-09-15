@@ -10,7 +10,6 @@
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "test": "mocha --debug-brk",
     "clean": "rimraf lib",
-    "postinstall": "npm run clean",
     "pretest": "npm run compile",
     "prepublishOnly": "npm test && npm run compile",
     "preversion": "",
