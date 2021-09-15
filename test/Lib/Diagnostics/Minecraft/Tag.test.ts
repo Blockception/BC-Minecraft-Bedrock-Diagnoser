@@ -7,7 +7,7 @@ import { TestDiagnoser } from "../../../diagnoser.test";
 
 describe("Tag", () => {
   it("diagnose no errors", () => {
-    const data = new ProjectData();
+    const data = TestDiagnoser.emptyContext().getCache();
 
     data.General.tags.set([
       GeneralInfo.create("init", Location.create(""), "main tickingarea"),

@@ -172,7 +172,7 @@ export namespace TestDiagnoser {
   export function emptyContext(): DiagnosticsBuilderContent {
     return {
       getCache: () => {
-        return new ProjectData();
+        return new ProjectData({ getDocument: (uri) => undefined, getFiles: (folder, ignores) => [] });
       },
       getDocument: (uri: string) => {
         return undefined;
