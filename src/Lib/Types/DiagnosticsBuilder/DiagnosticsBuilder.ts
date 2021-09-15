@@ -1,5 +1,5 @@
 import { DiagnosticSeverity } from "./Severity";
-import { TextDocument, ProjectData } from "bc-minecraft-bedrock-project";
+import { TextDocument, ProjectData, ProjectContext } from "bc-minecraft-bedrock-project";
 import { MCIgnore, MCProject } from "bc-minecraft-project";
 import { Types } from "bc-minecraft-bedrock-types";
 
@@ -20,7 +20,7 @@ export interface DiagnosticsBuilder {
 }
 
 /**The context of a diagnostics builder*/
-export interface DiagnosticsBuilderContent {
+export interface DiagnosticsBuilderContent extends ProjectContext {
   /**Returns a textdocument object or undefined if something went wrong or nothing exists
    * @param uri The document uri to read*/
   getDocument(uri: string): TextDocument | undefined;
