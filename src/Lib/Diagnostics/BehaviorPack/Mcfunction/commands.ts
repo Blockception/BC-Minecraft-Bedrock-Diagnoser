@@ -54,7 +54,7 @@ import { resourcepack_sound_diagnose } from "../../ResourcePack/Sounds Definitio
 export function mcfunction_commandscheck(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
   const edu = education_enabled(diagnoser);
   const text = doc.getText();
-  const lines = text.split("/n");
+  const lines = text.split("\n");
 
   for (let I = 0; I < lines.length; I++) {
     const line = lines[I].trim();
