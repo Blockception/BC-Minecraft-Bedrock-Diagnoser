@@ -46,7 +46,7 @@ export class Diagnoser {
     } catch (err: any) {
       const msg: string = typeof err.message === "string" ? err.message : JSON.stringify(err);
 
-      diagnoser.Add({ character: 0, line: 0 }, msg, DiagnosticSeverity.error, "doc.error");
+      diagnoser.Add({ character: 0, line: 0 }, msg, DiagnosticSeverity.error, "diagnoser.internal.exception");
     }
 
     diagnoser.done();
