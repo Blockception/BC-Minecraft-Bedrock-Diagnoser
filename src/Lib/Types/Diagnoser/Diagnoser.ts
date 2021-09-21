@@ -2,6 +2,7 @@ import { Pack, PackType, TextDocument } from "bc-minecraft-bedrock-project";
 import { MCIgnore } from "bc-minecraft-project";
 import { BehaviorPack } from "../../Diagnostics/BehaviorPack/BehaviorPack";
 import { ResourcePack } from "../../Diagnostics/ResourcePack/ResourcePack";
+import { DiagnosticSeverity } from "../DiagnosticsBuilder/Severity";
 import { DiagnoserContext } from "./DiagnoserContext";
 
 /**The object that is responsible for diagnosing minecraft bedrock files*/
@@ -32,12 +33,20 @@ export class Diagnoser {
     const diagnoser = this.context.getDiagnoser(doc, pack.context);
     if (!diagnoser) return false;
 
-    switch (PackType.detect(doc.uri)) {
-      case PackType.behavior_pack:
-        return BehaviorPack.Process(doc, diagnoser);
+    let out = false;
 
-      case PackType.resource_pack:
-        return ResourcePack.Process(doc, diagnoser);
+    try {
+      switch (PackType.detect(doc.uri)) {
+        case PackType.behavior_pack:
+          out = BehaviorPack.Process(doc, diagnoser);
+
+        case PackType.resource_pack:
+          out = ResourcePack.Process(doc, diagnoser);
+      }
+    } catch (err: any) {
+      const msg: string = typeof err.message === "string" ? err.message : JSON.stringify(err);
+
+      diagnoser.Add({ character: 0, line: 0 }, msg, DiagnosticSeverity.error, "doc.error");
     }
 
     diagnoser.done();

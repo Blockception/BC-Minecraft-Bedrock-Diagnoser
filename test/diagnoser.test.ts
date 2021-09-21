@@ -4,7 +4,7 @@ import { ProjectData } from "bc-minecraft-bedrock-project";
 import { Types } from "bc-minecraft-bedrock-types";
 import { MCIgnore, MCProject } from "bc-minecraft-project";
 import { expect } from "chai";
-import { DiagnoserContext } from "../src/main";
+import { InternalDiagnosticsBuilder } from "../src/main";
 
 export interface Error {
   position: Types.DocumentLocation;
@@ -13,16 +13,22 @@ export interface Error {
   code: string | number;
 }
 
-export class TestDiagnoser implements DiagnosticsBuilder {
+export class TestDiagnoser implements InternalDiagnosticsBuilder {
   public items: Error[];
 
   public context: DiagnosticsBuilderContent;
   public project: MCProject;
+  public doneMark: boolean;
 
   constructor(context: DiagnosticsBuilderContent | undefined = undefined, project: MCProject | undefined = undefined) {
+    this.doneMark = false;
     this.context = context ?? TestDiagnoser.emptyContext();
     this.project = project ?? MCProject.createEmpty();
     this.items = [];
+  }
+
+  done(): void {
+    this.doneMark = true;
   }
 
   /**
