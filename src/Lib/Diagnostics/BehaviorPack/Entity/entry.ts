@@ -13,6 +13,8 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
   if (!Internal.BehaviorPack.Entity.is(entity)) return;
 
   //No resourcepack check, entities can exist without their rp side
+
+  //check components
   behaviorpack_entity_components_dependencies(entity, diagnoser);
 
   const container = entity["minecraft:entity"];
