@@ -64,11 +64,15 @@ export function mcfunction_commandscheck(doc: TextDocument, diagnoser: Diagnosti
     if (line.startsWith("#")) continue;
 
     const offset = text.indexOf(line);
-    const comm = Command.parse(line, offset);
+    let comm: Command | undefined = Command.parse(line, offset);
 
     if (comm.isEmpty()) continue;
 
-    mcfunction_commandcheck(comm, diagnoser, edu);
+    while (comm) {
+      mcfunction_commandcheck(comm, diagnoser, edu);
+
+      comm = comm.getSubCommand();
+    }
   }
 }
 

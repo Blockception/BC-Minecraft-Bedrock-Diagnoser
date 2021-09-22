@@ -3,7 +3,7 @@ import { FileType } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/Behav
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 
 import * as Animation from "./Animation/entry";
-import * as AnimationController from "./Animation Controller/entry";
+import * as AnimationController from "./Animation Controllers/entry";
 import * as Block from "./Block/entry";
 import * as Entity from "./Entity/entry";
 import * as Mcfunction from "./Mcfunction/entry";

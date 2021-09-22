@@ -3,7 +3,7 @@ import { FileType } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/Resou
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 
 import * as Animation from "./Animation/entry";
-import * as AnimationController from "./Animation Controller/entry";
+import * as AnimationController from "./Animation Controllers/entry";
 import * as Attachable from "./Attachable/entry";
 import * as BiomesClient from "./Biomes Client/entry";
 import * as Block from "./Block/entry";

@@ -21,7 +21,7 @@ export function behaviorpack_check_blockdescriptor(blockDescriptor: string, diag
  * @returns
  */
 export function behaviorpack_check_blockid(blockDescriptor: string, diagnoser: DiagnosticsBuilder): void {
-  const id = Minecraft.Block.getId(blockDescriptor);
+  let id = Minecraft.Block.getId(blockDescriptor);
 
   const data = diagnoser.context.getCache();
 
@@ -31,10 +31,25 @@ export function behaviorpack_check_blockid(blockDescriptor: string, diagnoser: D
   const edu = education_enabled(diagnoser);
 
   //Vanilla has block
-  if (MinecraftData.BehaviorPack.hasEntity(id, edu)) return;
+  if (MinecraftData.BehaviorPack.hasBlock(id, edu)) return;
 
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.block, id, diagnoser)) return;
+
+  //Missing namespace?
+  if (!id.includes(":")) {
+    //retry
+    id = "minecraft:" + id;
+
+    //Project has block
+    if (data.hasBlock(id)) return;
+
+    //Vanilla has block
+    if (MinecraftData.BehaviorPack.hasBlock(id, edu)) return;
+
+    //Defined in McProject
+    if (check_definition_value(diagnoser.project.definitions.block, id, diagnoser)) return;
+  }
 
   //Nothing then report error
   diagnoser.Add(id, `Cannot find block definition: ${id}`, DiagnosticSeverity.error, "behaviorpack.block.missing");
