@@ -15,7 +15,7 @@ export function animation_or_controller_diagnose_implementation(id: string, data
       return animation_controller_diagnose_implementation(id, data, diagnoser);
 
     case anim_or_contr.neither:
-      diagnoser.Add(id, `Cannot find animation / animation controller: ${id}`, DiagnosticSeverity.error, "resourcepack.missing");
+      diagnoser.Add(id, `Cannot find animation / animation controller: ${id}`, DiagnosticSeverity.error, "resourcepack.anim_or_controller.missing");
   }
 }
 
