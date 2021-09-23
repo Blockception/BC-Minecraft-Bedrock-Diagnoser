@@ -1,6 +1,6 @@
 import { Internal, TextDocument } from "bc-minecraft-bedrock-project";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
-import { general_animation_controller } from "../../Minecraft/Animation Controllers";
+import { general_animation_controllers } from "../../Minecraft/Animation Controllers";
 import { Json } from "../../Json/Json";
 
 /**Diagnoses the given document as an animation controller
@@ -12,7 +12,7 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
   if (!Internal.BehaviorPack.AnimationControllers.is(controllers)) return;
 
   //Transition check
-  general_animation_controller(controllers, diagnoser);
+  general_animation_controllers(controllers, diagnoser);
 
   //TODO add bp animation controller diagnostics
 }
