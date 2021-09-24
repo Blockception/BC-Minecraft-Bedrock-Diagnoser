@@ -6,7 +6,8 @@ import { TestDiagnoser } from "../../../diagnoser.test";
 
 describe("Tickingarea", () => {
   it("diagnose no errors", () => {
-    const data = TestDiagnoser.emptyContext().getCache();
+    const B = TestDiagnoser.Create();
+    const data = B.context.getCache();
 
     data.General.tickingAreas.set([
       GeneralInfo.create("main", Location.create(""), "main tickingarea"),
@@ -14,8 +15,6 @@ describe("Tickingarea", () => {
       GeneralInfo.create("spawn", Location.create(""), "spawn location"),
       GeneralInfo.create("Spawn", Location.create(""), "spawn location"),
     ]);
-
-    const B = TestDiagnoser.createFromProjectData(data);
 
     minecraft_tickingarea_diagnose(OffsetWord.create("main"), B);
     minecraft_tickingarea_diagnose(OffsetWord.create("calc"), B);

@@ -7,7 +7,8 @@ import { TestDiagnoser } from "../../../diagnoser.test";
 
 describe("Tag", () => {
   it("diagnose no errors", () => {
-    const data = TestDiagnoser.emptyContext().getCache();
+    const B = TestDiagnoser.Create();
+    const data = B.context.getCache();
 
     data.General.tags.set([
       GeneralInfo.create("init", Location.create(""), "main tickingarea"),
@@ -15,8 +16,6 @@ describe("Tag", () => {
       GeneralInfo.create("Follow", Location.create(""), "main tickingarea"),
       GeneralInfo.create("Attack", Location.create(""), "main tickingarea"),
     ]);
-
-    const B = TestDiagnoser.createFromProjectData(data);
 
     minecraft_tag_diagnose(OffsetWord.create("init"), B);
     minecraft_tag_diagnose(OffsetWord.create("Flying"), B);

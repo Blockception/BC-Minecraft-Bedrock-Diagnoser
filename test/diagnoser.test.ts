@@ -1,10 +1,11 @@
-import { DiagnosticsBuilder, DiagnosticsBuilderContent } from "../src/Lib/Types/DiagnosticsBuilder/DiagnosticsBuilder";
+import { DiagnosticsBuilderContent } from "../src/Lib/Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../src/Lib/Types/DiagnosticsBuilder/Severity";
 import { ProjectData } from "bc-minecraft-bedrock-project";
 import { Types } from "bc-minecraft-bedrock-types";
-import { MCIgnore, MCProject } from "bc-minecraft-project";
+import { MCProject } from "bc-minecraft-project";
 import { expect } from "chai";
 import { InternalDiagnosticsBuilder } from "../src/main";
+import { TestProjecData } from "./testprojectdata.test";
 
 export interface Error {
   position: Types.DocumentLocation;
@@ -22,7 +23,7 @@ export class TestDiagnoser implements InternalDiagnosticsBuilder {
 
   constructor(context: DiagnosticsBuilderContent | undefined = undefined, project: MCProject | undefined = undefined) {
     this.doneMark = false;
-    this.context = context ?? TestDiagnoser.emptyContext();
+    this.context = context ?? TestProjecData.CreateContext();
     this.project = project ?? MCProject.createEmpty();
     this.items = [];
   }
@@ -167,25 +168,13 @@ export class TestDiagnoser implements InternalDiagnosticsBuilder {
 }
 
 export namespace TestDiagnoser {
-  export function createFromProjectData(data: ProjectData): TestDiagnoser {
-    var context = emptyContext();
-
-    context.getCache = () => data;
+  export function Create(files: Map<string, string> | undefined = undefined): TestDiagnoser {
+    let context = TestProjecData.CreateContext(files);
 
     return new TestDiagnoser(context, undefined);
   }
 
-  export function emptyContext(): DiagnosticsBuilderContent {
-    return {
-      getCache: () => {
-        return new ProjectData({ getDocument: (uri) => undefined, getFiles: (folder, ignores) => [] });
-      },
-      getDocument: (uri: string) => {
-        return undefined;
-      },
-      getFiles: (folder: string, ignores: MCIgnore) => {
-        return [];
-      },
-    };
+  export function emptyContext(files: Map<string, string> | undefined = undefined): DiagnosticsBuilderContent {
+    return TestProjecData.CreateContext(files);
   }
 }
