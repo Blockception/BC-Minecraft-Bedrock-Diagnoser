@@ -1,5 +1,4 @@
-import { MolangFullSet, MolangSet } from "bc-minecraft-bedrock-project";
-import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
+import { MolangSet } from "bc-minecraft-molang";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
 import { education_enabled } from "../../Definitions";

@@ -1,6 +1,6 @@
 import { Internal, Map } from "bc-minecraft-bedrock-project";
 import { State } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/BehaviorPack/AnimationController";
-import { Conditional } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/include";
+import { Types } from "bc-minecraft-bedrock-types";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
 
@@ -53,7 +53,7 @@ export function general_animation_controller(controller: animation_controller, c
  * @param States
  * @param Builder
  */
-function CheckTransition(controller: string, Transitions: Conditional[], States: Map<State>, diagnoser: DiagnosticsBuilder): void {
+function CheckTransition(controller: string, Transitions: Types.Conditional[], States: Map<State>, diagnoser: DiagnosticsBuilder): void {
   //Loop over the transitions
   for (var I = 0; I < Transitions.length; I++) {
     const trans = Transitions[I];

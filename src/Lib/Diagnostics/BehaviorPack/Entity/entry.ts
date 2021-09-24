@@ -1,8 +1,10 @@
-import { Internal, MolangFullSet, TextDocument } from "bc-minecraft-bedrock-project";
+import { Internal, TextDocument } from "bc-minecraft-bedrock-project";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { Json } from "../../Json/Json";
 import { behaviorpack_entity_components_dependencies } from "./components";
 import { animation_or_controller_diagnose_implementation } from "../anim or controller";
+import { MolangFullSet } from "bc-minecraft-molang";
+import { Types } from "bc-minecraft-bedrock-types";
 
 /**Diagnoses the given document as an bp entity
  * @param doc The text document to diagnose
@@ -21,5 +23,5 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
   const MolangData = MolangFullSet.harvest(container);
 
   //Check animations / animation controllers
-  Internal.Definition.forEach(container.description.animations, (value, key) => animation_or_controller_diagnose_implementation(value, MolangData, diagnoser));
+  Types.Definition.forEach(container.description.animations, (reference, id) => animation_or_controller_diagnose_implementation(id, MolangData, diagnoser));
 }

@@ -1,4 +1,4 @@
-import { Defined, DefinedUsing, MolangFullSet, MolangSet } from "bc-minecraft-bedrock-project";
+import { Defined, DefinedUsing, MolangFullSet, MolangSet } from "bc-minecraft-molang";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
 
