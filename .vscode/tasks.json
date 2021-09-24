@@ -7,7 +7,7 @@
       "isBackground": false,
       "group": "build",
       "label": "npm build 'bc-minecraft-bedrock-diagnoser'",
-      "presentation": { "reveal": "silent", "panel": "dedicated" },
+      "presentation": { "reveal": "always", "panel": "dedicated" },
       "problemMatcher": ["$tsc"]
     },
     {
