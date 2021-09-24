@@ -3,7 +3,7 @@ import { Defined, DefinedUsing, Molang, MolangData, MolangFullSet, MolangSet, Us
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
 
-export type OwnerType = "block" | "entity" | "item" | "feature" | "particle" | "animation" | "animation_controller";
+export type OwnerType = "block" | "entity" | "item" | "feature" | "particle" | "animation" | "animation_controller"| "render_controller";
 
 
 /**Diagnoses the given molang sets, the using party checks upon the definer if they have setup properly
@@ -64,6 +64,7 @@ function GetNamespace(owner : OwnerType) {
     switch (owner) {
       case "animation":
       case "animation_controller":
+      case "render_controller":
         break;
       
       case "block":

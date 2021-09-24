@@ -5,11 +5,15 @@ import { behaviorpack_entity_components_dependencies } from "./components";
 import { animation_or_controller_diagnose_implementation } from "../anim or controller";
 import { MolangFullSet } from "bc-minecraft-molang";
 import { Types } from "bc-minecraft-bedrock-types";
+import { diagnose_molang } from '../../Molang/diagnostics';
 
 /**Diagnoses the given document as an bp entity
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
 export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
+  //Check molang
+  diagnose_molang(doc.getText(), "entity", diagnoser);
+
   const entity = Json.LoadReport<Internal.BehaviorPack.Entity>(doc, diagnoser);
 
   if (!Internal.BehaviorPack.Entity.is(entity)) return;
