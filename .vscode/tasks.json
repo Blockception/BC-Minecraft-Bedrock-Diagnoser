@@ -3,9 +3,10 @@
   "tasks": [
     {
       "type": "npm",
-      "script": "compile",
+      "script": "build",
       "isBackground": false,
       "group": "build",
+      "label": "npm build 'bc-minecraft-bedrock-diagnoser'",
       "presentation": { "reveal": "silent", "panel": "dedicated" },
       "problemMatcher": ["$tsc"]
     },
@@ -14,25 +15,8 @@
       "script": "test",
       "isBackground": false,
       "group": "build",
+      "label": "npm test 'bc-minecraft-bedrock-diagnoser'",
       "problemMatcher": ["$tsc"]
-    },
-    {
-      "type": "shell",
-      "label": "Format workspace",
-      "command": "Powershell.exe -executionpolicy remotesigned -File ./scripts/format_documents.ps1",
-      "problemMatcher": "$tsc"
-    },
-    {
-      "type": "shell",
-      "label": "install project extension",
-      "command": "Powershell.exe -executionpolicy remotesigned -File ./scripts/install.ps1",
-      "problemMatcher": "$tsc"
-    },
-    {
-      "type": "shell",
-      "label": "update project extension",
-      "command": "Powershell.exe -executionpolicy remotesigned -File ./scripts/update.ps1",
-      "problemMatcher": "$tsc"
     }
   ]
 }
