@@ -2,16 +2,17 @@ import { MolangSet } from "bc-minecraft-molang";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
 import { education_enabled } from "../Definitions";
+import { OwnerType } from '../Molang/diagnostics';
 import { animation_controller_diagnose_implementation } from "./Animation Controllers/diagnostics";
 import { animation_diagnose_implementation } from "./Animation/diagnostics";
 
-export function animation_or_controller_diagnose_implementation(id: string, data: MolangSet, diagnoser: DiagnosticsBuilder): void {
+export function animation_or_controller_diagnose_implementation(id: string, data: MolangSet, owner : OwnerType, diagnoser: DiagnosticsBuilder): void {
   switch (is_animation_or_controller(id, diagnoser)) {
     case anim_or_contr.animation:
-      return animation_diagnose_implementation(id, data, diagnoser);
+      return animation_diagnose_implementation(id, data, owner, diagnoser);
 
     case anim_or_contr.controller:
-      return animation_controller_diagnose_implementation(id, data, diagnoser);
+      return animation_controller_diagnose_implementation(id, data, owner, diagnoser);
 
     case anim_or_contr.neither:
       diagnoser.Add(id, `Cannot find animation / animation controller: ${id}`, DiagnosticSeverity.error, "behaviorpack.anim_or_controller.missing");

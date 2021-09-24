@@ -27,5 +27,5 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
   const MolangData = MolangFullSet.harvest(container);
 
   //Check animations / animation controllers
-  Types.Definition.forEach(container.description.animations, (reference, id) => animation_or_controller_diagnose_implementation(id, MolangData, diagnoser));
+  Types.Definition.forEach(container.description.animations, (reference, id) => animation_or_controller_diagnose_implementation(id, MolangData, "entity", diagnoser));
 }

@@ -3,7 +3,7 @@ import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
 import { education_enabled } from "../../Definitions";
-import { diagnose_molangfull } from "../../Molang/diagnostics";
+import { diagnose_molang_implementation, OwnerType } from '../../Molang/diagnostics';
 
 /**
  *
@@ -11,9 +11,9 @@ import { diagnose_molangfull } from "../../Molang/diagnostics";
  * @param data
  * @param diagnoser
  */
-export function render_controller_diagnose_implementation(id: string, data: MolangFullSet, diagnoser: DiagnosticsBuilder): void {
+export function render_controller_diagnose_implementation(id: string, data: MolangFullSet, owner : OwnerType, diagnoser: DiagnosticsBuilder): void {
   if (has_render_controller(id, diagnoser)) {
-    molang_render_controller(id, data, diagnoser);
+    molang_render_controller(id, data, owner, diagnoser);
   }
 }
 
@@ -45,7 +45,7 @@ export function has_render_controller(id: string, diagnoser: DiagnosticsBuilder)
  * @param data
  * @param diagnoser
  */
-export function molang_render_controller(id: string, data: MolangFullSet, diagnoser: DiagnosticsBuilder): void {
+export function molang_render_controller(id: string, data: MolangFullSet, owner : OwnerType, diagnoser: DiagnosticsBuilder): void {
   const cache = diagnoser.context.getCache();
 
   //Project has render controller
@@ -53,5 +53,5 @@ export function molang_render_controller(id: string, data: MolangFullSet, diagno
 
   if (!rp) return;
 
-  diagnose_molangfull(rp.molang, data, diagnoser);
+  diagnose_molang_implementation(rp.molang, data, owner, diagnoser);
 }
