@@ -1,8 +1,7 @@
 import { MolangSet } from "bc-minecraft-molang";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
-import { education_enabled } from "../../Definitions";
-import { diagnose_molang } from "../../Molang/diagnostics";
+import { diagnose_molang_implementation, OwnerType } from "../../Molang/diagnostics";
 
 /**
  *
@@ -10,9 +9,9 @@ import { diagnose_molang } from "../../Molang/diagnostics";
  * @param data
  * @param diagnoser
  */
-export function animation_diagnose_implementation(id: string, data: MolangSet, diagnoser: DiagnosticsBuilder): void {
+export function animation_diagnose_implementation(id: string, data: MolangSet, owner : OwnerType, diagnoser: DiagnosticsBuilder): void {
   if (has_animation(id, diagnoser)) {
-    molang_animation(id, data, diagnoser);
+    molang_animation(id, data, owner, diagnoser);
   }
 }
 
@@ -28,8 +27,6 @@ export function has_animation(id: string, diagnoser: DiagnosticsBuilder): boolea
   //Project has render controller
   if (cache.BehaviorPacks.animations.has(id)) return true;
 
-  const edu = education_enabled(diagnoser);
-
   //Nothing then report error
   diagnoser.Add(id, `Cannot find behaviorpack animation: ${id}`, DiagnosticSeverity.error, "behaviorpack.animation.missing");
   return false;
@@ -41,7 +38,7 @@ export function has_animation(id: string, diagnoser: DiagnosticsBuilder): boolea
  * @param data
  * @param diagnoser
  */
-export function molang_animation(id: string, data: MolangSet, diagnoser: DiagnosticsBuilder): void {
+export function molang_animation(id: string, data: MolangSet, owner : OwnerType, diagnoser: DiagnosticsBuilder): void {
   const cache = diagnoser.context.getCache();
 
   //Project has render controller
@@ -49,5 +46,5 @@ export function molang_animation(id: string, data: MolangSet, diagnoser: Diagnos
 
   if (!anim) return;
 
-  diagnose_molang(anim.molang, data, diagnoser);
+  diagnose_molang_implementation(anim.molang, data, owner, diagnoser);
 }

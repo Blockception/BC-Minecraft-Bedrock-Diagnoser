@@ -3,7 +3,7 @@ import { Defined, DefinedUsing, Molang, MolangData, MolangFullSet, MolangSet, Us
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
 
-export type OwnerType = "block" | "entity" | "item" | "feature" | "particle";
+export type OwnerType = "block" | "entity" | "item" | "feature" | "particle" | "animation" | "animation_controller";
 
 
 /**Diagnoses the given molang sets, the using party checks upon the definer if they have setup properly
@@ -62,6 +62,10 @@ function diagnose_molang_using(using: DefinedUsing<string>, definer: Defined<str
 function GetNamespace(owner : OwnerType) {
     //Vanilla provides?
     switch (owner) {
+      case "animation":
+      case "animation_controller":
+        break;
+      
       case "block":
         return MolangData.Blocks;
 
