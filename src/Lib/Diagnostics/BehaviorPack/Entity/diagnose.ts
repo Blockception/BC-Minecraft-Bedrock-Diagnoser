@@ -1,4 +1,4 @@
-import { Command } from "bc-minecraft-bedrock-command";
+import { Command, ParameterType } from "bc-minecraft-bedrock-command";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
@@ -33,6 +33,32 @@ export function behaviorpack_entityid_diagnose(id: OffsetWord, diagnoser: Diagno
  * @param builder
  * @param Com
  */
-export function behaviorpack_entity_event_diagnose(data: OffsetWord, diagnoser: DiagnosticsBuilder, Com: Command): void {
-  throw new Error("Function not implemented.");
+export function behaviorpack_entity_event_diagnose(data: OffsetWord, diagnoser: DiagnosticsBuilder, Com: Command): void {  
+  const edu = education_enabled(diagnoser);
+  const matches = Com.getBestMatch(edu);
+
+  if(matches.length !== 1) return;
+
+  const entityid_index = matches[0].parameters.findIndex(p=>{p.type === ParameterType.entity});
+  let entityid : string | undefined= undefined;
+
+  if (entityid_index >= 0) {
+    entityid = Com.parameters[entityid_index]?.text;
+  }
+  else {
+    //TODO selector parsing?
+  }
+
+  if (entityid) {
+    //Get entity
+    const entity = diagnoser.context.getCache().BehaviorPacks.entities.get(entityid);
+
+    //Entity found
+    if (entity) {
+      //Events not found
+      if (!entity.events.includes(data.text)) {
+        diagnoser.Add(data.offset, `Entity: ${entityid} has no event declared: ${data.text}`, DiagnosticSeverity.error, "behaviorpack.entity.event.missing");
+      }
+    }
+  }
 }
