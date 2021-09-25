@@ -32,7 +32,7 @@ export function has_animation_controller(id: string, diagnoser: DiagnosticsBuild
   const edu = education_enabled(diagnoser);
 
   //Vanilla has animation controller
-  if (MinecraftData.ResourcePack.hasAnimation(id, edu)) return true;
+  if (MinecraftData.ResourcePack.hasAnimationController(id, edu)) return true;
 
   //Nothing then report error
   diagnoser.Add(`"${id}"`, `Cannot find resourcepack animation controller: ${id}`, DiagnosticSeverity.error, "resourcepack.animation_controller.missing");
