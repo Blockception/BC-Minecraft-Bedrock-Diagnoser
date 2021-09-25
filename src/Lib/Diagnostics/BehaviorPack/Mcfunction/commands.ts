@@ -38,6 +38,7 @@ import {
   mode_slottype_diagnose,
   mode_structureanimation_diagnose,
   mode_teleportrules_diagnose,
+  mode_time_diagnose,
 } from "../../Mode/diagnose";
 import { behaviorpack_item_diagnose } from "../Item/diagnose";
 import { minecraft_xp_diagnose } from "../../Minecraft/Xp";
@@ -125,9 +126,9 @@ function mcfunction_diagnoseparameter(pattern: ParameterInfo, data: Parameter, b
 
   switch (pattern.type) {
     case ParameterType.block:
-      return behaviorpack_check_blockdescriptor(data.text, builder);
+      return behaviorpack_check_blockdescriptor(data, builder);
     case ParameterType.blockStates:
-      return behaviorpack_check_blockstates(data.text, builder);
+      return behaviorpack_check_blockstates(data, builder);
     case ParameterType.boolean:
       return general_boolean_diagnose(data, builder);
     case ParameterType.cameraShakeType:
@@ -204,6 +205,8 @@ function mcfunction_diagnoseparameter(pattern: ParameterInfo, data: Parameter, b
       return mode_teleportrules_diagnose(data, builder);
     case ParameterType.tickingarea:
       return minecraft_tickingarea_diagnose(data, builder);
+    case ParameterType.time:
+        return mode_time_diagnose(data, builder);
     case ParameterType.xp:
       return minecraft_xp_diagnose(data, builder);
     case ParameterType.unknown:

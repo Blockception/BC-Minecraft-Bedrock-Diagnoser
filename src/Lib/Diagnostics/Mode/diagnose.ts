@@ -159,6 +159,13 @@ export function mode_teleportrules_diagnose(value: OffsetWord, diagnoser: Diagno
   mode_generic_diagnose(value, Modes.TeleportRules, diagnoser);
 }
 
+/**Diagnoses the value as a value in the mode: time
+ * @param value The value to evualate, needs the offset to report bugs
+ * @param diagnoser The diagnoser to report to*/
+export function mode_time_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): void {
+  mode_generic_diagnose(value, Modes.Time, diagnoser);
+}
+
 /**
  *
  * @param value
