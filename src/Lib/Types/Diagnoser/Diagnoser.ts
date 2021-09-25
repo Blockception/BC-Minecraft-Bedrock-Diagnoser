@@ -39,9 +39,11 @@ export class Diagnoser {
       switch (PackType.detect(doc.uri)) {
         case PackType.behavior_pack:
           out = BehaviorPack.Process(doc, diagnoser);
+          break;
 
         case PackType.resource_pack:
           out = ResourcePack.Process(doc, diagnoser);
+          break;
       }
     } catch (err: any) {
       const msg: string = typeof err.message === "string" ? err.message : JSON.stringify(err);
@@ -51,7 +53,7 @@ export class Diagnoser {
 
     diagnoser.done();
 
-    return true;
+    return out;
   }
 
   /**Diagnoses the entire given folder

@@ -35,7 +35,7 @@ export function has_animation(id: string, diagnoser: DiagnosticsBuilder): boolea
   if (MinecraftData.ResourcePack.hasAnimation(id, edu)) return true;
 
   //Nothing then report error
-  diagnoser.Add(id, `Cannot find resourcepack animation: ${id}`, DiagnosticSeverity.error, "resourcepack.animation.missing");
+  diagnoser.Add(`"${id}"`, `Cannot find resourcepack animation: ${id}`, DiagnosticSeverity.error, "resourcepack.animation.missing");
   return false;
 }
 

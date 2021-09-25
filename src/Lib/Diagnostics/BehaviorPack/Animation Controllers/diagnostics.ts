@@ -28,7 +28,7 @@ export function has_animation_controller(id: string, diagnoser: DiagnosticsBuild
   if (cache.BehaviorPacks.animation_controllers.has(id)) return true;
 
   //Nothing then report error
-  diagnoser.Add(id, `Cannot find behaviorpack animation_controller: ${id}`, DiagnosticSeverity.error, "behaviorpack.animation_controller.missing");
+  diagnoser.Add(`"${id}"`, `Cannot find behaviorpack animation_controller: ${id}`, DiagnosticSeverity.error, "behaviorpack.animation_controller.missing");
   return false;
 }
 

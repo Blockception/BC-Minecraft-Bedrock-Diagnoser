@@ -77,6 +77,37 @@ export function mcfunction_commandscheck(doc: TextDocument, diagnoser: Diagnosti
   }
 }
 
+export function json_commandscheck(prop : string | string[], doc : TextDocument, diagnoser: DiagnosticsBuilder) : void {
+  if (typeof prop === "string") {
+    if (prop.startsWith('/')) {
+      commandscheck(prop.substring(1), doc, diagnoser);
+    }
+  }
+  else {
+    prop.forEach(p=>{
+      if (p.startsWith('/')) {
+        commandscheck(p.substring(1), doc, diagnoser);
+      }
+    });
+  }  
+}
+
+export function commandscheck(commandtext : string, doc : TextDocument, diagnoser: DiagnosticsBuilder) : void {
+  if (commandtext.length < 3) return;
+
+  const edu = education_enabled(diagnoser);
+  const offset = doc.getText().indexOf(commandtext);  
+  let comm : Command | undefined = Command.parse(commandtext, offset);  
+
+  if (comm.isEmpty()) return;
+
+  while (comm) {
+    mcfunction_commandcheck(comm, diagnoser, edu);
+
+    comm = comm.getSubCommand();
+  }
+}
+
 /**
  *
  * @param command

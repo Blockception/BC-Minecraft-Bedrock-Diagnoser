@@ -35,7 +35,7 @@ export function has_animation_controller(id: string, diagnoser: DiagnosticsBuild
   if (MinecraftData.ResourcePack.hasAnimation(id, edu)) return true;
 
   //Nothing then report error
-  diagnoser.Add(id, `Cannot find resourcepack animation controller: ${id}`, DiagnosticSeverity.error, "resourcepack.animation_controller.missing");
+  diagnoser.Add(`"${id}"`, `Cannot find resourcepack animation controller: ${id}`, DiagnosticSeverity.error, "resourcepack.animation_controller.missing");
   return false;
 }
 
