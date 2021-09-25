@@ -1,4 +1,4 @@
-import { Identifiable } from 'bc-minecraft-bedrock-types/lib/src/Types/Identifiable';
+import { Types } from 'bc-minecraft-bedrock-types';
 import { Defined, DefinedUsing, Molang, MolangData, MolangFullSet, MolangSet, Using } from "bc-minecraft-molang";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
@@ -98,7 +98,7 @@ function diagnose_molang_variable_using(using: DefinedUsing<string>, definer: De
     if (defined1.includes(check) || defined2.includes(check)) continue;
 
     //Vanilla provides?
-    if (Identifiable.has(GetNamespace(owner)?.Variables ?? [], check)) continue;
+    if (InternalIdentifiable.has(GetNamespace(owner)?.Variables ?? [], check)) continue;
 
     diagnoser.Add("scripts", `Missing molang variable defintion: ${check}`, DiagnosticSeverity.error, `molang.variable.missing`);
   }
@@ -116,7 +116,7 @@ function diagnose_molang_temp_using(using: DefinedUsing<string>, definer: Define
     if (defined1.includes(check) || defined2.includes(check)) continue;
 
     //Vanilla provides?
-    if (Identifiable.has(GetNamespace(owner)?.Temps ?? [], check)) continue;
+    if (InternalIdentifiable.has(GetNamespace(owner)?.Temps ?? [], check)) continue;
 
     diagnoser.Add(check, `Missing molang temps defintion: ${check}`, DiagnosticSeverity.error, `molang.temp.missing`);
   }
@@ -135,7 +135,7 @@ function diagnose_molang_context_using(using: Using<string> | string, diagnoser:
     const check = checks[I];
 
     //Vanilla provides?
-    if (Identifiable.has(GetNamespace(owner)?.Contents ?? [], check)) continue;
+    if (InternalIdentifiable.has(GetNamespace(owner)?.Contents ?? [], check)) continue;
 
     diagnoser.Add(check, `Missing molang context defintion: ${check}`, DiagnosticSeverity.error, `molang.context.${owner}.unknown`);
   }
@@ -160,7 +160,7 @@ export function diagnose_molang_query_using(using: Using<string> | string, diagn
     const check = checks[I];
 
     //Vanilla provides?
-    if (Identifiable.has(MolangData.General.Queries, check)) continue;
+    if (InternalIdentifiable.has(MolangData.General.Queries, check)) continue;
 
     diagnoser.Add(check, `Unknown molang query function: ${check}`, DiagnosticSeverity.error, `molang.query.unknown`);
   }
@@ -185,8 +185,19 @@ export function diagnose_molang_math_using(using: Using<string> | string, diagno
     const check = checks[I];
 
     //Vanilla provides?
-    if (Identifiable.has(MolangData.General.Math, check)) continue;
+    if (InternalIdentifiable.has(MolangData.General.Math, check)) continue;
 
     diagnoser.Add(check, `Unknown molang math function: ${check}`, DiagnosticSeverity.error, `molang.math.unknown`);
+  }
+}
+
+
+namespace InternalIdentifiable {
+  export function has(data : Types.Identifiable[], id : string) : boolean {
+    for(let I = 0; I < data.length; I++) {
+      if (data[I].id.startsWith(id)) return true;
+    }
+
+    return false;
   }
 }
