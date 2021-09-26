@@ -24,6 +24,8 @@ export function behaviorpack_check_blockdescriptor(blockDescriptor: OffsetWord, 
 export function behaviorpack_check_blockid(blockDescriptor: OffsetWord, diagnoser: DiagnosticsBuilder): void {
   let id = Minecraft.Block.getId(blockDescriptor.text);
 
+  //Defined in McProject
+  if (check_definition_value(diagnoser.project.definitions.block, id, diagnoser)) return;
   const data = diagnoser.context.getCache();
 
   //Project has block
@@ -34,22 +36,19 @@ export function behaviorpack_check_blockid(blockDescriptor: OffsetWord, diagnose
   //Vanilla has block
   if (MinecraftData.BehaviorPack.hasBlock(id, edu)) return;
 
-  //Defined in McProject
-  if (check_definition_value(diagnoser.project.definitions.block, id, diagnoser)) return;
-
   //Missing namespace?
   if (!id.includes(":")) {
     //retry
     id = "minecraft:" + id;
+
+    //Defined in McProject
+    if (check_definition_value(diagnoser.project.definitions.block, id, diagnoser)) return;
 
     //Project has block
     if (data.hasBlock(id)) return;
 
     //Vanilla has block
     if (MinecraftData.BehaviorPack.hasBlock(id, edu)) return;
-
-    //Defined in McProject
-    if (check_definition_value(diagnoser.project.definitions.block, id, diagnoser)) return;
   }
 
   //Nothing then report error

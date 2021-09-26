@@ -11,6 +11,9 @@ import { check_definition_value, education_enabled } from "../../Definitions";
  * @returns
  */
 export function behaviorpack_entityid_diagnose(id: OffsetWord, diagnoser: DiagnosticsBuilder): void {
+  //Defined in McProject
+  if (check_definition_value(diagnoser.project.definitions.entity, id.text, diagnoser)) return;
+
   const data = diagnoser.context.getCache();
 
   //Project has entity
@@ -20,9 +23,6 @@ export function behaviorpack_entityid_diagnose(id: OffsetWord, diagnoser: Diagno
 
   //Vanilla has entity
   if (MinecraftData.BehaviorPack.hasEntity(id.text, edu)) return;
-
-  //Defined in McProject
-  if (check_definition_value(diagnoser.project.definitions.entity, id.text, diagnoser)) return;
 
   //Nothing then report error
   diagnoser.Add(id.offset, `Cannot find entity definition: ${id}`, DiagnosticSeverity.error, "behaviorpack.entity.missing");
