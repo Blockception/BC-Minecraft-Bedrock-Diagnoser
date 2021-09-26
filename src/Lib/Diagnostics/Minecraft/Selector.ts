@@ -208,8 +208,9 @@ function selectorattribute_postive_all_negatives(value: SelectorAttribute, selec
     if (element.value.startsWith("!")) Negatives++;
   }
 
-  if (Negatives != parameters.length - 1) {
-    diagnoser.Add(offset, 'Parameter: "' + name + '" can only have 1 positive test or/and multiple negatives test', DiagnosticSeverity.error, "selector.attribute.test.postive_allnegatives");
+  //If we have less negatives then parameters - 1, then that means there are more positve thens 1
+  if (Negatives < parameters.length - 1) {
+    diagnoser.Add(offset, `Parameter: "${name}" can only have 1 positive test or/and multiple negatives test`, DiagnosticSeverity.error, "selector.attribute.test.postive_allnegatives");
   }
 }
 

@@ -52,7 +52,7 @@ export class TestDiagnoser implements InternalDiagnosticsBuilder {
    *
    */
   expectEmpty(): void {
-    expect(this.items.length).to.lessThanOrEqual(0, `Expected no errors/warnings, but has received ${this.items.length}: ${JSON.stringify(this.items)}`);
+    expect(this.items.length).to.lessThanOrEqual(0, `Expected no errors/warnings, but has received ${this.items.length}:\n${this.writeItemsMessage()}`);
   }
 
   /**
@@ -60,7 +60,7 @@ export class TestDiagnoser implements InternalDiagnosticsBuilder {
    * @param number
    */
   expectAmount(number: number): void {
-    expect(this.items.length).to.equal(number, `Expected ${number} errors/warnings, but has received ${this.items.length}: ${JSON.stringify(this.items)}`);
+    expect(this.items.length).to.equal(number, `Expected ${number} errors/warnings, but has received ${this.items.length}:\n${this.writeItemsMessage()}`);
   }
 
   /**
@@ -68,7 +68,7 @@ export class TestDiagnoser implements InternalDiagnosticsBuilder {
    * @param number
    */
   expectGreaterThan(number: number): void {
-    expect(this.items.length).to.greaterThan(number, `Expected more ${number} errors/warnings, but has received ${this.items.length}: ${JSON.stringify(this.items)}`);
+    expect(this.items.length).to.greaterThan(number, `Expected more ${number} errors/warnings, but has received ${this.items.length}:\n${this.writeItemsMessage()}`);
   }
 
   /**
@@ -78,8 +78,18 @@ export class TestDiagnoser implements InternalDiagnosticsBuilder {
   expectGreaterThanOrEqual(number: number): void {
     expect(this.items.length).to.greaterThanOrEqual(
       number,
-      `Expected more or equal ${number} errors/warnings, but has received ${this.items.length}: ${JSON.stringify(this.items)}`
+      `Expected more or equal ${number} errors/warnings, but has received ${this.items.length}:\n${this.writeItemsMessage()}`
     );
+  }
+
+  writeItemsMessage() : string {
+    let out = "";
+
+    this.items.forEach(item=>{
+      out += `\t\t[${DiagnosticSeverity[item.severity]}: ${item.position}] ${item.message} (${item.code})\n`;
+    })
+
+    return out;
   }
 
   /**Gets the first matching message

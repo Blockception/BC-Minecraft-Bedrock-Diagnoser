@@ -6,8 +6,9 @@ import { education_enabled } from "../Definitions";
 import { animation_controller_diagnose_implementation } from "./Animation Controllers/diagnostics";
 import { animation_diagnose_implementation } from "./Animation/diagnostics";
 import { OwnerType } from '../Molang/diagnostics';
+import { OffsetWord } from '../../Types/OffsetWord';
 
-export function animation_or_controller_diagnose_implementation(id: string, data: MolangSet, owner : OwnerType, diagnoser: DiagnosticsBuilder): void {
+export function animation_or_controller_diagnose_implementation(id: string, data: MolangSet, owner: OwnerType, diagnoser: DiagnosticsBuilder): void {
   switch (is_animation_or_controller(id, diagnoser)) {
     case anim_or_contr.animation:
       return animation_diagnose_implementation(id, data, owner, diagnoser);
@@ -17,6 +18,19 @@ export function animation_or_controller_diagnose_implementation(id: string, data
 
     case anim_or_contr.neither:
       diagnoser.Add(id, `Cannot find animation / animation controller: ${id}`, DiagnosticSeverity.error, "resourcepack.anim_or_controller.missing");
+  }
+}
+
+export function animation_or_controller_diagnose(id: OffsetWord, diagnoser: DiagnosticsBuilder): void {
+  switch (is_animation_or_controller(id.text, diagnoser)) {
+    case anim_or_contr.controller:
+    case anim_or_contr.animation:
+      return;
+
+    case anim_or_contr.neither:
+
+      diagnoser.Add(id.text, `Cannot find animation / animation controller: ${id}`, DiagnosticSeverity.error, "mcfunction.anim_or_controller.missing");
+      return;
   }
 }
 
