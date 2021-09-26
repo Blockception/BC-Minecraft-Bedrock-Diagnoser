@@ -39,12 +39,12 @@
   },
   "homepage": "https://github.com/Blockception/BC-Minecraft-Bedrock-Diagnoser#readme",
   "dependencies": {
-    "bc-minecraft-bedrock-command": "^1.2.3",
-    "bc-minecraft-bedrock-project": "^1.7.18",
-    "bc-minecraft-bedrock-types": "^1.2.3",
-    "bc-minecraft-bedrock-vanilla-data": "^1.5.3",
-    "bc-minecraft-molang": "^1.0.8",
-    "bc-minecraft-project": "^1.0.7",
+    "bc-minecraft-bedrock-command": "^1.2.4",
+    "bc-minecraft-bedrock-project": "^1.7.20",
+    "bc-minecraft-bedrock-types": "^1.2.4",
+    "bc-minecraft-bedrock-vanilla-data": "^1.5.4",
+    "bc-minecraft-molang": "^1.0.9",
+    "bc-minecraft-project": "^1.0.8",
     "jsonc": "^2.0.0"
   },
   "devDependencies": {
