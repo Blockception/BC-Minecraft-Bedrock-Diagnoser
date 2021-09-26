@@ -34,6 +34,30 @@ export function animation_or_controller_diagnose(id: OffsetWord, diagnoser: Diag
   }
 }
 
+export function animation_reference_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): void {
+  const data = diagnoser.context.getCache();
+  const id = value.text;
+
+  let out = false;
+
+  //Project?
+  data.ResourcePacks.entities.forEach(entity=>{
+    if (entity.animations.defined.includes(id)) out = true;
+  });
+  
+  if (out) return;
+
+  //Vanilla?
+  MinecraftData.vanilla.ResourcePack.entities.forEach(entity=>{
+    if (entity.animations.includes(id)) out = true;
+  });
+ 
+  if (out) return;
+
+  diagnoser.Add(value.text, `Cannot find animation / animation controller: ${value.text}`, DiagnosticSeverity.error, "mcfunction.anim_or_controller.missing");
+}
+
+
 export enum anim_or_contr {
   animation,
   controller,

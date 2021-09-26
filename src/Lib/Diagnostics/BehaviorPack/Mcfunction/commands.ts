@@ -48,7 +48,7 @@ import { general_keyword_diagnose } from "../../General/Keyword";
 import { minecraft_tickingarea_diagnose } from "../../Minecraft/Tickingarea";
 import { resourcepack_particle_diagnose } from "../../ResourcePack/Particle/diagnose";
 import { resourcepack_sound_diagnose } from "../../ResourcePack/Sounds Definitions/diagnose";
-import { animation_or_controller_diagnose } from '../../ResourcePack/anim or controller';
+import { animation_or_controller_diagnose, animation_reference_diagnose } from '../../ResourcePack/anim or controller';
 import { OffsetWord } from '../../../Types/OffsetWord';
 
 /**
@@ -150,7 +150,7 @@ function mcfunction_commandcheck(command: Command, diagnoser: DiagnosticsBuilder
 
 /**Switch data*/
 const ParameterDiagnostics: { [key: number]: (value: OffsetWord, diagnoser: DiagnosticsBuilder) => void | boolean } = {
-  [ParameterType.animation]: animation_or_controller_diagnose,
+  [ParameterType.animation]: animation_reference_diagnose,
   [ParameterType.block]:behaviorpack_check_blockdescriptor,
   [ParameterType.blockStates]:behaviorpack_check_blockstates,
   [ParameterType.boolean]:general_boolean_diagnose,
