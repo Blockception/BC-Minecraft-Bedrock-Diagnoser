@@ -28,6 +28,31 @@ export function behaviorpack_entityid_diagnose(id: OffsetWord, diagnoser: Diagno
   diagnoser.Add(id.offset, `Cannot find entity definition: ${id}`, DiagnosticSeverity.error, "behaviorpack.entity.missing");
 }
 
+/**Checks if the entities exists in the project or in vanilla, if not then a bug is reported
+ * @param id
+ * @param diagnoser
+ * @returns
+ */
+ export function behaviorpack_entity_spawnegg_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): void {
+  const id = value.text.replace('_spawn_egg', "");
+
+  //Defined in McProject
+  if (check_definition_value(diagnoser.project.definitions.entity, value.text, diagnoser)) return;
+
+  const data = diagnoser.context.getCache();
+
+  //Project has entity
+  if (data.hasEntity(id)) return;
+
+  const edu = education_enabled(diagnoser);
+
+  //Vanilla has entity
+  if (MinecraftData.BehaviorPack.hasEntity(id, edu)) return;
+
+  //Nothing then report error
+  diagnoser.Add(value.text, `Cannot find entity for spawn egg definition: ${id}`, DiagnosticSeverity.error, "behaviorpack.entity.missing");
+}
+
 /**Checks if the event is defined on the correct entities
  * @param data
  * @param builder
