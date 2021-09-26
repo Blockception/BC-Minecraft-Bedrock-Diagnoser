@@ -35,15 +35,15 @@ export function minecraft_selector_diagnose(pattern: ParameterInfo, value: Offse
   }
 
   const data = diagnoser.context.getCache();
+  
+  //Defined in McProject
+  if (check_definition_value(diagnoser.project.definitions.name, name, diagnoser)) return;
 
   //Project has defined this fake entity
   if (data.General.fakeEntities.has(name)) return;
 
-  //Defined in McProject
-  if (check_definition_value(diagnoser.project.definitions.names, name, diagnoser)) return;
-
   //Found nothing then report
-  diagnoser.Add(value.offset, `Cannot find definition or name for: ${name}`, DiagnosticSeverity.warning, "minecraft.fakeentity.missing");
+  diagnoser.Add(value.offset, `Cannot find fake entity definition or name for: ${name}`, DiagnosticSeverity.warning, "minecraft.name.missing");
 }
 
 /**
