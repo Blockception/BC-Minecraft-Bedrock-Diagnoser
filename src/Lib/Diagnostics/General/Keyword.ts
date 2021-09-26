@@ -1,4 +1,4 @@
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../main";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Lib/Types/DiagnosticsBuilder/include";
 import { OffsetWord } from "../../Types/OffsetWord";
 
 export function general_keyword_diagnose(keyword: string, value: OffsetWord, diagnoser: DiagnosticsBuilder): void {

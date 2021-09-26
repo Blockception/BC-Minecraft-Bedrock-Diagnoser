@@ -1,5 +1,5 @@
 import { Minecraft } from "bc-minecraft-bedrock-types";
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../main";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Lib/Types/DiagnosticsBuilder/include";
 import { OffsetWord } from "../../Types/OffsetWord";
 
 export function minecraft_xp_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): void {
