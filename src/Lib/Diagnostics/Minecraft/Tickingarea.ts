@@ -7,11 +7,11 @@ export function minecraft_tickingarea_diagnose(value: OffsetWord, diagnoser: Dia
   const data = diagnoser.context.getCache();
   const id = Text.UnQuote(value.text);
 
-  //Project has defined
-  if (data.General.tickingAreas.has(id)) return;
-
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.tickingarea, id, diagnoser)) return;
+
+  //Project has defined
+  if (data.General.tickingAreas.has(id)) return;
 
   //Nothing then report error
   diagnoser.Add(value.offset, `Cannot find tickingarea definition: ${id}`, DiagnosticSeverity.error, "minecraft.tickingarea.missing");
