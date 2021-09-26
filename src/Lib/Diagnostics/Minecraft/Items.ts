@@ -1,3 +1,6 @@
+import { DiagnosticsBuilder, DiagnosticSeverity } from '../../Types/DiagnosticsBuilder/include';
+import { OffsetWord } from '../../Types/OffsetWord';
+import { check_definition_value } from '../Definitions';
 
 
 export function minecraft_item_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
