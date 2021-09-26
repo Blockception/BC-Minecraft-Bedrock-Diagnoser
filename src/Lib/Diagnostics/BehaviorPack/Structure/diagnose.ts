@@ -12,6 +12,7 @@ export function behaviorpack_structure_diagnose(value: OffsetWord, diagnoser: Di
 
   //Project has structure
   if (data.BehaviorPacks.structures.has(id)) return true;
+  if (data.General.structures.has(id)) return true;
 
   //Nothing then report error
   diagnoser.Add(`"${id}"`, `Cannot find behaviorpack mcstructure: ${id}`, DiagnosticSeverity.error, "behaviorpack.structure.missing");
