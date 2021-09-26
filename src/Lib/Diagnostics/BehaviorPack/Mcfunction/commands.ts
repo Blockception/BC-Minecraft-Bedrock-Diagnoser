@@ -11,9 +11,9 @@ import { general_string_diagnose } from "../../General/String";
 import { minecraft_check_command } from "../../Minecraft/Commands";
 import { minecraft_coordinate_diagnose } from "../../Minecraft/Coordinate";
 import { minecraft_effect_diagnose } from "../../Minecraft/Effect";
-import { general_jsonitem_diagnose } from "../../Minecraft/JsonItem";
-import { general_jsonrawtext_diagnose } from "../../Minecraft/JsonRawText";
-import { general_objectives_diagnose } from "../../Minecraft/Objective";
+import { minecraft_jsonitem_diagnose } from "../../Minecraft/JsonItem";
+import { minecraft_jsonrawtext_diagnose } from "../../Minecraft/JsonRawText";
+import { minecraft_objectives_diagnose } from "../../Minecraft/Objective";
 import { minecraft_selector_diagnose } from "../../Minecraft/Selector";
 import { minecraft_tag_diagnose } from "../../Minecraft/Tag";
 import { behaviorpack_check_blockdescriptor, behaviorpack_check_blockstates } from "../Block/diagnose";
@@ -140,7 +140,7 @@ function mcfunction_commandcheck(command: Command, diagnoser: DiagnosticsBuilder
  * @param edu
  * @returns
  */
-function mcfunction_diagnoseparameter(pattern: ParameterInfo, data: Parameter, builder: DiagnosticsBuilder, Com: Command, edu: boolean): void {
+function mcfunction_diagnoseparameter(pattern: ParameterInfo, data: Parameter, builder: DiagnosticsBuilder, Com: Command, edu: boolean): void | boolean {
   if (pattern === undefined || data === undefined) return;
 
   if (pattern.options) {
@@ -189,9 +189,9 @@ function mcfunction_diagnoseparameter(pattern: ParameterInfo, data: Parameter, b
     case ParameterType.item:
       return behaviorpack_item_diagnose(data, builder);
     case ParameterType.jsonItem:
-      return general_jsonitem_diagnose(data, builder);
+      return minecraft_jsonitem_diagnose(data, builder);
     case ParameterType.jsonRawText:
-      return general_jsonrawtext_diagnose(data, builder);
+      return minecraft_jsonrawtext_diagnose(data, builder);
     case ParameterType.keyword:
       return general_keyword_diagnose(pattern.text, data, builder);
     case ParameterType.locateFeature:
@@ -205,7 +205,7 @@ function mcfunction_diagnoseparameter(pattern: ParameterInfo, data: Parameter, b
     case ParameterType.oldBlockMode:
       return mode_oldblock_diagnose(data, builder);
     case ParameterType.objective:
-      return general_objectives_diagnose(data, builder);
+      return minecraft_objectives_diagnose(data, builder);
     case ParameterType.operation:
       return mode_operation_diagnose(data, builder);
     case ParameterType.particle:
