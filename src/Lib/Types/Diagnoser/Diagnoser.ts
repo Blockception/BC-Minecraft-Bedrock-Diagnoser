@@ -1,6 +1,7 @@
 import { Pack, PackType, TextDocument } from "bc-minecraft-bedrock-project";
 import { MCIgnore } from "bc-minecraft-project";
 import { BehaviorPack } from "../../Diagnostics/BehaviorPack/BehaviorPack";
+import { format_diagnose_path } from '../../Diagnostics/Format/diagnose';
 import { minecraft_language_diagnose } from '../../Diagnostics/Minecraft/Language';
 import { ResourcePack } from "../../Diagnostics/ResourcePack/ResourcePack";
 import { DiagnosticSeverity } from "../DiagnosticsBuilder/Severity";
@@ -37,6 +38,9 @@ export class Diagnoser {
     let out = false;
 
     try {
+      //diagnose path
+      format_diagnose_path(pack, doc.uri, diagnoser);
+
       //Language file?
       if (doc.uri.endsWith(".lang")) {
         minecraft_language_diagnose(doc, diagnoser);
