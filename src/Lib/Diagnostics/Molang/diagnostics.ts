@@ -54,7 +54,7 @@ function diagnose_molang_using(using: DefinedUsing<string>, definer: Defined<str
       //Valid
       continue;
     } else {
-      diagnoser.Add(name === "variable" ? "scripts" : check, `Missing molang defintion: ${name}.${check}`, DiagnosticSeverity.error, `molang.${name}.missing`);
+      diagnoser.Add(name === "variable" ? "scripts" : name, `Missing molang defintion: ${name}.${check}`, DiagnosticSeverity.error, `molang.${name}.missing`);
     }
   }
 }
