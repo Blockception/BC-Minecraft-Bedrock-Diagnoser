@@ -5,24 +5,23 @@ import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
 
 export type OwnerType = "block" | "entity" | "item" | "feature" | "particle" | "animation" | "animation_controller"| "render_controller";
 
-
 /**Diagnoses the given molang sets, the using party checks upon the definer if they have setup properly
  * @param using The set of molang data that is being used
  * @param definer The set of molang data that is defined
  * @param diagnoser The diagnoser to report to*/
-export function diagnose_molang_implementation(using: MolangSet | MolangFullSet, definer: MolangSet | MolangFullSet, owner: OwnerType, diagnoser: DiagnosticsBuilder): void {
+export function diagnose_molang_implementation(userid : string, using: MolangSet | MolangFullSet, definerid: string, definer: MolangSet | MolangFullSet, owner: OwnerType, diagnoser: DiagnosticsBuilder): void {
   //Is full set?
   if (MolangFullSet.isEither(using)) {
     //Upgrade if nesscary and check
     const temp = MolangFullSet.upgrade(definer);
 
-    diagnose_molang_using(using.geometries, temp.geometries, diagnoser, "geometry");
-    diagnose_molang_using(using.materials, temp.materials, diagnoser, "material");
-    diagnose_molang_using(using.textures, temp.textures, diagnoser, "texture");
+    diagnose_molang_using(userid, using.geometries, definerid, temp.geometries, diagnoser, "geometry");
+    diagnose_molang_using(userid, using.materials, definerid, temp.materials, diagnoser, "material");
+    diagnose_molang_using(userid, using.textures, definerid, temp.textures, diagnoser, "texture");
   }
 
   //Check variable vs variables and such
-  diagnose_molang_variable_using(using.variables, definer.variables, diagnoser, owner);
+  diagnose_molang_variable_using(userid, using.variables, definerid, definer.variables, diagnoser, owner);
   diagnose_molang_temp_using(using.temps, definer.variables, diagnoser, owner);
 
 }
@@ -42,7 +41,7 @@ export function diagnose_molang(using: string, owner: OwnerType, diagnoser: Diag
  * @param definer The set of molang data that is defined
  * @param diagnoser The diagnoser to report to
  * @param name The name of the data set such as `variable` or `query`*/
-function diagnose_molang_using(using: DefinedUsing<string>, definer: Defined<string>, diagnoser: DiagnosticsBuilder, name: string): void {
+function diagnose_molang_using(userid : string, using: DefinedUsing<string>, definerid : string, definer: Defined<string>, diagnoser: DiagnosticsBuilder, name: string): void {
   const checks = using.using;
   const defined1 = definer.defined;
   const defined2 = using.defined;
@@ -54,7 +53,7 @@ function diagnose_molang_using(using: DefinedUsing<string>, definer: Defined<str
       //Valid
       continue;
     } else {
-      diagnoser.Add(name === "variable" ? "scripts" : name, `Missing molang defintion: ${name}.${check}`, DiagnosticSeverity.error, `molang.${name}.missing`);
+      diagnoser.Add(userid, `Missing molang defintion: ${name}.${check}\n\tUsed by: ${userid}\n\tShould be defined by ${definerid}`, DiagnosticSeverity.error, `molang.${name}.missing`);
     }
   }
 }
@@ -86,7 +85,7 @@ function GetNamespace(owner : OwnerType) {
     return undefined;
 }
 
-function diagnose_molang_variable_using(using: DefinedUsing<string>, definer: Defined<string>, diagnoser: DiagnosticsBuilder, owner: OwnerType) {
+function diagnose_molang_variable_using(userid : string, using: DefinedUsing<string>, definerid : string, definer: Defined<string>, diagnoser: DiagnosticsBuilder, owner: OwnerType) {
   const checks = using.using;
   const defined1 = definer.defined;
   const defined2 = using.defined;
@@ -100,7 +99,7 @@ function diagnose_molang_variable_using(using: DefinedUsing<string>, definer: De
     //Vanilla provides?
     if (InternalIdentifiable.has(GetNamespace(owner)?.Variables ?? [], check)) continue;
 
-    diagnoser.Add("scripts", `Missing molang variable defintion: ${check}`, DiagnosticSeverity.error, `molang.variable.missing`);
+    diagnoser.Add(userid, `Missing molang defintion: variable.${check}\n\tUsed by: ${userid}\n\tShould be defined by ${definerid}`, DiagnosticSeverity.error, `molang.variable.missing`);
   }
 }
 
