@@ -25,7 +25,8 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
 
   const container = entity["minecraft:entity"];
   const MolangData = MolangFullSet.harvest(container);
+  const id = container.description.identifier;
 
   //Check animations / animation controllers
-  Types.Definition.forEach(container.description.animations, (reference, id) => animation_or_controller_diagnose_implementation(id, MolangData, "entity", diagnoser));
+  Types.Definition.forEach(container.description.animations, (reference, id) => animation_or_controller_diagnose_implementation(id, MolangData, id, "entity", diagnoser));
 }

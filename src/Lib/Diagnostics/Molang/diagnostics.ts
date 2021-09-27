@@ -22,7 +22,7 @@ export function diagnose_molang_implementation(userid : string, using: MolangSet
 
   //Check variable vs variables and such
   diagnose_molang_variable_using(userid, using.variables, definerid, definer.variables, diagnoser, owner);
-  diagnose_molang_temp_using(using.temps, definer.variables, diagnoser, owner);
+  diagnose_molang_temp_using(using.temps, definer.temps, diagnoser, owner);
 
 }
 

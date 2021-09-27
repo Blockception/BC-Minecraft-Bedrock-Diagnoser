@@ -9,9 +9,9 @@ import { diagnose_molang_implementation, OwnerType } from "../../Molang/diagnost
  * @param data
  * @param diagnoser
  */
-export function animation_controller_diagnose_implementation(id: string, data: MolangSet, owner : OwnerType, diagnoser: DiagnosticsBuilder): void {
+export function animation_controller_diagnose_implementation(id: string, data: MolangSet, ownerid : string, owner : OwnerType, diagnoser: DiagnosticsBuilder): void {
   if (has_animation_controller(id, diagnoser)) {
-    molang_animation_controller(id, data, owner, diagnoser);
+    molang_animation_controller(id, data, ownerid, owner, diagnoser);
   }
 }
 
@@ -38,7 +38,7 @@ export function has_animation_controller(id: string, diagnoser: DiagnosticsBuild
  * @param data
  * @param diagnoser
  */
-export function molang_animation_controller(id: string, data: MolangSet, owner : OwnerType, diagnoser: DiagnosticsBuilder): void {
+export function molang_animation_controller(id: string, data: MolangSet, ownerid : string, owner : OwnerType, diagnoser: DiagnosticsBuilder): void {
   const cache = diagnoser.context.getCache();
 
   //Project has animation controller
@@ -46,5 +46,5 @@ export function molang_animation_controller(id: string, data: MolangSet, owner :
 
   if (!anim) return;
 
-  diagnose_molang_implementation(anim.molang, data, owner, diagnoser);
+  diagnose_molang_implementation(anim.id, anim.molang, ownerid, data, owner, diagnoser);
 }

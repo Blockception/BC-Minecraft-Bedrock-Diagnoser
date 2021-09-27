@@ -1,4 +1,4 @@
-import {  MolangSet } from "bc-minecraft-molang";
+import { MolangSet } from "bc-minecraft-molang";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
@@ -11,9 +11,9 @@ import { diagnose_molang_implementation, OwnerType } from "../../Molang/diagnost
  * @param data
  * @param diagnoser
  */
-export function animation_diagnose_implementation(id: string, data: MolangSet, owner :OwnerType, diagnoser: DiagnosticsBuilder): void {
+export function animation_diagnose_implementation(id: string, data: MolangSet, ownerid: string, owner: OwnerType, diagnoser: DiagnosticsBuilder): void {
   if (has_animation(id, diagnoser)) {
-    molang_animation(id, data, owner, diagnoser);
+    molang_animation(id, data, ownerid, owner, diagnoser);
   }
 }
 
@@ -45,7 +45,7 @@ export function has_animation(id: string, diagnoser: DiagnosticsBuilder): boolea
  * @param data
  * @param diagnoser
  */
-export function molang_animation(id: string, data: MolangSet, owner :OwnerType, diagnoser: DiagnosticsBuilder): void {
+export function molang_animation(id: string, data: MolangSet, ownerid: string, owner: OwnerType, diagnoser: DiagnosticsBuilder): void {
   const cache = diagnoser.context.getCache();
 
   //Project has render controller
@@ -53,5 +53,5 @@ export function molang_animation(id: string, data: MolangSet, owner :OwnerType, 
 
   if (!anim) return;
 
-  diagnose_molang_implementation(anim.molang, data, owner, diagnoser);
+  diagnose_molang_implementation(id, anim.molang, ownerid, data, owner, diagnoser);
 }

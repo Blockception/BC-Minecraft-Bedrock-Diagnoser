@@ -11,9 +11,9 @@ import { diagnose_molang_implementation, OwnerType } from '../../Molang/diagnost
  * @param data
  * @param diagnoser
  */
-export function render_controller_diagnose_implementation(id: string, data: MolangFullSet, owner : OwnerType, diagnoser: DiagnosticsBuilder): void {
+export function render_controller_diagnose_implementation(id: string, data: MolangFullSet, ownerid : string, owner : OwnerType, diagnoser: DiagnosticsBuilder): void {
   if (has_render_controller(id, diagnoser)) {
-    molang_render_controller(id, data, owner, diagnoser);
+    molang_render_controller(id, data, ownerid, owner, diagnoser);
   }
 }
 
@@ -45,7 +45,7 @@ export function has_render_controller(id: string, diagnoser: DiagnosticsBuilder)
  * @param data
  * @param diagnoser
  */
-export function molang_render_controller(id: string, data: MolangFullSet, owner : OwnerType, diagnoser: DiagnosticsBuilder): void {
+export function molang_render_controller(id: string, data: MolangFullSet, ownerid : string, owner : OwnerType, diagnoser: DiagnosticsBuilder): void {
   const cache = diagnoser.context.getCache();
 
   //Project has render controller
@@ -53,5 +53,5 @@ export function molang_render_controller(id: string, data: MolangFullSet, owner 
 
   if (!rp) return;
 
-  diagnose_molang_implementation(rp.molang, data, owner, diagnoser);
+  diagnose_molang_implementation(id, rp.molang, ownerid, data, owner, diagnoser);
 }
