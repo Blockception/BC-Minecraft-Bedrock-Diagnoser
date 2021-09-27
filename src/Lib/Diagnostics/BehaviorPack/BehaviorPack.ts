@@ -7,6 +7,7 @@ import * as AnimationController from "./Animation Controllers/entry";
 import * as Block from "./Block/entry";
 import * as Entity from "./Entity/entry";
 import * as Mcfunction from "./Mcfunction/entry";
+import * as Tick from "./Functions/Tick/entry";
 import * as Item from "./Item/entry";
 import * as LootTable from "./Loot Table/entry";
 import * as Manifest from "./Manifest/entry";
@@ -42,7 +43,12 @@ export namespace BehaviorPack {
         break;
 
       case FileType.function:
-        Mcfunction.Diagnose(doc, diagnoser);
+        if (doc.uri.endsWith("tick.json")) {
+          Tick.Diagnose(doc, diagnoser);
+        }
+        else {
+          Mcfunction.Diagnose(doc, diagnoser);
+        }        
         break;
 
       case FileType.item:
