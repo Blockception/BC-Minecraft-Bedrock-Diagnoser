@@ -1,5 +1,5 @@
 {
-  "include": ["src", "test"],
+  "include": ["./src", "./test"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "target": "es2019",
