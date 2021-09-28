@@ -10,13 +10,13 @@ export function format_diagnose_path(pack: Pack, uri: string, diagnoser: Diagnos
   const root = pack.folder;
   const relpath = uri.replace(pack.folder, "");
 
-  if (relpath.length >= LengthFromRoot) {
+  if (relpath.length > LengthFromRoot) {
     diagnoser.Add(0, `Path is too long: '${relpath}', should be maximum of: ${LengthFromRoot} but is: ${relpath.length} characters long`, DiagnosticSeverity.error, "minecraft.format.path.length");
   }
 
   //Check each segment of the path
   relpath.split(/[\\\/]/gim).forEach(seg => {
-    if (seg.length >= SegmentLength) {
+    if (seg.length > SegmentLength) {
       diagnoser.Add(0, `Segment of path is too long: '${seg}' in ${relpath}, should be maximum of: ${SegmentLength} but is: ${seg.length} characters long`, DiagnosticSeverity.error, "minecraft.format.path.length");
     }
   });
