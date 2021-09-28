@@ -13,6 +13,6 @@ export function behaviorpack_functions_diagnose(value: Types.OffsetWord, diagnos
   //If project has function then ignore
   if (data.BehaviorPacks.functions.has(id)) return true;
 
-  diagnoser.Add(value.offset, `Cannot find mcfunction: ${id}`, DiagnosticSeverity.error, "behaviorpack.function.missing");
+  diagnoser.Add(value.offset, `Cannot find mcfunction: ${id}`, DiagnosticSeverity.error, "behaviorpack.mcfunction.missing");
   return false;
 }

@@ -15,6 +15,6 @@ export function behaviorpack_structure_diagnose(value: Types.OffsetWord, diagnos
   if (data.General.structures.has(id)) return true;
 
   //Nothing then report error
-  diagnoser.Add(value, `Cannot find behaviorpack mcstructure: ${id}`, DiagnosticSeverity.error, "behaviorpack.structure.missing");
+  diagnoser.Add(value, `Cannot find behaviorpack mcstructure: ${id}`, DiagnosticSeverity.error, "behaviorpack.mcstructure.missing");
   return false;
 }
