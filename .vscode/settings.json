@@ -1,9 +1,18 @@
 {
-  "editor.insertSpaces": true,
-  "tslint.enable": true,
-  "typescript.tsc.autoDetect": "off",
+  "editor.insertSpaces": false,
   "typescript.preferences.quoteStyle": "single",
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+  "editor.codeActionsOnSave": { "source.fixAll.eslint": true },
+  "npm.packageManager": "npm",
+
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "[markdown]": {
+    "editor.wordWrap": "off"
   }
 }
