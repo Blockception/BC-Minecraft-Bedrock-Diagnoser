@@ -12,6 +12,7 @@ import { minecraft_name_diagnose } from './Name';
 import { minecraft_objectives_diagnose } from './Objective';
 import { minecraft_family_diagnose } from './Family';
 import { behaviorpack_entityid_diagnose } from '../BehaviorPack/Entity/diagnose';
+import { minecraft_tag_diagnose } from './Tag';
 
 export function minecraft_selector_diagnose(pattern: ParameterInfo, value: Types.OffsetWord, diagnoser: DiagnosticsBuilder) {
   const sel = value.text;
@@ -100,9 +101,11 @@ function minecraft_selector_attribute_diagnose(attr: SelectorAttribute, sel: Sel
 
   const word = attr.getValue();
   if (word.text.startsWith("!")) {
-    word.offset++;
     word.text = word.text.slice(1);
   }
+  const old = word.text;
+  word.text = old.trim();
+  word.offset += old.indexOf(word.text);
 
   switch (attr.name) {
     case "x":
@@ -139,7 +142,7 @@ function minecraft_selector_attribute_diagnose(attr: SelectorAttribute, sel: Sel
 
     case "tag":
       //Family attribute is allowed multiple tests
-      minecraft_family_diagnose(word, diagnoser);
+      minecraft_tag_diagnose(word, diagnoser);
       return selectorattribute_all(attr, sel, diagnoser);
 
     case "type":
