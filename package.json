@@ -44,7 +44,7 @@
     "bc-minecraft-bedrock-types": "^1.2.5",
     "bc-minecraft-bedrock-vanilla-data": "^1.5.5",
     "bc-minecraft-molang": "^1.0.10",
-    "bc-minecraft-project": "^1.0.9",
+    "bc-minecraft-project": "^1.0.10",
     "jsonc": "^2.0.0"
   },
   "devDependencies": {
