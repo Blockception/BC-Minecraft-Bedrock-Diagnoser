@@ -3,8 +3,11 @@ import { OffsetWord } from "../../Types/OffsetWord";
 import { check_definition_value } from "../Definitions";
 
 
-export function minecraft_objectives_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder) {
+export function minecraft_objectives_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder) : void {
+  if(diagnoser.project.attributes["diagnostic.objective"] === "false") return;
+  
   const id = value.text;
+
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.objective, id, diagnoser)) return;
 

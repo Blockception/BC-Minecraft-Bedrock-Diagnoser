@@ -1,5 +1,6 @@
 import { Pack, PackType, TextDocument } from "bc-minecraft-bedrock-project";
 import { MCIgnore } from "bc-minecraft-project";
+import path = require('path');
 import { BehaviorPack } from "../../Diagnostics/BehaviorPack/BehaviorPack";
 import { format_diagnose_path } from '../../Diagnostics/Format/diagnose';
 import { minecraft_language_diagnose } from '../../Diagnostics/Minecraft/Language';
@@ -28,9 +29,15 @@ export class Diagnoser {
       if (!temp) return false;
       doc = temp;
     }
-
+    
     const pack = this.context.getCache().get(doc);
     if (!pack) return false;
+    
+    //Check if diagnostics was disabled
+    const ext = path.extname(doc.uri);
+    
+    //Check if diagnostics for this file type is disabled
+    if (pack.context.attributes["diagnostic" + ext] === "false") return false;
 
     const diagnoser = this.context.getDiagnoser(doc, pack.context);
     if (!diagnoser) return false;

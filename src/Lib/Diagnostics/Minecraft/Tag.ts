@@ -3,6 +3,8 @@ import { OffsetWord } from "../../Types/OffsetWord";
 import { check_definition_value } from "../Definitions";
 
 export function minecraft_tag_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): void {
+  if(diagnoser.project.attributes["diagnostic.tag"] === "false") return;
+
   const id = value.text;
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.tag, id, diagnoser)) return;
