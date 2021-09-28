@@ -6,10 +6,12 @@ import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Lib/Types/Diagn
 import { Types } from "bc-minecraft-bedrock-types";
 import { check_definition_value } from '../Definitions';
 import { general_range_float_diagnose, general_range_integer_diagnose } from '../General/Range';
-import { mode_selectorattribute_diagnose } from '../Mode/diagnose';
+import { mode_gamemode_diagnose, mode_selectorattribute_diagnose } from '../Mode/diagnose';
 import { minecraft_coordinate_diagnose } from './Coordinate';
 import { minecraft_name_diagnose } from './Name';
 import { minecraft_objectives_diagnose } from './Objective';
+import { minecraft_family_diagnose } from './Family';
+import { behaviorpack_entityid_diagnose } from '../BehaviorPack/Entity/diagnose';
 
 export function minecraft_selector_diagnose(pattern: ParameterInfo, value: Types.OffsetWord, diagnoser: DiagnosticsBuilder) {
   const sel = value.text;
@@ -35,7 +37,7 @@ export function minecraft_selector_diagnose(pattern: ParameterInfo, value: Types
   }
 
   const data = diagnoser.context.getCache();
-  
+
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.name, name, diagnoser)) return;
 
@@ -58,12 +60,12 @@ function minecraft_selector_diagnose_hard(pattern: ParameterInfo, value: Types.O
   //If the selector is only meant to be aimed at player warn the user
   if (pattern.options?.playerOnly === true) {
     if (selector.type === "@e") {
-      diagnoser.Add(selector.offset, "Selector is meant to target only players", DiagnosticSeverity.info, "minecraft.selector.playeronly");
+      diagnoser.Add(value, "Selector is meant to target only players", DiagnosticSeverity.info, "minecraft.selector.playeronly");
     }
   }
 
   if (!Minecraft.Selector.isValidType(selector)) {
-    diagnoser.Add(selector.offset, `Unknown selector type: ${selector.type}`, DiagnosticSeverity.error, "minecraft.selector.type.invalid");
+    diagnoser.Add(value, `Unknown selector type: ${selector.type}`, DiagnosticSeverity.error, "minecraft.selector.type.invalid");
   }
 
   //Check for duplicate scores definition
@@ -75,7 +77,7 @@ function minecraft_selector_diagnose_hard(pattern: ParameterInfo, value: Types.O
   selector.scores.forEach(score => minecraft_selector_score_attribute_diagnose(score, diagnoser));
 }
 
-function selector_scores_duplicate(value : Types.OffsetWord, diagnoser : DiagnosticsBuilder) : void {
+function selector_scores_duplicate(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
   const firstIndex = value.text.indexOf('scores={');
   if (firstIndex < 0) return;
 
@@ -96,10 +98,11 @@ function minecraft_selector_attribute_diagnose(attr: SelectorAttribute, sel: Sel
   //Attribute doesn't exist then skip it
   if (!mode_selectorattribute_diagnose(attr, diagnoser)) return;
 
-  const value_offset = attr.offset + attr.name.length + 1;
-  const not = attr.value.startsWith("!");
-  const value = not ? attr.value.substring(1) : attr.value;
-  const value_word = Types.OffsetWord.create(value, value_offset);
+  const word = attr.getValue();
+  if (word.text.startsWith("!")) {
+    word.offset++;
+    word.text = word.text.slice(1);
+  }
 
   switch (attr.name) {
     case "x":
@@ -113,30 +116,40 @@ function minecraft_selector_attribute_diagnose(attr: SelectorAttribute, sel: Sel
     case "ry":
     case "rym":
       selectorattribute_no_duplicates(attr, sel, diagnoser);
-      return selectorattribute_coordinate(value_word, diagnoser);
+      return selectorattribute_coordinate(word, diagnoser);
 
     case "c":
       selectorattribute_no_duplicates(attr, sel, diagnoser);
-      return general_range_integer_diagnose(value_word, diagnoser);
+      return general_range_integer_diagnose(word, diagnoser);
 
     case "l":
     case "lm":
       selectorattribute_no_duplicates(attr, sel, diagnoser);
-      return general_range_float_diagnose(value_word, diagnoser);
+      return general_range_float_diagnose(word, diagnoser);
 
     case "m":
-    case "type":
       //Types and gamemode can only be tested postive once, but can have all the negative tests
+      mode_gamemode_diagnose(word, diagnoser);
       return selectorattribute_postive_all_negatives(attr, sel, diagnoser);
 
     case "family":
+      //Family attribute is allowed multiple tests
+      minecraft_family_diagnose(word, diagnoser);
+      return selectorattribute_all(attr, sel, diagnoser);
+
     case "tag":
       //Family attribute is allowed multiple tests
+      minecraft_family_diagnose(word, diagnoser);
       return selectorattribute_all(attr, sel, diagnoser);
+
+    case "type":
+      //Types and gamemode can only be tested postive once, but can have all the negative tests
+      behaviorpack_entityid_diagnose(word, diagnoser);
+      return selectorattribute_postive_all_negatives(attr, sel, diagnoser);
 
     case "name":
       selectorattribute_postive_all_negatives(attr, sel, diagnoser);
-      return minecraft_name_diagnose(value_word, diagnoser);
+      return minecraft_name_diagnose(word, diagnoser);
   }
 }
 
@@ -180,7 +193,7 @@ function selectorattribute_no_duplicates(name: SelectorAttribute, selector: Sele
   var Count = selector.count(name.name);
 
   if (Count > 1) {
-    diagnoser.Add(name.offset, `Selector attribute: ${name} can only be used once in a selector`, DiagnosticSeverity.error, "selector.attribute.noduplicate");
+    diagnoser.Add(name.getName(), `Selector attribute: ${name} can only be used once in a selector`, DiagnosticSeverity.error, "selector.attribute.noduplicate");
   }
 }
 
@@ -191,7 +204,7 @@ function selectorattribute_no_duplicates(name: SelectorAttribute, selector: Sele
  * @param diagnoser 
  * @returns 
  */
-function selectorattribute_postive_all_negatives(value: SelectorAttribute, selector: Selector, diagnoser: DiagnosticsBuilder) : void {
+function selectorattribute_postive_all_negatives(value: SelectorAttribute, selector: Selector, diagnoser: DiagnosticsBuilder): void {
   //Attribute can only be tested postive once, but can have all the negative tests
   const parameters = selector.get(value.name);
 
@@ -221,7 +234,7 @@ function selectorattribute_postive_all_negatives(value: SelectorAttribute, selec
  * @param diagnoser 
  * @returns 
  */
-function selectorattribute_all(value: SelectorAttribute, selector: Selector, diagnoser: DiagnosticsBuilder) : void {
+function selectorattribute_all(value: SelectorAttribute, selector: Selector, diagnoser: DiagnosticsBuilder): void {
   const parameters = selector.get(value.name);
 
   //Just check for duplicate tests
