@@ -1,12 +1,13 @@
 import { Internal, Map } from "bc-minecraft-bedrock-project";
 import { State } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/BehaviorPack/AnimationController";
-import { Defined } from 'bc-minecraft-bedrock-project/node_modules/bc-minecraft-molang';
+import { Defined, MolangSet } from "bc-minecraft-bedrock-project/node_modules/bc-minecraft-molang";
 import { Types } from "bc-minecraft-bedrock-types";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
 
-type animation_controllers = Internal.BehaviorPack.AnimationControllers | Internal.ResourcePack.AnimationControllers;
-type animation_controller = Internal.BehaviorPack.AnimationController | Internal.ResourcePack.AnimationController;
+export type animation_controllers = Internal.BehaviorPack.AnimationControllers | Internal.ResourcePack.AnimationControllers;
+export type animation_controller = Internal.BehaviorPack.AnimationController | Internal.ResourcePack.AnimationController;
+export type animationsOwner = Types.Identifiable & { molang : MolangSet, animations : Defined<string> }
 
 /**
  *
@@ -63,18 +64,32 @@ function CheckTransition(controller: string, Transitions: Types.Conditional[], S
 
     //check is map contains any value
     if (States[state] === undefined) {
-      diagnoser.Add(controller + "/states/" + State, `missing state defined by transition: ${State}`, DiagnosticSeverity.error, "animation_controller.state.missing");
+      diagnoser.Add(
+        controller + "/states/" + State,
+        `missing state defined by transition: ${State}`,
+        DiagnosticSeverity.error,
+        "animation_controller.state.missing"
+      );
     }
   }
 }
 
-
-
-export function general_animation_controllers_implementation(controller : animation_controller, animations : Defined<string>, diagnoser : DiagnosticsBuilder) {
+export function general_animation_controllers_implementation(
+  controller: animation_controller,
+  user : animationsOwner,
+  diagnoser: DiagnosticsBuilder
+) {
   //for each state
-  Map.forEach(controller.states, (state)=>{
-    Types.Conditional.forEach(state, (anim_id, value)=>{
+  Map.forEach(controller.states, (state) => {
+    Types.Conditional.forEach(state.animations, (anim_id, value) => {
+      if (user.animations.defined.includes(anim_id)) return;
 
+      diagnoser.Add(
+        `${user.id}/animations`,
+        `Animation controller is using: '${anim_id}' but ${user.id} has nothing defined that matches\nMinecraft will still run but might return null errors on the animation`,
+        DiagnosticSeverity.warning,
+        "minecraft.animation_controller.animation.undefined"
+      );
     });
   });
 }

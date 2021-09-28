@@ -11,6 +11,7 @@ import { diagnose_molang_implementation, OwnerType } from "../../Molang/diagnost
  */
 export function animation_controller_diagnose_implementation(id: string, data: MolangSet, ownerid : string, owner : OwnerType, diagnoser: DiagnosticsBuilder): void {
   if (has_animation_controller(id, diagnoser)) {
+    general_animation_controllers_implementation()
     molang_animation_controller(id, data, ownerid, owner, diagnoser);
   }
 }
