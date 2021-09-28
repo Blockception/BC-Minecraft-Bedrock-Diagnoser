@@ -20,9 +20,15 @@ export namespace Json {
 
       //cast object
       out = <T>temp;
-    } catch (err) {
-      //TODO add parsing of error to possible retrieve the position of the error?
-      diagnoser.Add(0, `Invalid json: ${JSON.stringify(err)}`, DiagnosticSeverity.error, "json.invalid");
+    } catch (err : any) {
+      if (err.message && err.stack) {
+        diagnoser.Add(0, err.message + "\n" + err.stack, DiagnosticSeverity.error, "json.invalid");
+      }
+      else {
+        //add parsing of error to possible retrieve the position of the error?
+        diagnoser.Add(0, `Invalid json: ${JSON.stringify(err)}`, DiagnosticSeverity.error, "json.invalid");
+      }
+      
     }
 
     return out;
