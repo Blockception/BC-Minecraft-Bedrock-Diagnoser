@@ -4,14 +4,14 @@ import { BehaviorPack } from "bc-minecraft-bedrock-project";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
 import { check_definition_value, education_enabled } from "../../Definitions";
-import { OffsetWord } from '../../../Types/OffsetWord';
+import { Types} from 'bc-minecraft-bedrock-types';
 
 /**
  *
  * @param blockDescriptor
  * @param diagnoser
  */
-export function behaviorpack_check_blockdescriptor(blockDescriptor: OffsetWord, diagnoser: DiagnosticsBuilder): void {
+export function behaviorpack_check_blockdescriptor(blockDescriptor: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
   behaviorpack_check_blockid(blockDescriptor, diagnoser);
   behaviorpack_check_blockstates(blockDescriptor, diagnoser);
 }
@@ -21,7 +21,7 @@ export function behaviorpack_check_blockdescriptor(blockDescriptor: OffsetWord, 
  * @param diagnoser
  * @returns
  */
-export function behaviorpack_check_blockid(blockDescriptor: OffsetWord, diagnoser: DiagnosticsBuilder): void {
+export function behaviorpack_check_blockid(blockDescriptor: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
   let id = Minecraft.Block.getId(blockDescriptor.text);
 
   //Defined in McProject
@@ -60,7 +60,7 @@ export function behaviorpack_check_blockid(blockDescriptor: OffsetWord, diagnose
  * @param diagnoser
  * @returns
  */
-export function behaviorpack_check_blockstates(blockDescriptor: OffsetWord, diagnoser: DiagnosticsBuilder): void {
+export function behaviorpack_check_blockstates(blockDescriptor: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
   //If the block has no states then skip
   if (!blockDescriptor.text.includes("[")) return;
 
@@ -77,7 +77,7 @@ export function behaviorpack_check_blockstates(blockDescriptor: OffsetWord, diag
     //Block has not defined states, but states are being used
 
     diagnoser.Add(
-      blockDescriptor.offset,
+      blockDescriptor,
       `Block: ${block.id} has no defined states, but the block descriptor does: '${blockDescriptor}'`,
       DiagnosticSeverity.error,
       "behaviorpack.block.states.missing"
@@ -100,7 +100,7 @@ export function behaviorpack_check_blockstates(blockDescriptor: OffsetWord, diag
  * @param diagnoser 
  * @returns 
  */
-function check_state(blockDescriptor: OffsetWord, state: Minecraft.BlockState, data: BehaviorPack.Block.Block, diagnoser: DiagnosticsBuilder) {
+function check_state(blockDescriptor: Types.OffsetWord, state: Minecraft.BlockState, data: BehaviorPack.Block.Block, diagnoser: DiagnosticsBuilder) {
   for (var I = 0; I < data.states.length; I++) {
     const stateData = data.states[I];
 
@@ -114,5 +114,5 @@ function check_state(blockDescriptor: OffsetWord, state: Minecraft.BlockState, d
   }
 
   //No state matching found
-  diagnoser.Add(blockDescriptor.offset, `Missing state: '${state.property}' in the block definition: '${data.id}'`, DiagnosticSeverity.error, "behaviorpack.block.states.missing");
+  diagnoser.Add(blockDescriptor, `Missing state: '${state.property}' in the block definition: '${data.id}'`, DiagnosticSeverity.error, "behaviorpack.block.states.missing");
 }

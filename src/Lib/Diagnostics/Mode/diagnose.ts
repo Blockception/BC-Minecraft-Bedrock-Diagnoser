@@ -4,13 +4,13 @@ import { SelectorAttribute } from 'bc-minecraft-bedrock-types/lib/src/Minecraft/
 import { ModeHandler } from "bc-minecraft-bedrock-types/lib/src/Modes/ModeHandler";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
-import { OffsetWord } from "../../Types/OffsetWord";
+import { Types } from "bc-minecraft-bedrock-types";
 
 /**Diagnoses the value as a value in the mode: camerashake
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_camerashake_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_camerashake_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.CameraShake, diagnoser);
 }
 
@@ -18,7 +18,7 @@ export function mode_camerashake_diagnose(value: OffsetWord, diagnoser: Diagnost
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_clone_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_clone_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.Clone, diagnoser);
 }
 
@@ -26,7 +26,7 @@ export function mode_clone_diagnose(value: OffsetWord, diagnoser: DiagnosticsBui
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_difficulty_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_difficulty_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.Difficulty, diagnoser);
 }
 
@@ -34,7 +34,7 @@ export function mode_difficulty_diagnose(value: OffsetWord, diagnoser: Diagnosti
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_fill_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_fill_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.Fill, diagnoser);
 }
 
@@ -42,7 +42,7 @@ export function mode_fill_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuil
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_gamemode_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_gamemode_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.Gamemode, diagnoser);
 }
 
@@ -50,7 +50,7 @@ export function mode_gamemode_diagnose(value: OffsetWord, diagnoser: Diagnostics
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_locatefeature_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_locatefeature_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.LocateFeature, diagnoser);
 }
 
@@ -58,7 +58,7 @@ export function mode_locatefeature_diagnose(value: OffsetWord, diagnoser: Diagno
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_mask_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_mask_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.Mask, diagnoser);
 }
 
@@ -66,7 +66,7 @@ export function mode_mask_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuil
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_mirror_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_mirror_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.Mirror, diagnoser);
 }
 
@@ -74,7 +74,7 @@ export function mode_mirror_diagnose(value: OffsetWord, diagnoser: DiagnosticsBu
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_musicrepeat_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_musicrepeat_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.MusicRepeat, diagnoser);
 }
 
@@ -82,7 +82,7 @@ export function mode_musicrepeat_diagnose(value: OffsetWord, diagnoser: Diagnost
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_oldblock_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_oldblock_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.OldBlock, diagnoser);
 }
 
@@ -90,7 +90,7 @@ export function mode_oldblock_diagnose(value: OffsetWord, diagnoser: Diagnostics
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_operation_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_operation_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.Operation, diagnoser);
 }
 
@@ -98,7 +98,7 @@ export function mode_operation_diagnose(value: OffsetWord, diagnoser: Diagnostic
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_replace_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_replace_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.Replace, diagnoser);
 }
 
@@ -106,7 +106,7 @@ export function mode_replace_diagnose(value: OffsetWord, diagnoser: DiagnosticsB
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_ridefill_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_ridefill_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.RideFill, diagnoser);
 }
 
@@ -114,7 +114,7 @@ export function mode_ridefill_diagnose(value: OffsetWord, diagnoser: Diagnostics
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_riderules_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_riderules_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.RideRules, diagnoser);
 }
 
@@ -122,7 +122,7 @@ export function mode_riderules_diagnose(value: OffsetWord, diagnoser: Diagnostic
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_rotation_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_rotation_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.Rotation, diagnoser);
 }
 
@@ -130,7 +130,7 @@ export function mode_rotation_diagnose(value: OffsetWord, diagnoser: Diagnostics
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_save_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_save_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.Save, diagnoser);
 }
 
@@ -138,9 +138,9 @@ export function mode_save_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuil
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_selectorattribute_diagnose(value: OffsetWord | SelectorAttribute, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_selectorattribute_diagnose(value: Types.OffsetWord | SelectorAttribute, diagnoser: DiagnosticsBuilder): boolean {
   if (SelectorAttribute.is(value)) {
-    value = OffsetWord.create(value.name, value.offset);
+    value = Types.OffsetWord.create(value.name, value.offset);
   }
 
   return mode_generic_diagnose(value, Modes.SelectorAttribute, diagnoser);
@@ -150,7 +150,7 @@ export function mode_selectorattribute_diagnose(value: OffsetWord | SelectorAttr
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_selectortype_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_selectortype_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.SelectorType, diagnoser);
 }
 
@@ -158,7 +158,7 @@ export function mode_selectortype_diagnose(value: OffsetWord, diagnoser: Diagnos
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_slottype_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_slottype_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.SlotType, diagnoser);
 }
 
@@ -166,7 +166,7 @@ export function mode_slottype_diagnose(value: OffsetWord, diagnoser: Diagnostics
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_slotid_diagnose(value: OffsetWord, Com: Command, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_slotid_diagnose(value: Types.OffsetWord, Com: Command, diagnoser: DiagnosticsBuilder): boolean {
   //TODO add data to bedrock types
 
   return false;
@@ -176,7 +176,7 @@ export function mode_slotid_diagnose(value: OffsetWord, Com: Command, diagnoser:
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_structureanimation_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_structureanimation_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.StructureAnimation, diagnoser);
 }
 
@@ -184,7 +184,7 @@ export function mode_structureanimation_diagnose(value: OffsetWord, diagnoser: D
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_teleportrules_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_teleportrules_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.TeleportRules, diagnoser);
 }
 
@@ -192,7 +192,7 @@ export function mode_teleportrules_diagnose(value: OffsetWord, diagnoser: Diagno
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_time_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_time_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.Time, diagnoser);
 }
 
@@ -201,13 +201,13 @@ export function mode_time_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuil
  * @param Mode The collection of values to check against
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-function mode_generic_diagnose(value: OffsetWord, Mode: ModeHandler, diagnoser: DiagnosticsBuilder): boolean {
+function mode_generic_diagnose(value: Types.OffsetWord, Mode: ModeHandler, diagnoser: DiagnosticsBuilder): boolean {
   const m = Mode.get(value.text);
 
   //Mode returned then it is valid
   if (m) return true;
 
   const name = Mode.name.toLowerCase();
-  diagnoser.Add(value.offset, `value: '${value.text}' is not defined in mode: '${name}'`, DiagnosticSeverity.error, `minecraft.mode.${name}.invalid`);
+  diagnoser.Add(value, `value: '${value.text}' is not defined in mode: '${name}'`, DiagnosticSeverity.error, `minecraft.mode.${name}.invalid`);
   return false;
 }

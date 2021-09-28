@@ -99,7 +99,7 @@ function diagnose_molang_variable_using(userid : string, using: DefinedUsing<str
     //Vanilla provides?
     if (InternalIdentifiable.has(GetNamespace(owner)?.Variables ?? [], check)) continue;
 
-    diagnoser.Add(userid, `Missing molang defintion: variable.${check}\n\tUsed by: ${userid}\n\tShould be defined by ${definerid}`, DiagnosticSeverity.error, `molang.variable.missing`);
+    diagnoser.Add(userid, `Missing variable molang defintion: variable.${check}\n\tUsed by: ${userid}\n\tShould be defined by ${definerid}`, DiagnosticSeverity.error, `molang.variable.missing`);
   }
 }
 

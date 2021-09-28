@@ -1,9 +1,9 @@
 import { Text } from 'bc-minecraft-bedrock-project';
 import { DiagnosticsBuilder, DiagnosticSeverity } from '../../../Types/DiagnosticsBuilder/include';
-import { OffsetWord } from '../../../Types/OffsetWord';
+import { Types} from 'bc-minecraft-bedrock-types';
 import { check_definition_value } from '../../Definitions';
 
-export function behaviorpack_functions_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder) : boolean {
+export function behaviorpack_functions_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder) : boolean {
   const data = diagnoser.context.getCache();
   const id = Text.UnQuote(value.text);
 

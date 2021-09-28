@@ -1,10 +1,10 @@
 
 import { MinecraftData } from 'bc-minecraft-bedrock-vanilla-data';
 import { DiagnosticsBuilder, DiagnosticSeverity } from '../../../Types/DiagnosticsBuilder/include';
-import { OffsetWord } from "../../../Types/OffsetWord";
+import { Types } from "bc-minecraft-bedrock-types";
 import { check_definition_value, education_enabled } from '../../Definitions';
 
-export function behaviorpack_item_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function behaviorpack_item_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   let id = value.text;
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.item, id, diagnoser)) return true;
@@ -30,6 +30,6 @@ export function behaviorpack_item_diagnose(value: OffsetWord, diagnoser: Diagnos
   }
 
   //Nothing then report error
-  diagnoser.Add(id, `Cannot find behaviorpack item definition: ${id}`, DiagnosticSeverity.error, "behaviorpack.item.missing");
+  diagnoser.Add(value, `Cannot find behaviorpack item definition: ${id}`, DiagnosticSeverity.error, "behaviorpack.item.missing");
   return false;
 }

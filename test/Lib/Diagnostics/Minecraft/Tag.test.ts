@@ -1,8 +1,7 @@
-import { ProjectData } from "bc-minecraft-bedrock-project";
 import { GeneralInfo } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/General/Types/GeneralInfo";
 import { Location } from "bc-minecraft-bedrock-types/lib/src/Types/Location";
 import { minecraft_tag_diagnose } from "../../../../src/Lib/Diagnostics/Minecraft/Tag";
-import { OffsetWord } from "../../../../src/Lib/Types/OffsetWord";
+import { Types } from "bc-minecraft-bedrock-types";
 import { TestDiagnoser } from "../../../diagnoser.test";
 
 describe("Tag", () => {
@@ -17,20 +16,20 @@ describe("Tag", () => {
       GeneralInfo.create("Attack", Location.create(""), "main tickingarea"),
     ]);
 
-    minecraft_tag_diagnose(OffsetWord.create("init"), B);
-    minecraft_tag_diagnose(OffsetWord.create("Flying"), B);
-    minecraft_tag_diagnose(OffsetWord.create("Follow"), B);
-    minecraft_tag_diagnose(OffsetWord.create("Attack"), B);
+    minecraft_tag_diagnose(Types.OffsetWord.create("init"), B);
+    minecraft_tag_diagnose(Types.OffsetWord.create("Flying"), B);
+    minecraft_tag_diagnose(Types.OffsetWord.create("Follow"), B);
+    minecraft_tag_diagnose(Types.OffsetWord.create("Attack"), B);
 
     B.expectEmpty();
   });
 
   it("diagnose with errors", () => {
     const B = new TestDiagnoser();
-    minecraft_tag_diagnose(OffsetWord.create("main"), B);
-    minecraft_tag_diagnose(OffsetWord.create("calc"), B);
-    minecraft_tag_diagnose(OffsetWord.create("spawn"), B);
-    minecraft_tag_diagnose(OffsetWord.create("Spawn"), B);
+    minecraft_tag_diagnose(Types.OffsetWord.create("main"), B);
+    minecraft_tag_diagnose(Types.OffsetWord.create("calc"), B);
+    minecraft_tag_diagnose(Types.OffsetWord.create("spawn"), B);
+    minecraft_tag_diagnose(Types.OffsetWord.create("Spawn"), B);
 
     B.expectAmount(4);
   });

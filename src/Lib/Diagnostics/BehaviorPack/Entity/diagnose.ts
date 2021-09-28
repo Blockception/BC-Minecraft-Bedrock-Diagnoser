@@ -2,7 +2,7 @@ import { Command, ParameterType } from "bc-minecraft-bedrock-command";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
-import { OffsetWord } from "../../../Types/OffsetWord";
+import { Types } from "bc-minecraft-bedrock-types";
 import { check_definition_value, education_enabled } from "../../Definitions";
 
 /**Checks if the entities exists in the project or in vanilla, if not then a bug is reported
@@ -10,34 +10,11 @@ import { check_definition_value, education_enabled } from "../../Definitions";
  * @param diagnoser
  * @returns
  */
-export function behaviorpack_entityid_diagnose(id: OffsetWord, diagnoser: DiagnosticsBuilder): void {
-  //Defined in McProject
-  if (check_definition_value(diagnoser.project.definitions.entity, id.text, diagnoser)) return;
-
-  const data = diagnoser.context.getCache();
-
-  //Project has entity
-  if (data.hasEntity(id.text)) return;
-
-  const edu = education_enabled(diagnoser);
-
-  //Vanilla has entity
-  if (MinecraftData.BehaviorPack.hasEntity(id.text, edu)) return;
-
-  //Nothing then report error
-  diagnoser.Add(id.offset, `Cannot find entity definition: ${id}`, DiagnosticSeverity.error, "behaviorpack.entity.missing");
-}
-
-/**Checks if the entities exists in the project or in vanilla, if not then a bug is reported
- * @param id
- * @param diagnoser
- * @returns
- */
- export function behaviorpack_entity_spawnegg_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): void {
-  const id = value.text.replace('_spawn_egg', "");
+export function behaviorpack_entityid_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
+  const id = value.text;
 
   //Defined in McProject
-  if (check_definition_value(diagnoser.project.definitions.entity, value.text, diagnoser)) return;
+  if (check_definition_value(diagnoser.project.definitions.entity, id, diagnoser)) return;
 
   const data = diagnoser.context.getCache();
 
@@ -50,7 +27,18 @@ export function behaviorpack_entityid_diagnose(id: OffsetWord, diagnoser: Diagno
   if (MinecraftData.BehaviorPack.hasEntity(id, edu)) return;
 
   //Nothing then report error
-  diagnoser.Add(value.text, `Cannot find entity for spawn egg definition: ${id}`, DiagnosticSeverity.error, "behaviorpack.entity.missing");
+  diagnoser.Add(value.offset, `Cannot find entity definition: ${id}`, DiagnosticSeverity.error, "behaviorpack.entity.missing");
+}
+
+/**Checks if the entities exists in the project or in vanilla, if not then a bug is reported
+ * @param id
+ * @param diagnoser
+ * @returns
+ */
+ export function behaviorpack_entity_spawnegg_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
+  const id = value.text.replace('_spawn_egg', "");
+
+  behaviorpack_entityid_diagnose({offset:value.offset,text:id}, diagnoser);
 }
 
 /**Checks if the event is defined on the correct entities
@@ -58,7 +46,7 @@ export function behaviorpack_entityid_diagnose(id: OffsetWord, diagnoser: Diagno
  * @param builder
  * @param Com
  */
-export function behaviorpack_entity_event_diagnose(data: OffsetWord, diagnoser: DiagnosticsBuilder, Com: Command): void {  
+export function behaviorpack_entity_event_diagnose(data: Types.OffsetWord, diagnoser: DiagnosticsBuilder, Com: Command): void {  
   const edu = education_enabled(diagnoser);
   const matches = Com.getBestMatch(edu);
 

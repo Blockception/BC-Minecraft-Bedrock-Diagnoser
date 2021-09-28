@@ -1,6 +1,6 @@
 import { DiagnosticsBuilder } from "../../../../main";
-import { OffsetWord } from "../../../Types/OffsetWord";
+import { Types } from "bc-minecraft-bedrock-types";
 
-export function resourcepack_particle_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): void {
+export function resourcepack_particle_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
   //TODO
 }

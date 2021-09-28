@@ -6,7 +6,7 @@ import { education_enabled } from "../Definitions";
 import { animation_controller_diagnose_implementation } from "./Animation Controllers/diagnostics";
 import { animation_diagnose_implementation } from "./Animation/diagnostics";
 import { OwnerType } from '../Molang/diagnostics';
-import { OffsetWord } from '../../Types/OffsetWord';
+import { Types} from 'bc-minecraft-bedrock-types';
 
 export function animation_or_controller_diagnose_implementation(id: string, data: MolangSet, ownerid : string, owner: OwnerType, diagnoser: DiagnosticsBuilder): void {
   switch (is_animation_or_controller(id, diagnoser)) {
@@ -21,7 +21,7 @@ export function animation_or_controller_diagnose_implementation(id: string, data
   }
 }
 
-export function animation_or_controller_diagnose(id: OffsetWord, diagnoser: DiagnosticsBuilder): void {
+export function animation_or_controller_diagnose(id: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
   switch (is_animation_or_controller(id.text, diagnoser)) {
     case anim_or_contr.controller:
     case anim_or_contr.animation:
@@ -29,12 +29,12 @@ export function animation_or_controller_diagnose(id: OffsetWord, diagnoser: Diag
 
     case anim_or_contr.neither:
 
-      diagnoser.Add(id.text, `Cannot find animation / animation controller: ${id}`, DiagnosticSeverity.error, "mcfunction.anim_or_controller.missing");
+      diagnoser.Add(id, `Cannot find animation / animation controller: ${id}`, DiagnosticSeverity.error, "mcfunction.anim_or_controller.missing");
       return;
   }
 }
 
-export function animation_reference_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): void {
+export function animation_reference_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
   const data = diagnoser.context.getCache();
   const id = value.text;
 
@@ -54,7 +54,7 @@ export function animation_reference_diagnose(value: OffsetWord, diagnoser: Diagn
  
   if (out) return;
 
-  diagnoser.Add(value.text, `Cannot find animation / animation controller: ${value.text}`, DiagnosticSeverity.error, "mcfunction.anim_or_controller.missing");
+  diagnoser.Add(value, `Cannot find animation / animation controller: ${value.text}`, DiagnosticSeverity.error, "mcfunction.anim_or_controller.missing");
 }
 
 

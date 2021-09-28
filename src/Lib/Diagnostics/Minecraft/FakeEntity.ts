@@ -1,8 +1,8 @@
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Lib/Types/DiagnosticsBuilder/include";
-import { OffsetWord } from "../../Types/OffsetWord";
+import { Types } from "bc-minecraft-bedrock-types";
 import { Text } from 'bc-minecraft-bedrock-project';
 
-export function minecraft_fakentity_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): void {
+export function minecraft_fakentity_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
   const data = diagnoser.context.getCache();
   const id = Text.UnQuote(value.text);
 
@@ -10,5 +10,5 @@ export function minecraft_fakentity_diagnose(value: OffsetWord, diagnoser: Diagn
   if (data.General.fakeEntities.has(id)) return;
 
   //Nothing then report error
-  diagnoser.Add(value.offset, `Cannot find fake entity definition: ${id}`, DiagnosticSeverity.error, "minecraft.fakeentity.missing");
+  diagnoser.Add(value, `Cannot find fake entity definition: ${id}`, DiagnosticSeverity.error, "minecraft.fakeentity.missing");
 }

@@ -1,6 +1,6 @@
 import { ParameterType } from 'bc-minecraft-bedrock-command';
 import { minecraft_selector_diagnose } from '../../../../src/Lib/Diagnostics/Minecraft/Selector';
-import { OffsetWord } from "../../../../src/Lib/Types/OffsetWord";
+import { Types } from "bc-minecraft-bedrock-types";
 import { TestDiagnoser } from "../../../diagnoser.test";
 
 describe("Selector", () => {
@@ -10,7 +10,7 @@ describe("Selector", () => {
     //Loop over all vanilla versions
     minecraft_selector_diagnose(
       {required:false,text:"",type:ParameterType.selector}, 
-      OffsetWord.create("@e[type=!player,type=!minecraft:sheep]"),
+      Types.OffsetWord.create("@e[type=!player,type=!minecraft:sheep]"),
       B);
 
     B.expectEmpty();
@@ -22,7 +22,7 @@ describe("Selector", () => {
     //Loop over all vanilla versions
     minecraft_selector_diagnose(
       {required:false,text:"",type:ParameterType.selector}, 
-      OffsetWord.create("@e[type=!player,type=!minecraft:sheep,type=minecraft:zombie]"),
+      Types.OffsetWord.create("@e[type=!player,type=!minecraft:sheep,type=minecraft:zombie]"),
       B);
 
     B.expectEmpty();
@@ -34,7 +34,7 @@ describe("Selector", () => {
     //Loop over all vanilla versions
     minecraft_selector_diagnose(
       {required:false,text:"",type:ParameterType.selector}, 
-      OffsetWord.create("@e[m=!1,m=!2]"),
+      Types.OffsetWord.create("@e[m=!1,m=!2]"),
       B);
 
     B.expectEmpty();
@@ -46,7 +46,7 @@ describe("Selector", () => {
     //Loop over all vanilla versions
     minecraft_selector_diagnose(
       {required:false,text:"",type:ParameterType.selector}, 
-      OffsetWord.create("@e[m=!1,m=!2,m=0]"),
+      Types.OffsetWord.create("@e[m=!1,m=!2,m=0]"),
       B);
 
     B.expectEmpty();

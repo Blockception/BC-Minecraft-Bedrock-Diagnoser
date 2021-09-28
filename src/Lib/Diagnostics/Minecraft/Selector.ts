@@ -3,7 +3,7 @@ import { Text } from 'bc-minecraft-bedrock-project';
 import { Minecraft } from 'bc-minecraft-bedrock-types';
 import { Selector, SelectorAttribute } from 'bc-minecraft-bedrock-types/lib/src/Minecraft/Selector';
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Lib/Types/DiagnosticsBuilder/include";
-import { OffsetWord } from "../../Types/OffsetWord";
+import { Types } from "bc-minecraft-bedrock-types";
 import { check_definition_value } from '../Definitions';
 import { general_range_float_diagnose, general_range_integer_diagnose } from '../General/Range';
 import { mode_selectorattribute_diagnose } from '../Mode/diagnose';
@@ -11,7 +11,7 @@ import { minecraft_coordinate_diagnose } from './Coordinate';
 import { minecraft_name_diagnose } from './Name';
 import { minecraft_objectives_diagnose } from './Objective';
 
-export function minecraft_selector_diagnose(pattern: ParameterInfo, value: OffsetWord, diagnoser: DiagnosticsBuilder) {
+export function minecraft_selector_diagnose(pattern: ParameterInfo, value: Types.OffsetWord, diagnoser: DiagnosticsBuilder) {
   const sel = value.text;
 
   //Is a selector?
@@ -25,12 +25,12 @@ export function minecraft_selector_diagnose(pattern: ParameterInfo, value: Offse
 
   //Fake players have been banned
   if (pattern.options?.allowFakePlayers === false) {
-    diagnoser.Add(value.offset, "No fake players / names allowed", DiagnosticSeverity.error, "minecraft.selector.invalid");
+    diagnoser.Add(value, "No fake players / names allowed", DiagnosticSeverity.error, "minecraft.selector.invalid");
     return;
   }
 
   if (pattern.options?.playerOnly === true) {
-    diagnoser.Add(value.offset, "Only players selector allowed to be used", DiagnosticSeverity.error, "minecraft.selector.invalid");
+    diagnoser.Add(value, "Only players selector allowed to be used", DiagnosticSeverity.error, "minecraft.selector.invalid");
     return;
   }
 
@@ -43,7 +43,7 @@ export function minecraft_selector_diagnose(pattern: ParameterInfo, value: Offse
   if (data.General.fakeEntities.has(name)) return;
 
   //Found nothing then report
-  diagnoser.Add(value.offset, `Cannot find fake entity definition or name for: ${name}`, DiagnosticSeverity.warning, "minecraft.name.missing");
+  diagnoser.Add(value, `Cannot find fake entity definition or name for: ${name}`, DiagnosticSeverity.warning, "minecraft.name.missing");
 }
 
 /**
@@ -52,7 +52,7 @@ export function minecraft_selector_diagnose(pattern: ParameterInfo, value: Offse
  * @param value 
  * @param diagnoser 
  */
-function minecraft_selector_diagnose_hard(pattern: ParameterInfo, value: OffsetWord, diagnoser: DiagnosticsBuilder) {
+function minecraft_selector_diagnose_hard(pattern: ParameterInfo, value: Types.OffsetWord, diagnoser: DiagnosticsBuilder) {
   const selector = Minecraft.Selector.parse(value.text, value.offset);
 
   //If the selector is only meant to be aimed at player warn the user
@@ -75,14 +75,14 @@ function minecraft_selector_diagnose_hard(pattern: ParameterInfo, value: OffsetW
   selector.scores.forEach(score => minecraft_selector_score_attribute_diagnose(score, diagnoser));
 }
 
-function selector_scores_duplicate(value : OffsetWord, diagnoser : DiagnosticsBuilder) : void {
+function selector_scores_duplicate(value : Types.OffsetWord, diagnoser : DiagnosticsBuilder) : void {
   const firstIndex = value.text.indexOf('scores={');
   if (firstIndex < 0) return;
 
   const secondindex = value.text.indexOf('scores={', firstIndex + 5);
   if (secondindex < 0) return;
 
-  diagnoser.Add(value.offset, "Selector has multiple scores definitions. Only one is allowed", DiagnosticSeverity.error, "minecraft.selector.scores.duplicate");
+  diagnoser.Add(value, "Selector has multiple scores definitions. Only one is allowed", DiagnosticSeverity.error, "minecraft.selector.scores.duplicate");
 }
 
 /**
@@ -99,7 +99,7 @@ function minecraft_selector_attribute_diagnose(attr: SelectorAttribute, sel: Sel
   const value_offset = attr.offset + attr.name.length + 1;
   const not = attr.value.startsWith("!");
   const value = not ? attr.value.substring(1) : attr.value;
-  const value_word = OffsetWord.create(value, value_offset);
+  const value_word = Types.OffsetWord.create(value, value_offset);
 
   switch (attr.name) {
     case "x":
@@ -151,10 +151,10 @@ function minecraft_selector_score_attribute_diagnose(attr: SelectorAttribute, di
   const value = not ? attr.value.substring(1) : attr.value;
 
   //Check objective references
-  minecraft_objectives_diagnose(OffsetWord.create(attr.name, attr.offset), diagnoser);
+  minecraft_objectives_diagnose(Types.OffsetWord.create(attr.name, attr.offset), diagnoser);
 
   //Check range value  
-  general_range_integer_diagnose(OffsetWord.create(value, value_offset), diagnoser);
+  general_range_integer_diagnose(Types.OffsetWord.create(value, value_offset), diagnoser);
 }
 
 /**
@@ -163,9 +163,9 @@ function minecraft_selector_score_attribute_diagnose(attr: SelectorAttribute, di
  * @param selector
  * @param receiver
  */
-function selectorattribute_coordinate(value: OffsetWord, diagnoser: DiagnosticsBuilder): void {
+function selectorattribute_coordinate(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
   if (value.text.startsWith("^"))
-    diagnoser.Add(value.offset, 'Selector attribute coordinate cannot be local coordinates types, only relative or absolute', DiagnosticSeverity.error, "selector.coordinate.invalid");
+    diagnoser.Add(value, 'Selector attribute coordinate cannot be local coordinates types, only relative or absolute', DiagnosticSeverity.error, "selector.coordinate.invalid");
 
   minecraft_coordinate_diagnose(value, diagnoser)
 }

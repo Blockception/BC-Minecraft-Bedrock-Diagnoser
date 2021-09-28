@@ -49,7 +49,7 @@ import { minecraft_tickingarea_diagnose } from "../../Minecraft/Tickingarea";
 import { resourcepack_particle_diagnose } from "../../ResourcePack/Particle/diagnose";
 import { resourcepack_sound_diagnose } from "../../ResourcePack/Sounds Definitions/diagnose";
 import { animation_or_controller_diagnose, animation_reference_diagnose } from '../../ResourcePack/anim or controller';
-import { OffsetWord } from '../../../Types/OffsetWord';
+import { Types} from 'bc-minecraft-bedrock-types';
 
 /**
  *
@@ -149,7 +149,7 @@ function mcfunction_commandcheck(command: Command, diagnoser: DiagnosticsBuilder
 }
 
 /**Switch data*/
-const ParameterDiagnostics: { [key: number]: (value: OffsetWord, diagnoser: DiagnosticsBuilder) => void | boolean } = {
+const ParameterDiagnostics: { [key: number]: (value: Types.OffsetWord, diagnoser: DiagnosticsBuilder) => void | boolean } = {
   [ParameterType.animation]: animation_reference_diagnose,
   [ParameterType.block]: behaviorpack_check_blockdescriptor,
   [ParameterType.blockStates]: behaviorpack_check_blockstates,

@@ -1,8 +1,8 @@
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Lib/Types/DiagnosticsBuilder/include";
-import { OffsetWord } from "../../Types/OffsetWord";
+import { Types } from "bc-minecraft-bedrock-types";
 import { check_definition_value } from "../Definitions";
 
-export function minecraft_tag_diagnose(value: OffsetWord, diagnoser: DiagnosticsBuilder): void {
+export function minecraft_tag_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
   if(diagnoser.project.attributes["diagnostic.tag"] === "false") return;
 
   const id = value.text;
@@ -15,5 +15,5 @@ export function minecraft_tag_diagnose(value: OffsetWord, diagnoser: Diagnostics
   if (data.General.tags.has(id)) return;
 
   //Nothing then report error
-  diagnoser.Add(value.offset, `Cannot find tag definition: ${id}`, DiagnosticSeverity.error, "minecraft.tag.missing");
+  diagnoser.Add(value, `Cannot find tag definition: ${id}`, DiagnosticSeverity.error, "minecraft.tag.missing");
 }
