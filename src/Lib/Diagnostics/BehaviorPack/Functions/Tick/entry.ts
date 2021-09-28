@@ -15,7 +15,7 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
 
   data.values?.forEach(path => {
     if (!pack.functions.has(path)) {
-      diagnoser.Add(path, "Cannot find mcfunction: " + path, DiagnosticSeverity.error, "mcfunction.missing");
+      diagnoser.Add(path, "Cannot find mcfunction: " + path, DiagnosticSeverity.error, "behaviorpack.mcfunction.missing");
     }
   })
 }
