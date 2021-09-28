@@ -1,5 +1,6 @@
 import { Internal, Map } from "bc-minecraft-bedrock-project";
 import { State } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/BehaviorPack/AnimationController";
+import { Defined } from 'bc-minecraft-bedrock-project/node_modules/bc-minecraft-molang';
 import { Types } from "bc-minecraft-bedrock-types";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
@@ -65,4 +66,15 @@ function CheckTransition(controller: string, Transitions: Types.Conditional[], S
       diagnoser.Add(controller + "/states/" + State, `missing state defined by transition: ${State}`, DiagnosticSeverity.error, "animation_controller.state.missing");
     }
   }
+}
+
+
+
+export function general_animation_controllers_implementation(controller : animation_controller, animations : Defined<string>, diagnoser : DiagnosticsBuilder) {
+  //for each state
+  Map.forEach(controller.states, (state)=>{
+    Types.Conditional.forEach(state, (anim_id, value)=>{
+
+    });
+  });
 }
