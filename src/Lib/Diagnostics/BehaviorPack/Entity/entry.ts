@@ -3,9 +3,9 @@ import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/Diagnostic
 import { Json } from "../../Json/Json";
 import { behaviorpack_entity_components_dependencies } from "./components";
 import { animation_or_controller_diagnose_implementation } from "../anim or controller";
-import { MolangFullSet } from "bc-minecraft-molang";
+import { DefinedUsing, MolangFullSet } from "bc-minecraft-molang";
 import { Types } from "bc-minecraft-bedrock-types";
-import { diagnose_molang } from '../../Molang/diagnostics';
+import { diagnose_molang } from "../../Molang/diagnostics";
 
 /**Diagnoses the given document as an bp entity
  * @param doc The text document to diagnose
@@ -27,6 +27,18 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
   const MolangData = MolangFullSet.harvest(container);
   const id = container.description.identifier;
 
+  const owner = {
+    id: id,
+    molang: MolangData,
+    animations: DefinedUsing.create<string>(),
+  };
+
+  //Convert animations / controllers
+  Types.Definition.forEach(container.description.animations, (ref, anim_id) => {
+    owner.animations.defined.push(ref);
+    owner.animations.using.push(anim_id);
+  });
+
   //Check animations / animation controllers
-  Types.Definition.forEach(container.description.animations, (reference, id) => animation_or_controller_diagnose_implementation(id, MolangData, id, "entity", diagnoser));
+  owner.animations.using.forEach((anim_id) => animation_or_controller_diagnose_implementation(id, owner, "entity", diagnoser));
 }

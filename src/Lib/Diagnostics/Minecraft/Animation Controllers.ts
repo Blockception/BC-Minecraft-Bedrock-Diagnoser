@@ -1,13 +1,15 @@
-import { Internal, Map } from "bc-minecraft-bedrock-project";
+import { BehaviorPack, Internal, Map, ResourcePack } from "bc-minecraft-bedrock-project";
 import { State } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/BehaviorPack/AnimationController";
-import { Defined, MolangSet } from "bc-minecraft-bedrock-project/node_modules/bc-minecraft-molang";
+import { AnimationCarrier, MolangCarrier } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier";
+import { Defined, MolangFullSet, MolangSet } from "bc-minecraft-bedrock-project/node_modules/bc-minecraft-molang";
 import { Types } from "bc-minecraft-bedrock-types";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
+import { diagnose_molang_implementation, OwnerType } from '../Molang/diagnostics';
 
 export type animation_controllers = Internal.BehaviorPack.AnimationControllers | Internal.ResourcePack.AnimationControllers;
 export type animation_controller = Internal.BehaviorPack.AnimationController | Internal.ResourcePack.AnimationController;
-export type animationsOwner = Types.Identifiable & { molang : MolangSet, animations : Defined<string> }
+export type animationsOwner = Types.Identifiable & MolangCarrier<MolangSet> & AnimationCarrier<Defined<String>>;
 
 /**
  *
@@ -75,21 +77,24 @@ function CheckTransition(controller: string, Transitions: Types.Conditional[], S
 }
 
 export function general_animation_controllers_implementation(
-  controller: animation_controller,
-  user : animationsOwner,
+  controller: ResourcePack.AnimationController.AnimationController | BehaviorPack.AnimationController.AnimationController,
+  user: Types.Identifiable & AnimationCarrier<Defined<string>> & MolangCarrier<MolangSet | MolangFullSet>,
+  ownerType : OwnerType,
   diagnoser: DiagnosticsBuilder
 ) {
-  //for each state
-  Map.forEach(controller.states, (state) => {
-    Types.Conditional.forEach(state.animations, (anim_id, value) => {
-      if (user.animations.defined.includes(anim_id)) return;
 
-      diagnoser.Add(
-        `${user.id}/animations`,
-        `Animation controller is using: '${anim_id}' but ${user.id} has nothing defined that matches\nMinecraft will still run but might return null errors on the animation`,
-        DiagnosticSeverity.warning,
-        "minecraft.animation_controller.animation.undefined"
-      );
-    });
-  });
+  //for each animation
+  controller.animations.using.forEach(anim_id=>{
+    if (user.animations.defined.includes(anim_id)) return;
+
+    diagnoser.Add(
+      `${user.id}/animations`,
+      `Animation controller is using: '${anim_id}' but ${user.id} has nothing defined that matches\nMinecraft will still run but might return null errors on the animation`,
+      DiagnosticSeverity.warning,
+      "minecraft.animation_controller.animation.undefined"
+    );
+  })
+
+  //Molang
+  diagnose_molang_implementation(controller, user, ownerType, diagnoser);
 }

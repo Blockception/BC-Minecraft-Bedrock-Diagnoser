@@ -1,15 +1,22 @@
+import { MolangCarrier } from 'bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier';
 import { Types } from 'bc-minecraft-bedrock-types';
 import { Defined, DefinedUsing, Molang, MolangData, MolangFullSet, MolangSet, Using } from "bc-minecraft-molang";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
 
 export type OwnerType = "block" | "entity" | "item" | "feature" | "particle" | "animation" | "animation_controller"| "render_controller";
+type MCarrier = Types.Identifiable & MolangCarrier<MolangSet | MolangFullSet>
 
 /**Diagnoses the given molang sets, the using party checks upon the definer if they have setup properly
  * @param using The set of molang data that is being used
  * @param definer The set of molang data that is defined
  * @param diagnoser The diagnoser to report to*/
-export function diagnose_molang_implementation(userid : string, using: MolangSet | MolangFullSet, definerid: string, definer: MolangSet | MolangFullSet, owner: OwnerType, diagnoser: DiagnosticsBuilder): void {
+export function diagnose_molang_implementation(user : MCarrier, owner : MCarrier, ownerType: OwnerType, diagnoser: DiagnosticsBuilder): void {
+  const userid = user.id;
+  const using = user.molang;
+  const definer = owner.molang;
+  const definerid = owner.id
+    
   //Is full set?
   if (MolangFullSet.isEither(using)) {
     //Upgrade if nesscary and check
@@ -21,9 +28,8 @@ export function diagnose_molang_implementation(userid : string, using: MolangSet
   }
 
   //Check variable vs variables and such
-  diagnose_molang_variable_using(userid, using.variables, definerid, definer.variables, diagnoser, owner);
-  diagnose_molang_temp_using(using.temps, definer.temps, diagnoser, owner);
-
+  diagnose_molang_variable_using(userid, using.variables, definerid, definer.variables, diagnoser, ownerType);
+  diagnose_molang_temp_using(using.temps, definer.temps, diagnoser, ownerType);
 }
 
 /**Diagnoses the given molang sets, the using party checks upon the definer if they have setup properly

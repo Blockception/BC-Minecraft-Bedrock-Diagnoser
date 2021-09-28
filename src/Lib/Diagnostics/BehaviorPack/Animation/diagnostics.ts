@@ -1,4 +1,6 @@
-import { MolangSet } from "bc-minecraft-molang";
+import { AnimationCarrier, MolangCarrier } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier";
+import { Types } from "bc-minecraft-bedrock-types";
+import { DefinedUsing, MolangFullSet, MolangSet } from "bc-minecraft-molang";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
 import { diagnose_molang_implementation, OwnerType } from "../../Molang/diagnostics";
@@ -9,9 +11,19 @@ import { diagnose_molang_implementation, OwnerType } from "../../Molang/diagnost
  * @param data
  * @param diagnoser
  */
-export function animation_diagnose_implementation(id: string, data: MolangSet, ownerid: string, owner: OwnerType, diagnoser: DiagnosticsBuilder): void {
-  if (has_animation(id, diagnoser)) {
-    molang_animation(id, data, ownerid, owner, diagnoser);
+export function animation_diagnose_implementation(
+  anim_id: string,
+  user: Types.Identifiable & MolangCarrier<MolangSet | MolangFullSet> & AnimationCarrier<DefinedUsing<string>>,
+  ownerType: OwnerType,
+  diagnoser: DiagnosticsBuilder
+): void {
+  if (has_animation(anim_id, diagnoser)) {
+    //Project has animation
+    const anim = diagnoser.context.getCache().BehaviorPacks.animations.get(anim_id);
+
+    if (!anim) return;
+
+    diagnose_molang_implementation(anim, user, ownerType, diagnoser);
   }
 }
 
@@ -30,21 +42,4 @@ export function has_animation(id: string, diagnoser: DiagnosticsBuilder): boolea
   //Nothing then report error
   diagnoser.Add(`"${id}"`, `Cannot find behaviorpack animation: ${id}`, DiagnosticSeverity.error, "behaviorpack.animation.missing");
   return false;
-}
-
-/**
- *
- * @param id
- * @param data
- * @param diagnoser
- */
-export function molang_animation(id: string, data: MolangSet, ownerid: string, owner: OwnerType, diagnoser: DiagnosticsBuilder): void {
-  const cache = diagnoser.context.getCache();
-
-  //Project has render controller
-  const anim = cache.BehaviorPacks.animations.get(id);
-
-  if (!anim) return;
-
-  diagnose_molang_implementation(id, anim.molang, ownerid, data, owner, diagnoser);
 }

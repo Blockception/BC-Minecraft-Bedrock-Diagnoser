@@ -1,9 +1,12 @@
-import { MolangSet } from "bc-minecraft-molang";
+import { DefinedUsing, MolangFullSet, MolangSet } from "bc-minecraft-molang";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
 import { education_enabled } from "../../Definitions";
-import { diagnose_molang_implementation, OwnerType } from "../../Molang/diagnostics";
+import { OwnerType } from "../../Molang/diagnostics";
+import { Types } from "bc-minecraft-bedrock-types";
+import { AnimationCarrier, MolangCarrier } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier";
+import { general_animation_controllers_implementation } from '../../Minecraft/Animation Controllers';
 
 /**
  *
@@ -11,9 +14,19 @@ import { diagnose_molang_implementation, OwnerType } from "../../Molang/diagnost
  * @param data
  * @param diagnoser
  */
-export function animation_controller_diagnose_implementation(id: string, data: MolangSet, ownerid : string, owner: OwnerType, diagnoser: DiagnosticsBuilder): void {
-  if (has_animation_controller(id, diagnoser)) {
-    molang_animation_controller(id, data, ownerid, owner, diagnoser);
+export function animation_controller_diagnose_implementation(
+  controllerid: string,
+  user: Types.Identifiable & MolangCarrier<MolangSet | MolangFullSet> & AnimationCarrier<DefinedUsing<string>>,
+  ownerType: OwnerType,
+  diagnoser: DiagnosticsBuilder
+): void {
+  
+  if (has_animation_controller(controllerid, diagnoser)) {
+    const controller = diagnoser.context.getCache().ResourcePacks.animation_controllers.get(controllerid);
+
+    if (!controller) return;
+
+    general_animation_controllers_implementation(controller, user, ownerType, diagnoser);
   }
 }
 
@@ -35,23 +48,11 @@ export function has_animation_controller(id: string, diagnoser: DiagnosticsBuild
   if (MinecraftData.ResourcePack.hasAnimationController(id, edu)) return true;
 
   //Nothing then report error
-  diagnoser.Add(`"${id}"`, `Cannot find resourcepack animation controller: ${id}`, DiagnosticSeverity.error, "resourcepack.animation_controller.missing");
+  diagnoser.Add(
+    `"${id}"`,
+    `Cannot find resourcepack animation controller: ${id}`,
+    DiagnosticSeverity.error,
+    "resourcepack.animation_controller.missing"
+  );
   return false;
-}
-
-/**
- *
- * @param id
- * @param data
- * @param diagnoser
- */
-export function molang_animation_controller(id: string, data: MolangSet, ownerid: string, owner: OwnerType, diagnoser: DiagnosticsBuilder): void {
-  const cache = diagnoser.context.getCache();
-
-  //Project has animation controller
-  const anim = cache.ResourcePacks.animation_controllers.get(id);
-
-  if (!anim) return;
-
-  diagnose_molang_implementation(id, anim.molang, ownerid, data, owner, diagnoser);
 }

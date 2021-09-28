@@ -1,9 +1,10 @@
-import { MolangFullSet } from "bc-minecraft-molang";
-import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
+import { DefinedUsing, MolangFullSet, MolangSet } from "bc-minecraft-molang";
+import { MinecraftData, Types } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
 import { education_enabled } from "../../Definitions";
 import { diagnose_molang_implementation, OwnerType } from '../../Molang/diagnostics';
+import { AnimationCarrier, MolangCarrier } from 'bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier';
 
 /**
  *
@@ -11,9 +12,21 @@ import { diagnose_molang_implementation, OwnerType } from '../../Molang/diagnost
  * @param data
  * @param diagnoser
  */
-export function render_controller_diagnose_implementation(id: string, data: MolangFullSet, ownerid : string, owner : OwnerType, diagnoser: DiagnosticsBuilder): void {
-  if (has_render_controller(id, diagnoser)) {
-    molang_render_controller(id, data, ownerid, owner, diagnoser);
+export function render_controller_diagnose_implementation(  
+  controllerid: string,
+  user: Types.Identifiable & MolangCarrier<MolangSet | MolangFullSet> & AnimationCarrier<DefinedUsing<string>>,
+  ownerType: OwnerType,
+  diagnoser: DiagnosticsBuilder): void {
+
+  if (has_render_controller(controllerid, diagnoser)) {
+    const cache = diagnoser.context.getCache();
+
+    //Project has render controller
+    const rp = cache.ResourcePacks.render_controllers.get(controllerid);
+  
+    if (!rp) return;
+  
+    diagnose_molang_implementation(rp, user, ownerType, diagnoser);
   }
 }
 
@@ -37,21 +50,4 @@ export function has_render_controller(id: string, diagnoser: DiagnosticsBuilder)
   //Nothing then report error
   diagnoser.Add(id, `Cannot find render controller: ${id}`, DiagnosticSeverity.error, "resourcepack.render_controller.missing");
   return false;
-}
-
-/**
- *
- * @param id
- * @param data
- * @param diagnoser
- */
-export function molang_render_controller(id: string, data: MolangFullSet, ownerid : string, owner : OwnerType, diagnoser: DiagnosticsBuilder): void {
-  const cache = diagnoser.context.getCache();
-
-  //Project has render controller
-  const rp = cache.ResourcePacks.render_controllers.get(id);
-
-  if (!rp) return;
-
-  diagnose_molang_implementation(id, rp.molang, ownerid, data, owner, diagnoser);
 }
