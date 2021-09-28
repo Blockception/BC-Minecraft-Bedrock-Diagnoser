@@ -181,7 +181,8 @@ export function diagnose_molang_math_using(using: Using<string> | string, diagno
   const checks = using.using;
 
   for (let I = 0; I < checks.length; I++) {
-    const check = checks[I];
+    //Too many use the CamelCase version of math >.>
+    const check = checks[I].toLowerCase();
 
     //Vanilla provides?
     if (InternalIdentifiable.has(MolangData.General.Math, check)) continue;
