@@ -1,7 +1,7 @@
 import { BehaviorPack, Internal, Map, ResourcePack } from "bc-minecraft-bedrock-project";
 import { State } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/BehaviorPack/AnimationController";
 import { AnimationCarrier, MolangCarrier } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier";
-import { Defined, MolangFullSet, MolangSet } from "bc-minecraft-bedrock-project/node_modules/bc-minecraft-molang";
+import { Defined, MolangFullSet, MolangSet } from "bc-minecraft-molang";
 import { Types } from "bc-minecraft-bedrock-types";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
