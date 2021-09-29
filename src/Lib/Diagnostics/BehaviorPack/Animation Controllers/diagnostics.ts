@@ -1,9 +1,9 @@
 import { AnimationCarrier, MolangCarrier } from 'bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier';
 import { Types } from 'bc-minecraft-bedrock-types';
-import { Defined, DefinedUsing, MolangFullSet, MolangSet } from 'bc-minecraft-molang';
+import { DefinedUsing, MolangFullSet, MolangSet } from 'bc-minecraft-molang';
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
-import { animationsOwner, general_animation_controllers_implementation } from '../../Minecraft/Animation Controllers';
+import { general_animation_controllers_implementation } from '../../Minecraft/Animation Controllers';
 import { OwnerType } from '../../Molang/diagnostics';
 
 /**
@@ -21,8 +21,7 @@ export function animation_controller_diagnose_implementation(
 
     if (!controller) return;
 
-    general_animation_controllers_implementation(controller, user, ownerType, diagnoser);
-    
+    general_animation_controllers_implementation(controller, user, ownerType, diagnoser);    
   }
 }
 

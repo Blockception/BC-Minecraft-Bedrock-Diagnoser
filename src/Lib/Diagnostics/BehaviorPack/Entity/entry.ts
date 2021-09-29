@@ -39,6 +39,6 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
     owner.animations.using.push(anim_id);
   });
 
-  //Check animations / animation controllers
-  owner.animations.using.forEach((anim_id) => animation_or_controller_diagnose_implementation(id, owner, "entity", diagnoser));
+  //Check animations / animation controllers implements
+  owner.animations.using.forEach((anim_id) => animation_or_controller_diagnose_implementation(anim_id, owner, "entity", diagnoser));
 }

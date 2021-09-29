@@ -45,7 +45,5 @@ export function is_animation_or_controller(id: string, diagnoser: DiagnosticsBui
   if (cache.BehaviorPacks.animations.has(id)) return anim_or_contr.animation;
   if (cache.BehaviorPacks.animation_controllers.has(id)) return anim_or_contr.controller;
 
-  const edu = education_enabled(diagnoser);
-
   return anim_or_contr.neither;
 }

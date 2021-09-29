@@ -40,6 +40,8 @@ export function diagnose_molang(using: string, owner: OwnerType, diagnoser: Diag
   diagnose_molang_query_using(using, diagnoser);
   diagnose_molang_math_using(using, diagnoser);
   diagnose_molang_context_using(using, diagnoser, owner);
+
+  diagnose_molang_allowed(using, owner, diagnoser);
 }
 
 /**Diagnoses the given using set to the given defining set
@@ -62,6 +64,23 @@ function diagnose_molang_using(userid : string, using: DefinedUsing<string>, def
       diagnoser.Add(userid, `Missing molang defintion: ${name}.${check}\n\tUsed by: ${userid}\n\tShould be defined by ${definerid}`, DiagnosticSeverity.error, `molang.${name}.missing`);
     }
   }
+}
+
+function diagnose_molang_allowed(using : string, owner : OwnerType, diagnoser : DiagnosticsBuilder) : void {
+  if (!(owner === "animation" || owner === "animation_controller")) return;
+
+  const set = MolangFullSet.harvest(using);
+
+  if (has_any(set.textures)) diagnoser.Add("textures.", "Animation / Animation controllers do not have acces to textures", DiagnosticSeverity.warning, "molang.textures.invalid")
+  if (has_any(set.materials)) diagnoser.Add("material.", "Animation / Animation controllers do not have acces to materials", DiagnosticSeverity.warning, "molang.material.invalid")
+  if (has_any(set.geometries)) diagnoser.Add("geometry.", "Animation / Animation controllers do not have acces to geometries", DiagnosticSeverity.warning, "molang.geometry.invalid")
+}
+
+function has_any(data : Using<string> | Defined<string>) : boolean {
+  if (Using.is(data) && data.using.length > 0) return true;
+  if (Defined.is(data) && data.defined.length > 0) return true;
+
+  return false;
 }
 
 function GetNamespace(owner : OwnerType) {
