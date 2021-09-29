@@ -16,7 +16,7 @@ describe("Molang", () => {
       using.variables.defined.push("state")
 
       owner.temps.defined.push("push");
-      owner.variables.defined.push("speelf");
+      owner.variables.defined.push("spleef");
 
       diagnose_molang_implementation({ id: "animation.example.walk", molang: using }, { id: "minecraft:sheep", molang: owner }, "entity", diganoser);
 
