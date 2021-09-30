@@ -43,7 +43,7 @@
     "bc-minecraft-bedrock-project": "^1.7.35",
     "bc-minecraft-bedrock-types": "^1.2.10",
     "bc-minecraft-bedrock-vanilla-data": "^1.5.7",
-    "bc-minecraft-molang": "^1.0.18",
+    "bc-minecraft-molang": "^1.0.19",
     "bc-minecraft-project": "^1.0.11",
     "jsonc": "^2.0.0"
   },
