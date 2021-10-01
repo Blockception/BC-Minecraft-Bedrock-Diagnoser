@@ -1,20 +1,20 @@
+import { Map } from "bc-minecraft-bedrock-project";
 import { AnimationCarrier, MolangCarrier } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier";
 import { Types } from "bc-minecraft-bedrock-types";
 import { DefinedUsing, MolangFullSet, MolangSet } from "bc-minecraft-molang";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
-import { education_enabled } from "../Definitions";
 import { OwnerType } from "../Molang/diagnostics";
 import { animation_controller_diagnose_implementation } from "./Animation Controllers/diagnostics";
 import { animation_diagnose_implementation } from "./Animation/diagnostics";
 
+
 export function animation_or_controller_diagnose_implementation(
   id: string,
-  user: Types.Identifiable & MolangCarrier<MolangSet | MolangFullSet> & AnimationCarrier<DefinedUsing<string>>,
+  user: Types.Identifiable & MolangCarrier<MolangSet | MolangFullSet> & AnimationCarrier<DefinedUsing<string>> & { events?: Map<any> },
   ownerType: OwnerType,
   diagnoser: DiagnosticsBuilder
 ): void {
-  
   switch (is_animation_or_controller(id, diagnoser)) {
     case anim_or_contr.animation:
       return animation_diagnose_implementation(id, user, ownerType, diagnoser);
