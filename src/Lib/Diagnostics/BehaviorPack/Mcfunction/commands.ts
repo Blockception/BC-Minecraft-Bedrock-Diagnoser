@@ -231,8 +231,10 @@ function mcfunction_diagnoseparameter(pattern: ParameterInfo, data: Parameter, d
     }
   }
 
+  //Get specific call
   const call = ParameterDiagnostics[pattern.type];
 
+  //If call is found, then use that
   if (call) {
     return call(data, diagnoser);
   }
