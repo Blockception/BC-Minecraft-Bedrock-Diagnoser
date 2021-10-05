@@ -89,7 +89,7 @@ function GetNamespace(owner : OwnerType) {
       case "animation":
       case "animation_controller":
       case "render_controller":
-        break;
+        return MolangData.Entities;
       
       case "block":
         return MolangData.Blocks;
