@@ -28,6 +28,9 @@ export function animation_controller_diagnose_implementation(
 
     general_animation_controllers_implementation(controller, user, ownerType, diagnoser);
   }
+
+  //TODO add particle check
+  //TODO add sound check
 }
 
 /**

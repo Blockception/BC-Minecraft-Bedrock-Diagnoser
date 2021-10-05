@@ -6,6 +6,9 @@ import { education_enabled } from "../../Definitions";
 import { diagnose_molang_implementation, OwnerType } from "../../Molang/diagnostics";
 import { AnimationCarrier, MolangCarrier } from 'bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier';
 
+
+
+
 /**
  *
  * @param id
@@ -26,6 +29,9 @@ export function animation_diagnose_implementation(
 
     diagnose_molang_implementation(anim, user, ownerType, diagnoser);
   }
+  
+  //TODO add particle check
+  //TODO add sound check
 }
 
 /**

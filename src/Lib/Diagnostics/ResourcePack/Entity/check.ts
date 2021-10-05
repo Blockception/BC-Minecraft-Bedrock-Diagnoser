@@ -15,7 +15,7 @@ export function resourcepack_check_entityid(id: string, diagnoser: DiagnosticsBu
   const edu = education_enabled(diagnoser);
 
   //Vanilla has entity
-  if (MinecraftData.BehaviorPack.hasEntity(id, edu)) return;
+  if (MinecraftData.ResourcePack.hasEntity(id, edu)) return;
 
   //Nothing then report error
   diagnoser.Add(id, `Cannot find entity definition: ${id}`, DiagnosticSeverity.error, "resourcepack.entity.missing");
