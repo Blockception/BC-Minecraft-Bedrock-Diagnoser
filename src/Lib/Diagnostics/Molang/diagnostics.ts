@@ -159,7 +159,7 @@ function diagnose_molang_context_using(using: Using<string> | string, diagnoser:
     const check = checks[I];
 
     //Vanilla provides?
-    if (InternalIdentifiable.has(GetNamespace(owner)?.Contents ?? [], check)) continue;
+    if (InternalIdentifiable.has(GetNamespace(owner)?.Contexts ?? [], check)) continue;
 
     diagnoser.Add(check, `Missing molang context defintion: ${check}`, DiagnosticSeverity.error, `molang.context.${owner}.unknown`);
   }
