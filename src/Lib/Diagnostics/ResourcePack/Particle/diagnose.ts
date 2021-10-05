@@ -1,21 +1,24 @@
-import { MinecraftData } from 'bc-minecraft-bedrock-vanilla-data';
+import { Types } from "bc-minecraft-bedrock-types";
+import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../../main";
-import { check_definition_value, education_enabled } from '../../Definitions';
+import { check_definition_value, education_enabled } from "../../Definitions";
 
-export function resourcepack_particle_diagnose(id: string, diagnoser: DiagnosticsBuilder): void {
- //Defined in McProject
- if (check_definition_value(diagnoser.project.definitions.particle, id, diagnoser)) return;
+export function resourcepack_particle_diagnose(id: string | Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
+  const particle_id = typeof id === "string" ? id : id.text;
 
- const data = diagnoser.context.getCache();
+  //Defined in McProject
+  if (check_definition_value(diagnoser.project.definitions.particle, particle_id, diagnoser)) return;
 
- //Project has entity
- if (data.hasEntity(id)) return;
+  const data = diagnoser.context.getCache();
 
- const edu = education_enabled(diagnoser);
+  //Project has entity
+  if (data.ResourcePacks.particles.has(particle_id)) return;
 
- //Vanilla has entity
- if (MinecraftData.ResourcePack.hasParticle(id, edu)) return;
+  const edu = education_enabled(diagnoser);
 
- //Nothing then report error
- diagnoser.Add(id, `Cannot find particle definition: ${id}`, DiagnosticSeverity.error, "resourcepack.particle.missing");
+  //Vanilla has entity
+  if (MinecraftData.ResourcePack.hasParticle(particle_id, edu)) return;
+
+  //Nothing then report error
+  diagnoser.Add(id, `Cannot find particle definition: ${particle_id}`, DiagnosticSeverity.error, "resourcepack.particle.missing");
 }

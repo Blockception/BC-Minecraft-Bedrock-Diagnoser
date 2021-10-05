@@ -36,7 +36,7 @@ export class InternalTest implements DiagnosticsBuilderContent {
 
     return undefined;
   }
-  getFiles(folder: string, ignores: MCIgnore): string[] {
+  getFiles(folder: string, patterns : string[], ignores: MCIgnore): string[] {
     return [];
   }
 

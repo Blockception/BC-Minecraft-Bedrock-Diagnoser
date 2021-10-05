@@ -86,7 +86,7 @@ export class Diagnoser {
    * @param folder The folder to retrieve files of
    * @param ignores The pattern to ignore on files*/
   ProcessFolder(folder: string, ignores: MCIgnore): boolean {
-    const files = this.context.getFiles(folder, ignores);
+    const files = this.context.getFiles(folder, ["*"], ignores);
     let out = false;
 
     for (let I = 0; I < files.length; I++) {

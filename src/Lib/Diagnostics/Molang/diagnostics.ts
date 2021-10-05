@@ -1,22 +1,22 @@
-import { MolangCarrier } from 'bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier';
-import { Types } from 'bc-minecraft-bedrock-types';
+import { MolangCarrier } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier";
+import { Types } from "bc-minecraft-bedrock-types";
 import { Defined, DefinedUsing, Molang, MolangData, MolangFullSet, MolangSet, Using } from "bc-minecraft-molang";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
 
-export type OwnerType = "block" | "entity" | "item" | "feature" | "particle" | "animation" | "animation_controller"| "render_controller";
-type MCarrier = Types.Identifiable & MolangCarrier<MolangSet | MolangFullSet>
+export type OwnerType = "block" | "entity" | "item" | "feature" | "particle" | "animation" | "animation_controller" | "render_controller";
+type MCarrier = Types.Identifiable & MolangCarrier<MolangSet | MolangFullSet>;
 
 /**Diagnoses the given molang sets, the using party checks upon the definer if they have setup properly
  * @param using The set of molang data that is being used
  * @param definer The set of molang data that is defined
  * @param diagnoser The diagnoser to report to*/
-export function diagnose_molang_implementation(user : MCarrier, owner : MCarrier, ownerType: OwnerType, diagnoser: DiagnosticsBuilder): void {
+export function diagnose_molang_implementation(user: MCarrier, owner: MCarrier, ownerType: OwnerType, diagnoser: DiagnosticsBuilder): void {
   const userid = user.id;
   const using = user.molang;
   const definer = owner.molang;
-  const definerid = owner.id
-    
+  const definerid = owner.id;
+
   //Is full set?
   if (MolangFullSet.isEither(using)) {
     //Upgrade if nesscary and check
@@ -49,7 +49,14 @@ export function diagnose_molang(using: string, owner: OwnerType, diagnoser: Diag
  * @param definer The set of molang data that is defined
  * @param diagnoser The diagnoser to report to
  * @param name The name of the data set such as `variable` or `query`*/
-function diagnose_molang_using(userid : string, using: DefinedUsing<string>, definerid : string, definer: Defined<string>, diagnoser: DiagnosticsBuilder, name: string): void {
+function diagnose_molang_using(
+  userid: string,
+  using: DefinedUsing<string>,
+  definerid: string,
+  definer: Defined<string>,
+  diagnoser: DiagnosticsBuilder,
+  name: string
+): void {
   const checks = using.using;
   const defined1 = definer.defined;
   const defined2 = using.defined;
@@ -61,56 +68,59 @@ function diagnose_molang_using(userid : string, using: DefinedUsing<string>, def
       //Valid
       continue;
     } else {
-      diagnoser.Add(userid, `Missing molang defintion: ${name}.${check}\n\tUsed by: ${userid}\n\tShould be defined by ${definerid}`, DiagnosticSeverity.error, `molang.${name}.missing`);
+      diagnoser.Add(
+        userid,
+        `Missing molang defintion: ${name}.${check}\n\tUsed by: ${userid}\n\tShould be defined by ${definerid}`,
+        DiagnosticSeverity.error,
+        `molang.${name}.missing`
+      );
     }
   }
 }
 
-function diagnose_molang_allowed(using : string, owner : OwnerType, diagnoser : DiagnosticsBuilder) : void {
+function diagnose_molang_allowed(using: string, owner: OwnerType, diagnoser: DiagnosticsBuilder): void {
   if (!(owner === "animation" || owner === "animation_controller")) return;
 
   const set = MolangFullSet.harvest(using);
 
-  if (has_any(set.textures)) diagnoser.Add("textures.", "Animation / Animation controllers do not have acces to textures", DiagnosticSeverity.warning, "molang.textures.invalid")
-  if (has_any(set.materials)) diagnoser.Add("material.", "Animation / Animation controllers do not have acces to materials", DiagnosticSeverity.warning, "molang.material.invalid")
-  if (has_any(set.geometries)) diagnoser.Add("geometry.", "Animation / Animation controllers do not have acces to geometries", DiagnosticSeverity.warning, "molang.geometry.invalid")
+  if (has_any(set.textures))
+    diagnoser.Add(
+      "textures.",
+      "Animation / Animation controllers do not have acces to textures",
+      DiagnosticSeverity.warning,
+      "molang.textures.invalid"
+    );
+  if (has_any(set.materials))
+    diagnoser.Add(
+      "material.",
+      "Animation / Animation controllers do not have acces to materials",
+      DiagnosticSeverity.warning,
+      "molang.material.invalid"
+    );
+  if (has_any(set.geometries))
+    diagnoser.Add(
+      "geometry.",
+      "Animation / Animation controllers do not have acces to geometries",
+      DiagnosticSeverity.warning,
+      "molang.geometry.invalid"
+    );
 }
 
-function has_any(data : Using<string> | Defined<string>) : boolean {
+function has_any(data: Using<string> | Defined<string>): boolean {
   if (Using.is(data) && data.using.length > 0) return true;
   if (Defined.is(data) && data.defined.length > 0) return true;
 
   return false;
 }
 
-function GetNamespace(owner : OwnerType) {
-    //Vanilla provides?
-    switch (owner) {
-      case "animation":
-      case "animation_controller":
-      case "render_controller":
-        return MolangData.Entities;
-      
-      case "block":
-        return MolangData.Blocks;
-
-      case "entity":
-        return MolangData.Entities;
-
-      case "feature":
-        return MolangData.FeaturesRules;
-
-      case "item":
-        return MolangData.Items;
-
-      case "particle":
-        return MolangData.Particle;
-    }
-
-    return undefined;
-}
-
-function diagnose_molang_variable_using(userid : string, using: DefinedUsing<string>, definerid : string, definer: Defined<string>, diagnoser: DiagnosticsBuilder, owner: OwnerType) {
+function diagnose_molang_variable_using(
+  userid: string,
+  using: DefinedUsing<string>,
+  definerid: string,
+  definer: Defined<string>,
+  diagnoser: DiagnosticsBuilder,
+  owner: OwnerType
+) {
   const checks = using.using;
   const defined1 = definer.defined;
   const defined2 = using.defined;
@@ -122,9 +132,14 @@ function diagnose_molang_variable_using(userid : string, using: DefinedUsing<str
     if (defined1.includes(check) || defined2.includes(check)) continue;
 
     //Vanilla provides?
-    if (InternalIdentifiable.has(GetNamespace(owner)?.Variables ?? [], check)) continue;
+    if (InternalIdentifiable.has(MolangData.get(owner)?.Variables ?? [], check)) continue;
 
-    diagnoser.Add(userid, `Missing variable molang defintion: variable.${check}\n\tUsed by: ${userid}\n\tShould be defined by ${definerid}`, DiagnosticSeverity.error, `molang.variable.missing`);
+    diagnoser.Add(
+      userid,
+      `Missing variable molang defintion: variable.${check}\n\tUsed by: ${userid}\n\tShould be defined by ${definerid}`,
+      DiagnosticSeverity.error,
+      `molang.variable.missing`
+    );
   }
 }
 
@@ -140,7 +155,7 @@ function diagnose_molang_temp_using(using: DefinedUsing<string>, definer: Define
     if (defined1.includes(check) || defined2.includes(check)) continue;
 
     //Vanilla provides?
-    if (InternalIdentifiable.has(GetNamespace(owner)?.Temps ?? [], check)) continue;
+    if (InternalIdentifiable.has(MolangData.get(owner)?.Temps ?? [], check)) continue;
 
     diagnoser.Add(check, `Missing molang temps defintion: ${check}`, DiagnosticSeverity.error, `molang.temp.missing`);
   }
@@ -159,17 +174,17 @@ function diagnose_molang_context_using(using: Using<string> | string, diagnoser:
     const check = checks[I];
 
     //Vanilla provides?
-    if (InternalIdentifiable.has(GetNamespace(owner)?.Contexts ?? [], check)) continue;
+    if (InternalIdentifiable.has(MolangData.get(owner)?.Contexts ?? [], check)) continue;
 
     diagnoser.Add(check, `Missing molang context defintion: ${check}`, DiagnosticSeverity.error, `molang.context.${owner}.unknown`);
   }
 }
 
 /**
- * 
- * @param using 
- * @param diagnoser 
- * @param owner 
+ *
+ * @param using
+ * @param diagnoser
+ * @param owner
  */
 export function diagnose_molang_query_using(using: Using<string> | string, diagnoser: DiagnosticsBuilder) {
   if (typeof using === "string") {
@@ -191,10 +206,10 @@ export function diagnose_molang_query_using(using: Using<string> | string, diagn
 }
 
 /**
- * 
- * @param using 
- * @param diagnoser 
- * @param owner 
+ *
+ * @param using
+ * @param diagnoser
+ * @param owner
  */
 export function diagnose_molang_math_using(using: Using<string> | string, diagnoser: DiagnosticsBuilder) {
   if (typeof using === "string") {
@@ -216,10 +231,9 @@ export function diagnose_molang_math_using(using: Using<string> | string, diagno
   }
 }
 
-
 namespace InternalIdentifiable {
-  export function has(data : Types.Identifiable[], id : string) : boolean {
-    for(let I = 0; I < data.length; I++) {
+  export function has(data: Types.Identifiable[], id: string): boolean {
+    for (let I = 0; I < data.length; I++) {
       if (data[I].id.startsWith(id)) return true;
     }
 
