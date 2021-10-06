@@ -40,7 +40,7 @@
   "homepage": "https://github.com/Blockception/BC-Minecraft-Bedrock-Diagnoser#readme",
   "dependencies": {
     "bc-minecraft-bedrock-command": "^1.2.12",
-    "bc-minecraft-bedrock-project": "^1.7.42",
+    "bc-minecraft-bedrock-project": "^1.7.43",
     "bc-minecraft-bedrock-types": "^1.2.11",
     "bc-minecraft-bedrock-vanilla-data": "^1.5.9",
     "bc-minecraft-molang": "^1.1.2",
@@ -50,7 +50,7 @@
   "devDependencies": {
     "@types/chai": "^4.2.22",
     "@types/mocha": "^9.0.0",
-    "@types/node": "^16.10.2",
+    "@types/node": "^16.10.3",
     "chai": "^4.3.4",
     "mocha": "^9.1.2",
     "rimraf": "^3.0.2",
