@@ -67,8 +67,8 @@ function CheckTransition(controller: string, Transitions: Types.Conditional[], S
     //check is map contains any value
     if (States[state] === undefined) {
       diagnoser.Add(
-        controller + "/states/" + State,
-        `missing state defined by transition: ${State}`,
+        controller + "/states/" + state,
+        `missing state defined by transition: ${state}`,
         DiagnosticSeverity.error,
         "animation_controller.state.missing"
       );
