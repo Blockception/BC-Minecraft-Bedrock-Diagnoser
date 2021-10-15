@@ -2,11 +2,20 @@ import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Lib/Types/Diagn
 import { Types } from "bc-minecraft-bedrock-types";
 import { check_definition_value } from "../Definitions";
 
+export function minecraft_objectives_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
+  if (diagnoser.project.attributes["diagnostic.objective"] === "false") return;
 
-export function minecraft_objectives_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder) : void {
-  if(diagnoser.project.attributes["diagnostic.objective"] === "false") return;
-  
   const id = value.text;
+
+  //Length check
+  if (id.length > 16) {
+    diagnoser.Add(
+      value,
+      `The objective: ${id} is too long for an objective, it can be a maximum, of 16 characters long`,
+      DiagnosticSeverity.error,
+      "minecraft.objective.long"
+    );
+  }
 
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.objective, id, diagnoser)) return;
