@@ -1,6 +1,6 @@
 import { Types } from 'bc-minecraft-bedrock-types';
 import { minecraft_xp_diagnose } from "../../../../src/Lib/Diagnostics/Minecraft/Xp";
-import { TestDiagnoser } from "../../../diagnoser.test";
+import { TestDiagnoser } from "../../../diagnoser";
 
 describe("XP", () => {
   it("diagnose no errors", () => {

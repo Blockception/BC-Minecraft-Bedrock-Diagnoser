@@ -1,6 +1,6 @@
 import { general_integer_diagnose } from "../../../../src/Lib/Diagnostics/General/Integer";
 import { Types } from "bc-minecraft-bedrock-types";
-import { TestDiagnoser } from "../../../diagnoser.test";
+import { TestDiagnoser } from "../../../diagnoser";
 
 describe("Integer", () => {
   it("diagnose no errors", () => {

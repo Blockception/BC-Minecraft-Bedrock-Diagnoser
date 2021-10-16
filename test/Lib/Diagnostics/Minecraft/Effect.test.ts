@@ -1,7 +1,7 @@
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { minecraft_effect_diagnose } from "../../../../src/Lib/Diagnostics/Minecraft/Effect";
 import { Types } from "bc-minecraft-bedrock-types";
-import { TestDiagnoser } from "../../../diagnoser.test";
+import { TestDiagnoser } from "../../../diagnoser";
 
 describe("Effect", () => {
   it("diagnose no errors", () => {

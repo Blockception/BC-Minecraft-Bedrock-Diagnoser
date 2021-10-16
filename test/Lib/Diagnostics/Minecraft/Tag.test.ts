@@ -2,7 +2,7 @@ import { GeneralInfo } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/Ge
 import { Location } from "bc-minecraft-bedrock-types/lib/src/Types/Location";
 import { minecraft_tag_diagnose } from "../../../../src/Lib/Diagnostics/Minecraft/Tag";
 import { Types } from "bc-minecraft-bedrock-types";
-import { TestDiagnoser } from "../../../diagnoser.test";
+import { TestDiagnoser } from "../../../diagnoser";
 
 describe("Tag", () => {
   it("diagnose no errors", () => {

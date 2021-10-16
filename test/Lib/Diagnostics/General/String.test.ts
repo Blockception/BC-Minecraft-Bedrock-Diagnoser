@@ -1,6 +1,6 @@
 import { general_string_diagnose } from "../../../../src/Lib/Diagnostics/General/String";
 import { Types } from "bc-minecraft-bedrock-types";
-import { TestDiagnoser } from "../../../diagnoser.test";
+import { TestDiagnoser } from "../../../diagnoser";
 
 describe("String", () => {
   it("diagnose no errors", () => {

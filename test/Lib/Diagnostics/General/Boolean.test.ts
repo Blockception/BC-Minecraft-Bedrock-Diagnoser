@@ -1,6 +1,6 @@
 import { general_boolean_diagnose } from "../../../../src/Lib/Diagnostics/General/Boolean";
 import { Types } from "bc-minecraft-bedrock-types";
-import { TestDiagnoser } from "../../../diagnoser.test";
+import { TestDiagnoser } from "../../../diagnoser";
 
 describe("Boolean", () => {
   it("diagnose no errors", () => {

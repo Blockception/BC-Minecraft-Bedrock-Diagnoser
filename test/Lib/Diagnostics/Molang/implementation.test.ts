@@ -1,6 +1,6 @@
 import { MolangFullSet } from "bc-minecraft-molang";
 import { diagnose_molang_implementation } from "../../../../src/Lib/Diagnostics/Molang/diagnostics";
-import { TestDiagnoser } from "../../../diagnoser.test";
+import { TestDiagnoser } from "../../../diagnoser";
 
 describe("Molang", () => {
   describe("diagnose_molang_implementation", () => {

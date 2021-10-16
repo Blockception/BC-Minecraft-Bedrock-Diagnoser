@@ -1,6 +1,6 @@
 import { general_keyword_diagnose } from "../../../../src/Lib/Diagnostics/General/Keyword";
 import { Types } from "bc-minecraft-bedrock-types";
-import { TestDiagnoser } from "../../../diagnoser.test";
+import { TestDiagnoser } from "../../../diagnoser";
 
 describe("Keyword", () => {
   it("diagnose no errors", () => {

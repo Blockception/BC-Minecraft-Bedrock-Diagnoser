@@ -1,6 +1,6 @@
 import { minecraft_coordinate_diagnose } from "../../../../src/Lib/Diagnostics/Minecraft/Coordinate";
 import { Types } from "bc-minecraft-bedrock-types";
-import { TestDiagnoser } from "../../../diagnoser.test";
+import { TestDiagnoser } from "../../../diagnoser";
 
 describe("Coordinate", () => {
   it("diagnose no errors", () => {

@@ -1,7 +1,7 @@
 import { ParameterType } from 'bc-minecraft-bedrock-command';
 import { minecraft_selector_diagnose } from '../../../../src/Lib/Diagnostics/Minecraft/Selector';
 import { Types } from "bc-minecraft-bedrock-types";
-import { TestDiagnoser } from "../../../diagnoser.test";
+import { TestDiagnoser } from "../../../diagnoser";
 
 describe("Selector", () => {
   it("double negative types", () => {

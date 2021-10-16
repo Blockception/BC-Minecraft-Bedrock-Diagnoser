@@ -1,6 +1,6 @@
 import { general_float_diagnose } from "../../../../src/Lib/Diagnostics/General/Float";
 import { Types } from "bc-minecraft-bedrock-types";
-import { TestDiagnoser } from "../../../diagnoser.test";
+import { TestDiagnoser } from "../../../diagnoser";
 
 describe("Float", () => {
   it("diagnose no errors", () => {

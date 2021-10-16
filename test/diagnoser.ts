@@ -179,7 +179,7 @@ export class TestDiagnoser implements InternalDiagnosticsBuilder {
 
 export namespace TestDiagnoser {
   export function Create(files: Map<string, string> | undefined = undefined): TestDiagnoser {
-    let context = TestProjecData.CreateContext(files);
+    const context = TestProjecData.CreateContext(files);
 
     return new TestDiagnoser(context, undefined);
   }

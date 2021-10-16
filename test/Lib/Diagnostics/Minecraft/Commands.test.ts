@@ -1,6 +1,6 @@
 import { minecraft_check_command } from "../../../../src/Lib/Diagnostics/Minecraft/Commands";
 import { Types } from "bc-minecraft-bedrock-types";
-import { TestDiagnoser } from "../../../diagnoser.test";
+import { TestDiagnoser } from "../../../diagnoser";
 
 describe("Command", () => {
   it("diagnose no errors", () => {
