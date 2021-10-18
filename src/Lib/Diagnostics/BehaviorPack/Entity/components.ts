@@ -33,7 +33,12 @@ function checkAll(diagnoser: DiagnosticsBuilder, components: string[], dependent
     const need = needs[I];
 
     if (!components.includes(need)) {
-      diagnoser.Add(dependent, `Component: '${dependent}' requires a ${need} component to be present`, DiagnosticSeverity.error, "behaviorpack.entity.component.missing");
+      diagnoser.Add(
+        dependent,
+        `Component: '${dependent}' requires a ${need} component to be present`,
+        DiagnosticSeverity.error,
+        "behaviorpack.entity.component.missing"
+      );
     }
   }
 }
@@ -73,7 +78,9 @@ function checkPatternAny(diagnoser: DiagnosticsBuilder, components: string[], de
     if (!hasPattern(need, components)) {
       diagnoser.Add(
         dependent,
-        `Component that follows pattern: '${dependent}' requires one of the following components that follows the pattern(s): ${JSON.stringify(needs)}`,
+        `Component that follows pattern: '${dependent}' requires one of the following components that follows the pattern(s): ${JSON.stringify(
+          needs
+        )}`,
         DiagnosticSeverity.error,
         "behaviorpack.entity.component.missing"
       );
@@ -83,27 +90,24 @@ function checkPatternAny(diagnoser: DiagnosticsBuilder, components: string[], de
 
 function checkMovements(diagnoser: DiagnosticsBuilder, components: string[]): void {
   const hasMovement = hasPattern("minecraft:movement.", components) ? 1 : 0;
-  const hasNavigation = hasPattern("minecraft:movement.", components) ? 1 : 0;
+  const hasNavigation = hasPattern("minecraft:navigation.", components) ? 1 : 0;
 
-  const hasBaseMovement = components.includes("minecraft:movement") ? 1 : 0;
-  const Count = hasMovement + hasNavigation + hasBaseMovement;
+  const Count = hasMovement + hasNavigation;
 
-  if (Count > 0 && Count != 3) {
+  if (Count > 0 && Count != 2) {
     if (hasMovement == 0)
-      diagnoser.Add("minecraft:movement", `Missing a movement component such as: 'minecraft:movement.basic'`, DiagnosticSeverity.error, "behaviorpack.entity.component.missing");
+      diagnoser.Add(
+        "minecraft:movement",
+        `Missing a movement component such as: 'minecraft:movement.basic'`,
+        DiagnosticSeverity.error,
+        "behaviorpack.entity.component.missing"
+      );
     if (hasNavigation == 0)
       diagnoser.Add(
         "minecraft:movement",
         `Missing a movement component such as: 'minecraft:navigation.generic'`,
         DiagnosticSeverity.error,
         "behaviorpack.entity.component.missing"
-      );
-    if (hasBaseMovement == 0)
-      diagnoser.Add(
-        "components",
-        `Navigation and movement has been specified, but the following base component is missing: 'minecraft:movement'`,
-        DiagnosticSeverity.error,
-        "behaviorpack.entity.component.missing.minecraft:movement"
       );
   }
 }
