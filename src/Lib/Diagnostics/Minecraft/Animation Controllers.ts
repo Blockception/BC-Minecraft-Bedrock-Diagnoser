@@ -5,7 +5,7 @@ import { Defined, MolangFullSet, MolangSet } from "bc-minecraft-molang";
 import { Types } from "bc-minecraft-bedrock-types";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
-import { diagnose_molang_implementation, OwnerType } from '../Molang/diagnostics';
+import { diagnose_molang_implementation, OwnerType } from "../Molang/diagnostics";
 
 export type animation_controllers = Internal.BehaviorPack.AnimationControllers | Internal.ResourcePack.AnimationControllers;
 export type animation_controller = Internal.BehaviorPack.AnimationController | Internal.ResourcePack.AnimationController;
@@ -79,21 +79,20 @@ function CheckTransition(controller: string, Transitions: Types.Conditional[], S
 export function general_animation_controllers_implementation(
   controller: ResourcePack.AnimationController.AnimationController | BehaviorPack.AnimationController.AnimationController,
   user: Types.Identifiable & AnimationCarrier<Defined<string>> & MolangCarrier<MolangSet | MolangFullSet>,
-  ownerType : OwnerType,
+  ownerType: OwnerType,
   diagnoser: DiagnosticsBuilder
 ) {
-
   //for each animation
-  controller.animations.using.forEach(anim_id=>{
+  controller.animations.using.forEach((anim_id) => {
     if (user.animations.defined.includes(anim_id)) return;
 
     diagnoser.Add(
-      `${user.id}/animations`,
-      `Animation controller is using: '${anim_id}' but ${user.id} has nothing defined that matches\nMinecraft will still run but might return null errors on the animation`,
+      `${user.id}/${controller.id}`,
+      `Animation controller (${controller.id}) is using animation: '${anim_id}' but ${user.id} has nothing defined that matches the given key\nMinecraft will still run but might return null errors on the animation`,
       DiagnosticSeverity.warning,
       "minecraft.animation_controller.animation.undefined"
     );
-  })
+  });
 
   //Molang
   diagnose_molang_implementation(controller, user, ownerType, diagnoser);
