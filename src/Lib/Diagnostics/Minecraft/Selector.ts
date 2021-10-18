@@ -13,7 +13,7 @@ import { minecraft_objectives_diagnose } from "./Objective";
 import { minecraft_family_diagnose } from "./Family";
 import { behaviorpack_entityid_diagnose } from "../BehaviorPack/Entity/diagnose";
 import { minecraft_tag_diagnose } from "./Tag";
-import { general_positive_integer_diagnose } from "../General/Integer";
+import { general_positive_float_diagnose } from '../General/Float';
 
 export function minecraft_selector_diagnose(pattern: ParameterInfo, value: Types.OffsetWord, diagnoser: DiagnosticsBuilder) {
   const sel = value.text;
@@ -130,7 +130,7 @@ function minecraft_selector_attribute_diagnose(attr: SelectorAttribute, sel: Sel
     case "r":
     case "rm":
       selectorattribute_no_duplicates(attr, sel, diagnoser);
-      general_positive_integer_diagnose(word, diagnoser);
+      general_positive_float_diagnose(word, diagnoser);
       return;
 
     case "c":
