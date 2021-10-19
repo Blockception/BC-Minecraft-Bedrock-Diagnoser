@@ -18,7 +18,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/action-commit-amount-last-release@latest
+      - uses: DaanV2/action-commit-amount-last-release@latest
         id: commit-amount
       - run: echo ${{ steps.commit-amount.outputs.amount }}
     
