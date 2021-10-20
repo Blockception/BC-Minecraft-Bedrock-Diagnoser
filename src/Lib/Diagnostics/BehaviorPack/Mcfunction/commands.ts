@@ -15,7 +15,7 @@ import { minecraft_jsonrawtext_diagnose } from "../../Minecraft/JsonRawText";
 import { minecraft_objectives_diagnose } from "../../Minecraft/Objective";
 import { minecraft_selector_diagnose } from "../../Minecraft/Selector";
 import { minecraft_tag_diagnose } from "../../Minecraft/Tag";
-import { behaviorpack_structure_diagnose } from '../Structure/diagnose';
+import { behaviorpack_structure_diagnose } from "../Structure/diagnose";
 import { behaviorpack_check_blockdescriptor, behaviorpack_check_blockstates } from "../Block/diagnose";
 import { behaviorpack_entityid_diagnose, behaviorpack_entity_event_diagnose, behaviorpack_entity_spawnegg_diagnose } from "../Entity/diagnose";
 import { behaviorpack_functions_diagnose } from "./diagnose";
@@ -48,8 +48,8 @@ import { general_keyword_diagnose } from "../../General/Keyword";
 import { minecraft_tickingarea_diagnose } from "../../Minecraft/Tickingarea";
 import { resourcepack_particle_diagnose } from "../../ResourcePack/Particle/diagnose";
 import { resourcepack_sound_diagnose } from "../../ResourcePack/Sounds Definitions/diagnose";
-import { animation_or_controller_diagnose, animation_reference_diagnose } from '../../ResourcePack/anim or controller';
-import { Types} from 'bc-minecraft-bedrock-types';
+import { animation_reference_diagnose } from "../../ResourcePack/anim or controller";
+import { Types } from "bc-minecraft-bedrock-types";
 
 /**
  *
@@ -82,20 +82,19 @@ export function mcfunction_commandscheck(doc: TextDocument, diagnoser: Diagnosti
 }
 
 /**
- * 
- * @param prop 
- * @param doc 
- * @param diagnoser 
+ *
+ * @param prop
+ * @param doc
+ * @param diagnoser
  */
 export function json_commandscheck(prop: string | string[], doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
   if (typeof prop === "string") {
-    if (prop.startsWith('/')) {
+    if (prop.startsWith("/")) {
       commandscheck(prop.substring(1), doc, diagnoser);
     }
-  }
-  else {
-    prop.forEach(p => {
-      if (p.startsWith('/')) {
+  } else {
+    prop.forEach((p) => {
+      if (p.startsWith("/")) {
         commandscheck(p.substring(1), doc, diagnoser);
       }
     });
@@ -103,11 +102,11 @@ export function json_commandscheck(prop: string | string[], doc: TextDocument, d
 }
 
 /**
- * 
- * @param commandtext 
- * @param doc 
- * @param diagnoser 
- * @returns 
+ *
+ * @param commandtext
+ * @param doc
+ * @param diagnoser
+ * @returns
  */
 export function commandscheck(commandtext: string, doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
   if (commandtext.length < 3) return;
@@ -136,7 +135,12 @@ function mcfunction_commandcheck(command: Command, diagnoser: DiagnosticsBuilder
   const info = command.getBestMatch(edu);
 
   if (info.length === 0) {
-    diagnoser.Add(command.parameters[0].offset, `Unknown command syntax: "${command.getKeyword()}"`, DiagnosticSeverity.error, "mcfunction.syntax.unknown");
+    diagnoser.Add(
+      command.parameters[0].offset,
+      `Unknown command syntax: "${command.getKeyword()}"`,
+      DiagnosticSeverity.error,
+      "mcfunction.syntax.unknown"
+    );
     return;
   }
 
@@ -169,9 +173,8 @@ const ParameterDiagnostics: { [key: number]: (value: Types.OffsetWord, diagnoser
   [ParameterType.integer]: general_integer_diagnose,
   [ParameterType.item]: (item, diagnoser) => {
     if (item.text.endsWith("_spawn_egg")) {
-      behaviorpack_entity_spawnegg_diagnose(item, diagnoser)
-    }
-    else {
+      behaviorpack_entity_spawnegg_diagnose(item, diagnoser);
+    } else {
       behaviorpack_item_diagnose(item, diagnoser);
     }
   },
@@ -205,7 +208,7 @@ const ParameterDiagnostics: { [key: number]: (value: Types.OffsetWord, diagnoser
   [ParameterType.time]: mode_time_diagnose,
   //Custom call ParameterType.unknown]:(item, diagnoser)=>diagnoser.Add(item.offset, "Unknown parametype: " + item.type, DiagnosticSeverity.warning, "debugger.error"),
   [ParameterType.xp]: minecraft_xp_diagnose,
-}
+};
 
 /**
  *
@@ -216,7 +219,13 @@ const ParameterDiagnostics: { [key: number]: (value: Types.OffsetWord, diagnoser
  * @param edu
  * @returns
  */
-function mcfunction_diagnoseparameter(pattern: ParameterInfo, data: Parameter, diagnoser: DiagnosticsBuilder, Com: Command, edu: boolean): void | boolean {
+function mcfunction_diagnoseparameter(
+  pattern: ParameterInfo,
+  data: Parameter,
+  diagnoser: DiagnosticsBuilder,
+  Com: Command,
+  edu: boolean
+): void | boolean {
   if (pattern === undefined || data === undefined) return;
 
   if (pattern.options) {
