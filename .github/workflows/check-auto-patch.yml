@@ -59,8 +59,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - uses: WyriHaximus/github-action-get-previous-tag@v1
+        id: get_tag
+        
       - uses: "marvinpinto/action-automatic-releases@latest"
         name: Tagged Release
+        if: ${{ success() }}
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: ${{ steps.get_tag.outputs.tag }}
           prerelease: false
