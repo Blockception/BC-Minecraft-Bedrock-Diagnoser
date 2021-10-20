@@ -23,6 +23,7 @@ jobs:
       - uses: DaanV2/action-commit-amount-last-release@latest
         id: commit-amount
       - name: "Found: ${{ steps.commit-amount.outputs.amount }} new commits"
+        run: echo Found ${{ steps.commit-amount.outputs.amount }} new commits
       
   patch:
     # The type of runner that the job will run on
