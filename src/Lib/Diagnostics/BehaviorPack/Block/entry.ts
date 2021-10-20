@@ -8,5 +8,6 @@ import { diagnose_molang } from '../../Molang/diagnostics';
 export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
   //Check molang
   diagnose_molang(doc.getText(), "block", diagnoser);
+  
   //TODO add diagnostics
 }
