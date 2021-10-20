@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: DaanV2/action-commit-amount-last-release@latest
         id: commit-amount
-      - run: echo ${{ steps.commit-amount.outputs.amount }}
+      - name: "Found: ${{ steps.commit-amount.outputs.amount }} new commits"
       
   patch:
     # The type of runner that the job will run on
@@ -59,7 +59,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - uses: WyriHaximus/github-action-get-previous-tag@v1
+      - uses: actions/get-latest-tag@v1
         id: get_tag
         
       - uses: "marvinpinto/action-automatic-releases@latest"
