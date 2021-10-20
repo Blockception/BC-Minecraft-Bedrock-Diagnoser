@@ -2,6 +2,8 @@ import { Pack, PackType, TextDocument } from "bc-minecraft-bedrock-project";
 import { MCIgnore } from "bc-minecraft-project";
 import path = require('path');
 import { BehaviorPack } from "../../Diagnostics/BehaviorPack/BehaviorPack";
+import { SkinPack } from "../../Diagnostics/SkinPack/SkinPack";
+import { WorldPack } from "../../Diagnostics/WorldPack/WorldPack";
 import { format_diagnose_path } from '../../Diagnostics/Format/diagnose';
 import { minecraft_language_diagnose } from '../../Diagnostics/Minecraft/Language';
 import { ResourcePack } from "../../Diagnostics/ResourcePack/ResourcePack";
@@ -61,6 +63,14 @@ export class Diagnoser {
   
           case PackType.resource_pack:
             out = ResourcePack.Process(doc, diagnoser);
+            break;
+
+          case PackType.skin_pack:
+            out = SkinPack.Process(doc, diagnoser);
+            break;
+
+          case PackType.world:
+            out = WorldPack.Process(doc, diagnoser);
             break;
         }
       }
