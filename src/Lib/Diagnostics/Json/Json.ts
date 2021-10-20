@@ -20,17 +20,25 @@ export namespace Json {
 
       //cast object
       out = <T>temp;
-    } catch (err : any) {
+    } catch (err: any) {
       if (err.message && err.stack) {
         diagnoser.Add(0, err.message + "\n" + err.stack, DiagnosticSeverity.error, "json.invalid");
-      }
-      else {
+      } else {
         //add parsing of error to possible retrieve the position of the error?
         diagnoser.Add(0, `Invalid json: ${JSON.stringify(err)}`, DiagnosticSeverity.error, "json.invalid");
       }
-      
     }
 
     return out;
+  }
+
+  /** */
+  export function TypeCheck<T>(value: any, diagnoser: DiagnosticsBuilder, type: string, code : string, checkfn: (value: any) => value is T): value is T {
+    if (checkfn(value)) {
+      return true;
+    }
+
+    diagnoser.Add(0, "Json cannot be casted to: " + type, DiagnosticSeverity.error, code);
+    return false;
   }
 }
