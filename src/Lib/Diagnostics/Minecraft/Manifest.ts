@@ -1,0 +1,52 @@
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Lib/Types/DiagnosticsBuilder/include";
+import { Manifest, ManifestHeader } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/include";
+
+export function minecraft_manifest_diagnose(m: Manifest, diagnoser: DiagnosticsBuilder): void {
+  minecraft_manifest_header_diagnose(m.header, diagnoser);
+
+  m.modules?.forEach((m) => {
+    minecraft_manifest_version(m.version, diagnoser, "modules/version");
+  });
+}
+
+export function minecraft_manifest_header_diagnose(m: ManifestHeader, diagnoser: DiagnosticsBuilder): void {
+  //Version check
+  minecraft_manifest_version(m.version, diagnoser, "header/version");
+}
+
+export function minecraft_manifest_required_module(m: Manifest, diagnoser: DiagnosticsBuilder, required_type: string): boolean {
+  const modules = m.modules;
+
+  if (modules) {
+    for (let I = 0; I < modules.length; I++) {
+      const module = modules[I];
+
+      if (module.type === required_type) return true;
+    }
+  }
+
+  //No correct module found
+  diagnoser.Add(
+    "modules",
+    "This manifest is required to have the following module type: " + required_type,
+    DiagnosticSeverity.error,
+    "minecraft.manifest.module.missing"
+  );
+
+  return false;
+}
+
+export function minecraft_manifest_version(version: number[], diagnoser: DiagnosticsBuilder, path: string): void {
+  if (version.length != 3) {
+    diagnoser.Add(path, "The version number needs to be an array of 3 items", DiagnosticSeverity.error, "minecraft.manifest.version.invalid");
+  }
+
+  if (version[0] < 1) {
+    diagnoser.Add(
+      `${path}/${version[0]}`,
+      "By convention, the version numbering needs to be atleast [1, 0, 0]",
+      DiagnosticSeverity.warning,
+      "minecraft.manifest.version.minimum"
+    );
+  }
+}
