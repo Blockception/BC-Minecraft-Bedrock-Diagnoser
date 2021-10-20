@@ -20,3 +20,14 @@ diagnoser.Process(doc): boolean;
 diagnoser.ProcessFolder(folder, ignores): void;
 diagnoser.ProcessPack(pack): void;
 ```
+
+## Contributing
+
+First, read the [contributing guide](./CONTRIBUTING.md). fork the project, clone it and run the following commands:
+
+**Installation**
+
+```cmd
+  npm ci
+  npm update
+```
