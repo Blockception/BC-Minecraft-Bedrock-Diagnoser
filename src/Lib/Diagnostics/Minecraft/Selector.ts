@@ -13,7 +13,8 @@ import { minecraft_objectives_diagnose } from "./Objective";
 import { minecraft_family_diagnose } from "./Family";
 import { behaviorpack_entityid_diagnose } from "../BehaviorPack/Entity/diagnose";
 import { minecraft_tag_diagnose } from "./Tag";
-import { general_positive_float_diagnose } from '../General/Float';
+import { general_float_diagnose, general_positive_float_diagnose } from "../General/Float";
+import { general_integer_diagnose, general_positive_integer_diagnose } from "../General/Integer";
 
 export function minecraft_selector_diagnose(pattern: ParameterInfo, value: Types.OffsetWord, diagnoser: DiagnosticsBuilder) {
   const sel = value.text;
@@ -114,16 +115,20 @@ function minecraft_selector_attribute_diagnose(attr: SelectorAttribute, sel: Sel
   word.offset += old.indexOf(word.text);
 
   switch (attr.name) {
+    case "rx":
+    case "rxm":
+    case "ry":
+    case "rym":
+      selectorattribute_no_duplicates(attr, sel, diagnoser);
+      general_float_diagnose(word, diagnoser, { min: -180, max: 180 });
+      return
+
     case "x":
     case "y":
     case "z":
     case "dx":
     case "dy":
     case "dz":
-    case "rx":
-    case "rxm":
-    case "ry":
-    case "rym":
       selectorattribute_no_duplicates(attr, sel, diagnoser);
       return selectorattribute_coordinate(word, diagnoser);
 
@@ -135,12 +140,14 @@ function minecraft_selector_attribute_diagnose(attr: SelectorAttribute, sel: Sel
 
     case "c":
       selectorattribute_no_duplicates(attr, sel, diagnoser);
-      return general_range_integer_diagnose(word, diagnoser);
+      general_integer_diagnose(word, diagnoser);
+      return;
 
     case "l":
     case "lm":
       selectorattribute_no_duplicates(attr, sel, diagnoser);
-      return general_range_float_diagnose(word, diagnoser);
+      general_positive_integer_diagnose(word, diagnoser);
+      return;
 
     case "m":
       //Types and gamemode can only be tested postive once, but can have all the negative tests

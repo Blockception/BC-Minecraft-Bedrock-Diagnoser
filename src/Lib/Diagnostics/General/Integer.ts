@@ -3,10 +3,31 @@ import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBu
 import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
 import { Types } from "bc-minecraft-bedrock-types";
 
-export function general_integer_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  if (General.Integer.is(value.text)) return true;
+export function general_integer_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder, range?: { min: number; max: number }): boolean {
+  if (General.Integer.is(value.text)) {
+    if (range) {
+      const v = Number.parseInt(value.text);
 
-  diagnoser.Add(value, "Invalid integer value: " + value.text, DiagnosticSeverity.error, "integer.invalid");
+      if (v < range.min)
+        diagnoser.Add(
+          value,
+          `The value of ${v} is lower than the allowed minimum: ${range.min}`,
+          DiagnosticSeverity.error,
+          "general.integer.minimum"
+        );
+      if (v > range.max)
+        diagnoser.Add(
+          value,
+          `The value of ${v} is higher than the allowed minimum: ${range.max}`,
+          DiagnosticSeverity.error,
+          "general.integer.maximum"
+        );
+    }
+
+    return true;
+  }
+
+  diagnoser.Add(value, "Invalid integer value: " + value.text, DiagnosticSeverity.error, "general.integer.invalid");
   return false;
 }
 
@@ -18,6 +39,6 @@ export function general_positive_integer_diagnose(value: Types.OffsetWord, diagn
 
   if (n >= 0) return true;
 
-  diagnoser.Add(value, `expected a positive integer but got: ${n}`, DiagnosticSeverity.error, "integer.positive.only");
+  diagnoser.Add(value, `expected a positive integer but got: ${n}`, DiagnosticSeverity.error, "general.integer.positive.only");
   return false;
 }
