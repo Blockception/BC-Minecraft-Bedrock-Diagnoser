@@ -6,6 +6,7 @@ import { animation_or_controller_diagnose_implementation } from "../anim or cont
 import { DefinedUsing, MolangFullSet } from "bc-minecraft-molang";
 import { Types } from "bc-minecraft-bedrock-types";
 import { diagnose_molang } from "../../Molang/diagnostics";
+import { diagnose_script } from "../../Minecraft/Script";
 
 /**Diagnoses the given document as an bp entity
  * @param doc The text document to diagnose
@@ -41,4 +42,7 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
 
   //Check animations / animation controllers implements
   owner.animations.using.forEach((anim_id) => animation_or_controller_diagnose_implementation(anim_id, owner, "entity", diagnoser));
+
+  //Script check
+  if (container.description.scripts) diagnose_script(diagnoser, container.description.scripts, container.description.animations);
 }
