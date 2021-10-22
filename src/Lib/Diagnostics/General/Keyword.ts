@@ -5,5 +5,5 @@ export function general_keyword_diagnose(keyword: string, value: Types.OffsetWor
   //Keyword matches the given value, then stop
   if (value.text === keyword) return;
 
-  diagnoser.Add(value, `Invalid keyword: ${value}, expected keyword: ${value}`, DiagnosticSeverity.error, "keyword.invalid");
+  diagnoser.Add(value, `Invalid keyword: ${value}, expected keyword: ${value}`, DiagnosticSeverity.error, "general.keyword.invalid");
 }
