@@ -7,6 +7,7 @@ import { DefinedUsing, MolangFullSet } from "bc-minecraft-molang";
 import { Types } from "bc-minecraft-bedrock-types";
 import { diagnose_molang } from "../../Molang/diagnostics";
 import { diagnose_script } from "../../Minecraft/Script";
+import { behaviorpack_entity_check_events } from "./events";
 
 /**Diagnoses the given document as an bp entity
  * @param doc The text document to diagnose
@@ -45,4 +46,7 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
 
   //Script check
   if (container.description.scripts) diagnose_script(diagnoser, container.description.scripts, container.description.animations);
+
+  //Check events
+  if (container.events) behaviorpack_entity_check_events(container.events, diagnoser, container.component_groups);
 }
