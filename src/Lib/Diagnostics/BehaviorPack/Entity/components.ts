@@ -15,10 +15,19 @@ export function behaviorpack_entity_components_dependencies(entity: Internal.Beh
   checkAll(diagnoser, components, "minecraft:breedable", "minecraft:behavior.breed");
 
   checkAll(diagnoser, components, "minecraft:behavior.admire_item", "minecraft:admire_item");
+  checkAll(diagnoser, components, "minecraft:behavior.barter", "minecraft:barter");
+
+  //behavior.slime_attack
+  checkAny(diagnoser, components, "minecraft:behavior.slime_attack", "minecraft:behavior.nearest_attackable_target", "minecraft:behavior.hurt_by_target");
+  checkAll(diagnoser, components, "minecraft:behavior.slime_attack", "minecraft:attack");
+
+  //behavior.stalk_and_pounce_on_target
+  checkAny(diagnoser, components, "minecraft:behavior.stalk_and_pounce_on_target", "minecraft:behavior.nearest_attackable_target", "minecraft:behavior.hurt_by_target");
+  checkAll(diagnoser, components, "minecraft:behavior.stalk_and_pounce_on_target", "minecraft:attack");
+  
 }
 
-/**
- *
+/**The component needs all of the specified needs
  * @param diagnoser
  * @param dependent The component group that is depended on other groups
  * @param needs
@@ -43,8 +52,7 @@ function checkAll(diagnoser: DiagnosticsBuilder, components: string[], dependent
   }
 }
 
-/**
- *
+/**The component needs one of the specified needs
  * @param diagnoser
  * @param dependent The component group that is depended on other groups
  * @param needs
@@ -58,15 +66,15 @@ function checkAny(diagnoser: DiagnosticsBuilder, components: string[], dependent
   for (let I = 0; I < needs.length; I++) {
     const need = needs[I];
 
-    if (!components.includes(need)) {
-      diagnoser.Add(
-        dependent,
-        `Component: '${dependent}' requires one of the following components: ${JSON.stringify(needs)}`,
-        DiagnosticSeverity.error,
-        "behaviorpack.entity.component.missing"
-      );
-    }
+    if (components.includes(need)) return;
   }
+
+  diagnoser.Add(
+    dependent,
+    `Component: '${dependent}' requires one of the following components: ${JSON.stringify(needs)}`,
+    DiagnosticSeverity.error,
+    "behaviorpack.entity.component.missing"
+  );
 }
 
 function checkPatternAny(diagnoser: DiagnosticsBuilder, components: string[], dependent: string, ...needs: string[]): void {
