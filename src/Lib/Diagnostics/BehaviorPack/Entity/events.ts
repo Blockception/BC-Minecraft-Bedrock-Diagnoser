@@ -7,9 +7,9 @@ export function behaviorpack_entity_check_events(
   component_groups?: Map<Internal.BehaviorPack.EntityComponentContainer>
 ) {
   if (Array.isArray(events)) {
-    events.forEach((event) => behaviorpack_entity_check_event(event, diagnoser, component_groups));
+    events.forEach((event) => behaviorpack_entity_check_event(event, "", diagnoser, component_groups));
   } else {
-    Map.forEach(events, (event, key) => behaviorpack_entity_check_event(event, diagnoser, component_groups));
+    Map.forEach(events, (event, key) => behaviorpack_entity_check_event(event, key, diagnoser, component_groups));
   }
 }
 
@@ -21,22 +21,28 @@ export function behaviorpack_entity_check_events(
  */
 export function behaviorpack_entity_check_event(
   event: Internal.BehaviorPack.EntityEvent,
+  event_id: string,
   diagnoser: DiagnosticsBuilder,
   component_groups?: Map<Internal.BehaviorPack.EntityComponentContainer>
 ): void {
-  has_groups(diagnoser, event.add?.component_groups, component_groups);
-  has_groups(diagnoser, event.remove?.component_groups, component_groups);
+  has_groups(diagnoser, event_id, event.add?.component_groups, component_groups);
+  has_groups(diagnoser, event_id, event.remove?.component_groups, component_groups);
 
   event.randomize?.forEach((item) => {
-    behaviorpack_entity_check_event(item, diagnoser, component_groups);
+    behaviorpack_entity_check_event(item, event_id, diagnoser, component_groups);
   });
 
   event.sequence?.forEach((item) => {
-    behaviorpack_entity_check_event(item, diagnoser, component_groups);
+    behaviorpack_entity_check_event(item, event_id, diagnoser, component_groups);
   });
 }
 
-function has_groups(diagnoser: DiagnosticsBuilder, groups?: string[], component_groups?: Map<Internal.BehaviorPack.EntityComponentContainer>): void {
+function has_groups(
+  diagnoser: DiagnosticsBuilder,
+  id: string,
+  groups?: string[],
+  component_groups?: Map<Internal.BehaviorPack.EntityComponentContainer>
+): void {
   if (groups === undefined) return;
 
   for (let I = 0; I < groups.length; I++) {
@@ -48,8 +54,8 @@ function has_groups(diagnoser: DiagnosticsBuilder, groups?: string[], component_
     }
 
     diagnoser.Add(
-      `events/${group}`,
-      "Event is calling component group: " + group,
+      `events/${id}/${group}`,
+      `Event is calling component group: ${group}, but the component group was not found`,
       DiagnosticSeverity.warning,
       "behaviorpack.entity.component_group.missing"
     );
