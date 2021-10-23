@@ -2,6 +2,7 @@ import { TextDocument } from "bc-minecraft-bedrock-project";
 import { jsonc } from "jsonc";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
+import { Handle_Json_Error } from "./Errors";
 
 export namespace Json {
   /**Loads the object and casts it to the specified type, if it fails then undefined is loaded and the error message is send to the diagnoser
@@ -21,19 +22,28 @@ export namespace Json {
       //cast object
       out = <T>temp;
     } catch (err: any) {
-      if (err.message && err.stack) {
-        diagnoser.Add(0, err.message + "\n" + err.stack, DiagnosticSeverity.error, "json.invalid");
-      } else {
-        //add parsing of error to possible retrieve the position of the error?
-        diagnoser.Add(0, `Invalid json: ${JSON.stringify(err)}`, DiagnosticSeverity.error, "json.invalid");
-      }
+      Handle_Json_Error(err, doc, diagnoser);
     }
 
     return out;
   }
 
-  /** */
-  export function TypeCheck<T>(value: any, diagnoser: DiagnosticsBuilder, type: string, code : string, checkfn: (value: any) => value is T): value is T {
+  /**
+   * 
+   * @param value 
+   * @param diagnoser 
+   * @param type 
+   * @param code 
+   * @param checkfn 
+   * @returns 
+   */
+  export function TypeCheck<T>(
+    value: any,
+    diagnoser: DiagnosticsBuilder,
+    type: string,
+    code: string,
+    checkfn: (value: any) => value is T
+  ): value is T {
     if (checkfn(value)) {
       return true;
     }
