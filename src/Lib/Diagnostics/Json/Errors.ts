@@ -27,7 +27,7 @@ export function Handle_Json_Error(err: any, doc: TextDocument, diagnoser: Diagno
 function safe_first_get(regex: RegExp, text: string): string | undefined {
   const match = regex.exec(text);
 
-  if (match) return match[0];
+  if (match) return match[1] ?? match[0];
 
   return undefined;
 }
