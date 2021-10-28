@@ -1,4 +1,4 @@
-import { MolangFullSet } from "bc-minecraft-molang";
+import { Molang } from "bc-minecraft-molang";
 import { diagnose_molang_implementation } from "../../../../src/Lib/Diagnostics/Molang/diagnostics";
 import { TestDiagnoser } from "../../../diagnoser";
 
@@ -7,8 +7,8 @@ describe("Molang", () => {
     it("no errors", () => {
       const diganoser = TestDiagnoser.Create();
 
-      const using = MolangFullSet.create();
-      const owner = MolangFullSet.create();
+      const using = Molang.MolangFullSet.create();
+      const owner = Molang.MolangFullSet.create();
 
       using.queries.using.push("is_jumping")
       using.temps.using.push("foo");
@@ -26,8 +26,8 @@ describe("Molang", () => {
     it("1 error", () => {
       const diganoser = TestDiagnoser.Create();
 
-      const using = MolangFullSet.create();
-      const owner = MolangFullSet.create();
+      const using = Molang.MolangFullSet.create();
+      const owner = Molang.MolangFullSet.create();
 
       using.queries.using.push("is_jumping")
       using.temps.using.push("foo");
@@ -44,8 +44,8 @@ describe("Molang", () => {
     it("1 error", () => {
       const diganoser = TestDiagnoser.Create();
 
-      const using = MolangFullSet.create();
-      const owner = MolangFullSet.create();
+      const using = Molang.MolangFullSet.create();
+      const owner = Molang.MolangFullSet.create();
 
       using.queries.using.push("is_jumping")
       using.temps.using.push("foo");

@@ -3,7 +3,7 @@ import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/Diagnostic
 import { Json } from "../../Json/Json";
 import { behaviorpack_entity_components_dependencies } from "./components";
 import { animation_or_controller_diagnose_implementation } from "../anim or controller";
-import { DefinedUsing, MolangFullSet } from "bc-minecraft-molang";
+import { DefinedUsing, Molang } from "bc-minecraft-molang";
 import { Types } from "bc-minecraft-bedrock-types";
 import { diagnose_molang } from "../../Molang/diagnostics";
 import { diagnose_script } from "../../Minecraft/Script";
@@ -26,7 +26,7 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
   behaviorpack_entity_components_dependencies(entity, diagnoser);
 
   const container = entity["minecraft:entity"];
-  const MolangData = MolangFullSet.harvest(container);
+  const MolangData = Molang.MolangFullSet.harvest(container);
   const id = container.description.identifier;
 
   const owner = {

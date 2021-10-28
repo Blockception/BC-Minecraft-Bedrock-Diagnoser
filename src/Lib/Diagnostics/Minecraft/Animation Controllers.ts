@@ -1,7 +1,7 @@
 import { BehaviorPack, Internal, Map, ResourcePack } from "bc-minecraft-bedrock-project";
 import { State } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/BehaviorPack/AnimationController";
 import { AnimationCarrier, MolangCarrier } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier";
-import { Defined, MolangFullSet, MolangSet } from "bc-minecraft-molang";
+import { Defined, Molang } from "bc-minecraft-molang";
 import { Types } from "bc-minecraft-bedrock-types";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
@@ -9,7 +9,7 @@ import { diagnose_molang_implementation, OwnerType } from "../Molang/diagnostics
 
 export type animation_controllers = Internal.BehaviorPack.AnimationControllers | Internal.ResourcePack.AnimationControllers;
 export type animation_controller = Internal.BehaviorPack.AnimationController | Internal.ResourcePack.AnimationController;
-export type animationsOwner = Types.Identifiable & MolangCarrier<MolangSet> & AnimationCarrier<Defined<String>>;
+export type animationsOwner = Types.Identifiable & MolangCarrier<Molang.MolangSet> & AnimationCarrier<Defined<String>>;
 
 /**
  *
@@ -78,7 +78,7 @@ function CheckTransition(controller: string, Transitions: Types.Conditional[], S
 
 export function general_animation_controllers_implementation(
   controller: ResourcePack.AnimationController.AnimationController | BehaviorPack.AnimationController.AnimationController,
-  user: Types.Identifiable & AnimationCarrier<Defined<string>> & MolangCarrier<MolangSet | MolangFullSet>,
+  user: Types.Identifiable & AnimationCarrier<Defined<string>> & MolangCarrier<Molang.MolangSet | Molang.MolangFullSet>,
   ownerType: OwnerType,
   diagnoser: DiagnosticsBuilder
 ) {

@@ -1,4 +1,4 @@
-import { DefinedUsing, MolangFullSet, MolangSet } from "bc-minecraft-molang";
+import { DefinedUsing, Molang } from "bc-minecraft-molang";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
@@ -16,7 +16,7 @@ import { general_animation_controllers_implementation } from '../../Minecraft/An
  */
 export function animation_controller_diagnose_implementation(
   controllerid: string,
-  user: Types.Identifiable & MolangCarrier<MolangSet | MolangFullSet> & AnimationCarrier<DefinedUsing<string>>,
+  user: Types.Identifiable & MolangCarrier<Molang.MolangSet | Molang.MolangFullSet> & AnimationCarrier<DefinedUsing<string>>,
   ownerType: OwnerType,
   diagnoser: DiagnosticsBuilder
 ): void {
