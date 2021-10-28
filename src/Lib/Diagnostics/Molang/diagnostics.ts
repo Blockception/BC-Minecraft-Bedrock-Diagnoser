@@ -1,6 +1,6 @@
 import { MolangCarrier } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier";
 import { Types } from "bc-minecraft-bedrock-types";
-import { Defined, DefinedUsing, Molang, MolangData, MolangFullSet, MolangSet, Using } from "bc-minecraft-molang";
+import { Defined, DefinedUsing, MolangData, MolangFullSet, MolangSet, Using } from "bc-minecraft-molang";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
 
