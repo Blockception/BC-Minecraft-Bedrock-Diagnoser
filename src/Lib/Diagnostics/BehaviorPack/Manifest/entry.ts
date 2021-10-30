@@ -20,7 +20,7 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
   check_min_engine_version(manifest.header.min_engine_version, doc, diagnoser);
 }
 
-function check_min_engine_version(version: string | Types.Version | undefined, doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
+function check_min_engine_version(version: number[] | string | Types.Version | undefined, doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
   const pack = diagnoser.context.getCache().BehaviorPacks.get(doc);
 
   /**No pack then skip */
