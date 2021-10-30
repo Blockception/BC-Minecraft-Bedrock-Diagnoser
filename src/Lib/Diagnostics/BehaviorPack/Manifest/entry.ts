@@ -30,9 +30,7 @@ function check_min_engine_version(version: string | Types.Version | undefined, d
   if (pack.functions.count() === 0) return;
 
   if (version !== undefined) {
-    if (typeof version === "string") version = Types.Version.parse(version);
-
-
+    if (Types.Version.compare(version, { major: 1, minor: 8, patch: 0 }) >= 0) return;
   }
 
   return diagnoser.Add(
