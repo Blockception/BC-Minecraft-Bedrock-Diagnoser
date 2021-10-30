@@ -1,7 +1,7 @@
 import { Internal, TextDocument } from "bc-minecraft-bedrock-project";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { Json } from "../../Json/Json";
-import { minecraft_manifest_diagnose } from "../../Minecraft/Manifest";
+import { minecraft_manifest_diagnose, minecraft_manifest_required_module } from "../../Minecraft/Manifest";
 
 /**Diagnoses the given document as an bp manifest
  * @param doc The text document to diagnose
@@ -11,5 +11,6 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
 
   if (!Json.TypeCheck(manifest, diagnoser, "manifest", "minecraft.manifest.invalid", Internal.Manifest.is)) return;
 
-  minecraft_manifest_diagnose(manifest, diagnoser);
+  minecraft_manifest_diagnose(manifest, diagnoser);  
+  minecraft_manifest_required_module(manifest, diagnoser, "world_template");
 }

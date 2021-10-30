@@ -45,10 +45,9 @@ export namespace BehaviorPack {
       case FileType.function:
         if (doc.uri.endsWith("tick.json")) {
           Tick.Diagnose(doc, diagnoser);
-        }
-        else {
+        } else {
           Mcfunction.Diagnose(doc, diagnoser);
-        }        
+        }
         break;
 
       case FileType.item:
