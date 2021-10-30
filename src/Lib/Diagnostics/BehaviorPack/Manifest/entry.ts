@@ -2,6 +2,8 @@ import { Internal, TextDocument } from "bc-minecraft-bedrock-project";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { Json } from "../../Json/Json";
 import { minecraft_manifest_diagnose, minecraft_manifest_required_module } from "../../Minecraft/Manifest";
+import { Types } from "bc-minecraft-bedrock-types";
+import { DiagnosticSeverity } from "../../../../main";
 
 /**Diagnoses the given document as an bp manifest
  * @param doc The text document to diagnose
@@ -13,4 +15,30 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
 
   minecraft_manifest_diagnose(manifest, diagnoser);
   minecraft_manifest_required_module(manifest, diagnoser, "data");
+
+  //BP specific
+  check_min_engine_version(manifest.header.min_engine_version, doc, diagnoser);
+}
+
+function check_min_engine_version(version: string | Types.Version | undefined, doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
+  const pack = diagnoser.context.getCache().BehaviorPacks.get(doc);
+
+  /**No pack then skip */
+  if (pack === undefined) return;
+
+  /**Only need to check if there are functions */
+  if (pack.functions.count() === 0) return;
+
+  if (version !== undefined) {
+    if (typeof version === "string") version = Types.Version.parse(version);
+
+
+  }
+
+  return diagnoser.Add(
+    "header",
+    "Behaviorpacks with mcfunctions need `min_engine_version` of atleast value: '1.8.0'",
+    DiagnosticSeverity.error,
+    "behaviorpack.manifest.min_engine_version"
+  );
 }
