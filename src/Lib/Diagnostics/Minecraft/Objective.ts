@@ -17,6 +17,10 @@ export function minecraft_objectives_diagnose(value: Types.OffsetWord, diagnoser
     );
   }
 
+  if (!/^[a-zA-Z0-9\-\_\.]+$/gmi.test(id)) {
+    diagnoser.Add(value, `Illegal character found in objective: ${id}`, DiagnosticSeverity.error, "minecraft.objective.invalid");
+  }
+
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.objective, id, diagnoser)) return;
 

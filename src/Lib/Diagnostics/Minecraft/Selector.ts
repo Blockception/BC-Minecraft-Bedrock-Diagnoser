@@ -5,7 +5,7 @@ import { Selector, SelectorAttribute } from "bc-minecraft-bedrock-types/lib/src/
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Lib/Types/DiagnosticsBuilder/include";
 import { Types } from "bc-minecraft-bedrock-types";
 import { check_definition_value } from "../Definitions";
-import { general_range_float_diagnose, general_range_integer_diagnose } from "../General/Range";
+import { general_range_integer_diagnose } from "../General/Range";
 import { mode_gamemode_diagnose, mode_selectorattribute_diagnose } from "../Mode/diagnose";
 import { minecraft_coordinate_diagnose } from "./Coordinate";
 import { minecraft_name_diagnose } from "./Name";
