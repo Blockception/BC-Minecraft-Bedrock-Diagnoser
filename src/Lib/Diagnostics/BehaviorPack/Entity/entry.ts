@@ -8,6 +8,7 @@ import { Types } from "bc-minecraft-bedrock-types";
 import { diagnose_molang } from "../../Molang/diagnostics";
 import { diagnose_script } from "../../Minecraft/Script";
 import { behaviorpack_entity_check_events } from "./events";
+import { behaviorpack_animation_used } from "../Animation/usage";
 
 /**Diagnoses the given document as an bp entity
  * @param doc The text document to diagnose
@@ -49,4 +50,7 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
 
   //Check events
   if (container.events) behaviorpack_entity_check_events(container.events, diagnoser, container.component_groups);
+
+  //Check used animations
+  behaviorpack_animation_used(container.description.animations, diagnoser, container.description.scripts);
 }
