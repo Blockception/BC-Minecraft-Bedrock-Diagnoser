@@ -35,7 +35,7 @@ export function animation_controller_diagnose_implementation(
 
     diagnoser.Add(
       `animations/${controllerid}`,
-      `Animation controller: ${controllerid} uses particle: ${particle}, but no definition has been found`,
+      `Animation controller: ${controllerid} uses particle: '${particle}', but no definition has been found`,
       DiagnosticSeverity.warning,
       "resourcepack.animation_controller.particle.missing"
     );
@@ -47,7 +47,7 @@ export function animation_controller_diagnose_implementation(
 
     diagnoser.Add(
       `animations/${controllerid}`,
-      `Animation controller: ${controllerid} uses sound: ${sound}, but no definition has been found`,
+      `Animation controller: ${controllerid} uses sound: '${sound}', but no definition has been found`,
       DiagnosticSeverity.warning,
       "resourcepack.animation_controller.sound.missing"
     );

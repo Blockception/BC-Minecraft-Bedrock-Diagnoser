@@ -5,22 +5,25 @@ import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
 import { education_enabled } from "../Definitions";
 import { animation_controller_diagnose_implementation } from "./Animation Controllers/diagnostics";
 import { animation_diagnose_implementation } from "./Animation/diagnostics";
-import { OwnerType } from '../Molang/diagnostics';
-import { Types} from 'bc-minecraft-bedrock-types';
-import { AnimationCarrier, MolangCarrier } from 'bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier';
+import { OwnerType } from "../Molang/diagnostics";
+import { Types } from "bc-minecraft-bedrock-types";
+import { AnimationCarrier, MolangCarrier } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier";
+import { Definition } from "bc-minecraft-bedrock-types/lib/src/Types/Definition";
 
 export function animation_or_controller_diagnose_implementation(
-  id: string, 
-  user : Types.Identifiable & MolangCarrier<Molang.MolangSet | Molang.MolangFullSet> & AnimationCarrier<DefinedUsing<string>>,
-  ownerType: OwnerType, 
-  diagnoser: DiagnosticsBuilder): void {
-
+  id: string,
+  user: Types.Identifiable & MolangCarrier<Molang.MolangSet | Molang.MolangFullSet> & AnimationCarrier<DefinedUsing<string>>,
+  ownerType: OwnerType,
+  diagnoser: DiagnosticsBuilder,
+  particles?: Definition,
+  sounds?: Definition
+): void {
   switch (is_animation_or_controller(id, diagnoser)) {
     case anim_or_contr.animation:
-      return animation_diagnose_implementation(id, user, ownerType, diagnoser);
+      return animation_diagnose_implementation(id, user, ownerType, diagnoser, particles, sounds);
 
     case anim_or_contr.controller:
-      return animation_controller_diagnose_implementation(id, user, ownerType, diagnoser);
+      return animation_controller_diagnose_implementation(id, user, ownerType, diagnoser, particles, sounds);
 
     case anim_or_contr.neither:
       diagnoser.Add(id, `Cannot find animation / animation controller: ${id}`, DiagnosticSeverity.error, "resourcepack.anim_or_controller.missing");
@@ -34,7 +37,6 @@ export function animation_or_controller_diagnose(id: Types.OffsetWord, diagnoser
       return;
 
     case anim_or_contr.neither:
-
       diagnoser.Add(id, `Cannot find animation / animation controller: ${id}`, DiagnosticSeverity.error, "mcfunction.anim_or_controller.missing");
       return;
   }
@@ -47,22 +49,26 @@ export function animation_reference_diagnose(value: Types.OffsetWord, diagnoser:
   let out = false;
 
   //Project?
-  data.ResourcePacks.entities.forEach(entity=>{
+  data.ResourcePacks.entities.forEach((entity) => {
     if (entity.animations.defined.includes(id)) out = true;
   });
-  
+
   if (out) return;
 
   //Vanilla?
-  MinecraftData.vanilla.ResourcePack.entities.forEach(entity=>{
+  MinecraftData.vanilla.ResourcePack.entities.forEach((entity) => {
     if (entity.animations.includes(id)) out = true;
   });
- 
+
   if (out) return;
 
-  diagnoser.Add(value, `Cannot find animation / animation controller: ${value.text}`, DiagnosticSeverity.error, "mcfunction.anim_or_controller.missing");
+  diagnoser.Add(
+    value,
+    `Cannot find animation / animation controller: ${value.text}`,
+    DiagnosticSeverity.error,
+    "mcfunction.anim_or_controller.missing"
+  );
 }
-
 
 export enum anim_or_contr {
   animation,

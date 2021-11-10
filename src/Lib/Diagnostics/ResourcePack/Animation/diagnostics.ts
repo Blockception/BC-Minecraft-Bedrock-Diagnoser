@@ -35,7 +35,7 @@ export function animation_diagnose_implementation(
 
     diagnoser.Add(
       `animations/${anim_id}`,
-      `Animation: ${anim_id} uses particle: ${particle}, but no definition has been found`,
+      `Animation: ${anim_id} uses particle: '${particle}', but no definition has been found`,
       DiagnosticSeverity.warning,
       "resourcepack.animation.particle.missing"
     );
@@ -47,7 +47,7 @@ export function animation_diagnose_implementation(
 
     diagnoser.Add(
       `animations/${anim_id}`,
-      `Animation: ${anim_id} uses sound: ${sound}, but no definition has been found`,
+      `Animation: ${anim_id} uses sound: '${sound}', but no definition has been found`,
       DiagnosticSeverity.warning,
       "resourcepack.animation.sound.missing"
     );
