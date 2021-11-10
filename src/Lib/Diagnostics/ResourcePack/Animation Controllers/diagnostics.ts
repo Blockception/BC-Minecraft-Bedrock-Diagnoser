@@ -6,7 +6,8 @@ import { education_enabled } from "../../Definitions";
 import { OwnerType } from "../../Molang/diagnostics";
 import { Types } from "bc-minecraft-bedrock-types";
 import { AnimationCarrier, MolangCarrier } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier";
-import { general_animation_controllers_implementation } from '../../Minecraft/Animation Controllers';
+import { general_animation_controllers_implementation } from "../../Minecraft/Animation Controllers";
+import { Definition } from "bc-minecraft-bedrock-types/lib/src/Types/Definition";
 
 /**
  *
@@ -18,19 +19,39 @@ export function animation_controller_diagnose_implementation(
   controllerid: string,
   user: Types.Identifiable & MolangCarrier<Molang.MolangSet | Molang.MolangFullSet> & AnimationCarrier<DefinedUsing<string>>,
   ownerType: OwnerType,
-  diagnoser: DiagnosticsBuilder
+  diagnoser: DiagnosticsBuilder,
+  particles?: Definition,
+  sounds?: Definition
 ): void {
-  
-  if (has_animation_controller(controllerid, diagnoser)) {
-    const controller = diagnoser.context.getCache().ResourcePacks.animation_controllers.get(controllerid);
+  if (!has_animation_controller(controllerid, diagnoser)) return;
+  const controller = diagnoser.context.getCache().ResourcePacks.animation_controllers.get(controllerid);
 
-    if (!controller) return;
+  if (!controller) return;
+  general_animation_controllers_implementation(controller, user, ownerType, diagnoser);
 
-    general_animation_controllers_implementation(controller, user, ownerType, diagnoser);
-  }
+  //Particle check
+  controller.particles.using.forEach((particle) => {
+    if (particles && particles[particle] !== undefined) return;
 
-  //TODO add particle check
-  //TODO add sound check
+    diagnoser.Add(
+      `animations/${controllerid}`,
+      `Animation controller: ${controllerid} uses particle: ${particle}, but no definition has been found`,
+      DiagnosticSeverity.warning,
+      "resourcepack.animation_controller.particle.missing"
+    );
+  });
+
+  //Sound check
+  controller.sounds.using.forEach((sound) => {
+    if (sounds && sounds[sound] !== undefined) return;
+
+    diagnoser.Add(
+      `animations/${controllerid}`,
+      `Animation controller: ${controllerid} uses sound: ${sound}, but no definition has been found`,
+      DiagnosticSeverity.warning,
+      "resourcepack.animation_controller.sound.missing"
+    );
+  });
 }
 
 /**

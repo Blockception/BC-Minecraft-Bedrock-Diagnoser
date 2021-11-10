@@ -4,10 +4,8 @@ import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/Diagnostic
 import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
 import { education_enabled } from "../../Definitions";
 import { diagnose_molang_implementation, OwnerType } from "../../Molang/diagnostics";
-import { AnimationCarrier, MolangCarrier } from 'bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier';
-
-
-
+import { AnimationCarrier, MolangCarrier } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier";
+import { Definition } from "bc-minecraft-bedrock-types/lib/src/Types/Definition";
 
 /**
  *
@@ -19,19 +17,41 @@ export function animation_diagnose_implementation(
   anim_id: string,
   user: Types.Identifiable & MolangCarrier<Molang.MolangSet | Molang.MolangFullSet> & AnimationCarrier<DefinedUsing<string>>,
   ownerType: OwnerType,
-  diagnoser: DiagnosticsBuilder
+  diagnoser: DiagnosticsBuilder,
+  particles?: Definition,
+  sounds?: Definition
 ): void {
-  if (has_animation(anim_id, diagnoser)) {
-    //Project has animation
-    const anim = diagnoser.context.getCache().BehaviorPacks.animations.get(anim_id);
+  if (!has_animation(anim_id, diagnoser)) return;
+  //Project has animation
+  const anim = diagnoser.context.getCache().ResourcePacks.animations.get(anim_id);
 
-    if (!anim) return;
+  if (!anim) return;
 
-    diagnose_molang_implementation(anim, user, ownerType, diagnoser);
-  }
-  
-  //TODO add particle check
-  //TODO add sound check
+  diagnose_molang_implementation(anim, user, ownerType, diagnoser);
+
+  //Particle check
+  anim.particles.using.forEach((particle) => {
+    if (particles && particles[particle] !== undefined) return;
+
+    diagnoser.Add(
+      `animations/${anim_id}`,
+      `Animation: ${anim_id} uses particle: ${particle}, but no definition has been found`,
+      DiagnosticSeverity.warning,
+      "resourcepack.animation.particle.missing"
+    );
+  });
+
+  //Sound check
+  anim.sounds.using.forEach((sound) => {
+    if (sounds && sounds[sound] !== undefined) return;
+
+    diagnoser.Add(
+      `animations/${anim_id}`,
+      `Animation: ${anim_id} uses sound: ${sound}, but no definition has been found`,
+      DiagnosticSeverity.warning,
+      "resourcepack.animation.sound.missing"
+    );
+  });
 }
 
 /**
