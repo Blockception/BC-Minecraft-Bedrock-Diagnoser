@@ -115,13 +115,17 @@ function minecraft_selector_attribute_diagnose(attr: SelectorAttribute, sel: Sel
   word.offset += old.indexOf(word.text);
 
   switch (attr.name) {
-    case "rx":
     case "rxm":
+    case "rx":
+      selectorattribute_no_duplicates(attr, sel, diagnoser);
+      general_float_diagnose(word, diagnoser, { min: -90, max: 90 });
+      return;
+    
     case "ry":
     case "rym":
       selectorattribute_no_duplicates(attr, sel, diagnoser);
       general_float_diagnose(word, diagnoser, { min: -180, max: 180 });
-      return
+      return;
 
     case "x":
     case "y":
