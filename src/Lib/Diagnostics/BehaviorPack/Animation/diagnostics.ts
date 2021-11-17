@@ -1,11 +1,10 @@
-import { Map } from 'bc-minecraft-bedrock-project';
+import { Map } from "bc-minecraft-bedrock-project";
 import { AnimationCarrier, MolangCarrier } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier";
 import { Types } from "bc-minecraft-bedrock-types";
 import { DefinedUsing, Molang } from "bc-minecraft-molang";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
 import { diagnose_molang_implementation, OwnerType } from "../../Molang/diagnostics";
-
 
 /**
  *
@@ -19,14 +18,14 @@ export function animation_diagnose_implementation(
   ownerType: OwnerType,
   diagnoser: DiagnosticsBuilder
 ): void {
-  if (has_animation(anim_id, diagnoser)) {
-    //Project has animation
-    const anim = diagnoser.context.getCache().BehaviorPacks.animations.get(anim_id);
+  if (!has_animation(anim_id, diagnoser)) return;
+  
+  //Project has animation
+  const anim = diagnoser.context.getCache().BehaviorPacks.animations.get(anim_id);
 
-    if (!anim) return;
+  if (!anim) return;
 
-    diagnose_molang_implementation(anim, user, ownerType, diagnoser);
-  }
+  diagnose_molang_implementation(anim, user, ownerType, diagnoser);
 }
 
 /**

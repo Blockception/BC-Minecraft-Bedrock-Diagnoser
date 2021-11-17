@@ -157,7 +157,7 @@ function diagnose_molang_temp_using(using: DefinedUsing<string>, definer: Define
     //Vanilla provides?
     if (InternalIdentifiable.has(MolangData.get(owner)?.Temps ?? [], check)) continue;
 
-    diagnoser.Add(check, `Missing molang temps defintion: ${check}`, DiagnosticSeverity.error, `molang.temp.missing`);
+    diagnoser.Add("temp." + check, `Missing molang temps defintion: ${check}`, DiagnosticSeverity.error, `molang.temp.missing`);
   }
 }
 
@@ -176,7 +176,7 @@ function diagnose_molang_context_using(using: Using<string> | string, diagnoser:
     //Vanilla provides?
     if (InternalIdentifiable.has(MolangData.get(owner)?.Contexts ?? [], check)) continue;
 
-    diagnoser.Add(check, `Missing molang context defintion: ${check}`, DiagnosticSeverity.error, `molang.context.${owner}.unknown`);
+    diagnoser.Add("context." + check, `Missing molang context defintion: ${check}`, DiagnosticSeverity.error, `molang.context.${owner}.unknown`);
   }
 }
 
@@ -201,7 +201,7 @@ export function diagnose_molang_query_using(using: Using<string> | string, diagn
     //Vanilla provides?
     if (InternalIdentifiable.has(MolangData.General.Queries, check)) continue;
 
-    diagnoser.Add(check, `Unknown molang query function: ${check}`, DiagnosticSeverity.error, `molang.query.unknown`);
+    diagnoser.Add("query." + check, `Unknown molang query function: ${check}`, DiagnosticSeverity.error, `molang.query.unknown`);
   }
 }
 
@@ -228,7 +228,7 @@ export function diagnose_molang_math_using(using: Using<string> | string, diagno
     //Vanilla provides?
     if (InternalIdentifiable.has(MolangData.General.Math, check)) continue;
 
-    diagnoser.Add(check, `Unknown molang math function: ${check}`, DiagnosticSeverity.error, `molang.math.unknown`);
+    diagnoser.Add("math." + check, `Unknown molang math function: ${check}`, DiagnosticSeverity.error, `molang.math.unknown`);
   }
 }
 
