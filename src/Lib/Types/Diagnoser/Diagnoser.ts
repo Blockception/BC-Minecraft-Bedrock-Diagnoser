@@ -56,6 +56,7 @@ export class Diagnoser {
       }
       else {
         //Check per pack
+        //TODO can now do from pack.type
         switch (PackType.detect(doc.uri)) {
           case PackType.behavior_pack:
             out = BehaviorPack.Process(doc, diagnoser);
