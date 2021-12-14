@@ -9,7 +9,7 @@ updates:
     directory: "/" # Location of package manifests
     open-pull-requests-limit: 20
     schedule:
-      interval: "daily"
+      interval: "weekly"
     assignees:
     - "DaanV2"
     reviewers:
