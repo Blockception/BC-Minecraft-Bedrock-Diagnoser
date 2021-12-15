@@ -1,10 +1,12 @@
 import { Command } from "bc-minecraft-bedrock-command";
 import { Modes } from "bc-minecraft-bedrock-types";
-import { SelectorAttribute } from 'bc-minecraft-bedrock-types/lib/src/Minecraft/include';
+import { SelectorAttribute } from "bc-minecraft-bedrock-types/lib/src/Minecraft/include";
 import { ModeHandler } from "bc-minecraft-bedrock-types/lib/src/Modes/ModeHandler";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
 import { Types } from "bc-minecraft-bedrock-types";
+import { education_enabled } from "../Definitions";
+import { SlotTypeMode } from "bc-minecraft-bedrock-types/lib/src/Modes/SlotType";
 
 /**Diagnoses the value as a value in the mode: camerashake
  * @param value The value to evualate, needs the offset to report bugs
@@ -167,9 +169,36 @@ export function mode_slottype_diagnose(value: Types.OffsetWord, diagnoser: Diagn
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_slotid_diagnose(value: Types.OffsetWord, Com: Command, diagnoser: DiagnosticsBuilder): boolean {
-  //TODO add data to bedrock types
+  //Get the slot type
+  const index = Com.parameters.indexOf(value) - 1;
+  //if the index is negative, the parameter then was not found
+  if (index < 0) return false;
 
-  return false;
+  //Get the slot type
+  const m = <SlotTypeMode>Modes.SlotType.get(Com.parameters[index].text);
+  //if the mode is not found, then the parameter is not valid, expected that the previous parameter handling handled slot type not existing
+  if (m === undefined) return false;
+
+  if (m.eduOnly === true && education_enabled(diagnoser) === false) {
+    diagnoser.Add(value.offset, "This is an education only mode, and education is disabled", DiagnosticSeverity.error, "minecraft.mode.edu");
+    return false;
+  }
+
+  if (m.range) {
+    const n = Number.parseInt(value.text);
+
+    if (m.range.min > n || m.range.max < n) {
+      diagnoser.Add(
+        value.offset,
+        `The value is not in the range of ${m.range.min} to ${m.range.max}`,
+        DiagnosticSeverity.error,
+        "minecraft.mode.range"
+      );
+      return false;
+    }
+  }
+
+  return true;
 }
 
 /**Diagnoses the value as a value in the mode: structureanimation

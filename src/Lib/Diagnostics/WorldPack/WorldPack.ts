@@ -3,6 +3,7 @@ import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBu
 
 import * as Manifest from "./Manifest/entry";
 
+/** The namespace that deals with worldpack diagnostics */
 export namespace WorldPack {
   /**Processes and diagnoses the given textdocument
    * @param doc The document to process / diagnose

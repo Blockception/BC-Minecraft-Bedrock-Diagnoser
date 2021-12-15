@@ -3,6 +3,7 @@ import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBu
 
 import * as Manifest from "./Manifest/entry";
 
+/** The namespace that deals with Skinpack diagnostics */
 export namespace SkinPack {
   /**Processes and diagnoses the given textdocument
    * @param doc The document to process / diagnose

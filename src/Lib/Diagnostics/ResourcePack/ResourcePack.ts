@@ -22,7 +22,12 @@ import * as TextureAtlas from "./Texture Atlas/entry";
 import { TextDocument } from 'bc-minecraft-bedrock-project';
 
 
+/** The namespace that deals with resourcepack diagnostics */
 export namespace ResourcePack {
+  /** Processes and diagnoses the given textdocument
+   * @param doc The document to process / diagnose
+   * @param diagnoser The diagnoser to report to
+   * @returns `true` or `false` whenever or not it was succesfull */
   export function Process(doc: TextDocument, diagnoser: DiagnosticsBuilder): boolean {
     const Type = RP.FileType.detect(doc.uri);
 

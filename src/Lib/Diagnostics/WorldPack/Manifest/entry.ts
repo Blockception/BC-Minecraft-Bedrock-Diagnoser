@@ -11,6 +11,6 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
 
   if (!Json.TypeCheck(manifest, diagnoser, "manifest", "minecraft.manifest.invalid", Internal.Manifest.is)) return;
 
-  minecraft_manifest_diagnose(manifest, diagnoser);  
+  minecraft_manifest_diagnose(manifest, diagnoser);
   minecraft_manifest_required_module(manifest, diagnoser, "world_template");
 }

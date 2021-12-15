@@ -3,9 +3,8 @@ import { DiagnosticsBuilder } from "../Types/DiagnosticsBuilder/DiagnosticsBuild
 import { DiagnosticSeverity } from "../Types/DiagnosticsBuilder/Severity";
 
 /**Returns if the project has education enabled
- * @param diagnoser
- * @returns
- */
+ * @param diagnoser The diagnostics builder to add the errors to
+ * @returns True if education is enabled, false if not*/
 export function education_enabled(diagnoser: DiagnosticsBuilder): boolean {
   return diagnoser.project.attributes["education.enable"] === "true";
 }

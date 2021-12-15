@@ -9,6 +9,7 @@ import { minecraft_manifest_diagnose, minecraft_manifest_required_module } from 
 export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
   const manifest = Json.LoadReport<Internal.Manifest>(doc, diagnoser);
 
+  //check if manifest is valid
   if (!Json.TypeCheck(manifest, diagnoser, "manifest", "minecraft.manifest.invalid", Internal.Manifest.is)) return;
 
   minecraft_manifest_diagnose(manifest, diagnoser);

@@ -8,7 +8,13 @@ import { OwnerType } from "../Molang/diagnostics";
 import { animation_controller_diagnose_implementation } from "./Animation Controllers/diagnostics";
 import { animation_diagnose_implementation } from "./Animation/diagnostics";
 
-
+/** 
+ * @param id 
+ * @param user 
+ * @param ownerType 
+ * @param diagnoser 
+ * @returns 
+ */
 export function animation_or_controller_diagnose_implementation(
   id: string,
   user: Types.Identifiable & MolangCarrier<Molang.MolangSet | Molang.MolangFullSet> & AnimationCarrier<DefinedUsing<string>> & { events?: Map<any> },
@@ -27,18 +33,20 @@ export function animation_or_controller_diagnose_implementation(
   }
 }
 
+/** The result of the animation or controller check */
 export enum anim_or_contr {
+  /** the id is an animation */
   animation,
+  /** the id is an animation controller */
   controller,
+  /** the id is neither an animation nor an animation controller */
   neither,
 }
 
-/**
- *
- * @param id
- * @param diagnoser
- * @returns True if animation, false if controller
- */
+/** is an animation or controller.
+ * @param id The id of the animation or controller
+ * @param diagnoser The diagnostics builder to add the errors to
+ * @returns True if animation, false if controller*/
 export function is_animation_or_controller(id: string, diagnoser: DiagnosticsBuilder): anim_or_contr {
   const cache = diagnoser.context.getCache();
 
