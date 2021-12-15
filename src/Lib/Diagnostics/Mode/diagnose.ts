@@ -187,7 +187,7 @@ export function mode_slotid_diagnose(value: Types.OffsetWord, Com: Command, diag
   if (m.range) {
     const n = Number.parseInt(value.text);
 
-    if (m.range.min > n || m.range.max < n) {
+    if (m.range.min >= n || m.range.max <= n) {
       diagnoser.Add(
         value.offset,
         `The value is not in the range of ${m.range.min} to ${m.range.max}`,
