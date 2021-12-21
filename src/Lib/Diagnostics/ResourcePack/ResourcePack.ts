@@ -6,6 +6,7 @@ import * as AnimationController from "./Animation Controllers/entry";
 import * as Attachable from "./Attachable/entry";
 import * as BiomesClient from "./Biomes Client/entry";
 import * as Block from "./Block/entry";
+import * as Blocks from "./Block/block";
 import * as Entity from "./Entity/entry";
 import * as Fog from "./Fog/entry";
 import * as Item from "./Item/entry";
@@ -49,7 +50,13 @@ export namespace ResourcePack {
         break;
 
       case RP.FileType.block:
-        Block.Diagnose(doc, diagnoser);
+        if (doc.uri.endsWith("blocks.json")) {
+          Blocks.Diagnose(doc, diagnoser);
+        }
+        else {
+          Block.Diagnose(doc, diagnoser);
+        }
+
         break;
 
       case RP.FileType.entity:
