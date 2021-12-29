@@ -20,7 +20,7 @@ import * as Sounds from "./Sounds/entry";
 import * as SoundsDefinitions from "./Sounds Definitions/entry";
 import * as Texture from "./Texture/entry";
 import * as TextureAtlas from "./Texture Atlas/entry";
-import * as Flipbook from "./Texture Atlas/Flipbook";
+import * as Flipbook from "./Texture Atlas/flipbook";
 import { TextDocument } from "bc-minecraft-bedrock-project";
 
 /** The namespace that deals with resourcepack diagnostics */
