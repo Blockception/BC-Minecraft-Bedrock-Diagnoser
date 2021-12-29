@@ -1,7 +1,7 @@
 import { Internal, TextDocument } from "bc-minecraft-bedrock-project";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { Json } from "../../Json/Json";
-import { behaviorpack_entity_components_dependencies } from "./components";
+import { behaviorpack_entity_components_check, behaviorpack_entity_components_dependencies } from "./components";
 import { animation_or_controller_diagnose_implementation } from "../anim or controller";
 import { DefinedUsing, Molang } from "bc-minecraft-molang";
 import { Types } from "bc-minecraft-bedrock-types";
@@ -25,6 +25,7 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
 
   //check components
   behaviorpack_entity_components_dependencies(entity, diagnoser);
+  behaviorpack_entity_components_check(entity, diagnoser);
 
   const container = entity["minecraft:entity"];
   const MolangData = Molang.MolangFullSet.harvest(container);

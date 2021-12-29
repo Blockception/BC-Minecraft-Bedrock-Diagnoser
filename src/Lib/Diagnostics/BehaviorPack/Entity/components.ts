@@ -1,8 +1,11 @@
-import { Internal } from "bc-minecraft-bedrock-project";
+import { Internal, TextDocument } from "bc-minecraft-bedrock-project";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
 import { hasPattern } from "../../../Types/Patterns/Checks";
 import { getUsedComponents } from "./Entity";
+import { behaviorpack_entity_components_economy_trade_table } from "./components/economy_trade_table";
+import { behaviorpack_entity_components_trade_table } from "./components/trade";
+import { behaviorpack_entity_components_loot } from "./components/loot";
 
 /**Checks if components dependencies are present, a component might need others to be present
  * @param entity The entity to check
@@ -24,7 +27,29 @@ export function behaviorpack_entity_components_dependencies(entity: Internal.Beh
   //behavior.stalk_and_pounce_on_target
   checkAny(diagnoser, components, "minecraft:behavior.stalk_and_pounce_on_target", "minecraft:behavior.nearest_attackable_target", "minecraft:behavior.hurt_by_target");
   checkAll(diagnoser, components, "minecraft:behavior.stalk_and_pounce_on_target", "minecraft:attack");
-  
+}
+
+export function behaviorpack_entity_components_check(entity: Internal.BehaviorPack.Entity, diagnoser: DiagnosticsBuilder) {
+  const desc = entity["minecraft:entity"];
+
+  behaviorpack_entity_componentscontainer_check(desc.components, diagnoser);
+
+  if (desc.component_groups === undefined) return;
+
+  const groups = Object.getOwnPropertyNames(desc.component_groups);
+
+  for (let I = 0; I < groups.length; I++) {
+    const group = groups[I];
+    behaviorpack_entity_componentscontainer_check(desc.component_groups[group], diagnoser);
+  }
+}
+
+function behaviorpack_entity_componentscontainer_check(container: Internal.BehaviorPack.EntityComponentContainer | undefined | null, diagnoser: DiagnosticsBuilder) {
+  if (container === null || typeof container !== "object") return;
+
+  behaviorpack_entity_components_loot(container, diagnoser);
+  behaviorpack_entity_components_trade_table(container, diagnoser);
+  behaviorpack_entity_components_economy_trade_table(container, diagnoser);
 }
 
 /**The component needs all of the specified needs
@@ -42,12 +67,7 @@ function checkAll(diagnoser: DiagnosticsBuilder, components: string[], dependent
     const need = needs[I];
 
     if (!components.includes(need)) {
-      diagnoser.Add(
-        dependent,
-        `Component: '${dependent}' requires a ${need} component to be present`,
-        DiagnosticSeverity.error,
-        "behaviorpack.entity.component.missing"
-      );
+      diagnoser.Add(dependent, `Component: '${dependent}' requires a ${need} component to be present`, DiagnosticSeverity.error, "behaviorpack.entity.component.missing");
     }
   }
 }
@@ -86,9 +106,7 @@ function checkPatternAny(diagnoser: DiagnosticsBuilder, components: string[], de
     if (!hasPattern(need, components)) {
       diagnoser.Add(
         dependent,
-        `Component that follows pattern: '${dependent}' requires one of the following components that follows the pattern(s): ${JSON.stringify(
-          needs
-        )}`,
+        `Component that follows pattern: '${dependent}' requires one of the following components that follows the pattern(s): ${JSON.stringify(needs)}`,
         DiagnosticSeverity.error,
         "behaviorpack.entity.component.missing"
       );
@@ -104,12 +122,7 @@ function checkMovements(diagnoser: DiagnosticsBuilder, components: string[]): vo
 
   if (Count > 0 && Count != 2) {
     if (hasMovement == 0)
-      diagnoser.Add(
-        "minecraft:movement",
-        `Missing a movement component such as: 'minecraft:movement.basic'`,
-        DiagnosticSeverity.error,
-        "behaviorpack.entity.component.missing"
-      );
+      diagnoser.Add("minecraft:movement", `Missing a movement component such as: 'minecraft:movement.basic'`, DiagnosticSeverity.error, "behaviorpack.entity.component.missing");
     if (hasNavigation == 0)
       diagnoser.Add(
         "minecraft:movement",
