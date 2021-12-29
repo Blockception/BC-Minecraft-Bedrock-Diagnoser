@@ -1,5 +1,5 @@
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
-import { ResourcePack as RP } from 'bc-minecraft-bedrock-project';
+import { ResourcePack as RP } from "bc-minecraft-bedrock-project";
 
 import * as Animation from "./Animation/entry";
 import * as AnimationController from "./Animation Controllers/entry";
@@ -20,8 +20,8 @@ import * as Sounds from "./Sounds/entry";
 import * as SoundsDefinitions from "./Sounds Definitions/entry";
 import * as Texture from "./Texture/entry";
 import * as TextureAtlas from "./Texture Atlas/entry";
-import { TextDocument } from 'bc-minecraft-bedrock-project';
-
+import * as Flipbook from "./Texture Atlas/Flipbook";
+import { TextDocument } from "bc-minecraft-bedrock-project";
 
 /** The namespace that deals with resourcepack diagnostics */
 export namespace ResourcePack {
@@ -52,8 +52,7 @@ export namespace ResourcePack {
       case RP.FileType.block:
         if (doc.uri.endsWith("blocks.json")) {
           Blocks.Diagnose(doc, diagnoser);
-        }
-        else {
+        } else {
           Block.Diagnose(doc, diagnoser);
         }
 
@@ -108,7 +107,7 @@ export namespace ResourcePack {
         break;
 
       case RP.FileType.texture_flipbook_atlas:
-        TextureAtlas.DiagnoseFlipbook(doc, diagnoser);
+        Flipbook.DiagnoseFlipbook(doc, diagnoser);
         break;
 
       case RP.FileType.texture_item_atlas:
