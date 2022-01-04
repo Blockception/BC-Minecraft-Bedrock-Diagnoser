@@ -1,6 +1,7 @@
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/include";
 import { Types } from "bc-minecraft-bedrock-types";
-import { check_definition_value } from "../../Definitions";
+import { check_definition_value, education_enabled } from "../../Definitions";
+import { MinecraftData } from 'bc-minecraft-bedrock-vanilla-data';
 
 export function behaviorpack_loot_table_diagnose(value: Types.OffsetWord | string, diagnoser: DiagnosticsBuilder): boolean {
   const id = typeof value === "string" ? value : value.text;
@@ -12,6 +13,11 @@ export function behaviorpack_loot_table_diagnose(value: Types.OffsetWord | strin
 
   //Project has loot_table
   if (data.BehaviorPacks.loot_tables.has(id)) return true;
+
+  const edu = education_enabled(diagnoser);
+
+  //Vanilla has loot_table
+  if (MinecraftData.BehaviorPack.hasLootTable(id, edu)) return true;
 
   //Nothing then report error
   diagnoser.Add(value, `Cannot find behaviorpack loot_table definition: ${id}`, DiagnosticSeverity.error, "behaviorpack.loot_table.missing");
