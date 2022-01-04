@@ -70,7 +70,7 @@ function diagnose_molang_using(
     } else {
       diagnoser.Add(
         userid,
-        `Missing molang defintion: ${name}.${check}\n\tUsed by: ${userid}\n\tShould be defined by ${definerid}`,
+        `The following molang is not defined: '${name}.${check}' by '${definerid}'\n\tThe definition is used by: '${userid}'`,
         DiagnosticSeverity.error,
         `molang.${name}.missing`
       );
@@ -136,7 +136,7 @@ function diagnose_molang_variable_using(
 
     diagnoser.Add(
       userid,
-      `Missing variable molang defintion: variable.${check}\n\tUsed by: ${userid}\n\tShould be defined by ${definerid}`,
+      `The following molang variable defintion is not defined: 'variable.${check}' by '${definerid}'\n\tThe definition is used by: '${userid}'`,
       DiagnosticSeverity.error,
       `molang.variable.missing`
     );
@@ -157,7 +157,9 @@ function diagnose_molang_temp_using(using: DefinedUsing<string>, definer: Define
     //Vanilla provides?
     if (InternalIdentifiable.has(MolangData.get(owner)?.Temps ?? [], check)) continue;
 
-    diagnoser.Add("temp." + check, `Missing molang temps defintion: ${check}`, DiagnosticSeverity.error, `molang.temp.missing`);
+    diagnoser.Add("temp." + check, 
+    `The following molang temp defintion is not defined: 'temp.${check}'`,
+    DiagnosticSeverity.error, `molang.temp.missing`);
   }
 }
 
@@ -176,7 +178,9 @@ function diagnose_molang_context_using(using: Using<string> | string, diagnoser:
     //Vanilla provides?
     if (InternalIdentifiable.has(MolangData.get(owner)?.Contexts ?? [], check)) continue;
 
-    diagnoser.Add("context." + check, `Missing molang context defintion: ${check}`, DiagnosticSeverity.error, `molang.context.${owner}.unknown`);
+    diagnoser.Add("context." + check, 
+    `The following molang context defintion is not defined: 'context.${check}'`,
+    DiagnosticSeverity.error, `molang.context.${owner}.unknown`);
   }
 }
 
