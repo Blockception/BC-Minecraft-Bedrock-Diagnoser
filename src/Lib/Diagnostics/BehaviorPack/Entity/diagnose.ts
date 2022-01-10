@@ -27,7 +27,7 @@ export function behaviorpack_entityid_diagnose(value: Types.OffsetWord, diagnose
   if (MinecraftData.BehaviorPack.hasEntity(id, edu)) return;
 
   //No namespace?
-  if (!id.includes(':')) {
+  if (!id.includes(":")) {
     id = "minecraft:" + id;
 
     //Defined in McProject
@@ -39,10 +39,10 @@ export function behaviorpack_entityid_diagnose(value: Types.OffsetWord, diagnose
     if (data.hasEntity(id)) return;
 
     const edu = education_enabled(diagnoser);
-
-    //Vanilla has entity
-    if (MinecraftData.BehaviorPack.hasEntity(id, edu)) return;
   }
+
+  //Vanilla has entity
+  if (MinecraftData.BehaviorPack.hasEntity(id, edu)) return;
 
   //Nothing then report error
   diagnoser.Add(value.offset, `Cannot find entity definition: ${id}`, DiagnosticSeverity.error, "behaviorpack.entity.missing");
@@ -54,7 +54,7 @@ export function behaviorpack_entityid_diagnose(value: Types.OffsetWord, diagnose
  * @returns
  */
 export function behaviorpack_entity_spawnegg_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
-  const id = value.text.replace('_spawn_egg', "");
+  const id = value.text.replace("_spawn_egg", "");
 
   behaviorpack_entityid_diagnose({ offset: value.offset, text: id }, diagnoser);
 }
@@ -70,13 +70,14 @@ export function behaviorpack_entity_event_diagnose(data: Types.OffsetWord, diagn
 
   if (matches.length !== 1) return;
 
-  const entityid_index = matches[0].parameters.findIndex(p => { p.type === ParameterType.entity });
+  const entityid_index = matches[0].parameters.findIndex((p) => {
+    p.type === ParameterType.entity;
+  });
   let entityid: string | undefined = undefined;
 
   if (entityid_index >= 0) {
     entityid = Com.parameters[entityid_index]?.text;
-  }
-  else {
+  } else {
     //TODO selector parsing?
   }
 
@@ -88,7 +89,12 @@ export function behaviorpack_entity_event_diagnose(data: Types.OffsetWord, diagn
     if (entity) {
       //Events not found
       if (!entity.events.includes(data.text)) {
-        diagnoser.Add(data.offset, `Entity: ${entityid} has no event declared: ${data.text}`, DiagnosticSeverity.error, "behaviorpack.entity.event.missing");
+        diagnoser.Add(
+          data.offset,
+          `Entity: ${entityid} has no event declared: ${data.text}`,
+          DiagnosticSeverity.error,
+          "behaviorpack.entity.event.missing"
+        );
       }
     }
   }

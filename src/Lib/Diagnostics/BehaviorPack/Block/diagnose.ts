@@ -46,10 +46,10 @@ export function behaviorpack_check_blockid(blockDescriptor: Types.OffsetWord, di
 
     //Project has block
     if (data.hasBlock(id)) return;
-
-    //Vanilla has block
-    if (MinecraftData.BehaviorPack.hasBlock(id, edu)) return;
   }
+  
+  //Vanilla has block
+  if (MinecraftData.BehaviorPack.hasBlock(id, edu)) return;
 
   //Nothing then report error
   diagnoser.Add(id, `Cannot find block definition: ${id}`, DiagnosticSeverity.error, "behaviorpack.block.missing");
