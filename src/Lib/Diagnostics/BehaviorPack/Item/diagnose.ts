@@ -1,8 +1,7 @@
-
-import { MinecraftData } from 'bc-minecraft-bedrock-vanilla-data';
-import { DiagnosticsBuilder, DiagnosticSeverity } from '../../../Types/DiagnosticsBuilder/include';
+import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/include";
 import { Types } from "bc-minecraft-bedrock-types";
-import { check_definition_value, education_enabled } from '../../Definitions';
+import { check_definition_value, education_enabled } from "../../Definitions";
 
 export function behaviorpack_item_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   let id = value.text;
@@ -24,10 +23,10 @@ export function behaviorpack_item_diagnose(value: Types.OffsetWord, diagnoser: D
 
     //Project has block
     if (data.hasItem(id)) return true;
-
-    //Vanilla has block
-    if (MinecraftData.BehaviorPack.hasItem(id, education_enabled(diagnoser))) return true;
   }
+
+  //Vanilla has block
+  if (MinecraftData.BehaviorPack.hasItem(id, education_enabled(diagnoser))) return true;
 
   //Nothing then report error
   diagnoser.Add(value, `Cannot find behaviorpack item definition: ${id}`, DiagnosticSeverity.error, "behaviorpack.item.missing");
