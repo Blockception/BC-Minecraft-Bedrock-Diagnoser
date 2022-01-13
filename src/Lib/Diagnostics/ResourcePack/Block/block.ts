@@ -26,7 +26,7 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
 
       if (typeof texture === "string") {
         hasDefinition(key, texture, rp, diagnoser);
-      } else {
+      } else if (texture) {
         if (texture.down) hasDefinition(key, texture.down, rp, diagnoser);
         if (texture.up) hasDefinition(key, texture.up, rp, diagnoser);
         if (texture.side) hasDefinition(key, texture.side, rp, diagnoser);
