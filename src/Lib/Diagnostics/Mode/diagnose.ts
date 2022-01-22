@@ -186,11 +186,13 @@ export function mode_slotid_diagnose(value: Types.OffsetWord, Com: Command, diag
 
   if (m.range) {
     const n = Number.parseInt(value.text);
+    const min = n < m.range.min;
+    const max = n > m.range.max;
 
-    if (m.range.min < n || m.range.max > n) {
+    if (n < m.range.min || n > m.range.max) {
       diagnoser.Add(
         value.offset,
-        `The value is ${value.text} not in the range of ${m.range.min} to ${m.range.max}`,
+        `The value is ${n} not in the range of ${m.range.min} to ${m.range.max}`,
         DiagnosticSeverity.error,
         "minecraft.mode.range"
       );
