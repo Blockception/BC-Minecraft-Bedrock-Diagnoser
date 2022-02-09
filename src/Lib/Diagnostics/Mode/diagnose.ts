@@ -16,6 +16,14 @@ export function mode_camerashake_diagnose(value: Types.OffsetWord, diagnoser: Di
   return mode_generic_diagnose(value, Modes.CameraShake, diagnoser);
 }
 
+/**Diagnoses the value as a value in the mode: camerashake
+ * @param value The value to evualate, needs the offset to report bugs
+ * @param diagnoser The diagnoser to report to
+ * @returns true or false, false is any error was found*/
+ export function mode_causetype_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+  return mode_generic_diagnose(value, Modes.CauseType, diagnoser);
+}
+
 /**Diagnoses the value as a value in the mode: clone
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
@@ -54,6 +62,14 @@ export function mode_gamemode_diagnose(value: Types.OffsetWord, diagnoser: Diagn
  * @returns true or false, false is any error was found*/
 export function mode_locatefeature_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.LocateFeature, diagnoser);
+}
+
+/**Diagnoses the value as a value in the mode: locatefeature
+ * @param value The value to evualate, needs the offset to report bugs
+ * @param diagnoser The diagnoser to report to
+ * @returns true or false, false is any error was found*/
+export function mode_handtype_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+  return mode_generic_diagnose(value, Modes.HandType, diagnoser);
 }
 
 /**Diagnoses the value as a value in the mode: mask

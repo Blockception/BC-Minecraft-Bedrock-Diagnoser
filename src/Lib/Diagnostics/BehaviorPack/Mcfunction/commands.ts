@@ -21,10 +21,12 @@ import { behaviorpack_entityid_diagnose, behaviorpack_entity_event_diagnose, beh
 import { behaviorpack_functions_diagnose } from "./diagnose";
 import {
   mode_camerashake_diagnose,
+  mode_causetype_diagnose,
   mode_clone_diagnose,
   mode_difficulty_diagnose,
   mode_fill_diagnose,
   mode_gamemode_diagnose,
+  mode_handtype_diagnose,
   mode_locatefeature_diagnose,
   mode_mask_diagnose,
   mode_mirror_diagnose,
@@ -50,6 +52,7 @@ import { resourcepack_particle_diagnose } from "../../ResourcePack/Particle/diag
 import { resourcepack_sound_diagnose } from "../../ResourcePack/Sounds Definitions/diagnose";
 import { animation_reference_diagnose } from "../../ResourcePack/anim or controller";
 import { Types } from "bc-minecraft-bedrock-types";
+import { behaviorpack_loot_table_diagnose } from '../Loot Table/diagnose';
 
 /**
  *
@@ -159,6 +162,7 @@ const ParameterDiagnostics: { [key: number]: (value: Types.OffsetWord, diagnoser
   [ParameterType.blockStates]: behaviorpack_check_blockstates,
   [ParameterType.boolean]: general_boolean_diagnose,
   [ParameterType.cameraShakeType]: mode_camerashake_diagnose,
+  [ParameterType.causeType]: mode_causetype_diagnose,
   [ParameterType.cloneMode]: mode_clone_diagnose,
   //Custom call [ParameterType.command]:,
   [ParameterType.coordinate]: minecraft_coordinate_diagnose,
@@ -170,6 +174,7 @@ const ParameterDiagnostics: { [key: number]: (value: Types.OffsetWord, diagnoser
   [ParameterType.function]: behaviorpack_functions_diagnose,
   [ParameterType.float]: general_float_diagnose,
   [ParameterType.gamemode]: mode_gamemode_diagnose,
+  [ParameterType.handType]: mode_handtype_diagnose,
   [ParameterType.integer]: general_integer_diagnose,
   [ParameterType.item]: (item, diagnoser) => {
     if (item.text.endsWith("_spawn_egg")) {
@@ -182,6 +187,7 @@ const ParameterDiagnostics: { [key: number]: (value: Types.OffsetWord, diagnoser
   [ParameterType.jsonRawText]: minecraft_jsonrawtext_diagnose,
   //Custom call [ParameterType.keyword]:general_keyword_diagnose,
   [ParameterType.locateFeature]: mode_locatefeature_diagnose,
+  [ParameterType.lootTable]: behaviorpack_loot_table_diagnose,
   //Custom call [ParameterType.message]:,
   [ParameterType.maskMode]: mode_mask_diagnose,
   [ParameterType.mirror]: mode_mirror_diagnose,
