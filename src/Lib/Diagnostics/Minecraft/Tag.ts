@@ -7,6 +7,9 @@ export function minecraft_tag_diagnose(value: Types.OffsetWord, diagnoser: Diagn
 
   const id = value.text;
 
+  //Empty tags are valid as they are used to represent either no items or any items
+  if (id === "") return;
+
   if (!/^[a-zA-Z0-9\-\_\.]+$/gim.test(id)) {
     diagnoser.Add(value, `Illegal character found in tag: ${id}`, DiagnosticSeverity.error, "minecraft.tag.invalid");
   }
