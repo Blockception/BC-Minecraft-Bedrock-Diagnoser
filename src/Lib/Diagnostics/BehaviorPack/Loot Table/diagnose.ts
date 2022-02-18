@@ -8,12 +8,10 @@ export function behaviorpack_loot_table_diagnose(value: Types.OffsetWord | strin
 
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.loot_table, id, diagnoser)) return true;
-
   const data = diagnoser.context.getCache();
 
   //Project has loot_table
   if (data.BehaviorPacks.loot_tables.has(id)) return true;
-
   const edu = education_enabled(diagnoser);
 
   //Vanilla has loot_table
