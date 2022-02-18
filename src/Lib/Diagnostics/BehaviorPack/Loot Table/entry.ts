@@ -6,6 +6,7 @@ import { behaviorpack_item_diagnose } from '../Item/diagnose';
 import { behaviorpack_loot_table_diagnose } from './diagnose';
 import { behaviorpack_loot_table_function_diagnose, LootFunction } from './functions';
 import { behaviorpack_loot_table_condition_diagnose, LootCondition } from './conditions';
+import { minecraft_get_item } from '../../Minecraft/Items';
 
 /**Diagnoses the given document as an loot table
  * @param doc The text document to diagnose
@@ -17,22 +18,13 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
   table.pools?.forEach(pool => {
     pool.entries?.forEach(entry => {
       //Is item then check if item exists
-      let item : string;
-      let index : number;
-
       switch (entry.type) {
         case 'item':
-          item = entry.name ?? "";
-          index = doc.getText().indexOf(item);
-  
-          behaviorpack_item_diagnose(Types.OffsetWord.create(item, index), diagnoser);
+          if (entry.name) behaviorpack_item_diagnose(minecraft_get_item(entry.name, doc), diagnoser);
           break;
 
         case 'loot_table':
-          item = entry.name ?? "";
-          index = doc.getText().indexOf(item);
-  
-          behaviorpack_loot_table_diagnose(Types.OffsetWord.create(item, index), diagnoser);
+          if (entry.name) behaviorpack_loot_table_diagnose(minecraft_get_item(entry.name, doc), diagnoser);
           break;
       }
 

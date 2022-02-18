@@ -4,6 +4,7 @@ import { behaviorpack_loot_table_function_diagnose, LootFunction } from '../Loot
 import { TextDocument } from "bc-minecraft-bedrock-project";
 import { Types } from 'bc-minecraft-bedrock-types';
 import { behaviorpack_item_diagnose } from '../Item/diagnose';
+import { minecraft_get_item } from '../../Minecraft/Items';
 
 /**Diagnoses the given document as an trading table
  * @param doc The text document to diagnose
@@ -28,11 +29,8 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
 }
 
 function diagnose_item(entry : TradeGive, doc: TextDocument, diagnoser : DiagnosticsBuilder) : void {
-  //Is item then check if item exists
-  let item = entry.item ?? "";
-  let index = doc.getText().indexOf(item);
-
-  behaviorpack_item_diagnose(Types.OffsetWord.create(item, index), diagnoser);
+  //Is item then check if item exists  
+  if (entry.item) behaviorpack_item_diagnose(minecraft_get_item(entry.item, doc), diagnoser);
 
   entry.functions?.forEach(fn=>behaviorpack_loot_table_function_diagnose(fn, diagnoser));
 }

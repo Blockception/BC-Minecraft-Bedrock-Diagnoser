@@ -3,7 +3,11 @@ import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types/Diagnosti
 import { Types } from "bc-minecraft-bedrock-types";
 import { check_definition_value, education_enabled } from "../../Definitions";
 
-export function behaviorpack_item_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+interface Item extends Types.OffsetWord {
+  data?: number;
+}
+
+export function behaviorpack_item_diagnose(value: Item, diagnoser: DiagnosticsBuilder): boolean {
   let id = value.text;
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.item, id, diagnoser)) return true;

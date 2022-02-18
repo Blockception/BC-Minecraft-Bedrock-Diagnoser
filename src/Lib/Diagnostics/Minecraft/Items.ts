@@ -1,19 +1,26 @@
-import { DiagnosticsBuilder, DiagnosticSeverity } from '../../Types/DiagnosticsBuilder/include';
+import { DiagnosticsBuilder } from '../../Types/DiagnosticsBuilder/include';
 import { Types} from 'bc-minecraft-bedrock-types';
-import { check_definition_value } from '../Definitions';
+import { TextDocument } from 'bc-minecraft-bedrock-project';
+import { behaviorpack_item_diagnose } from '../BehaviorPack/Item/diagnose';
 
+interface Item extends Types.OffsetWord {
+  data?: number;
+}
 
-export function minecraft_item_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  const id = value.text;
-  //Defined in McProject
-  if (check_definition_value(diagnoser.project.definitions.item, id, diagnoser)) return true;
+/**@deprecated */
+export function minecraft_item_diagnose(value: Item, diagnoser: DiagnosticsBuilder): boolean {
+  return behaviorpack_item_diagnose(value, diagnoser);
+}
 
-  const data = diagnoser.context.getCache();
+export function minecraft_get_item(value : string, doc : TextDocument) : Item {
+  let offset = doc.getText().indexOf(value);
+  let index = value.indexOf(":")
 
-  //Project has item
-  if (data.BehaviorPacks.items.has(id)) return true;
+  if (index === -1) return {offset:offset,text:value};
 
-  //Nothing then report error
-  diagnoser.Add(value, `Cannot behaviorpack item: ${id}`, DiagnosticSeverity.error, "behaviorpack.item.missing");
-  return false;
+  let second = value.indexOf(':', index + 1);
+
+  if (second === -1) return {offset:offset,text:value};
+
+  return {offset:offset,text:value.substring(0, second)};
 }
