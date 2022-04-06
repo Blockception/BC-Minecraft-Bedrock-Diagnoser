@@ -100,7 +100,7 @@ export class Diagnoser {
     let out = false;
 
     for (let I = 0; I < files.length; I++) {
-      out ||= this.Process(files[I]);
+      out = this.Process(files[I]) || out
     }
 
     return out;
