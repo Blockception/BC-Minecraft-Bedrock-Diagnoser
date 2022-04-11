@@ -14,21 +14,28 @@ export function minecraft_manifest_header_diagnose(m: ManifestHeader, diagnoser:
   minecraft_manifest_version(m.version, diagnoser, "header/version");
 }
 
-export function minecraft_manifest_required_module(m: Manifest, diagnoser: DiagnosticsBuilder, required_type: string): boolean {
+/**
+ * 
+ * @param m 
+ * @param diagnoser 
+ * @param required_type 
+ * @returns 
+ */
+export function minecraft_manifest_required_module(m: Manifest, diagnoser: DiagnosticsBuilder, ...required_type: string[]): boolean {
   const modules = m.modules;
 
   if (modules) {
     for (let I = 0; I < modules.length; I++) {
       const module = modules[I];
 
-      if (module.type === required_type) return true;
+      if (required_type.includes(module.type)) return true;
     }
   }
 
   //No correct module found
   diagnoser.Add(
     "modules",
-    "This manifest is required to have the following module type: " + required_type,
+    "This manifest is required to have the following module type one of " + required_type.join(', '),
     DiagnosticSeverity.error,
     "minecraft.manifest.module.missing"
   );
