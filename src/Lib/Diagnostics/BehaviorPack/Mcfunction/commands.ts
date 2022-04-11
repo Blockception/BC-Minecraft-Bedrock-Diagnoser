@@ -142,7 +142,7 @@ function mcfunction_commandcheck(command: Command, diagnoser: DiagnosticsBuilder
       command.parameters[0].offset,
       `Unknown command syntax: "${command.getKeyword()}"`,
       DiagnosticSeverity.error,
-      "mcfunction.syntax.unknown"
+      "behaviorpack.mcfunction.syntax.unknown"
     );
     return;
   }
