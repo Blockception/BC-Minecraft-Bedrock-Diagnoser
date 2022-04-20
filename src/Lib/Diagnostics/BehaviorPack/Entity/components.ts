@@ -27,6 +27,9 @@ export function behaviorpack_entity_components_dependencies(entity: Internal.Beh
   //behavior.stalk_and_pounce_on_target
   checkAny(diagnoser, components, "minecraft:behavior.stalk_and_pounce_on_target", "minecraft:behavior.nearest_attackable_target", "minecraft:behavior.hurt_by_target");
   checkAll(diagnoser, components, "minecraft:behavior.stalk_and_pounce_on_target", "minecraft:attack");
+
+  //behavior.drop_item_for
+  checkAny(diagnoser, components, "minecraft:behavior.drop_item_for", /$minecraft:nagivation.*/gim);
 }
 
 export function behaviorpack_entity_components_check(entity: Internal.BehaviorPack.Entity, diagnoser: DiagnosticsBuilder) {
@@ -79,14 +82,19 @@ function checkAll(diagnoser: DiagnosticsBuilder, components: string[], dependent
  * @param components The list of used components
  * @returns
  */
-function checkAny(diagnoser: DiagnosticsBuilder, components: string[], dependent: string, ...needs: string[]): void {
+function checkAny(diagnoser: DiagnosticsBuilder, components: string[], dependent: string, ...needs: (string|RegExp)[]): void {
   //Check if the entity has the component
   if (!components.includes(dependent)) return;
 
   for (let I = 0; I < needs.length; I++) {
     const need = needs[I];
 
-    if (components.includes(need)) return;
+    if (typeof need === "string") {
+      if (components.includes(need)) return;
+    }
+    else {
+      if (components.findIndex(c => need.test(c)) !== -1) return;
+    }
   }
 
   diagnoser.Add(
