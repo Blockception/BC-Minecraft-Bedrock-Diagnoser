@@ -7,7 +7,7 @@ import { mode_slottype_diagnose } from '../../Mode/diagnose';
 
 export function minecraft_selector_hasitem_diagnose(attr: SelectorItemAttribute, diagnoser: DiagnosticsBuilder): void {
   if (attr.values.length === 0) {
-    diagnoser.Add(attr.getName(), "Empty scores, can be removed", DiagnosticSeverity.info, "minecraft.selector.attribute.unnesscary");
+    diagnoser.Add(attr.getName(), "Empty hasitem, can be removed", DiagnosticSeverity.info, "minecraft.selector.attribute.unnesscary");
   }
 
   attr.values.forEach((value) => minecraft_selector_hasitem_item_diagnose(value, diagnoser));
