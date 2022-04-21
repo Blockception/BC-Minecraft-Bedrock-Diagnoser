@@ -15,5 +15,7 @@
 
   "[markdown]": {
     "editor.wordWrap": "off"
-  }
+  },
+
+  "prettier.printWidth": 150
 }

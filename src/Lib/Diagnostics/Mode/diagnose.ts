@@ -202,8 +202,6 @@ export function mode_slotid_diagnose(value: Types.OffsetWord, Com: Command, diag
 
   if (m.range) {
     const n = Number.parseInt(value.text);
-    const min = n < m.range.min;
-    const max = n > m.range.max;
 
     if (n < m.range.min || n > m.range.max) {
       diagnoser.Add(
