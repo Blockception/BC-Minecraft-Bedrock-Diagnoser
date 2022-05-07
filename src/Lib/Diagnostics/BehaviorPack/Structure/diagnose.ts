@@ -10,20 +10,27 @@ export function behaviorpack_structure_diagnose(value: Types.OffsetWord, diagnos
   if (id.includes('/')) {
     if (id.startsWith('"') && id.endsWith('"')) {
 
-    }
-    else {
+    } else {
       diagnoser.Add(value, `A structure id with '/' needs quotes surrounding it: ${id} => "${id}"`, DiagnosticSeverity.error, "behaviorpack.mcstructure.invalid");
     }
   }
 
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.structure, id, diagnoser)) return true;
-
   const data = diagnoser.context.getCache();
 
   //Project has structure
   if (data.BehaviorPacks.structures.has(id)) return true;
   if (data.General.structures.has(id)) return true;
+
+  //structures can be identified with : or /
+  if (id.includes(':')) {
+    const cid = id.replace(':', '/');
+
+    if (check_definition_value(diagnoser.project.definitions.structure, cid, diagnoser)) return true;
+    if (data.BehaviorPacks.structures.has(cid)) return true;
+    if (data.General.structures.has(cid)) return true;
+  }
 
   //Nothing then report error
   diagnoser.Add(value, `Cannot find behaviorpack mcstructure: ${id}`, DiagnosticSeverity.error, "behaviorpack.mcstructure.missing");
