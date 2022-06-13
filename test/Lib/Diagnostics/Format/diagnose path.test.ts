@@ -1,45 +1,47 @@
-import { BehaviorPack } from 'bc-minecraft-bedrock-project';
-import { MCProject } from 'bc-minecraft-project';
-import { format_diagnose_path } from '../../../../src/Lib/Diagnostics/Format/diagnose';
+import { BehaviorPack } from "bc-minecraft-bedrock-project";
+import { MCProject } from "bc-minecraft-project";
+import { format_diagnose_path } from "../../../../src/Lib/Diagnostics/Format/diagnose";
 import { TestDiagnoser } from "../../../diagnoser";
 
-describe("Filepath lengths", ()=>{
-  it("Total length",()=>{
-    const diagnoser = new TestDiagnoser();
-    const path = 'Content/world_template/behavior_packs/TE-bp/functions/abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxy.mcfunction';
+describe("Filepath lengths", () => {
+  var diagnoser: TestDiagnoser;
+  var pack:  BehaviorPack.BehaviorPack;
 
-    const p = new BehaviorPack.BehaviorPack('Content/world_template/behavior_packs/TE-bp', MCProject.createEmpty());
-    format_diagnose_path(p, path, diagnoser);
+  beforeEach(() => {
+    diagnoser = new TestDiagnoser();
+    pack = new BehaviorPack.BehaviorPack("Content/world_template/behavior_packs/TE-bp", MCProject.createEmpty());
+  });
+
+  it("Total length", () => {
+    const path =
+      "Content/world_template/behavior_packs/TE-bp/functions/abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxy.mcfunction";
+
+    format_diagnose_path(pack, path, diagnoser);
 
     diagnoser.expectAmount(2);
   });
 
-  it("Total length2",()=>{
-    const diagnoser = new TestDiagnoser();
-    const path = 'Content/world_template/behavior_packs/TE-bp/functions/abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz/abcdefghijklmnopqrstuvwxy/abcdefghijklmnopqrstuvwxy.mcfunction';
+  it("Total length2", () => {
+    const path =
+      "Content/world_template/behavior_packs/TE-bp/functions/abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz/abcdefghijklmnopqrstuvwxy/abcdefghijklmnopqrstuvwxy.mcfunction";
 
-    const p = new BehaviorPack.BehaviorPack('Content/world_template/behavior_packs/TE-bp', MCProject.createEmpty());
-    format_diagnose_path(p, path, diagnoser);
-
-    diagnoser.expectAmount(1);
-  });
-
-  it("Segment length2",()=>{
-    const diagnoser = new TestDiagnoser();
-    const path = 'Content/world_template/behavior_packs/TE-bp/functions/abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefg.mcfunction';
-
-    const p = new BehaviorPack.BehaviorPack('Content/world_template/behavior_packs/TE-bp', MCProject.createEmpty());
-    format_diagnose_path(p, path, diagnoser);
+    format_diagnose_path(pack, path, diagnoser);
 
     diagnoser.expectAmount(1);
   });
 
-  it("Just Okay",()=>{
-    const diagnoser = new TestDiagnoser();
-    const path = 'Content/world_template/behavior_packs/TE-bp/functions/abcdefghij/abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstu.mcfunction';
+  it("Segment length2", () => {
+    const path = "Content/world_template/behavior_packs/TE-bp/functions/abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefg.mcfunction";
 
-    const p = new BehaviorPack.BehaviorPack('Content/world_template/behavior_packs/TE-bp', MCProject.createEmpty());
-    format_diagnose_path(p, path, diagnoser);
+    format_diagnose_path(pack, path, diagnoser);
+
+    diagnoser.expectAmount(1);
+  });
+
+  it("Just Okay", () => {
+    const path = "Content/world_template/behavior_packs/TE-bp/functions/abcdefghij/abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstu.mcfunction";
+
+    format_diagnose_path(pack, path, diagnoser);
 
     diagnoser.expectEmpty();
   });

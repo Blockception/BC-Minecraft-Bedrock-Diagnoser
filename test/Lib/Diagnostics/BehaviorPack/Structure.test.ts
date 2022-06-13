@@ -1,28 +1,18 @@
+import { ProjectData } from 'bc-minecraft-bedrock-project';
 import { behaviorpack_structure_diagnose } from "../../../../src/Lib/Diagnostics/BehaviorPack/Structure/diagnose";
 import { TestDiagnoser } from "../../../diagnoser";
 
 describe("BehaviorPack", () => {
   describe("Structures", () => {
-    it("no errors", () => {
-      const diagnoser = TestDiagnoser.Create();
-      const data = diagnoser.context.getCache();
+    var diagnoser : TestDiagnoser;
+    var data : ProjectData;
 
-      data.BehaviorPacks.packs[0].structures.set({
-        id: '"test/example"',
-        documentation: "",
-        location: { position: 0, uri: "" },
-      });
-
-      behaviorpack_structure_diagnose({ offset: 0, text: '"test/example"' }, diagnoser);
-      behaviorpack_structure_diagnose({ offset: 0, text: '"test:example"' }, diagnoser);
-
-      diagnoser.expectEmpty();
-    });
+    beforeEach(()=>{
+      diagnoser = TestDiagnoser.Create();
+      data = diagnoser.context.getCache();
+    })
 
     it("quotes", () => {
-      const diagnoser = TestDiagnoser.Create();
-      const data = diagnoser.context.getCache();
-
       data.BehaviorPacks.packs[0].structures.set({
         id: 'test/example',
         documentation: "",
@@ -35,10 +25,20 @@ describe("BehaviorPack", () => {
       diagnoser.expectAmount(1)
     });
 
-    it("missing", () => {
-      const diagnoser = TestDiagnoser.Create();
-      const data = diagnoser.context.getCache();
+    it("no errors", () => {
+      data.BehaviorPacks.packs[0].structures.set({
+        id: '"test/example"',
+        documentation: "",
+        location: { position: 0, uri: "" },
+      });
 
+      behaviorpack_structure_diagnose({ offset: 0, text: '"test/example"' }, diagnoser);
+      behaviorpack_structure_diagnose({ offset: 0, text: '"test:example"' }, diagnoser);
+
+      diagnoser.expectEmpty();
+    });
+
+    it("missing", () => {
       data.BehaviorPacks.packs[0].structures.set({
         id: '"test/example"',
         documentation: "",
