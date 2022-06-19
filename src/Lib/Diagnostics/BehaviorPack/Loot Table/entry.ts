@@ -5,7 +5,7 @@ import { Json } from '../../Json/Json';
 import { behaviorpack_item_diagnose } from '../Item/diagnose';
 import { behaviorpack_loot_table_diagnose } from './diagnose';
 import { behaviorpack_loot_table_function_diagnose, LootFunction } from './functions';
-import { behaviorpack_loot_table_condition_diagnose, LootCondition } from './conditions';
+import { LootCondition } from './conditions';
 import { minecraft_get_item } from '../../Minecraft/Items';
 
 /**Diagnoses the given document as an loot table

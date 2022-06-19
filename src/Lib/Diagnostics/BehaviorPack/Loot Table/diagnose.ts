@@ -1,7 +1,7 @@
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/include";
-import { Types } from "bc-minecraft-bedrock-types";
 import { check_definition_value, education_enabled } from "../../Definitions";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/include";
 import { MinecraftData } from 'bc-minecraft-bedrock-vanilla-data';
+import { Types } from "bc-minecraft-bedrock-types";
 
 export function behaviorpack_loot_table_diagnose(value: Types.OffsetWord | string, diagnoser: DiagnosticsBuilder): boolean {
   const id = typeof value === "string" ? value : value.text;

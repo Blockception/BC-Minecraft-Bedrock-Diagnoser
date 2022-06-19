@@ -1,5 +1,5 @@
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
-import { behaviorpack_entityid_diagnose } from '../Entity/diagnose';
+import { behaviorpack_entityid_diagnose } from "../Entity/diagnose";
 
 /**
  *
@@ -14,10 +14,7 @@ export interface LootFunction {
  * @param value
  * @param diagnoser
  */
-export function behaviorpack_loot_table_function_diagnose(
-  value: LootFunction,
-  diagnoser: DiagnosticsBuilder
-): void {
+export function behaviorpack_loot_table_function_diagnose(value: LootFunction, diagnoser: DiagnosticsBuilder): void {
   switch (value.function) {
     case "set_actor_id":
       let entityid = (<{ id?: string }>value).id;

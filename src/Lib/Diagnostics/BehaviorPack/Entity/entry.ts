@@ -1,14 +1,14 @@
-import { Internal, TextDocument } from "bc-minecraft-bedrock-project";
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
-import { Json } from "../../Json/Json";
-import { behaviorpack_entity_components_check, behaviorpack_entity_components_dependencies } from "./components";
 import { animation_or_controller_diagnose_implementation } from "../anim or controller";
+import { behaviorpack_animation_used } from "../Animation/usage";
+import { behaviorpack_entity_check_events } from "./events";
+import { behaviorpack_entity_components_check, behaviorpack_entity_components_dependencies } from "./components";
 import { DefinedUsing, Molang } from "bc-minecraft-molang";
-import { Types } from "bc-minecraft-bedrock-types";
 import { diagnose_molang } from "../../Molang/diagnostics";
 import { diagnose_script } from "../../Minecraft/Script";
-import { behaviorpack_entity_check_events } from "./events";
-import { behaviorpack_animation_used } from "../Animation/usage";
+import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
+import { Internal, TextDocument } from "bc-minecraft-bedrock-project";
+import { Json } from "../../Json/Json";
+import { Types } from "bc-minecraft-bedrock-types";
 
 /**Diagnoses the given document as an bp entity
  * @param doc The text document to diagnose

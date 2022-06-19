@@ -1,8 +1,8 @@
-import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/include";
-import { Types } from "bc-minecraft-bedrock-types";
+import { behaviorpack_check_blockid } from "../Block/diagnose";
 import { check_definition_value, education_enabled } from "../../Definitions";
-import { behaviorpack_check_blockid } from '../Block/diagnose';
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/include";
+import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
+import { Types } from "bc-minecraft-bedrock-types";
 
 interface Item extends Types.OffsetWord {
   data?: number;
