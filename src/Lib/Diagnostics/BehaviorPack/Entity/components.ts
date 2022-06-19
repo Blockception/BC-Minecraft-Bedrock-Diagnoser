@@ -1,11 +1,11 @@
-import { Internal } from "bc-minecraft-bedrock-project";
+import { behaviorpack_entity_components_economy_trade_table } from "./components/economy_trade_table";
+import { behaviorpack_entity_components_loot } from "./components/loot";
+import { behaviorpack_entity_components_trade_table } from "./components/trade";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
-import { hasPattern } from "../../../Types/Patterns/Checks";
 import { getUsedComponents } from "./Entity";
-import { behaviorpack_entity_components_economy_trade_table } from "./components/economy_trade_table";
-import { behaviorpack_entity_components_trade_table } from "./components/trade";
-import { behaviorpack_entity_components_loot } from "./components/loot";
+import { hasPattern } from "../../../Types/Patterns/Checks";
+import { Internal } from "bc-minecraft-bedrock-project";
 
 /**Checks if components dependencies are present, a component might need others to be present
  * @param entity The entity to check

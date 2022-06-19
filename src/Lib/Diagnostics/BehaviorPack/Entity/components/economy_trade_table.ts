@@ -1,5 +1,5 @@
 import { DiagnosticsBuilder } from "../../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
-import { Internal, TextDocument } from "bc-minecraft-bedrock-project";
+import { Internal } from "bc-minecraft-bedrock-project";
 import { behaviorpack_trading_diagnose } from "../../Trading/diagnose";
 
 export function behaviorpack_entity_components_economy_trade_table(container: Internal.BehaviorPack.EntityComponentContainer, diagnoser: DiagnosticsBuilder) {

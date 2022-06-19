@@ -6,20 +6,20 @@ import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/Diagnostic
 import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
 import { diagnose_molang_implementation, OwnerType } from "../../Molang/diagnostics";
 
+type User = Types.Identifiable &
+  MolangCarrier<Molang.MolangSet | Molang.MolangFullSet> &
+  AnimationCarrier<DefinedUsing<string>> & 
+  { events?: Map<any> };
+
 /**
  *
  * @param id
  * @param data
  * @param diagnoser
  */
-export function animation_diagnose_implementation(
-  anim_id: string,
-  user: Types.Identifiable & MolangCarrier<Molang.MolangSet | Molang.MolangFullSet> & AnimationCarrier<DefinedUsing<string>> & { events?: Map<any> },
-  ownerType: OwnerType,
-  diagnoser: DiagnosticsBuilder
-): void {
+export function animation_diagnose_implementation(anim_id: string, user: User, ownerType: OwnerType, diagnoser: DiagnosticsBuilder): void {
   if (!has_animation(anim_id, diagnoser)) return;
-  
+
   //Project has animation
   const anim = diagnoser.context.getCache().BehaviorPacks.animations.get(anim_id);
 
