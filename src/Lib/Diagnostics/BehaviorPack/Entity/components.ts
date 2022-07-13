@@ -30,6 +30,7 @@ export function behaviorpack_entity_components_dependencies(entity: Internal.Beh
 
   //behavior.drop_item_for
   checkAny(diagnoser, components, "minecraft:behavior.drop_item_for", /$minecraft:nagivation.*/gim);
+  checkAny(diagnoser, components, "minecraft:behavior.leap_at_target", /$minecraft:behavior.*target.*/gim);
 }
 
 export function behaviorpack_entity_components_check(entity: Internal.BehaviorPack.Entity, diagnoser: DiagnosticsBuilder) {
