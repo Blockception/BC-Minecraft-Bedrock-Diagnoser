@@ -1,5 +1,6 @@
 import { Internal, Map } from "bc-minecraft-bedrock-project";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../../main";
+import { behaviorpack_entity_components_filters } from "./components/filters";
 
 export function behaviorpack_entity_check_events(
   events: Map<Internal.BehaviorPack.EntityEvent> | Internal.BehaviorPack.EntityEvent[],
@@ -20,7 +21,7 @@ export function behaviorpack_entity_check_events(
  * @param component_groups
  */
 export function behaviorpack_entity_check_event(
-  event: Internal.BehaviorPack.EntityEvent,
+  event: Internal.BehaviorPack.EntityEvent & { filters?: any },
   event_id: string,
   diagnoser: DiagnosticsBuilder,
   component_groups?: Map<Internal.BehaviorPack.EntityComponentContainer>
@@ -35,6 +36,8 @@ export function behaviorpack_entity_check_event(
   event.sequence?.forEach((item) => {
     behaviorpack_entity_check_event(item, event_id, diagnoser, component_groups);
   });
+
+  behaviorpack_entity_components_filters(event.filters, diagnoser);
 }
 
 function has_groups(

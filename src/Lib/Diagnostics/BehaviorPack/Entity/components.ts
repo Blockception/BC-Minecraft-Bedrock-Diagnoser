@@ -8,6 +8,7 @@ import { hasPattern } from "../../../Types/Patterns/Checks";
 import { Internal } from "bc-minecraft-bedrock-project";
 import { behaviorpack_diagnose_entity_components } from "./components/diagnose";
 import { Context } from "./components/context";
+import { behaviorpack_entity_components_filters } from './components/filters';
 
 /**Checks if components dependencies are present, a component might need others to be present
  * @param entity The entity to check
@@ -72,6 +73,7 @@ function behaviorpack_entity_componentscontainer_check(
   behaviorpack_entity_components_loot(container, diagnoser);
   behaviorpack_entity_components_trade_table(container, diagnoser);
   behaviorpack_entity_components_economy_trade_table(container, diagnoser);
+  behaviorpack_entity_components_filters(container, diagnoser);
 
   behaviorpack_diagnose_entity_components(container, context, diagnoser);
 }
