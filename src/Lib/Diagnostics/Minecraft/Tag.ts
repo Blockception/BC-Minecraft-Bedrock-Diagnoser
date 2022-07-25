@@ -2,10 +2,10 @@ import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Lib/Types/Diagn
 import { Types } from "bc-minecraft-bedrock-types";
 import { check_definition_value } from "../Definitions";
 
-export function minecraft_tag_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
+export function minecraft_tag_diagnose(value: Types.OffsetWord | string, diagnoser: DiagnosticsBuilder): void {
   if (diagnoser.project.attributes["diagnostic.tag"] === "false") return;
 
-  const id = value.text;
+  const id = typeof value === "string" ? value : value.text;
 
   //Empty tags are valid as they are used to represent either no items or any items
   if (id === "") return;

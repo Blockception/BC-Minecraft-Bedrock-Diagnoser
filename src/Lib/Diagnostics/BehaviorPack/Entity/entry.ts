@@ -9,6 +9,8 @@ import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/Diagnostic
 import { Internal, TextDocument } from "bc-minecraft-bedrock-project";
 import { Json } from "../../Json/Json";
 import { Types } from "bc-minecraft-bedrock-types";
+import { getUsedComponents } from "./Entity";
+import { Context } from "./components/context";
 
 /**Diagnoses the given document as an bp entity
  * @param doc The text document to diagnose
@@ -24,8 +26,12 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
   //No resourcepack check, entities can exist without their rp side
 
   //check components
-  behaviorpack_entity_components_dependencies(entity, diagnoser);
-  behaviorpack_entity_components_check(entity, diagnoser);
+  const context: Context = {
+    components: getUsedComponents(entity),
+  };
+
+  behaviorpack_entity_components_dependencies(entity, context, diagnoser);
+  behaviorpack_entity_components_check(entity, context, diagnoser);
 
   const container = entity["minecraft:entity"];
   const MolangData = Molang.MolangFullSet.harvest(container);

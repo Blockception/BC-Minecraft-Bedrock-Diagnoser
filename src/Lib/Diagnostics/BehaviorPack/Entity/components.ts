@@ -6,12 +6,14 @@ import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
 import { getUsedComponents } from "./Entity";
 import { hasPattern } from "../../../Types/Patterns/Checks";
 import { Internal } from "bc-minecraft-bedrock-project";
+import { behaviorpack_diagnose_entity_components } from "./components/diagnose";
+import { Context } from "./components/context";
 
 /**Checks if components dependencies are present, a component might need others to be present
  * @param entity The entity to check
  * @param diagnoser The diagnoser to report to*/
-export function behaviorpack_entity_components_dependencies(entity: Internal.BehaviorPack.Entity, diagnoser: DiagnosticsBuilder) {
-  const components = getUsedComponents(entity);
+export function behaviorpack_entity_components_dependencies(entity: Internal.BehaviorPack.Entity, context: Context, diagnoser: DiagnosticsBuilder) {
+  const components = context.components;
 
   checkMovements(diagnoser, components);
   checkAll(diagnoser, components, "minecraft:addrider", "minecraft:rideable");
@@ -21,11 +23,23 @@ export function behaviorpack_entity_components_dependencies(entity: Internal.Beh
   checkAll(diagnoser, components, "minecraft:behavior.barter", "minecraft:barter");
 
   //behavior.slime_attack
-  checkAny(diagnoser, components, "minecraft:behavior.slime_attack", "minecraft:behavior.nearest_attackable_target", "minecraft:behavior.hurt_by_target");
+  checkAny(
+    diagnoser,
+    components,
+    "minecraft:behavior.slime_attack",
+    "minecraft:behavior.nearest_attackable_target",
+    "minecraft:behavior.hurt_by_target"
+  );
   checkAll(diagnoser, components, "minecraft:behavior.slime_attack", "minecraft:attack");
 
   //behavior.stalk_and_pounce_on_target
-  checkAny(diagnoser, components, "minecraft:behavior.stalk_and_pounce_on_target", "minecraft:behavior.nearest_attackable_target", "minecraft:behavior.hurt_by_target");
+  checkAny(
+    diagnoser,
+    components,
+    "minecraft:behavior.stalk_and_pounce_on_target",
+    "minecraft:behavior.nearest_attackable_target",
+    "minecraft:behavior.hurt_by_target"
+  );
   checkAll(diagnoser, components, "minecraft:behavior.stalk_and_pounce_on_target", "minecraft:attack");
 
   //behavior.drop_item_for
@@ -33,10 +47,10 @@ export function behaviorpack_entity_components_dependencies(entity: Internal.Beh
   checkAny(diagnoser, components, "minecraft:behavior.leap_at_target", /$minecraft:behavior.*target.*/gim);
 }
 
-export function behaviorpack_entity_components_check(entity: Internal.BehaviorPack.Entity, diagnoser: DiagnosticsBuilder) {
+export function behaviorpack_entity_components_check(entity: Internal.BehaviorPack.Entity, context: Context, diagnoser: DiagnosticsBuilder) {
   const desc = entity["minecraft:entity"];
 
-  behaviorpack_entity_componentscontainer_check(desc.components, diagnoser);
+  behaviorpack_entity_componentscontainer_check(desc.components, context, diagnoser);
 
   if (desc.component_groups === undefined) return;
 
@@ -44,16 +58,22 @@ export function behaviorpack_entity_components_check(entity: Internal.BehaviorPa
 
   for (let I = 0; I < groups.length; I++) {
     const group = groups[I];
-    behaviorpack_entity_componentscontainer_check(desc.component_groups[group], diagnoser);
+    behaviorpack_entity_componentscontainer_check(desc.component_groups[group], context, diagnoser);
   }
 }
 
-function behaviorpack_entity_componentscontainer_check(container: Internal.BehaviorPack.EntityComponentContainer | undefined | null, diagnoser: DiagnosticsBuilder) {
+function behaviorpack_entity_componentscontainer_check(
+  container: Internal.BehaviorPack.EntityComponentContainer | undefined | null,
+  context: Context,
+  diagnoser: DiagnosticsBuilder
+) {
   if (container === null || typeof container !== "object") return;
 
   behaviorpack_entity_components_loot(container, diagnoser);
   behaviorpack_entity_components_trade_table(container, diagnoser);
   behaviorpack_entity_components_economy_trade_table(container, diagnoser);
+
+  behaviorpack_diagnose_entity_components(container, context, diagnoser);
 }
 
 /**The component needs all of the specified needs
@@ -71,7 +91,12 @@ function checkAll(diagnoser: DiagnosticsBuilder, components: string[], dependent
     const need = needs[I];
 
     if (!components.includes(need)) {
-      diagnoser.Add(dependent, `Component: '${dependent}' requires a ${need} component to be present`, DiagnosticSeverity.error, "behaviorpack.entity.component.missing");
+      diagnoser.Add(
+        dependent,
+        `Component: '${dependent}' requires a ${need} component to be present`,
+        DiagnosticSeverity.error,
+        "behaviorpack.entity.component.missing"
+      );
     }
   }
 }
@@ -83,7 +108,7 @@ function checkAll(diagnoser: DiagnosticsBuilder, components: string[], dependent
  * @param components The list of used components
  * @returns
  */
-function checkAny(diagnoser: DiagnosticsBuilder, components: string[], dependent: string, ...needs: (string|RegExp)[]): void {
+function checkAny(diagnoser: DiagnosticsBuilder, components: string[], dependent: string, ...needs: (string | RegExp)[]): void {
   //Check if the entity has the component
   if (!components.includes(dependent)) return;
 
@@ -92,9 +117,8 @@ function checkAny(diagnoser: DiagnosticsBuilder, components: string[], dependent
 
     if (typeof need === "string") {
       if (components.includes(need)) return;
-    }
-    else {
-      if (components.findIndex(c => need.test(c)) !== -1) return;
+    } else {
+      if (components.findIndex((c) => need.test(c)) !== -1) return;
     }
   }
 
@@ -115,7 +139,9 @@ function checkPatternAny(diagnoser: DiagnosticsBuilder, components: string[], de
     if (!hasPattern(need, components)) {
       diagnoser.Add(
         dependent,
-        `Component that follows pattern: '${dependent}' requires one of the following components that follows the pattern(s): ${JSON.stringify(needs)}`,
+        `Component that follows pattern: '${dependent}' requires one of the following components that follows the pattern(s): ${JSON.stringify(
+          needs
+        )}`,
         DiagnosticSeverity.error,
         "behaviorpack.entity.component.missing"
       );
@@ -131,7 +157,12 @@ function checkMovements(diagnoser: DiagnosticsBuilder, components: string[]): vo
 
   if (Count > 0 && Count != 2) {
     if (hasMovement == 0)
-      diagnoser.Add("minecraft:movement", `Missing a movement component such as: 'minecraft:movement.basic'`, DiagnosticSeverity.error, "behaviorpack.entity.component.missing");
+      diagnoser.Add(
+        "minecraft:movement",
+        `Missing a movement component such as: 'minecraft:movement.basic'`,
+        DiagnosticSeverity.error,
+        "behaviorpack.entity.component.missing"
+      );
     if (hasNavigation == 0)
       diagnoser.Add(
         "minecraft:movement",
