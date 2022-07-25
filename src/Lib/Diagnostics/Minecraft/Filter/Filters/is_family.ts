@@ -1,0 +1,17 @@
+import { Minecraft } from "bc-minecraft-bedrock-types";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../../../main";
+import { minecraft_family_diagnose } from "../../Family";
+
+export function diagnose_filter_is_family(filter: Minecraft.Filter.Filter, diagnoser: DiagnosticsBuilder) {
+  const family = filter.value;
+
+  if (!family) {
+    return diagnoser.Add("test/is_family", "Family is not defined", DiagnosticSeverity.error, "minecraft.filter.is_family.type");
+  }
+
+  if (typeof family !== "string") {
+    return diagnoser.Add(`test/is_family/${family}`, "Family is not defined", DiagnosticSeverity.error, "minecraft.filter.is_family.type");
+  }
+
+  minecraft_family_diagnose(family, diagnoser);
+}
