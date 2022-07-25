@@ -37,7 +37,7 @@ export function behaviorpack_entity_check_event(
     behaviorpack_entity_check_event(item, event_id, diagnoser, component_groups);
   });
 
-  behaviorpack_entity_components_filters(event.filters, diagnoser);
+  behaviorpack_entity_components_filters(event, diagnoser);
 }
 
 function has_groups(
