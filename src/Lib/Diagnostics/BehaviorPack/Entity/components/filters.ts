@@ -7,7 +7,7 @@ export function behaviorpack_entity_components_filters(container: any, diagnoser
   traverse_object(container, diagnoser);
 }
 
-function traverse_object(data: { [key: string]: any }, diagnoser: DiagnosticsBuilder) {
+function traverse_object(data: Record<string, any>, diagnoser: DiagnosticsBuilder) {
   const properties = Object.getOwnPropertyNames(data);
 
   properties.forEach((property_key) => {

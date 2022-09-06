@@ -24,6 +24,4 @@ export function behaviorpack_diagnose_entity_components(
   });
 }
 
-const component_test: { [key: string]: (component: any, context: Context, diagnoser: DiagnosticsBuilder) => void } = {
-
-};
+const component_test: Record<string, (component: any, context: Context, diagnoser: DiagnosticsBuilder) => void> = {};

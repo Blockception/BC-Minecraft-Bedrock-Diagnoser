@@ -52,7 +52,7 @@ import { resourcepack_particle_diagnose } from "../../ResourcePack/Particle/diag
 import { resourcepack_sound_diagnose } from "../../ResourcePack/Sounds Definitions/diagnose";
 import { animation_reference_diagnose } from "../../ResourcePack/anim or controller";
 import { Types } from "bc-minecraft-bedrock-types";
-import { behaviorpack_loot_table_diagnose } from '../Loot Table/diagnose';
+import { behaviorpack_loot_table_diagnose } from "../Loot Table/diagnose";
 
 /**
  *
@@ -156,7 +156,7 @@ function mcfunction_commandcheck(command: Command, diagnoser: DiagnosticsBuilder
 }
 
 /**Switch data*/
-const ParameterDiagnostics: { [key: number]: (value: Types.OffsetWord, diagnoser: DiagnosticsBuilder) => void | boolean } = {
+const ParameterDiagnostics: Record<number, (value: Types.OffsetWord, diagnoser: DiagnosticsBuilder) => void | boolean> = {
   [ParameterType.animation]: animation_reference_diagnose,
   [ParameterType.block]: behaviorpack_check_blockdescriptor,
   [ParameterType.blockStates]: behaviorpack_check_blockstates,
