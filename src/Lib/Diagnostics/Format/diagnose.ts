@@ -1,5 +1,5 @@
 import { Pack } from "bc-minecraft-bedrock-project";
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/include";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../Types/DiagnosticsBuilder";
 
 /**Max relative length form pack / worldtemplate */
 const LengthFromRoot = 80;

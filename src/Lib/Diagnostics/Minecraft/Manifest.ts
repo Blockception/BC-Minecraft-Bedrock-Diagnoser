@@ -1,5 +1,5 @@
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Lib/Types/DiagnosticsBuilder/include";
-import { Manifest, ManifestHeader } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/include";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Lib/Types/DiagnosticsBuilder";
+import { Manifest, ManifestHeader } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal";
 
 export function minecraft_manifest_diagnose(m: Manifest, diagnoser: DiagnosticsBuilder): void {
   minecraft_manifest_header_diagnose(m.header, diagnoser);

@@ -1,5 +1,5 @@
 import { TextDocument } from "bc-minecraft-bedrock-project";
-import { FileType } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/BehaviorPack/include";
+import { FileType } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/BehaviorPack";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 
 import * as Animation from "./Animation/entry";

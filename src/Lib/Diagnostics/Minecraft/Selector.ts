@@ -1,7 +1,7 @@
 import { ParameterInfo } from "bc-minecraft-bedrock-command/lib/src/Lib/Data/CommandInfo";
 import { Text } from "bc-minecraft-bedrock-project";
 import { Minecraft } from "bc-minecraft-bedrock-types";
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Lib/Types/DiagnosticsBuilder/include";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Lib/Types/DiagnosticsBuilder";
 import { Types } from "bc-minecraft-bedrock-types";
 import { check_definition_value } from "../Definitions";
 import {
@@ -10,7 +10,7 @@ import {
   SelectorItemAttribute,
   SelectorScoreAttribute,
   SelectorValueAttribute,
-} from "bc-minecraft-bedrock-types/lib/src/Minecraft/Selector/include";
+} from "bc-minecraft-bedrock-types/lib/src/Minecraft/Selector";
 import { selector_attributes_duplicate } from "./Selector/Checks";
 import { minecraft_selector_scores_diagnose } from "./Selector/Scores";
 import { minecraft_selector_hasitem_diagnose } from "./Selector/HasItem";

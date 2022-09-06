@@ -1,4 +1,4 @@
-import { SelectorItemAttribute, SelectorValueAttribute } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Selector/include";
+import { SelectorItemAttribute, SelectorValueAttribute } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Selector";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
 import { behaviorpack_item_diagnose } from "../../BehaviorPack/Item/diagnose";

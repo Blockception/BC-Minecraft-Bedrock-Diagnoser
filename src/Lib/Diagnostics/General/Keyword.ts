@@ -1,4 +1,4 @@
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Lib/Types/DiagnosticsBuilder/include";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Lib/Types/DiagnosticsBuilder";
 import { Types } from "bc-minecraft-bedrock-types";
 
 export function general_keyword_diagnose(keyword: string, value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {

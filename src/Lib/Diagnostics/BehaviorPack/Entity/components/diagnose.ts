@@ -1,5 +1,5 @@
 import { Internal } from "bc-minecraft-bedrock-project";
-import { DiagnosticsBuilder } from "../../../../Types/DiagnosticsBuilder/include";
+import { DiagnosticsBuilder } from "../../../../Types/DiagnosticsBuilder";
 import { Context } from "./context";
 
 /**

@@ -1,6 +1,6 @@
 import { behaviorpack_check_blockid } from "../Block/diagnose";
 import { check_definition_value, education_enabled } from "../../Definitions";
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/include";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { Types } from "bc-minecraft-bedrock-types";
 

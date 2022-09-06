@@ -1,4 +1,4 @@
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Lib/Types/DiagnosticsBuilder/include";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Lib/Types/DiagnosticsBuilder";
 import { Types } from "bc-minecraft-bedrock-types";
 import { general_integer_diagnose } from './Integer';
 import { general_float_diagnose } from './Float';
