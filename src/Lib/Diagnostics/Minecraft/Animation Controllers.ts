@@ -1,6 +1,6 @@
 import { BehaviorPack, Internal, SMap, ResourcePack, MolangCarrier, AnimationCarrier } from "bc-minecraft-bedrock-project";
-import { Defined, Molang } from "bc-minecraft-molang";
-import { diagnose_molang_implementation, OwnerType } from "../Molang/diagnostics";
+import { Defined, Molang, MolangDataSetKey } from "bc-minecraft-molang";
+import { diagnose_molang_implementation } from "../Molang/diagnostics";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/Severity";
 import { State } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/BehaviorPack/AnimationController";
@@ -78,7 +78,7 @@ function CheckTransition(controller: string, Transitions: Types.Conditional[], S
 export function general_animation_controllers_implementation(
   controller: ResourcePack.AnimationController.AnimationController | BehaviorPack.AnimationController.AnimationController,
   user: Types.Identifiable & AnimationCarrier<Defined<string>> & MolangCarrier<Molang.MolangSetOptional>,
-  ownerType: OwnerType,
+  ownerType: MolangDataSetKey,
   diagnoser: DiagnosticsBuilder
 ) {
   //for each animation

@@ -17,7 +17,7 @@ import { Context } from "./components/context";
  * @param diagnoser The diagnoser builder to receive the errors*/
 export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
   //Check molang
-  diagnose_molang(doc.getText(), "entity", diagnoser);
+  diagnose_molang(doc.getText(), "Entities", diagnoser);
 
   const entity = Json.LoadReport<Internal.BehaviorPack.Entity>(doc, diagnoser);
 
@@ -50,7 +50,7 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
   });
 
   //Check animations / animation controllers implements
-  owner.animations.using.forEach((anim_id) => animation_or_controller_diagnose_implementation(anim_id, owner, "entity", diagnoser));
+  owner.animations.using.forEach((anim_id) => animation_or_controller_diagnose_implementation(anim_id, owner, "Entities", diagnoser));
 
   //Script check
   if (container.description.scripts) diagnose_script(diagnoser, container.description.scripts, container.description.animations);

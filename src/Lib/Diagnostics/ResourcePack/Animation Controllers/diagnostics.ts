@@ -2,10 +2,10 @@ import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticsBuilder } from "../../../Types";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 import { education_enabled } from "../../Definitions";
-import { OwnerType } from "../../Molang/diagnostics";
 import { general_animation_controllers_implementation } from "../../Minecraft/Animation Controllers";
 import { Definition } from "bc-minecraft-bedrock-types/lib/src/Types/Definition";
-import { EntityAnimationMolangCarrier } from '../../../Types';
+import { EntityAnimationMolangCarrier } from "../../../Types";
+import { MolangDataSetKey } from "bc-minecraft-molang";
 
 /**
  *
@@ -16,7 +16,7 @@ import { EntityAnimationMolangCarrier } from '../../../Types';
 export function animation_controller_diagnose_implementation(
   controllerid: string,
   user: EntityAnimationMolangCarrier,
-  ownerType: OwnerType,
+  ownerType: MolangDataSetKey,
   diagnoser: DiagnosticsBuilder,
   particles?: Definition,
   sounds?: Definition

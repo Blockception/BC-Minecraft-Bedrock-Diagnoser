@@ -11,7 +11,7 @@ import { json_commandscheck } from '../Mcfunction/commands';
 export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
   //Check molang
   const text = doc.getText();
-  diagnose_molang(text, "animation", diagnoser);
+  diagnose_molang(text, "Animations", diagnoser);
 
   const anims = Json.LoadReport<Internal.BehaviorPack.Animations>(doc, diagnoser);
   if (!Internal.BehaviorPack.Animations.is(anims)) return;

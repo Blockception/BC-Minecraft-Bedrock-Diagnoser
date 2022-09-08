@@ -12,7 +12,7 @@ import { SMap, TextDocument } from "bc-minecraft-bedrock-project";
 export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
   //Check molang
   const text = doc.getText();
-  diagnose_molang(text, "animation_controller", diagnoser);
+  diagnose_molang(text, "AnimationsControllers", diagnoser);
 
   const controllers = Json.LoadReport<Internal.BehaviorPack.AnimationControllers>(doc, diagnoser);
   if (!Internal.BehaviorPack.AnimationControllers.is(controllers)) return;

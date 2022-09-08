@@ -10,15 +10,20 @@ describe("Molang", () => {
       const using = Molang.MolangFullSet.create();
       const owner = Molang.MolangFullSet.create();
 
-      using.queries.using.push("is_jumping")
+      using.queries.using.push("is_jumping");
       using.temps.using.push("foo");
       using.variables.using.push("spleef", "state");
-      using.variables.defined.push("state")
+      using.variables.defined.push("state");
 
       owner.temps.defined.push("foo");
       owner.variables.defined.push("spleef");
 
-      diagnose_molang_implementation({ id: "animation.example.walk", molang: using }, { id: "minecraft:sheep", molang: owner }, "entity", diganoser);
+      diagnose_molang_implementation(
+        { id: "animation.example.walk", molang: using },
+        { id: "minecraft:sheep", molang: owner },
+        "Entities",
+        diganoser
+      );
 
       diganoser.expectEmpty();
     });
@@ -29,14 +34,19 @@ describe("Molang", () => {
       const using = Molang.MolangFullSet.create();
       const owner = Molang.MolangFullSet.create();
 
-      using.queries.using.push("is_jumping")
+      using.queries.using.push("is_jumping");
       using.temps.using.push("foo");
       using.variables.using.push("spleef", "state");
-      using.variables.defined.push("state")
+      using.variables.defined.push("state");
 
       owner.variables.defined.push("spleef");
 
-      diagnose_molang_implementation({ id: "animation.example.walk", molang: using }, { id: "minecraft:sheep", molang: owner }, "entity", diganoser);
+      diagnose_molang_implementation(
+        { id: "animation.example.walk", molang: using },
+        { id: "minecraft:sheep", molang: owner },
+        "Entities",
+        diganoser
+      );
 
       diganoser.expectAmount(1);
     });
@@ -47,14 +57,19 @@ describe("Molang", () => {
       const using = Molang.MolangFullSet.create();
       const owner = Molang.MolangFullSet.create();
 
-      using.queries.using.push("is_jumping")
+      using.queries.using.push("is_jumping");
       using.temps.using.push("foo");
       using.variables.using.push("spleef", "state");
-      using.variables.defined.push("state")
+      using.variables.defined.push("state");
 
       owner.temps.defined.push("foo");
 
-      diagnose_molang_implementation({ id: "animation.example.walk", molang: using }, { id: "minecraft:sheep", molang: owner }, "entity", diganoser);
+      diagnose_molang_implementation(
+        { id: "animation.example.walk", molang: using },
+        { id: "minecraft:sheep", molang: owner },
+        "Entities",
+        diganoser
+      );
 
       diganoser.expectAmount(1);
     });

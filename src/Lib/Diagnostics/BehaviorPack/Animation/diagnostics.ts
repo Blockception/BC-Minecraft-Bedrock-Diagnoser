@@ -1,6 +1,7 @@
+import { MolangDataSetKey } from 'bc-minecraft-molang';
 import { DiagnosticsBuilder, DiagnosticSeverity } from '../../../Types';
 import { EntityAnimationMolangCarrier, EventCarrier } from "../../../Types/Interfaces";
-import { diagnose_molang_implementation, OwnerType } from "../../Molang/diagnostics";
+import { diagnose_molang_implementation } from "../../Molang/diagnostics";
 
 type User = EntityAnimationMolangCarrier & EventCarrier;
 
@@ -13,7 +14,7 @@ type User = EntityAnimationMolangCarrier & EventCarrier;
 export function animation_diagnose_implementation(
   anim_id: string,
   user: User,
-  ownerType: OwnerType,
+  ownerType: MolangDataSetKey,
   diagnoser: DiagnosticsBuilder
 ): void {
   if (!has_animation(anim_id, diagnoser)) return;

@@ -6,7 +6,7 @@ import * as AnimationController from "./Animation Controllers/entry";
 import * as Attachable from "./Attachable/entry";
 import * as BiomesClient from "./Biomes Client/entry";
 import * as Block from "./Block/entry";
-import * as Blocks from "./Block/block";
+import * as Blocks from "./Block/entry";
 import * as Entity from "./Entity/entry";
 import * as Fog from "./Fog/entry";
 import * as Item from "./Item/entry";

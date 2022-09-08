@@ -1,10 +1,11 @@
 import { Definition } from "bc-minecraft-bedrock-types/lib/src/Types/Definition";
-import { diagnose_molang_implementation, OwnerType } from "../../Molang/diagnostics";
 import { DiagnosticsBuilder } from "../../../Types";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 import { education_enabled } from "../../Definitions";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
-import { EntityAnimationMolangCarrier } from '../../../Types';
+import { EntityAnimationMolangCarrier } from "../../../Types";
+import { MolangDataSetKey } from "bc-minecraft-molang";
+import { diagnose_molang_implementation } from "../../Molang";
 
 /**
  *
@@ -15,7 +16,7 @@ import { EntityAnimationMolangCarrier } from '../../../Types';
 export function animation_diagnose_implementation(
   anim_id: string,
   user: EntityAnimationMolangCarrier,
-  ownerType: OwnerType,
+  ownerType: MolangDataSetKey,
   diagnoser: DiagnosticsBuilder,
   particles?: Definition,
   sounds?: Definition
@@ -71,6 +72,11 @@ export function has_animation(id: string, diagnoser: DiagnosticsBuilder): boolea
   if (MinecraftData.ResourcePack.hasAnimation(id, edu)) return true;
 
   //Nothing then report error
-  diagnoser.Add(`"${id}"`, `Cannot find resourcepack animation: ${id}`, DiagnosticSeverity.error, "resourcepack.animation.missing");
+  diagnoser.Add(
+    `"${id}"`,
+    `Cannot find resourcepack animation: ${id}`,
+    DiagnosticSeverity.error,
+    "resourcepack.animation.missing"
+  );
   return false;
 }

@@ -2,7 +2,7 @@ import { DiagnosticsBuilder } from "../../../Types";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 import { EntityAnimationMolangCarrier, EventCarrier } from "../../../Types/Interfaces";
 import { general_animation_controllers_implementation } from "../../Minecraft/Animation Controllers";
-import { OwnerType } from "../../Molang/diagnostics";
+import { MolangDataSetKey } from 'bc-minecraft-molang';
 
 /**
  *
@@ -13,7 +13,7 @@ import { OwnerType } from "../../Molang/diagnostics";
 export function animation_controller_diagnose_implementation(
   controllerid: string,
   user: EntityAnimationMolangCarrier & EventCarrier,
-  ownerType: OwnerType,
+  ownerType: MolangDataSetKey,
   diagnoser: DiagnosticsBuilder
 ): void {
   if (has_animation_controller(controllerid, diagnoser)) {

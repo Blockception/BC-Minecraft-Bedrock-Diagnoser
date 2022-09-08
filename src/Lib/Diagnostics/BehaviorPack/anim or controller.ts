@@ -1,9 +1,9 @@
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/Severity";
 import { EntityAnimationMolangCarrier, EventCarrier } from "../../Types/Interfaces";
-import { OwnerType } from "../Molang/diagnostics";
 import { animation_controller_diagnose_implementation } from "./Animation Controllers/diagnostics";
 import { animation_diagnose_implementation } from "./Animation/diagnostics";
+import { MolangDataSetKey } from 'bc-minecraft-molang';
 
 /**
  * @param id
@@ -15,7 +15,7 @@ import { animation_diagnose_implementation } from "./Animation/diagnostics";
 export function animation_or_controller_diagnose_implementation(
   id: string,
   user: EntityAnimationMolangCarrier & EventCarrier,
-  ownerType: OwnerType,
+  ownerType: MolangDataSetKey,
   diagnoser: DiagnosticsBuilder
 ): void {
   switch (is_animation_or_controller(id, diagnoser)) {

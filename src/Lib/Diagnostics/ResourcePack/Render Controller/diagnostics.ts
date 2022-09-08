@@ -1,10 +1,10 @@
-import { DefinedUsing, Molang } from "bc-minecraft-molang";
-import { MinecraftData, Types } from "bc-minecraft-bedrock-vanilla-data";
+import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticsBuilder } from "../../../Types";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 import { education_enabled } from "../../Definitions";
-import { diagnose_molang_implementation, OwnerType } from '../../Molang/diagnostics';
+import { diagnose_molang_implementation } from '../../Molang/diagnostics';
 import { EntityAnimationMolangCarrier } from '../../../Types';
+import { MolangDataSetKey } from 'bc-minecraft-molang';
 
 /**
  *
@@ -15,7 +15,7 @@ import { EntityAnimationMolangCarrier } from '../../../Types';
 export function render_controller_diagnose_implementation(  
   controllerid: string,
   user: EntityAnimationMolangCarrier,
-  ownerType: OwnerType,
+  ownerType: MolangDataSetKey,
   diagnoser: DiagnosticsBuilder): void {
 
   if (has_render_controller(controllerid, diagnoser)) {

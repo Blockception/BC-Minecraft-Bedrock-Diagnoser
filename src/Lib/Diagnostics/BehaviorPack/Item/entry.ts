@@ -7,7 +7,7 @@ import { diagnose_molang } from '../../Molang/diagnostics';
  * @param diagnoser The diagnoser builder to receive the errors*/
 export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
   //Check molang
-  diagnose_molang(doc.getText(), "item", diagnoser);
+  diagnose_molang(doc.getText(), "Items", diagnoser);
 
   //TODO add diagnostics
 }
