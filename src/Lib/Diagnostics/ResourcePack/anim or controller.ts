@@ -12,7 +12,7 @@ import { Definition } from "bc-minecraft-bedrock-types/lib/src/Types/Definition"
 
 export function animation_or_controller_diagnose_implementation(
   id: string,
-  user: Types.Identifiable & MolangCarrier<Molang.MolangSetOptional> & AnimationCarrier<DefinedUsing<string>>,
+  user: EntityAnimationMolangCarrier,
   ownerType: OwnerType,
   diagnoser: DiagnosticsBuilder,
   particles?: Definition,

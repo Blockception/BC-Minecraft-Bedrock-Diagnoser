@@ -1,5 +1,5 @@
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Lib/Types/DiagnosticsBuilder";
-import { Manifest, ManifestHeader } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal";
+import { Manifest, ManifestHeader } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/Types";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../Types";
 
 export function minecraft_manifest_diagnose(m: Manifest, diagnoser: DiagnosticsBuilder): void {
   minecraft_manifest_header_diagnose(m.header, diagnoser);
@@ -15,13 +15,17 @@ export function minecraft_manifest_header_diagnose(m: ManifestHeader, diagnoser:
 }
 
 /**
- * 
- * @param m 
- * @param diagnoser 
- * @param required_type 
- * @returns 
+ *
+ * @param m
+ * @param diagnoser
+ * @param required_type
+ * @returns
  */
-export function minecraft_manifest_required_module(m: Manifest, diagnoser: DiagnosticsBuilder, ...required_type: string[]): boolean {
+export function minecraft_manifest_required_module(
+  m: Manifest,
+  diagnoser: DiagnosticsBuilder,
+  ...required_type: string[]
+): boolean {
   const modules = m.modules;
 
   if (modules) {
@@ -35,7 +39,7 @@ export function minecraft_manifest_required_module(m: Manifest, diagnoser: Diagn
   //No correct module found
   diagnoser.Add(
     "modules",
-    "This manifest is required to have the following module type one of " + required_type.join(', '),
+    "This manifest is required to have the following module type one of " + required_type.join(", "),
     DiagnosticSeverity.error,
     "minecraft.manifest.module.missing"
   );
@@ -45,7 +49,12 @@ export function minecraft_manifest_required_module(m: Manifest, diagnoser: Diagn
 
 export function minecraft_manifest_version(version: number[], diagnoser: DiagnosticsBuilder, path: string): void {
   if (version.length != 3) {
-    diagnoser.Add(path, "The version number needs to be an array of 3 items", DiagnosticSeverity.error, "minecraft.manifest.version.invalid");
+    diagnoser.Add(
+      path,
+      "The version number needs to be an array of 3 items",
+      DiagnosticSeverity.error,
+      "minecraft.manifest.version.invalid"
+    );
   }
 
   if (version[0] < 1) {

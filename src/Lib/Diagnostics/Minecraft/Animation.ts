@@ -1,5 +1,5 @@
-import { Internal, ResourcePack, BehaviorPack } from "bc-minecraft-bedrock-project";
-import { DataSetConnector } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/DataSet/DataSetConnector";
+import { Internal, ResourcePack, BehaviorPack, DataSetConnector } from "bc-minecraft-bedrock-project";
+import { Script } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/Types";
 import { Types } from "bc-minecraft-bedrock-types";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/Severity";
@@ -11,7 +11,7 @@ export function minecraft_animation_used(
     ResourcePack.AnimationController.AnimationController | BehaviorPack.AnimationController.AnimationController,
     ResourcePack.ResourcePack
   >,
-  script?: Internal.Script
+  script?: Script
 ): void {
   const used: string[] = [];
 
@@ -33,7 +33,12 @@ export function minecraft_animation_used(
   Types.Definition.forEach(animations, (ref, id) => {
     //If the used animations does not contain the referenced animation, then its unused
     if (!used.includes(ref)) {
-      diagnoser.Add(`${ref}/${id}`, `Animation: ${id} is not being used, could be removed`, DiagnosticSeverity.info, `minecraft.animation.unused`);
+      diagnoser.Add(
+        `${ref}/${id}`,
+        `Animation: ${id} is not being used, could be removed`,
+        DiagnosticSeverity.info,
+        `minecraft.animation.unused`
+      );
     }
   });
 }

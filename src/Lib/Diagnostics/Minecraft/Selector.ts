@@ -1,9 +1,13 @@
-import { ParameterInfo } from "bc-minecraft-bedrock-command/lib/src/Lib/Data/CommandInfo";
-import { Text } from "bc-minecraft-bedrock-project";
-import { Minecraft } from "bc-minecraft-bedrock-types";
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Lib/Types/DiagnosticsBuilder";
-import { Types } from "bc-minecraft-bedrock-types";
 import { check_definition_value } from "../Definitions";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../Types";
+import { Minecraft } from "bc-minecraft-bedrock-types";
+import { minecraft_selector_attribute_diagnose } from "./Selector/General";
+import { minecraft_selector_hasitem_diagnose } from "./Selector/HasItem";
+import { minecraft_selector_scores_diagnose } from "./Selector/Scores";
+import { ParameterInfo } from "bc-minecraft-bedrock-command/lib/src/Lib/Data/CommandInfo";
+import { selector_attributes_duplicate } from "./Selector/Checks";
+import { Text } from "bc-minecraft-bedrock-project";
+import { Types } from "bc-minecraft-bedrock-types";
 import {
   Selector,
   SelectorAttribute,
@@ -11,19 +15,19 @@ import {
   SelectorScoreAttribute,
   SelectorValueAttribute,
 } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Selector";
-import { selector_attributes_duplicate } from "./Selector/Checks";
-import { minecraft_selector_scores_diagnose } from "./Selector/Scores";
-import { minecraft_selector_hasitem_diagnose } from "./Selector/HasItem";
-import { minecraft_selector_attribute_diagnose } from "./Selector/General";
 
 /**
- * 
- * @param pattern 
- * @param value 
- * @param diagnoser 
- * @returns 
+ *
+ * @param pattern
+ * @param value
+ * @param diagnoser
+ * @returns
  */
-export function minecraft_selector_diagnose(pattern: ParameterInfo, value: Types.OffsetWord, diagnoser: DiagnosticsBuilder) {
+export function minecraft_selector_diagnose(
+  pattern: ParameterInfo,
+  value: Types.OffsetWord,
+  diagnoser: DiagnosticsBuilder
+) {
   const sel = value.text;
 
   //Is a selector?
@@ -42,7 +46,12 @@ export function minecraft_selector_diagnose(pattern: ParameterInfo, value: Types
   }
 
   if (pattern.options?.playerOnly === true) {
-    diagnoser.Add(value, "Only players selector allowed to be used", DiagnosticSeverity.error, "minecraft.selector.invalid");
+    diagnoser.Add(
+      value,
+      "Only players selector allowed to be used",
+      DiagnosticSeverity.error,
+      "minecraft.selector.invalid"
+    );
     return;
   }
 
@@ -55,7 +64,12 @@ export function minecraft_selector_diagnose(pattern: ParameterInfo, value: Types
   if (data.General.fakeEntities.has(name)) return;
 
   //Found nothing then report
-  diagnoser.Add(value, `Cannot find fake entity definition or name for: ${name}`, DiagnosticSeverity.warning, "minecraft.name.missing");
+  diagnoser.Add(
+    value,
+    `Cannot find fake entity definition or name for: ${name}`,
+    DiagnosticSeverity.warning,
+    "minecraft.name.missing"
+  );
 }
 
 /**
@@ -64,18 +78,32 @@ export function minecraft_selector_diagnose(pattern: ParameterInfo, value: Types
  * @param value
  * @param diagnoser
  */
-function minecraft_selector_diagnose_hard(pattern: ParameterInfo, value: Types.OffsetWord, diagnoser: DiagnosticsBuilder) {
+function minecraft_selector_diagnose_hard(
+  pattern: ParameterInfo,
+  value: Types.OffsetWord,
+  diagnoser: DiagnosticsBuilder
+) {
   const selector = Minecraft.Selector.Selector.parse(value.text, value.offset);
 
   //If the selector is only meant to be aimed at player warn the user
   if (pattern.options?.playerOnly === true) {
     if (selector.type === "@e") {
-      diagnoser.Add(value, "Selector is meant to target only players", DiagnosticSeverity.info, "minecraft.selector.playeronly");
+      diagnoser.Add(
+        value,
+        "Selector is meant to target only players",
+        DiagnosticSeverity.info,
+        "minecraft.selector.playeronly"
+      );
     }
   }
 
   if (!Minecraft.Selector.Selector.isValidType(selector)) {
-    diagnoser.Add(value, `Unknown selector type: ${selector.type}`, DiagnosticSeverity.error, "minecraft.selector.type.invalid");
+    diagnoser.Add(
+      value,
+      `Unknown selector type: ${selector.type}`,
+      DiagnosticSeverity.error,
+      "minecraft.selector.type.invalid"
+    );
   }
 
   //Check for duplicate scores definition
@@ -86,20 +114,34 @@ function minecraft_selector_diagnose_hard(pattern: ParameterInfo, value: Types.O
   selector.attributes.forEach((attr) => minecraft_selector_attribute_diagnose_hard(attr, selector, diagnoser));
 }
 
-export function minecraft_selector_attribute_diagnose_hard(attr: SelectorAttribute, selector: Selector, diagnoser: DiagnosticsBuilder) {
+export function minecraft_selector_attribute_diagnose_hard(
+  attr: SelectorAttribute,
+  selector: Selector,
+  diagnoser: DiagnosticsBuilder
+) {
   switch (attr.name) {
     case "scores":
       if (SelectorScoreAttribute.is(attr)) {
         minecraft_selector_scores_diagnose(attr, diagnoser);
       } else {
-        diagnoser.Add(attr.getName(), "Scores is not valid", DiagnosticSeverity.error, "minecraft.selector.attribute.invalid");
+        diagnoser.Add(
+          attr.getName(),
+          "Scores is not valid",
+          DiagnosticSeverity.error,
+          "minecraft.selector.attribute.invalid"
+        );
       }
       break;
     case "hasitem":
       if (SelectorItemAttribute.is(attr)) {
         minecraft_selector_hasitem_diagnose(attr, diagnoser);
       } else {
-        diagnoser.Add(attr.getName(), "Hasitem is not valid", DiagnosticSeverity.error, "minecraft.selector.attribute.invalid");
+        diagnoser.Add(
+          attr.getName(),
+          "Hasitem is not valid",
+          DiagnosticSeverity.error,
+          "minecraft.selector.attribute.invalid"
+        );
       }
       break;
 
@@ -107,7 +149,12 @@ export function minecraft_selector_attribute_diagnose_hard(attr: SelectorAttribu
       if (SelectorValueAttribute.is(attr)) {
         minecraft_selector_attribute_diagnose(attr, selector, diagnoser);
       } else {
-        diagnoser.Add(attr.getName(), attr.name + " is not valid", DiagnosticSeverity.error, "minecraft.selector.attribute.invalid");
+        diagnoser.Add(
+          attr.getName(),
+          attr.name + " is not valid",
+          DiagnosticSeverity.error,
+          "minecraft.selector.attribute.invalid"
+        );
       }
       break;
   }

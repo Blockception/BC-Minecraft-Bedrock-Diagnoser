@@ -4,7 +4,7 @@ import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 import { education_enabled } from "../../Definitions";
 import { diagnose_molang_implementation, OwnerType } from '../../Molang/diagnostics';
-import { AnimationCarrier, MolangCarrier } from 'bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier';
+import { EntityAnimationMolangCarrier } from '../../../Types';
 
 /**
  *
@@ -14,7 +14,7 @@ import { AnimationCarrier, MolangCarrier } from 'bc-minecraft-bedrock-project/li
  */
 export function render_controller_diagnose_implementation(  
   controllerid: string,
-  user: Types.Identifiable & MolangCarrier<Molang.MolangSetOptional> & AnimationCarrier<DefinedUsing<string>>,
+  user: EntityAnimationMolangCarrier,
   ownerType: OwnerType,
   diagnoser: DiagnosticsBuilder): void {
 

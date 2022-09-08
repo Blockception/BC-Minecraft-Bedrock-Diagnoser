@@ -1,7 +1,7 @@
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Lib/Types/DiagnosticsBuilder";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../Types";
 import { Types } from "bc-minecraft-bedrock-types";
 import { check_definition_value } from "../Definitions";
-import { Text } from 'bc-minecraft-bedrock-project';
+import { Text } from "bc-minecraft-bedrock-project";
 
 export function minecraft_tickingarea_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
   const data = diagnoser.context.getCache();
@@ -14,5 +14,10 @@ export function minecraft_tickingarea_diagnose(value: Types.OffsetWord, diagnose
   if (data.General.tickingAreas.has(id)) return;
 
   //Nothing then report error
-  diagnoser.Add(value, `Cannot find tickingarea definition: ${id}`, DiagnosticSeverity.error, "minecraft.tickingarea.missing");
+  diagnoser.Add(
+    value,
+    `Cannot find tickingarea definition: ${id}`,
+    DiagnosticSeverity.error,
+    "minecraft.tickingarea.missing"
+  );
 }

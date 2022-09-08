@@ -1,11 +1,10 @@
-import { BehaviorPack, Internal, Map, ResourcePack } from "bc-minecraft-bedrock-project";
-import { State } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/BehaviorPack/AnimationController";
-import { AnimationCarrier, MolangCarrier } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier";
+import { BehaviorPack, Internal, SMap, ResourcePack, MolangCarrier, AnimationCarrier } from "bc-minecraft-bedrock-project";
 import { Defined, Molang } from "bc-minecraft-molang";
-import { Types } from "bc-minecraft-bedrock-types";
+import { diagnose_molang_implementation, OwnerType } from "../Molang/diagnostics";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/Severity";
-import { diagnose_molang_implementation, OwnerType } from "../Molang/diagnostics";
+import { State } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/BehaviorPack/AnimationController";
+import { Types } from "bc-minecraft-bedrock-types";
 
 export type animation_controllers = Internal.BehaviorPack.AnimationControllers | Internal.ResourcePack.AnimationControllers;
 export type animation_controller = Internal.BehaviorPack.AnimationController | Internal.ResourcePack.AnimationController;
@@ -57,7 +56,7 @@ export function general_animation_controller(controller: animation_controller, c
  * @param States
  * @param Builder
  */
-function CheckTransition(controller: string, Transitions: Types.Conditional[], States: Map<State>, diagnoser: DiagnosticsBuilder): void {
+function CheckTransition(controller: string, Transitions: Types.Conditional[], States: SMap<State>, diagnoser: DiagnosticsBuilder): void {
   //Loop over the transitions
   for (var I = 0; I < Transitions.length; I++) {
     const trans = Transitions[I];

@@ -1,14 +1,15 @@
 import { Pack, PackType, TextDocument } from "bc-minecraft-bedrock-project";
-import { MCIgnore } from "bc-minecraft-project";
-import path = require('path');
-import { BehaviorPack } from "../../Diagnostics/BehaviorPack/BehaviorPack";
-import { SkinPack } from "../../Diagnostics/SkinPack/SkinPack";
-import { WorldPack } from "../../Diagnostics/WorldPack/WorldPack";
-import { format_diagnose_path } from '../../Diagnostics/Format/diagnose';
-import { minecraft_language_diagnose } from '../../Diagnostics/Minecraft/Language';
-import { ResourcePack } from "../../Diagnostics/ResourcePack/ResourcePack";
-import { DiagnosticSeverity } from "../Severity";
 import { DiagnoserContext } from "./DiagnoserContext";
+import { DiagnosticSeverity } from "./Severity";
+import { format_diagnose_path } from "../Diagnostics/Format";
+import { MCIgnore } from "bc-minecraft-project";
+import { minecraft_language_diagnose } from "../Diagnostics/Minecraft";
+
+import path = require("path");
+import { BehaviorPack } from "../Diagnostics/BehaviorPack";
+import { ResourcePack } from "../Diagnostics/ResourcePack";
+import { SkinPack } from "../Diagnostics/SkinPack/SkinPack";
+import { WorldPack } from "../Diagnostics/WorldPack/WorldPack";
 
 /**The object that is responsible for diagnosing minecraft bedrock files*/
 export class Diagnoser {
@@ -31,13 +32,13 @@ export class Diagnoser {
       if (!temp) return false;
       doc = temp;
     }
-    
+
     const pack = this.context.getCache().get(doc);
     if (!pack) return false;
-    
+
     //Check if diagnostics was disabled
     const ext = path.extname(doc.uri);
-    
+
     //Check if diagnostics for this file type is disabled
     if (pack.context.attributes["diagnostic" + ext] === "false") return false;
 
@@ -53,14 +54,13 @@ export class Diagnoser {
       //Language file?
       if (doc.uri.endsWith(".lang")) {
         minecraft_language_diagnose(doc, diagnoser);
-      }
-      else {
+      } else {
         //Check per pack
         switch (pack.type) {
           case PackType.behavior_pack:
             out = BehaviorPack.Process(doc, diagnoser);
             break;
-  
+
           case PackType.resource_pack:
             out = ResourcePack.Process(doc, diagnoser);
             break;
@@ -79,10 +79,9 @@ export class Diagnoser {
 
       if (err.message && err.stack) {
         msg = `${err.message}\n\t${err.stack}`;
-      }
-      else {
+      } else {
         msg = JSON.stringify(err);
-      }      
+      }
 
       diagnoser.Add({ character: 0, line: 0 }, msg, DiagnosticSeverity.error, "diagnoser.internal.exception");
     }
@@ -100,7 +99,7 @@ export class Diagnoser {
     let out = false;
 
     for (let I = 0; I < files.length; I++) {
-      out = this.Process(files[I]) || out
+      out = this.Process(files[I]) || out;
     }
 
     return out;

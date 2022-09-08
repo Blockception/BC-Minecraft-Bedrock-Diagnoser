@@ -1,13 +1,11 @@
-import { DefinedUsing, Molang } from "bc-minecraft-molang";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 import { education_enabled } from "../../Definitions";
 import { OwnerType } from "../../Molang/diagnostics";
-import { Types } from "bc-minecraft-bedrock-types";
-import { AnimationCarrier, MolangCarrier } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier";
 import { general_animation_controllers_implementation } from "../../Minecraft/Animation Controllers";
 import { Definition } from "bc-minecraft-bedrock-types/lib/src/Types/Definition";
+import { EntityAnimationMolangCarrier } from '../../../Types';
 
 /**
  *
@@ -17,7 +15,7 @@ import { Definition } from "bc-minecraft-bedrock-types/lib/src/Types/Definition"
  */
 export function animation_controller_diagnose_implementation(
   controllerid: string,
-  user: Types.Identifiable & MolangCarrier<Molang.MolangSetOptional> & AnimationCarrier<DefinedUsing<string>>,
+  user: EntityAnimationMolangCarrier,
   ownerType: OwnerType,
   diagnoser: DiagnosticsBuilder,
   particles?: Definition,
