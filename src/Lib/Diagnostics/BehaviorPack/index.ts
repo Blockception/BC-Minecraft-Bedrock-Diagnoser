@@ -15,4 +15,3 @@ export * as Structure from "./Structure/index";
 export * as Trading from "./Trading/index";
 export * from "./BehaviorPack";
 export * from "./anim or controller";
-export * from "./diagnostics";
