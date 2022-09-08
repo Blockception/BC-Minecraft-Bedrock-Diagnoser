@@ -5,7 +5,7 @@ import { behaviorpack_entity_components_check, behaviorpack_entity_components_de
 import { DefinedUsing, Molang } from "bc-minecraft-molang";
 import { diagnose_molang } from "../../Molang/diagnostics";
 import { diagnose_script } from "../../Minecraft/Script";
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../../Types";
 import { Internal, TextDocument } from "bc-minecraft-bedrock-project";
 import { Json } from "../../Json/Json";
 import { Types } from "bc-minecraft-bedrock-types";

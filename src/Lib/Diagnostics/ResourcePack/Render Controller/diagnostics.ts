@@ -1,6 +1,6 @@
 import { DefinedUsing, Molang } from "bc-minecraft-molang";
 import { MinecraftData, Types } from "bc-minecraft-bedrock-vanilla-data";
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../../Types";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 import { education_enabled } from "../../Definitions";
 import { diagnose_molang_implementation, OwnerType } from '../../Molang/diagnostics';

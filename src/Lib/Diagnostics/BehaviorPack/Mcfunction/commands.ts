@@ -1,7 +1,7 @@
 import { Command, Parameter, ParameterType } from "bc-minecraft-bedrock-command";
 import { ParameterInfo } from "bc-minecraft-bedrock-command/lib/src/Lib/Data/CommandInfo";
 import { TextDocument } from "bc-minecraft-bedrock-project";
-import { DiagnosticSeverity, DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
+import { DiagnosticSeverity, DiagnosticsBuilder } from "../../../Types";
 import { education_enabled } from "../../Definitions";
 import { general_boolean_diagnose } from "../../General/Boolean";
 import { general_float_diagnose } from "../../General/Float";

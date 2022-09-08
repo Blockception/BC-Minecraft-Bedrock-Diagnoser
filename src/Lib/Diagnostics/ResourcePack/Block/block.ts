@@ -1,6 +1,6 @@
 import { TextDocument } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/TextDocument";
 import { ResourcePackCollection } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/ResourcePack/ResourcePackCollection";
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../../Types";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 import { Json } from "../../Json/Json";
 
@@ -11,7 +11,7 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
   const blocks = Json.LoadReport<Blocks>(doc, diagnoser);
 
   if (!Json.TypeCheck(blocks, diagnoser, "blocks.json", "minecraft.resourcepack.blocks.invalid", is)) return;
-  
+
   const keys = Object.keys(blocks);
   const rp = diagnoser.context.getCache().ResourcePacks;
 

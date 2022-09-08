@@ -1,6 +1,6 @@
 import { Definition } from "bc-minecraft-bedrock-types/lib/src/Types/Definition";
 import { diagnose_molang_implementation, OwnerType } from "../../Molang/diagnostics";
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../../Types";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 import { education_enabled } from "../../Definitions";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";

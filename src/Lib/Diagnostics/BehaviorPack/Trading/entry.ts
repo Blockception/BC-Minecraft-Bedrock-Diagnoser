@@ -1,4 +1,4 @@
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../../Types";
 import { Json } from '../../Json/Json';
 import { behaviorpack_loot_table_function_diagnose, LootFunction } from '../Loot Table/functions';
 import { TextDocument } from "bc-minecraft-bedrock-project";

@@ -1,6 +1,6 @@
 import { TextDocument } from "bc-minecraft-bedrock-project";
 import { DiagnosticSeverity } from "../../../../main";
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../../Types";
 import { mcfunction_commandscheck } from "./commands";
 
 /**Diagnoses the given document as an mcfunction

@@ -1,7 +1,6 @@
-import { Internal } from "bc-minecraft-bedrock-project";
+import { Script } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/Types";
 import { Types } from "bc-minecraft-bedrock-types";
-import { DiagnosticSeverity } from '../../../main';
-import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../Types";
 
 /**
  *
@@ -13,7 +12,7 @@ import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
  */
 export function diagnose_script(
   builder: DiagnosticsBuilder,
-  script: Internal.Script | undefined,
+  script: Script | undefined,
   Animations?: Types.Definition,
   Controllers?: Types.Definition
 ): void {
@@ -26,9 +25,19 @@ export function diagnose_script(
   }
 }
 
-function has_ref(builder: DiagnosticsBuilder, ref_id: string, Animations?: Types.Definition, Controllers?: Types.Definition): void {
+function has_ref(
+  builder: DiagnosticsBuilder,
+  ref_id: string,
+  Animations?: Types.Definition,
+  Controllers?: Types.Definition
+): void {
   if (Animations && Animations[ref_id] !== undefined) return;
   if (Controllers && Controllers[ref_id] !== undefined) return;
 
-  builder.Add(`scripts/animate/${ref_id}`, "Cannot find animation or controller definition of: " + ref_id, DiagnosticSeverity.error, "minecraft.script.animate.missing");
+  builder.Add(
+    `scripts/animate/${ref_id}`,
+    "Cannot find animation or controller definition of: " + ref_id,
+    DiagnosticSeverity.error,
+    "minecraft.script.animate.missing"
+  );
 }

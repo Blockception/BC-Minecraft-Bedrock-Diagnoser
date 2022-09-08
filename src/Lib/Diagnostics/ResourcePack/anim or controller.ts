@@ -1,19 +1,18 @@
-import { DefinedUsing, Molang } from "bc-minecraft-molang";
+import { MolangDataSetKey } from "bc-minecraft-molang";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/Severity";
 import { education_enabled } from "../Definitions";
 import { animation_controller_diagnose_implementation } from "./Animation Controllers/diagnostics";
 import { animation_diagnose_implementation } from "./Animation/diagnostics";
-import { OwnerType } from "../Molang/diagnostics";
 import { Types } from "bc-minecraft-bedrock-types";
-import { AnimationCarrier, MolangCarrier } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier";
 import { Definition } from "bc-minecraft-bedrock-types/lib/src/Types/Definition";
+import { EntityAnimationMolangCarrier } from "../../Types";
 
 export function animation_or_controller_diagnose_implementation(
   id: string,
   user: EntityAnimationMolangCarrier,
-  ownerType: OwnerType,
+  ownerType: MolangDataSetKey,
   diagnoser: DiagnosticsBuilder,
   particles?: Definition,
   sounds?: Definition
@@ -26,7 +25,12 @@ export function animation_or_controller_diagnose_implementation(
       return animation_controller_diagnose_implementation(id, user, ownerType, diagnoser, particles, sounds);
 
     case anim_or_contr.neither:
-      diagnoser.Add(id, `Cannot find animation / animation controller: ${id}`, DiagnosticSeverity.error, "resourcepack.anim_or_controller.missing");
+      diagnoser.Add(
+        id,
+        `Cannot find animation / animation controller: ${id}`,
+        DiagnosticSeverity.error,
+        "resourcepack.anim_or_controller.missing"
+      );
   }
 }
 
@@ -37,7 +41,12 @@ export function animation_or_controller_diagnose(id: Types.OffsetWord, diagnoser
       return;
 
     case anim_or_contr.neither:
-      diagnoser.Add(id, `Cannot find animation / animation controller: ${id}`, DiagnosticSeverity.error, "mcfunction.anim_or_controller.missing");
+      diagnoser.Add(
+        id,
+        `Cannot find animation / animation controller: ${id}`,
+        DiagnosticSeverity.error,
+        "mcfunction.anim_or_controller.missing"
+      );
       return;
   }
 }

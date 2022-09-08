@@ -1,5 +1,5 @@
 import { check_definition_value, education_enabled } from "../../Definitions";
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types";
 import { MinecraftData } from 'bc-minecraft-bedrock-vanilla-data';
 import { Types } from "bc-minecraft-bedrock-types";
 

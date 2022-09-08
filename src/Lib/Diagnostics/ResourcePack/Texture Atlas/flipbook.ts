@@ -1,4 +1,4 @@
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../../Types";
 import { TextDocument } from '../../../Types/Interfaces';
 import { Json } from "../../Json/Json";
 import { texture_files_diagnose } from "./entry";

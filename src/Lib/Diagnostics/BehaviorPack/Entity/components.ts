@@ -1,7 +1,7 @@
 import { behaviorpack_entity_components_economy_trade_table } from "./components/economy_trade_table";
 import { behaviorpack_entity_components_loot } from "./components/loot";
 import { behaviorpack_entity_components_trade_table } from "./components/trade";
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../../Types";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 import { getUsedComponents } from "./Entity";
 import { hasPattern } from "../../../Types/Checks";

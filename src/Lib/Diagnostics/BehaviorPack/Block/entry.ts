@@ -1,5 +1,5 @@
 import { TextDocument } from "bc-minecraft-bedrock-project";
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../../Types";
 import { diagnose_molang } from '../../Molang/diagnostics';
 
 /**Diagnoses the given document as an bp block

@@ -1,4 +1,4 @@
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Lib/Types/DiagnosticsBuilder";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../Types";
 import { Types } from "bc-minecraft-bedrock-types";
 import { check_definition_value } from "../Definitions";
 

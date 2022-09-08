@@ -1,5 +1,5 @@
 import { diagnose_molang } from "../../Molang/diagnostics";
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../../Types";
 import { general_animation_controllers } from "../../Minecraft/Animation Controllers";
 import { Internal } from "bc-minecraft-bedrock-project";
 import { Json } from "../../Json/Json";

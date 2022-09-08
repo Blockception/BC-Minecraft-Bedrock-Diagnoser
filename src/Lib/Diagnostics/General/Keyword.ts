@@ -1,5 +1,5 @@
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Lib/Types/DiagnosticsBuilder";
 import { Types } from "bc-minecraft-bedrock-types";
+import { DiagnosticsBuilder, DiagnosticSeverity } from '../../Types';
 
 export function general_keyword_diagnose(keyword: string, value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
   //Keyword matches the given value, then stop

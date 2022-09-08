@@ -1,5 +1,5 @@
 import { TextDocument } from "bc-minecraft-bedrock-project";
-import { DiagnosticsBuilder } from "../../../../Types/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../../../Types";
 import { DiagnosticSeverity } from '../../../../Types/Severity';
 import { Json } from '../../../Json/Json';
 

@@ -1,4 +1,4 @@
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../../Types";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 import { EntityAnimationMolangCarrier, EventCarrier } from "../../../Types/Interfaces";
 import { general_animation_controllers_implementation } from "../../Minecraft/Animation Controllers";

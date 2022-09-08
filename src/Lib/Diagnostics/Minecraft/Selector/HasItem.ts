@@ -1,5 +1,5 @@
 import { SelectorItemAttribute, SelectorValueAttribute } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Selector";
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../../Types";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 import { behaviorpack_item_diagnose } from "../../BehaviorPack/Item/diagnose";
 import { general_integer_diagnose } from "../../General/Integer";

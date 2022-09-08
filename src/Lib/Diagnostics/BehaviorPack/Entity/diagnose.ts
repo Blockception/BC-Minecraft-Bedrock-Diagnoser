@@ -1,6 +1,6 @@
 import { check_definition_value, education_enabled } from "../../Definitions";
 import { Command, ParameterType } from "bc-minecraft-bedrock-command";
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../../Types";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { Types } from "bc-minecraft-bedrock-types";
