@@ -1,5 +1,5 @@
-import { DiagnosticsBuilderContent } from "../src/Lib/Types/DiagnosticsBuilder/DiagnosticsBuilder";
-import { DiagnosticSeverity } from "../src/Lib/Types/DiagnosticsBuilder/Severity";
+import { DiagnosticsBuilderContent } from "../src/Lib/Types/DiagnosticsBuilder";
+import { DiagnosticSeverity } from "../src/Lib/Types/Severity";
 import { ProjectData } from "bc-minecraft-bedrock-project";
 import { Types } from "bc-minecraft-bedrock-types";
 import { MCProject } from "bc-minecraft-project";

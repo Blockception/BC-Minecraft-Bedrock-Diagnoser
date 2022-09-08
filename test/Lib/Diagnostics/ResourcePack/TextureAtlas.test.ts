@@ -1,4 +1,4 @@
-import { TextDocument } from "bc-minecraft-bedrock-project";
+import { TextDocument } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/TextDocument";
 import { expect } from "chai";
 import { ResourcePack } from "../../../../src/Lib/Diagnostics/ResourcePack/ResourcePack";
 import { TestDiagnoser } from "../../../diagnoser";
@@ -50,7 +50,7 @@ describe("ResourcePack", () => {
 
       try {
         const value = ResourcePack.Process(doc, diagnoser);
-      } catch (err : any) {
+      } catch (err: any) {
         if (typeof err.message !== "undefined") expect.fail("Expect no errors: " + err.message);
       }
     });

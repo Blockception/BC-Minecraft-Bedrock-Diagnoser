@@ -1,7 +1,7 @@
 import { DefinedUsing, Molang } from "bc-minecraft-molang";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
-import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
-import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
+import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
+import { DiagnosticSeverity } from "../../Types/Severity";
 import { education_enabled } from "../Definitions";
 import { animation_controller_diagnose_implementation } from "./Animation Controllers/diagnostics";
 import { animation_diagnose_implementation } from "./Animation/diagnostics";
@@ -12,7 +12,7 @@ import { Definition } from "bc-minecraft-bedrock-types/lib/src/Types/Definition"
 
 export function animation_or_controller_diagnose_implementation(
   id: string,
-  user: Types.Identifiable & MolangCarrier<Molang.MolangSet | Molang.MolangFullSet> & AnimationCarrier<DefinedUsing<string>>,
+  user: Types.Identifiable & MolangCarrier<Molang.MolangSetOptional> & AnimationCarrier<DefinedUsing<string>>,
   ownerType: OwnerType,
   diagnoser: DiagnosticsBuilder,
   particles?: Definition,

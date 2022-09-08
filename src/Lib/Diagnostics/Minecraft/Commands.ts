@@ -1,6 +1,6 @@
 import { hasCommandData } from "bc-minecraft-bedrock-command";
 import { DiagnosticSeverity } from "../../../main";
-import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 import { Types } from "bc-minecraft-bedrock-types";
 
 /**

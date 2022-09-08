@@ -1,11 +1,11 @@
 import { MolangCarrier } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier";
 import { Types } from "bc-minecraft-bedrock-types";
 import { Defined, DefinedUsing, Molang, MolangData, Using } from "bc-minecraft-molang";
-import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
-import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
+import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
+import { DiagnosticSeverity } from "../../Types/Severity";
 
 export type OwnerType = "block" | "entity" | "item" | "feature" | "particle" | "animation" | "animation_controller" | "render_controller";
-type MCarrier = Types.Identifiable & MolangCarrier<Molang.MolangSet | Molang.MolangFullSet>;
+type MCarrier = Types.Identifiable & MolangCarrier<Molang.MolangSetOptional>;
 
 /**Diagnoses the given molang sets, the using party checks upon the definer if they have setup properly
  * @param using The set of molang data that is being used

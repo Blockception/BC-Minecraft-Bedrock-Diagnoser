@@ -1,16 +1,18 @@
-import { Internal, Map } from "bc-minecraft-bedrock-project";
+import { Internal, SMap } from "bc-minecraft-bedrock-project";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../../main";
 import { behaviorpack_entity_components_filters } from "./components/filters";
 
+type EntityEvent = Internal.BehaviorPack.EntityEvent;
+
 export function behaviorpack_entity_check_events(
-  events: Map<Internal.BehaviorPack.EntityEvent> | Internal.BehaviorPack.EntityEvent[],
+  events: SMap<EntityEvent> | EntityEvent[],
   diagnoser: DiagnosticsBuilder,
-  component_groups?: Map<Internal.BehaviorPack.EntityComponentContainer>
+  component_groups?: SMap<Internal.BehaviorPack.EntityComponentContainer>
 ) {
   if (Array.isArray(events)) {
     events.forEach((event) => behaviorpack_entity_check_event(event, "", diagnoser, component_groups));
   } else {
-    Map.forEach(events, (event, key) => behaviorpack_entity_check_event(event, key, diagnoser, component_groups));
+    SMap.forEach(events, (event, key) => behaviorpack_entity_check_event(event, key, diagnoser, component_groups));
   }
 }
 
@@ -21,10 +23,10 @@ export function behaviorpack_entity_check_events(
  * @param component_groups
  */
 export function behaviorpack_entity_check_event(
-  event: Internal.BehaviorPack.EntityEvent & { filters?: any },
+  event: EntityEvent & { filters?: any },
   event_id: string,
   diagnoser: DiagnosticsBuilder,
-  component_groups?: Map<Internal.BehaviorPack.EntityComponentContainer>
+  component_groups?: SMap<Internal.BehaviorPack.EntityComponentContainer>
 ): void {
   has_groups(diagnoser, event_id, event.add?.component_groups, component_groups);
   has_groups(diagnoser, event_id, event.remove?.component_groups, component_groups);
@@ -44,7 +46,7 @@ function has_groups(
   diagnoser: DiagnosticsBuilder,
   id: string,
   groups?: string[],
-  component_groups?: Map<Internal.BehaviorPack.EntityComponentContainer>
+  component_groups?: SMap<Internal.BehaviorPack.EntityComponentContainer>
 ): void {
   if (groups === undefined) return;
 

@@ -1,5 +1,5 @@
 import { TextDocument } from "bc-minecraft-bedrock-project";
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
 
 /**Diagnoses the given document as an structure
  * @param doc The text document to diagnose

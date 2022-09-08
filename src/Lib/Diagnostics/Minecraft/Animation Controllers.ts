@@ -3,8 +3,8 @@ import { State } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/Behavio
 import { AnimationCarrier, MolangCarrier } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier";
 import { Defined, Molang } from "bc-minecraft-molang";
 import { Types } from "bc-minecraft-bedrock-types";
-import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
-import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
+import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
+import { DiagnosticSeverity } from "../../Types/Severity";
 import { diagnose_molang_implementation, OwnerType } from "../Molang/diagnostics";
 
 export type animation_controllers = Internal.BehaviorPack.AnimationControllers | Internal.ResourcePack.AnimationControllers;
@@ -17,7 +17,7 @@ export type animationsOwner = Types.Identifiable & MolangCarrier<Molang.MolangSe
  * @param diagnoser
  */
 export function general_animation_controllers(data: animation_controllers, diagnoser: DiagnosticsBuilder): void {
-  Map.forEach<animation_controller>(data.animation_controllers, (controller, controller_id) => {
+  SMap.forEach<animation_controller>(data.animation_controllers, (controller, controller_id) => {
     general_animation_controller(controller, controller_id, diagnoser);
   });
 }
@@ -44,7 +44,7 @@ export function general_animation_controller(controller: animation_controller, c
   }
 
   //Check states
-  Map.forEach(controller.states, (state, state_id) => {
+  SMap.forEach(controller.states, (state, state_id) => {
     //Check transitions
     if (state.transitions) CheckTransition(controller_id, state.transitions, controller.states, diagnoser);
   });
@@ -78,7 +78,7 @@ function CheckTransition(controller: string, Transitions: Types.Conditional[], S
 
 export function general_animation_controllers_implementation(
   controller: ResourcePack.AnimationController.AnimationController | BehaviorPack.AnimationController.AnimationController,
-  user: Types.Identifiable & AnimationCarrier<Defined<string>> & MolangCarrier<Molang.MolangSet | Molang.MolangFullSet>,
+  user: Types.Identifiable & AnimationCarrier<Defined<string>> & MolangCarrier<Molang.MolangSetOptional>,
   ownerType: OwnerType,
   diagnoser: DiagnosticsBuilder
 ) {

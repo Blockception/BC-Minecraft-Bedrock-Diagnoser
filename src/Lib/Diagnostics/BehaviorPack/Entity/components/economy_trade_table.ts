@@ -1,4 +1,4 @@
-import { DiagnosticsBuilder } from "../../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../../../Types/DiagnosticsBuilder";
 import { Internal } from "bc-minecraft-bedrock-project";
 import { behaviorpack_trading_diagnose } from "../../Trading/diagnose";
 

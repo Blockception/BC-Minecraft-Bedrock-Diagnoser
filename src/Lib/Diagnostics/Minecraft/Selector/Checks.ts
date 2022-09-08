@@ -1,6 +1,6 @@
 import { SelectorAttribute } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Selector/Selector";
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
-import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
+import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
+import { DiagnosticSeverity } from "../../../Types/Severity";
 
 /**
  *

@@ -1,7 +1,7 @@
 import { Internal } from "bc-minecraft-bedrock-project";
 import { Types } from "bc-minecraft-bedrock-types";
 import { DiagnosticSeverity } from '../../../main';
-import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 
 /**
  *

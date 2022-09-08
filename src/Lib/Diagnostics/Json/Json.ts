@@ -1,7 +1,7 @@
 import { TextDocument } from "bc-minecraft-bedrock-project";
 import { jsonc } from "jsonc";
-import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
-import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
+import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
+import { DiagnosticSeverity } from "../../Types/Severity";
 import { Handle_Json_Error } from "./Errors";
 
 export namespace Json {

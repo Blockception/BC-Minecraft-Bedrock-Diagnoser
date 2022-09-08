@@ -1,4 +1,4 @@
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
 import { behaviorpack_entityid_diagnose } from "../Entity/diagnose";
 
 /**

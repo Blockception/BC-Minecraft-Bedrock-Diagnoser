@@ -2,7 +2,7 @@ import { TextDocument } from "bc-minecraft-bedrock-project";
 import { DocumentLocation } from "bc-minecraft-bedrock-types/lib/src/Types/DocumentLocation";
 import { OffsetWord } from 'bc-minecraft-bedrock-types/lib/src/Types/OffsetWord';
 import { DiagnosticSeverity } from "../../../main";
-import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 
 export function Handle_Json_Error(err: any, doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
   if (typeof err.message !== "string") {

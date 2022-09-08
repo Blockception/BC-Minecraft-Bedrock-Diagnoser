@@ -1,7 +1,7 @@
-import { TextDocument } from "bc-minecraft-bedrock-project";
+import { TextDocument } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/TextDocument";
 import { ResourcePackCollection } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/ResourcePack/ResourcePackCollection";
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
-import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
+import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
+import { DiagnosticSeverity } from "../../../Types/Severity";
 import { Json } from "../../Json/Json";
 
 /**Diagnoses the given document as a block

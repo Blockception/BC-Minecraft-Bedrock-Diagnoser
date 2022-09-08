@@ -1,6 +1,6 @@
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
-import { DiagnosticSeverity } from '../../../Types/DiagnosticsBuilder/Severity';
+import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
+import { DiagnosticSeverity } from '../../../Types/Severity';
 import { education_enabled } from "../../Definitions";
 
 export function resourcepack_has_model(modelid: string, owner: string, diagnoser: DiagnosticsBuilder): boolean {

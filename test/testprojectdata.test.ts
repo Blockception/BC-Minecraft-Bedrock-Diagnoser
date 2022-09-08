@@ -1,4 +1,4 @@
-import { DiagnosticsBuilderContent } from "../src/Lib/Types/DiagnosticsBuilder/DiagnosticsBuilder";
+import { DiagnosticsBuilderContent } from "../src/Lib/Types/DiagnosticsBuilder";
 import { ProjectData, TextDocument } from "bc-minecraft-bedrock-project";
 import { MCIgnore, MCProject } from "bc-minecraft-project";
 import path = require("path");

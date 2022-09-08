@@ -1,5 +1,5 @@
 import { Internal, TextDocument } from "bc-minecraft-bedrock-project";
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
 import { Json } from "../../Json/Json";
 import { minecraft_manifest_diagnose, minecraft_manifest_required_module } from "../../Minecraft/Manifest";
 

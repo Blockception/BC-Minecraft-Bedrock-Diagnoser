@@ -1,7 +1,7 @@
 import { Selector } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Selector/Selector";
 import { SelectorValueAttribute } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Selector/ValueAttribute";
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
-import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
+import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
+import { DiagnosticSeverity } from "../../../Types/Severity";
 import { behaviorpack_entityid_diagnose } from "../../BehaviorPack/Entity/diagnose";
 import { general_float_diagnose, general_positive_float_diagnose } from "../../General/Float";
 import { general_integer_diagnose, general_positive_integer_diagnose } from "../../General/Integer";

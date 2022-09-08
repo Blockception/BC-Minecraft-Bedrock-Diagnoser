@@ -1,4 +1,4 @@
-import { Internal, Map } from "bc-minecraft-bedrock-project";
+import { Internal, SMap } from "bc-minecraft-bedrock-project";
 
 export function getUsedComponents(entity: Internal.BehaviorPack.Entity): string[] {
   const out: string[] = [];
@@ -12,7 +12,7 @@ export function getUsedComponents(entity: Internal.BehaviorPack.Entity): string[
   const groups = entity["minecraft:entity"].component_groups;
 
   if (groups) {
-    Map.forEach(groups, (group) => {
+    SMap.forEach(groups, (group) => {
       Object.getOwnPropertyNames(group).forEach((c) => {
         if (!out.includes(c)) out.push(c);
       });

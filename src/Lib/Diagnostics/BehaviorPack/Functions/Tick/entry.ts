@@ -1,6 +1,6 @@
 import { TextDocument } from "bc-minecraft-bedrock-project";
-import { DiagnosticsBuilder } from "../../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
-import { DiagnosticSeverity } from '../../../../Types/DiagnosticsBuilder/Severity';
+import { DiagnosticsBuilder } from "../../../../Types/DiagnosticsBuilder";
+import { DiagnosticSeverity } from '../../../../Types/Severity';
 import { Json } from '../../../Json/Json';
 
 /**Diagnoses the given document as an tick.json

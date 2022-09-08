@@ -1,4 +1,4 @@
-import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 import { ResourcePack as RP } from "bc-minecraft-bedrock-project";
 
 import * as Animation from "./Animation/entry";

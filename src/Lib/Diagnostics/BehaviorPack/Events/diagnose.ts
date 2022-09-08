@@ -1,5 +1,5 @@
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
-import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
+import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
+import { DiagnosticSeverity } from "../../../Types/Severity";
 
 export function diagnose_events(any: any | undefined, events: string[], Builder: DiagnosticsBuilder) {
   if (typeof any !== "object") return;

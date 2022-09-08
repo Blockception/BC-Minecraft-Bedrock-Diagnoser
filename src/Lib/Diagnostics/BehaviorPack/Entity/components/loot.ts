@@ -1,5 +1,5 @@
 import { behaviorpack_loot_table_diagnose } from "../../Loot Table/diagnose";
-import { DiagnosticsBuilder } from "../../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../../../Types/DiagnosticsBuilder";
 import { Internal } from "bc-minecraft-bedrock-project";
 
 export function behaviorpack_entity_components_loot(container: Internal.BehaviorPack.EntityComponentContainer, diagnoser: DiagnosticsBuilder) {

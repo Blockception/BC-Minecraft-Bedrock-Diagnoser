@@ -7,7 +7,7 @@ import { WorldPack } from "../../Diagnostics/WorldPack/WorldPack";
 import { format_diagnose_path } from '../../Diagnostics/Format/diagnose';
 import { minecraft_language_diagnose } from '../../Diagnostics/Minecraft/Language';
 import { ResourcePack } from "../../Diagnostics/ResourcePack/ResourcePack";
-import { DiagnosticSeverity } from "../DiagnosticsBuilder/Severity";
+import { DiagnosticSeverity } from "../Severity";
 import { DiagnoserContext } from "./DiagnoserContext";
 
 /**The object that is responsible for diagnosing minecraft bedrock files*/

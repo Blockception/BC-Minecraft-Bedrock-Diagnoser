@@ -1,6 +1,6 @@
 import { Text } from 'bc-minecraft-bedrock-project';
-import { DiagnosticsBuilder, DiagnosticSeverity } from '../../../Types/DiagnosticsBuilder/include';
 import { Types} from 'bc-minecraft-bedrock-types';
+import { DiagnosticsBuilder, DiagnosticSeverity } from '../../../Types';
 import { check_definition_value } from '../../Definitions';
 
 export function behaviorpack_functions_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder) : boolean {

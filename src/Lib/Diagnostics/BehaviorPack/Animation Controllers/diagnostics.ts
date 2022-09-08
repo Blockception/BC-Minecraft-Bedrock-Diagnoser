@@ -1,9 +1,6 @@
-import { Map } from "bc-minecraft-bedrock-project";
-import { AnimationCarrier, MolangCarrier } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/Carrier/Carrier";
-import { Types } from "bc-minecraft-bedrock-types";
-import { DefinedUsing, Molang } from "bc-minecraft-molang";
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
-import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
+import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
+import { DiagnosticSeverity } from "../../../Types/Severity";
+import { EntityAnimationMolangCarrier, EventCarrier } from "../../../Types/Interfaces";
 import { general_animation_controllers_implementation } from "../../Minecraft/Animation Controllers";
 import { OwnerType } from "../../Molang/diagnostics";
 
@@ -15,7 +12,7 @@ import { OwnerType } from "../../Molang/diagnostics";
  */
 export function animation_controller_diagnose_implementation(
   controllerid: string,
-  user: Types.Identifiable & MolangCarrier<Molang.MolangSet | Molang.MolangFullSet> & AnimationCarrier<DefinedUsing<string>> & { events?: Map<any> },
+  user: EntityAnimationMolangCarrier & EventCarrier,
   ownerType: OwnerType,
   diagnoser: DiagnosticsBuilder
 ): void {

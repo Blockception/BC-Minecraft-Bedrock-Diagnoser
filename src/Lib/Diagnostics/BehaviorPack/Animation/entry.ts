@@ -1,6 +1,6 @@
-import { Internal, Map, TextDocument } from "bc-minecraft-bedrock-project";
+import { Internal, SMap, TextDocument } from "bc-minecraft-bedrock-project";
 import { DiagnosticSeverity } from '../../../../main';
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
 import { Json } from '../../Json/Json';
 import { diagnose_molang } from '../../Molang/diagnostics';
 import { json_commandscheck } from '../Mcfunction/commands';
@@ -17,11 +17,11 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
   if (!Internal.BehaviorPack.Animations.is(anims)) return;
   
   //foreach animation, 
-  Map.forEach(anims.animations, (anim, id)=>{
+  SMap.forEach(anims.animations, (anim, id)=>{
     const length = anim.animation_length;
 
     //foreach time
-    Map.forEach(anim.timeline, (data, time)=>{
+    SMap.forEach(anim.timeline, (data, time)=>{
       json_commandscheck(data, doc, diagnoser);
 
       if (length) {

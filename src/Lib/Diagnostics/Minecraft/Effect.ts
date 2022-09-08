@@ -1,6 +1,6 @@
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticSeverity } from "../../../main";
-import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 import { Types } from "bc-minecraft-bedrock-types";
 
 export function minecraft_effect_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {

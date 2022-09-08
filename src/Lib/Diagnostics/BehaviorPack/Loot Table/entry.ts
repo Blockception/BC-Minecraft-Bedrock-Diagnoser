@@ -1,6 +1,6 @@
 import { TextDocument } from "bc-minecraft-bedrock-project";
 import { Types } from 'bc-minecraft-bedrock-types';
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
+import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
 import { Json } from '../../Json/Json';
 import { behaviorpack_item_diagnose } from '../Item/diagnose';
 import { behaviorpack_loot_table_diagnose } from './diagnose';

@@ -1,8 +1,8 @@
 import { Command } from "bc-minecraft-bedrock-command";
 import { Modes } from "bc-minecraft-bedrock-types";
 import { ModeHandler } from "bc-minecraft-bedrock-types/lib/src/Modes/ModeHandler";
-import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
-import { DiagnosticSeverity } from "../../Types/DiagnosticsBuilder/Severity";
+import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
+import { DiagnosticSeverity } from "../../Types/Severity";
 import { Types } from "bc-minecraft-bedrock-types";
 import { education_enabled } from "../Definitions";
 import { SlotTypeMode } from "bc-minecraft-bedrock-types/lib/src/Modes/SlotType";

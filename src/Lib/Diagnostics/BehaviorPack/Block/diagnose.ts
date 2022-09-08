@@ -1,8 +1,8 @@
 import { Minecraft } from "bc-minecraft-bedrock-types";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { BehaviorPack } from "bc-minecraft-bedrock-project";
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder/DiagnosticsBuilder";
-import { DiagnosticSeverity } from "../../../Types/DiagnosticsBuilder/Severity";
+import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
+import { DiagnosticSeverity } from "../../../Types/Severity";
 import { check_definition_value, education_enabled } from "../../Definitions";
 import { Types} from 'bc-minecraft-bedrock-types';
 
