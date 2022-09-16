@@ -1,4 +1,4 @@
-import { Command, Parameter, ParameterType } from "bc-minecraft-bedrock-command";
+import { Command, Edu, Parameter, ParameterType, Vanilla } from "bc-minecraft-bedrock-command";
 import { ParameterInfo } from "bc-minecraft-bedrock-command/lib/src/Lib/Data/CommandInfo";
 import { TextDocument } from "bc-minecraft-bedrock-project";
 import { DiagnosticSeverity, DiagnosticsBuilder } from "../../../Types";
@@ -138,12 +138,37 @@ function mcfunction_commandcheck(command: Command, diagnoser: DiagnosticsBuilder
   const info = command.getBestMatch(edu);
 
   if (info.length === 0) {
-    diagnoser.Add(
-      command.parameters[0].offset,
-      `Unknown command syntax: "${command.getKeyword()}"`,
-      DiagnosticSeverity.error,
-      "behaviorpack.mcfunction.syntax.unknown"
-    );
+    const keyCommand = command.getKeyword();
+
+    //Vanilla has this command so only the syntax is valid
+    if (Vanilla[keyCommand] !== undefined) {
+      return diagnoser.Add(
+        command.parameters[0].offset,
+        `Unknown syntax for: "${keyCommand}"`,
+        DiagnosticSeverity.error,
+        `minecraft.commands.${keyCommand}.syntax`
+      );
+    }
+
+    //Edu has it
+    if (Edu[keyCommand] !== undefined) {
+      if (edu) {
+        return diagnoser.Add(
+          command.parameters[0].offset,
+          `Unknown edu syntax for: "${keyCommand}"`,
+          DiagnosticSeverity.error,
+          `minecraft.commands.${keyCommand}.syntax`
+        );
+      }
+
+      return diagnoser.Add(
+        command.parameters[0].offset,
+        `This is a edu command, but education is not turned on:\nYou can turn it on by setting \`education.enable=true\` in the settings`,
+        DiagnosticSeverity.error,
+        `project.settings`
+      );
+    }
+
     return;
   }
 
