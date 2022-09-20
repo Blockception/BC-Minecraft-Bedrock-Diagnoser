@@ -20,6 +20,7 @@ export function behaviorpack_entity_components_dependencies(entity: Internal.Beh
   checkAll(diagnoser, components, "minecraft:addrider", "minecraft:rideable");
   checkAll(diagnoser, components, "minecraft:breedable", "minecraft:behavior.breed");
 
+  checkAll(diagnoser, components, "minecraft:behavior.controlled_by_player", "minecraft:movement", "minecraft:rideable");
   checkAll(diagnoser, components, "minecraft:behavior.admire_item", "minecraft:admire_item");
   checkAll(diagnoser, components, "minecraft:behavior.barter", "minecraft:barter");
 
