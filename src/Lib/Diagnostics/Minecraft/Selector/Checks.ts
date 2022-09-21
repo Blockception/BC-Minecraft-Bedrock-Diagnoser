@@ -9,7 +9,11 @@ import { DiagnosticSeverity } from "../../../Types/Severity";
  * @param diagnoser
  * @returns
  */
-export function selector_attributes_duplicate(value: SelectorAttribute[], attr: string, diagnoser: DiagnosticsBuilder): void {
+export function selector_attributes_duplicate(
+  value: SelectorAttribute[],
+  attr: string,
+  diagnoser: DiagnosticsBuilder
+): void {
   const attrs = value.filter((a) => a.name === attr);
 
   if (attrs.length <= 1) return;
