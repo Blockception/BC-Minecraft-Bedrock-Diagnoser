@@ -9,7 +9,7 @@ import { Location } from "bc-minecraft-bedrock-types/lib/src/Types";
 describe("Selector", () => {
   const context = TestProjecData.CreateContext();
   const pi: ParameterInfo = { required: false, text: "", type: ParameterType.selector };
-  const cache = context.getCache()
+  const cache = context.getCache();
   cache.General.objectives.set(GeneralInfo.create("data", Location.create("test"), "test objective"));
   cache.General.tags.set(GeneralInfo.create("foo", Location.create("test"), "test tag"));
 
@@ -55,6 +55,8 @@ describe("Selector", () => {
 
   describe("Expecting no errors", () => {
     const valid = [
+      "@a[hasitem={item=minecraft:stone,data=1}]",
+      "@a[hasitem={item=stone,data=1}]",
       "@e[type=!player,type=!minecraft:sheep]",
       "@a[type=player,type=!minecraft:sheep,type=!minecraft:sheep]",
       "@s",
@@ -62,8 +64,8 @@ describe("Selector", () => {
       "@p[ry=180,rym=135]",
       "@s[y=15,dy=-100,z=~,x=~]",
       "@s[scores={data=..3,data=5..}]",
-      "@e[name=\"main\",tag=foo]",
-      "@e[x=0,y=2,z=3,dx=4,dy=5,dz=6,type=minecraft:sheep,c=1]"
+      '@e[name="main",tag=foo]',
+      "@e[x=0,y=2,z=3,dx=4,dy=5,dz=6,type=minecraft:sheep,c=1]",
     ];
 
     valid.forEach((test) => {
@@ -80,7 +82,8 @@ describe("Selector", () => {
 
   describe("Expecting errors", () => {
     const invalid = [
-      "@e[type=player,type=minecraft:sheep]", 
+      "@a[hasitem={data=1}]",
+      "@e[type=player,type=minecraft:sheep]",
       "@a[scores={data=1},scores={data=2}]",
       "@a[scores={data={value=1}}",
       "@a[scores={data=[value=1]}",

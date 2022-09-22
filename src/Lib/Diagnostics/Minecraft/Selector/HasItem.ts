@@ -99,7 +99,7 @@ function diagnose_hasitem_object(
 
   const names = reader.names();
   for (const name of names) {
-    const checks = attribute_hasitem_diagnostics[attr.key];
+    const checks = attribute_hasitem_diagnostics[name];
     const attrs = reader.get(name) as CompactJson.IKeyNode[];
 
     if (checks) {
@@ -156,7 +156,7 @@ function diagnose_hasitem_data(
     return false;
   }
 
-  const itemWord = CompactJson.toOffsetWord(item[0]) as Types.OffsetWord & { data: number };
+  const itemWord = CompactJson.valueToOffsetWord(item[0]) as Types.OffsetWord & { data: number };
   attrs.forEach((a) => {
     if (CompactJson.isString(a)) {
       itemWord.data = parseInt(a.value);
