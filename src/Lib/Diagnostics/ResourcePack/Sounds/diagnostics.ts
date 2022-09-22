@@ -14,6 +14,11 @@ export function diagnose_resourcepack_sounds(data: Types.Definition | undefined,
     if (pdata.ResourcePacks.sounds.has(id)) return;
     if (MinecraftData.ResourcePack.hasSound(id, edu)) return;
 
-    diagnoser.Add(ref + "/" + id, `Cannot find sound definition: ${id}`, DiagnosticSeverity.error, "resourcepack.sound.missing");
+    diagnoser.Add(
+      ref + "/" + id,
+      `Cannot find sound definition: ${id}`,
+      DiagnosticSeverity.error,
+      "resourcepack.sound.missing"
+    );
   });
 }

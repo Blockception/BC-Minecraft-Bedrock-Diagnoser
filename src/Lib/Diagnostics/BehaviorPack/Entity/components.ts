@@ -8,19 +8,29 @@ import { hasPattern } from "../../../Types/Checks";
 import { Internal } from "bc-minecraft-bedrock-project";
 import { behaviorpack_diagnose_entity_components } from "./components/diagnose";
 import { Context } from "./components/context";
-import { behaviorpack_entity_components_filters } from './components/filters';
+import { behaviorpack_entity_components_filters } from "./components/filters";
 
 /**Checks if components dependencies are present, a component might need others to be present
  * @param entity The entity to check
  * @param diagnoser The diagnoser to report to*/
-export function behaviorpack_entity_components_dependencies(entity: Internal.BehaviorPack.Entity, context: Context, diagnoser: DiagnosticsBuilder) {
+export function behaviorpack_entity_components_dependencies(
+  entity: Internal.BehaviorPack.Entity,
+  context: Context,
+  diagnoser: DiagnosticsBuilder
+) {
   const components = context.components;
 
   checkMovements(diagnoser, components);
   checkAll(diagnoser, components, "minecraft:addrider", "minecraft:rideable");
   checkAll(diagnoser, components, "minecraft:breedable", "minecraft:behavior.breed");
 
-  checkAll(diagnoser, components, "minecraft:behavior.controlled_by_player", "minecraft:movement", "minecraft:rideable");
+  checkAll(
+    diagnoser,
+    components,
+    "minecraft:behavior.controlled_by_player",
+    "minecraft:movement",
+    "minecraft:rideable"
+  );
   checkAll(diagnoser, components, "minecraft:behavior.admire_item", "minecraft:admire_item");
   checkAll(diagnoser, components, "minecraft:behavior.barter", "minecraft:barter");
 
@@ -49,7 +59,11 @@ export function behaviorpack_entity_components_dependencies(entity: Internal.Beh
   checkAny(diagnoser, components, "minecraft:behavior.leap_at_target", /$minecraft:behavior.*target.*/gim);
 }
 
-export function behaviorpack_entity_components_check(entity: Internal.BehaviorPack.Entity, context: Context, diagnoser: DiagnosticsBuilder) {
+export function behaviorpack_entity_components_check(
+  entity: Internal.BehaviorPack.Entity,
+  context: Context,
+  diagnoser: DiagnosticsBuilder
+) {
   const desc = entity["minecraft:entity"];
 
   behaviorpack_entity_componentscontainer_check(desc.components, context, diagnoser);
@@ -111,7 +125,12 @@ function checkAll(diagnoser: DiagnosticsBuilder, components: string[], dependent
  * @param components The list of used components
  * @returns
  */
-function checkAny(diagnoser: DiagnosticsBuilder, components: string[], dependent: string, ...needs: (string | RegExp)[]): void {
+function checkAny(
+  diagnoser: DiagnosticsBuilder,
+  components: string[],
+  dependent: string,
+  ...needs: (string | RegExp)[]
+): void {
   //Check if the entity has the component
   if (!components.includes(dependent)) return;
 
@@ -133,7 +152,12 @@ function checkAny(diagnoser: DiagnosticsBuilder, components: string[], dependent
   );
 }
 
-function checkPatternAny(diagnoser: DiagnosticsBuilder, components: string[], dependent: string, ...needs: string[]): void {
+function checkPatternAny(
+  diagnoser: DiagnosticsBuilder,
+  components: string[],
+  dependent: string,
+  ...needs: string[]
+): void {
   if (!hasPattern(dependent, components)) return;
 
   for (let I = 0; I < needs.length; I++) {

@@ -1,6 +1,6 @@
 import { TextDocument } from "bc-minecraft-bedrock-project";
 import { DiagnosticsBuilder } from "../../../Types";
-import { diagnose_molang } from '../../Molang/diagnostics';
+import { diagnose_molang } from "../../Molang/diagnostics";
 
 /**Diagnoses the given document as an item
  * @param doc The text document to diagnose

@@ -4,14 +4,17 @@ import { BehaviorPack } from "bc-minecraft-bedrock-project";
 import { DiagnosticsBuilder } from "../../../Types";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 import { check_definition_value, education_enabled } from "../../Definitions";
-import { Types} from 'bc-minecraft-bedrock-types';
+import { Types } from "bc-minecraft-bedrock-types";
 
 /**
  *
  * @param blockDescriptor
  * @param diagnoser
  */
-export function behaviorpack_check_blockdescriptor(blockDescriptor: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
+export function behaviorpack_check_blockdescriptor(
+  blockDescriptor: Types.OffsetWord,
+  diagnoser: DiagnosticsBuilder
+): void {
   behaviorpack_check_blockid(blockDescriptor, diagnoser);
   behaviorpack_check_blockstates(blockDescriptor, diagnoser);
 }
@@ -47,7 +50,7 @@ export function behaviorpack_check_blockid(blockDescriptor: Types.OffsetWord, di
     //Project has block
     if (data.hasBlock(id)) return true;
   }
-  
+
   //Vanilla has block
   if (MinecraftData.BehaviorPack.hasBlock(id, edu)) return true;
 
@@ -94,14 +97,19 @@ export function behaviorpack_check_blockstates(blockDescriptor: Types.OffsetWord
 }
 
 /**
- * 
- * @param blockDescriptor 
- * @param state 
- * @param data 
- * @param diagnoser 
- * @returns 
+ *
+ * @param blockDescriptor
+ * @param state
+ * @param data
+ * @param diagnoser
+ * @returns
  */
-function check_state(blockDescriptor: Types.OffsetWord, state: Minecraft.BlockState, data: BehaviorPack.Block.Block, diagnoser: DiagnosticsBuilder) {
+function check_state(
+  blockDescriptor: Types.OffsetWord,
+  state: Minecraft.BlockState,
+  data: BehaviorPack.Block.Block,
+  diagnoser: DiagnosticsBuilder
+) {
   for (var I = 0; I < data.states.length; I++) {
     const stateData = data.states[I];
 
@@ -115,5 +123,10 @@ function check_state(blockDescriptor: Types.OffsetWord, state: Minecraft.BlockSt
   }
 
   //No state matching found
-  diagnoser.Add(blockDescriptor, `Missing state: '${state.property}' in the block definition: '${data.id}'`, DiagnosticSeverity.error, "behaviorpack.block.states.missing");
+  diagnoser.Add(
+    blockDescriptor,
+    `Missing state: '${state.property}' in the block definition: '${data.id}'`,
+    DiagnosticSeverity.error,
+    "behaviorpack.block.states.missing"
+  );
 }

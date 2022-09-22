@@ -1,6 +1,6 @@
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticsBuilder } from "../../../Types";
-import { DiagnosticSeverity } from '../../../Types/Severity';
+import { DiagnosticSeverity } from "../../../Types/Severity";
 import { education_enabled } from "../../Definitions";
 
 export function resourcepack_has_model(modelid: string, owner: string, diagnoser: DiagnosticsBuilder): boolean {
@@ -14,7 +14,12 @@ export function resourcepack_has_model(modelid: string, owner: string, diagnoser
   //Check vanilla data
   if (MinecraftData.ResourcePack.hasModel(modelid, edu)) return true;
 
-	diagnoser.Add(modelid, `Cannot find model definition: ${modelid}`, DiagnosticSeverity.error, "resourcepack.model.missing")
+  diagnoser.Add(
+    modelid,
+    `Cannot find model definition: ${modelid}`,
+    DiagnosticSeverity.error,
+    "resourcepack.model.missing"
+  );
 
   return false;
 }

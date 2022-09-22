@@ -15,14 +15,23 @@ export function education_enabled(diagnoser: DiagnosticsBuilder): boolean {
  * @param value The value to find
  * @param diagnoser The diagnoser to report to
  * @returns false is not found in either exclusion or definitions*/
-export function check_definition_value(container: Definition | undefined, value: string, diagnoser: DiagnosticsBuilder): boolean {
+export function check_definition_value(
+  container: Definition | undefined,
+  value: string,
+  diagnoser: DiagnosticsBuilder
+): boolean {
   if (Definition.is(container)) {
     //Is defined
     if (container.defined.includes(value)) return true;
 
     //Is excluded
     if (container.excluded.includes(value)) {
-      diagnoser.Add(value, "Value has been blacklisted through the project files", DiagnosticSeverity.error, "project.excluded");
+      diagnoser.Add(
+        value,
+        "Value has been blacklisted through the project files",
+        DiagnosticSeverity.error,
+        "project.excluded"
+      );
 
       return true;
     }

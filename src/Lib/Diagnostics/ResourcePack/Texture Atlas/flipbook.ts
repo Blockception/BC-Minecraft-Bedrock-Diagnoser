@@ -1,5 +1,5 @@
 import { DiagnosticsBuilder } from "../../../Types";
-import { TextDocument } from '../../../Types/Interfaces';
+import { TextDocument } from "../../../Types/Interfaces";
 import { Json } from "../../Json/Json";
 import { texture_files_diagnose } from "./entry";
 
@@ -15,7 +15,9 @@ export function DiagnoseFlipbook(doc: TextDocument, diagnoser: DiagnosticsBuilde
   const pack = diagnoser.context.getCache().ResourcePacks.get(doc.uri);
   if (pack === undefined) return;
 
-  const texture_files = diagnoser.context.getFiles(pack.folder, ["**/textures/**/*.{tga,png,jpg,jpeg}"], pack.context.ignores).map((item) => item.replace(/\\/gi, "/"));
+  const texture_files = diagnoser.context
+    .getFiles(pack.folder, ["**/textures/**/*.{tga,png,jpg,jpeg}"], pack.context.ignores)
+    .map((item) => item.replace(/\\/gi, "/"));
 
   for (let I = 0; I < flipbooks.length; I++) {
     const flipbook = flipbooks[I];

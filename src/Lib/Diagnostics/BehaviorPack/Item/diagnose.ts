@@ -37,6 +37,11 @@ export function behaviorpack_item_diagnose(value: Item, diagnoser: DiagnosticsBu
   if (behaviorpack_check_blockid(value, diagnoser)) return true;
 
   //Nothing then report error
-  diagnoser.Add(value, `Cannot find behaviorpack item definition: ${id}`, DiagnosticSeverity.error, "behaviorpack.item.missing");
+  diagnoser.Add(
+    value,
+    `Cannot find behaviorpack item definition: ${id}`,
+    DiagnosticSeverity.error,
+    "behaviorpack.item.missing"
+  );
   return false;
 }

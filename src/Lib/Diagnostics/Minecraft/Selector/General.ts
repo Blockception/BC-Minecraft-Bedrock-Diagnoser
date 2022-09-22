@@ -1,7 +1,7 @@
 import { CompactJson } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Json";
 import { Selector } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Selector/Selector";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types";
-import { diagnoseAttributes } from './Util';
+import { diagnoseAttributes } from "./Util";
 
 /**
  * Attribute can only be tested positive once, but can have all the negative tests

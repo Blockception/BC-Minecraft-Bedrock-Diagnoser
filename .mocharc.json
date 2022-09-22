@@ -1,6 +1,7 @@
 {
+  "extension": ["ts"],
   "ui": "bdd",
   "color": true,
-  "spec": "./lib",
-  "recursive": true
+  "recursive": true,
+  "require": "ts-node/register"
 }
