@@ -15,7 +15,7 @@
     "preversion": "",
     "postversion": "git push && git push --tags",
     "version": "git add -A src",
-    "watch": "tsc -w -p ./src"
+    "watch": "tsc -w"
   },
   "files": [
     "lib/src/**/*.js",
@@ -41,7 +41,7 @@
   "dependencies": {
     "bc-minecraft-bedrock-command": "^1.2.35",
     "bc-minecraft-bedrock-project": "^1.7.86",
-    "bc-minecraft-bedrock-types": "^1.4.2",
+    "bc-minecraft-bedrock-types": "^1.4.5",
     "bc-minecraft-bedrock-vanilla-data": "^1.6.5",
     "bc-minecraft-molang": "^1.3.7",
     "bc-minecraft-project": "^1.0.20",

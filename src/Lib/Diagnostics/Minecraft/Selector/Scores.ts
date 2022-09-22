@@ -1,37 +1,57 @@
-import { Types } from 'bc-minecraft-bedrock-types';
-import { SelectorScoreAttribute } from 'bc-minecraft-bedrock-types/lib/src/Minecraft/Selector/ScoreAttribute';
-import { SelectorValueAttribute } from 'bc-minecraft-bedrock-types/lib/src/Minecraft/Selector/ValueAttribute';
-import { DiagnosticsBuilder, DiagnosticSeverity } from '../../../../main';
-import { general_range_integer_diagnose } from '../../General/Range';
-import { minecraft_objectives_diagnose } from '../Objective';
-
+import { Types } from "bc-minecraft-bedrock-types";
+import { Selector } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Selector";
+import { CompactJson } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Json";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../../main";
+import { general_range_integer_diagnose } from "../../General/Range";
+import { minecraft_objectives_diagnose } from "../Objective";
 
 /**
- *
- * @param attr
- * @param diagnoser
+ * Diagnoses the scores attribute from a selector
+ * @param attr The attribute to diagnose
+ * @param diagnoser The diagnoser to use
  */
-export function minecraft_selector_scores_diagnose(attr: SelectorScoreAttribute, diagnoser: DiagnosticsBuilder): void {
-  if (attr.values.length === 0) {
-    diagnoser.Add(attr.getName(), "Empty scores, can be removed", DiagnosticSeverity.info, "minecraft.selector.attribute.unnesscary");
+export function selector_scores_diagnose(
+  attr: CompactJson.IKeyNode,
+  sel: Selector,
+  diagnoser: DiagnosticsBuilder
+): boolean {
+  let result = true;
+  if (!CompactJson.isObject(attr)) {
+    const type = CompactJson.Type[attr.type];
+
+    result = false;
+    diagnoser.Add(
+      CompactJson.toOffsetWord(attr),
+      `Expected a object, not a ${type}`,
+      DiagnosticSeverity.error,
+      "minecraft.selector.attribute.scores.type"
+    );
   }
 
-  attr.values.forEach((value) => minecraft_selector_scores_item_diagnose(value, diagnoser));
+  return minecraft_selector_scores_item_diagnose(attr, diagnoser) && result;
 }
 
 /**
- * 
- * @param attr 
- * @param diagnoser 
+ * Diagnoses a single item from a selector scores attribute
+ * @param attr The score attribute to diagnose
+ * @param diagnoser The diagnoser to use
  */
-function minecraft_selector_scores_item_diagnose(attr: SelectorValueAttribute, diagnoser: DiagnosticsBuilder): void {
-  const value_offset = attr.offset + attr.name.length + 1;
-  const not = attr.value.startsWith("!");
-  const value = not ? attr.value.substring(1) : attr.value;
+function minecraft_selector_scores_item_diagnose(attr: CompactJson.IKeyNode, diagnoser: DiagnosticsBuilder): boolean {
+  if (!CompactJson.isString(attr)) {
+    const type = CompactJson.Type[attr.type];
+
+    diagnoser.Add(
+      CompactJson.toOffsetWord(attr),
+      `Expected a range / integer value, not a ${type}`,
+      DiagnosticSeverity.error,
+      "minecraft.selector.attribute.scores.item.type"
+    );
+    return false;
+  }
 
   //Check objective references
-  minecraft_objectives_diagnose(Types.OffsetWord.create(attr.name, attr.offset), diagnoser);
+  let result = minecraft_objectives_diagnose(Types.OffsetWord.create(attr.key, attr.offset), diagnoser);
 
   //Check range value
-  general_range_integer_diagnose(Types.OffsetWord.create(value, value_offset), diagnoser);
+  return general_range_integer_diagnose(CompactJson.valueToOffsetWord(attr), diagnoser) && result;
 }

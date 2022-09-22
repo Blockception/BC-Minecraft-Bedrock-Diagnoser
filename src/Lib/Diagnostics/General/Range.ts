@@ -1,13 +1,19 @@
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../Types";
 import { Types } from "bc-minecraft-bedrock-types";
-import { general_integer_diagnose } from './Integer';
-import { general_float_diagnose } from './Float';
+import { general_integer_diagnose } from "./Integer";
+import { general_float_diagnose } from "./Float";
 
-export function general_range_integer_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
+/**
+ * Diagnoses a range integer value
+ * @param value The value to diagnose
+ * @param diagnoser The diagnoser to use
+ * @returns Returns true when the value is valid
+ */
+export function general_range_integer_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   let upper = Number.MAX_SAFE_INTEGER;
   let lower = Number.MIN_SAFE_INTEGER;
 
-  const index = value.text.indexOf('..');
+  const index = value.text.indexOf("..");
 
   //has ..
   if (index >= 0) {
@@ -19,33 +25,52 @@ export function general_range_integer_diagnose(value: Types.OffsetWord, diagnose
     let co = true;
 
     //If the text is filled, diagnose it as integer. if that returns false it has an error, then mark 'co'ntinue as false
-    if (lowerText !== "" && !general_integer_diagnose(Types.OffsetWord.create(lowerText, value.offset), diagnoser)) co = false;
-    if (upperText !== "" && !general_integer_diagnose(Types.OffsetWord.create(upperText, value.offset + index + 2), diagnoser)) co = false;
+    if (lowerText !== "" && !general_integer_diagnose(Types.OffsetWord.create(lowerText, value.offset), diagnoser))
+      co = false;
+    if (
+      upperText !== "" &&
+      !general_integer_diagnose(Types.OffsetWord.create(upperText, value.offset + index + 2), diagnoser)
+    )
+      co = false;
 
     //Return if marked to not continue
-    if (!co) return;
+    if (!co) {
+      return true;
+    }
 
     //Parse values
     if (lowerText !== "") lower = Number.parseInt(lowerText);
     if (upperText !== "") upper = Number.parseInt(upperText);
-  }
-  else {
+  } else {
     //Just an integer
-    general_integer_diagnose(value, diagnoser);
-    return;
+    return general_integer_diagnose(value, diagnoser);
   }
 
   //Check if the lowest value is not higher then lower
   if (lower > upper) {
-    diagnoser.Add(value, "Lower range was greater than the high range", DiagnosticSeverity.error, "general.range.integer.invalid");
+    diagnoser.Add(
+      value,
+      "Lower range was greater than the high range",
+      DiagnosticSeverity.error,
+      "general.range.integer.invalid"
+    );
+    return false;
   }
+
+  return true;
 }
 
-export function general_range_float_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
+/**
+ * Diagnoses a range value
+ * @param value The value to diagnose
+ * @param diagnoser The diagnoser to use
+ * @returns Returns true when the value is valid
+ */
+export function general_range_float_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   let upper = Number.MAX_VALUE;
-  let lower = Number.MIN_VALUE;  
+  let lower = Number.MIN_VALUE;
 
-  const index = value.text.indexOf('..');
+  const index = value.text.indexOf("..");
 
   //has ..
   if (index >= 0) {
@@ -57,24 +82,37 @@ export function general_range_float_diagnose(value: Types.OffsetWord, diagnoser:
     let co = true;
 
     //If the text is filled, diagnose it as integer. if that returns false it has an error, then mark 'co'ntinue as false
-    if (lowerText !== "" && !general_float_diagnose(Types.OffsetWord.create(lowerText, value.offset), diagnoser)) co = false;
-    if (upperText !== "" && !general_float_diagnose(Types.OffsetWord.create(upperText, value.offset + index + 2), diagnoser)) co = false;
+    if (lowerText !== "" && !general_float_diagnose(Types.OffsetWord.create(lowerText, value.offset), diagnoser))
+      co = false;
+    if (
+      upperText !== "" &&
+      !general_float_diagnose(Types.OffsetWord.create(upperText, value.offset + index + 2), diagnoser)
+    )
+      co = false;
 
     //Return if marked to not continue
-    if (!co) return;
+    if (!co) {
+      return true;
+    }
 
     //Parse values
     if (lowerText !== "") lower = Number.parseFloat(lowerText);
     if (upperText !== "") upper = Number.parseFloat(upperText);
-  }
-  else {
+  } else {
     //Just an integer
-    general_float_diagnose(value, diagnoser);
-    return;
+    return general_float_diagnose(value, diagnoser);
   }
 
   //Check if the lowest value is not higher then lower
   if (lower > upper) {
-    diagnoser.Add(value, "Lower range was greater than the high range", DiagnosticSeverity.error, "general.range.float.invalid");
+    diagnoser.Add(
+      value,
+      "Lower range was greater than the high range",
+      DiagnosticSeverity.error,
+      "general.range.float.invalid"
+    );
+    return false;
   }
+
+  return true;
 }

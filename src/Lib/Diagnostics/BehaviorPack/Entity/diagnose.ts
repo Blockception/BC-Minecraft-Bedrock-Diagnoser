@@ -5,47 +5,59 @@ import { DiagnosticSeverity } from "../../../Types/Severity";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { Types } from "bc-minecraft-bedrock-types";
 
-/**Checks if the entities exists in the project or in vanilla, if not then a bug is reported
- * @param id
- * @param diagnoser
- * @returns
+/**
+ * Checks if the entities exists in the project or in vanilla, if not then a bug is reported
+ * @param value The entity to check
+ * @param diagnoser The diagnoser
+ * @returns True if the entity exists
  */
-export function behaviorpack_entityid_diagnose(value: Types.OffsetWord | string, diagnoser: DiagnosticsBuilder): void {
+export function behaviorpack_entityid_diagnose(
+  value: Types.OffsetWord | string,
+  diagnoser: DiagnosticsBuilder
+): boolean {
   let id = typeof value === "string" ? value : value.text;
 
   //Defined in McProject
-  if (check_definition_value(diagnoser.project.definitions.entity, id, diagnoser)) return;
-
-  const data = diagnoser.context.getCache();
+  if (check_definition_value(diagnoser.project.definitions.entity, id, diagnoser)) {
+    return true;
+  }
 
   //Project has entity
-  if (data.hasEntity(id)) return;
-
-  const edu = education_enabled(diagnoser);
+  const data = diagnoser.context.getCache();
+  if (data.hasEntity(id)) {
+    return true;
+  }
 
   //Vanilla has entity
-  if (MinecraftData.BehaviorPack.hasEntity(id, edu)) return;
+  const edu = education_enabled(diagnoser);
+  if (MinecraftData.BehaviorPack.hasEntity(id, edu)) {
+    return true;
+  }
 
   //No namespace?
   if (!id.includes(":")) {
     id = "minecraft:" + id;
 
     //Defined in McProject
-    if (check_definition_value(diagnoser.project.definitions.entity, id, diagnoser)) return;
-
-    const data = diagnoser.context.getCache();
+    if (check_definition_value(diagnoser.project.definitions.entity, id, diagnoser)) {
+      return true;
+    }
 
     //Project has entity
-    if (data.hasEntity(id)) return;
-
-    const edu = education_enabled(diagnoser);
+    const data = diagnoser.context.getCache();
+    if (data.hasEntity(id)) {
+      return true;
+    }
   }
 
   //Vanilla has entity
-  if (MinecraftData.BehaviorPack.hasEntity(id, edu)) return;
+  if (MinecraftData.BehaviorPack.hasEntity(id, edu)) {
+    return true;
+  }
 
   //Nothing then report error
   diagnoser.Add(value, `Cannot find entity definition: ${id}`, DiagnosticSeverity.error, "behaviorpack.entity.missing");
+  return false;
 }
 
 /**Checks if the entities exists in the project or in vanilla, if not then a bug is reported
@@ -64,7 +76,11 @@ export function behaviorpack_entity_spawnegg_diagnose(value: Types.OffsetWord, d
  * @param builder
  * @param Com
  */
-export function behaviorpack_entity_event_diagnose(data: Types.OffsetWord, diagnoser: DiagnosticsBuilder, Com: Command): void {
+export function behaviorpack_entity_event_diagnose(
+  data: Types.OffsetWord,
+  diagnoser: DiagnosticsBuilder,
+  Com: Command
+): void {
   const edu = education_enabled(diagnoser);
   const matches = Com.getBestMatch(edu);
 

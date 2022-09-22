@@ -12,6 +12,15 @@
     },
     {
       "type": "npm",
+      "script": "watch",
+      "isBackground": false,
+      "group": "build",
+      "label": "npm watch 'bc-minecraft-bedrock-diagnoser'",
+      "presentation": { "reveal": "always", "panel": "dedicated" },
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "type": "npm",
       "script": "test",
       "isBackground": false,
       "group": "build",
