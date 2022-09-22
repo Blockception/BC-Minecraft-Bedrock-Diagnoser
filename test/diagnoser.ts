@@ -55,6 +55,10 @@ export class TestDiagnoser implements InternalDiagnosticsBuilder {
     expect(this.items.length).to.lessThanOrEqual(0, `Expected no errors/warnings, but has received ${this.items.length}:\n${this.writeItemsMessage()}`);
   }
 
+  expectAny(): void {
+    expect(this.items.length).to.greaterThan(0, `Expected any errors/warnings, but has received none`);
+  }
+
   /**
    *
    * @param number

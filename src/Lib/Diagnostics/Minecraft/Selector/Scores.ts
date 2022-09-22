@@ -26,9 +26,15 @@ export function selector_scores_diagnose(
       DiagnosticSeverity.error,
       "minecraft.selector.attribute.scores.type"
     );
+
+    return result;
   }
 
-  return minecraft_selector_scores_item_diagnose(attr, diagnoser) && result;
+  attr.value.forEach((item) => {
+    result = minecraft_selector_scores_item_diagnose(item, diagnoser) && result;
+  });
+
+  return result;
 }
 
 /**
