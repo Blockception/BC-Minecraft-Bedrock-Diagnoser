@@ -6,7 +6,6 @@ import { DiagnosticSeverity } from "../../Types/Severity";
 import { Types } from "bc-minecraft-bedrock-types";
 import { education_enabled } from "../Definitions";
 import { SlotTypeMode } from "bc-minecraft-bedrock-types/lib/src/Modes/SlotType";
-import { SelectorAttribute } from 'bc-minecraft-bedrock-types/lib/src/Minecraft/Selector/Selector';
 
 /**Diagnoses the value as a value in the mode: camerashake
  * @param value The value to evualate, needs the offset to report bugs
@@ -20,7 +19,7 @@ export function mode_camerashake_diagnose(value: Types.OffsetWord, diagnoser: Di
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
- export function mode_causetype_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function mode_causetype_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.CauseType, diagnoser);
 }
 
@@ -156,11 +155,7 @@ export function mode_save_diagnose(value: Types.OffsetWord, diagnoser: Diagnosti
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_selectorattribute_diagnose(value: Types.OffsetWord | SelectorAttribute, diagnoser: DiagnosticsBuilder): boolean {
-  if (SelectorAttribute.is(value)) {
-    value = Types.OffsetWord.create(value.name, value.offset);
-  }
-
+export function mode_selectorattribute_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   return mode_generic_diagnose(value, Modes.SelectorAttribute, diagnoser);
 }
 
@@ -184,19 +179,31 @@ export function mode_slottype_diagnose(value: Types.OffsetWord, diagnoser: Diagn
  * @param value The value to evualate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_slotid_diagnose(value: Types.OffsetWord, Com: Command, diagnoser: DiagnosticsBuilder): boolean {
-  //Get the slot type
-  const index = Com.parameters.indexOf(value) - 1;
-  //if the index is negative, the parameter then was not found
-  if (index < 0) return false;
+export function mode_slotid_diagnose(
+  value: Types.OffsetWord,
+  Com: Command | string,
+  diagnoser: DiagnosticsBuilder
+): boolean {
+  if (typeof Com !== "string") {
+    //Get the slot type
+    const index = Com.parameters.indexOf(value) - 1;
+    //if the index is negative, the parameter then was not found
+    if (index < 0) return false;
+    Com = Com.parameters[index].text;
+  }
 
   //Get the slot type
-  const m = <SlotTypeMode>Modes.SlotType.get(Com.parameters[index].text);
+  const m = <SlotTypeMode>Modes.SlotType.get(Com);
   //if the mode is not found, then the parameter is not valid, expected that the previous parameter handling handled slot type not existing
   if (m === undefined) return false;
 
   if (m.eduOnly === true && education_enabled(diagnoser) === false) {
-    diagnoser.Add(value.offset, "This is an education only mode, and education is disabled", DiagnosticSeverity.error, "minecraft.mode.edu");
+    diagnoser.Add(
+      value.offset,
+      "This is an education only mode, and education is disabled",
+      DiagnosticSeverity.error,
+      "minecraft.mode.edu"
+    );
     return false;
   }
 
@@ -253,6 +260,11 @@ function mode_generic_diagnose(value: Types.OffsetWord, Mode: ModeHandler, diagn
   if (m) return true;
 
   const name = Mode.name.toLowerCase();
-  diagnoser.Add(value, `value: '${value.text}' is not defined in mode: '${name}'`, DiagnosticSeverity.error, `minecraft.mode.${name}.invalid`);
+  diagnoser.Add(
+    value,
+    `value: '${value.text}' is not defined in mode: '${name}'`,
+    DiagnosticSeverity.error,
+    `minecraft.mode.${name}.invalid`
+  );
   return false;
 }

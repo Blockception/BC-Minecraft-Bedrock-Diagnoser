@@ -9,8 +9,8 @@ import { minecraft_coordinate_diagnose } from "../Coordinate";
  * @param selector
  * @param receiver
  */
-export function selectorattribute_coordinate(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
-  if (value.text.startsWith("^"))
+export function selectorattribute_coordinate(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+  if (value.text.startsWith("^")) {
     diagnoser.Add(
       value,
       "Selector attribute coordinate cannot be local coordinates types, only relative or absolute",
@@ -18,5 +18,8 @@ export function selectorattribute_coordinate(value: Types.OffsetWord, diagnoser:
       "selector.coordinate.invalid"
     );
 
-  minecraft_coordinate_diagnose(value, diagnoser);
+    return false;
+  }
+
+  return minecraft_coordinate_diagnose(value, diagnoser);
 }

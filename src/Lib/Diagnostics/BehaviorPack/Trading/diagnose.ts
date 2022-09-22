@@ -1,9 +1,12 @@
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types";
 import { Types } from "bc-minecraft-bedrock-types";
 import { check_definition_value, education_enabled } from "../../Definitions";
-import { MinecraftData } from 'bc-minecraft-bedrock-vanilla-data';
+import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 
-export function behaviorpack_trading_diagnose(value: Types.OffsetWord | string, diagnoser: DiagnosticsBuilder): boolean {
+export function behaviorpack_trading_diagnose(
+  value: Types.OffsetWord | string,
+  diagnoser: DiagnosticsBuilder
+): boolean {
   const id = typeof value === "string" ? value : value.text;
 
   //Defined in McProject
@@ -18,6 +21,11 @@ export function behaviorpack_trading_diagnose(value: Types.OffsetWord | string, 
   if (MinecraftData.BehaviorPack.hasTrading(id, edu)) return true;
 
   //Nothing then report error
-  diagnoser.Add(value, `Cannot find behaviorpack trading definition: ${id}`, DiagnosticSeverity.error, "behaviorpack.trading.missing");
+  diagnoser.Add(
+    value,
+    `Cannot find behaviorpack trading definition: ${id}`,
+    DiagnosticSeverity.error,
+    "behaviorpack.trading.missing"
+  );
   return false;
 }

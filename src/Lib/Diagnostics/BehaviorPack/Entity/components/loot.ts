@@ -2,7 +2,10 @@ import { behaviorpack_loot_table_diagnose } from "../../Loot Table/diagnose";
 import { DiagnosticsBuilder } from "../../../../Types";
 import { Internal } from "bc-minecraft-bedrock-project";
 
-export function behaviorpack_entity_components_loot(container: Internal.BehaviorPack.EntityComponentContainer, diagnoser: DiagnosticsBuilder) {
+export function behaviorpack_entity_components_loot(
+  container: Internal.BehaviorPack.EntityComponentContainer,
+  diagnoser: DiagnosticsBuilder
+) {
   checkitem(container["minecraft:loot"], diagnoser);
   checkitem(container["minecraft:equipment"], diagnoser);
 }

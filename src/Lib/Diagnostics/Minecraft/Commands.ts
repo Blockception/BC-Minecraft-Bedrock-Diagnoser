@@ -11,5 +11,10 @@ import { Types } from "bc-minecraft-bedrock-types";
 export function minecraft_check_command(command: Types.OffsetWord, diagnoser: DiagnosticsBuilder, edu: boolean): void {
   if (hasCommandData(command.text, edu)) return;
 
-  diagnoser.Add(command, "Command does not exist: " + command.text, DiagnosticSeverity.error, "minecraft.command.invalid");
+  diagnoser.Add(
+    command,
+    "Command does not exist: " + command.text,
+    DiagnosticSeverity.error,
+    "minecraft.command.invalid"
+  );
 }

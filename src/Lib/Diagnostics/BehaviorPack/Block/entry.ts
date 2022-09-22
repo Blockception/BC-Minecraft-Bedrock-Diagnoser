@@ -1,6 +1,6 @@
 import { TextDocument } from "bc-minecraft-bedrock-project";
 import { DiagnosticsBuilder } from "../../../Types";
-import { diagnose_molang } from '../../Molang/diagnostics';
+import { diagnose_molang } from "../../Molang/diagnostics";
 
 /**Diagnoses the given document as an bp block
  * @param doc The text document to diagnose
@@ -8,6 +8,6 @@ import { diagnose_molang } from '../../Molang/diagnostics';
 export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
   //Check molang
   diagnose_molang(doc.getText(), "Blocks", diagnoser);
-  
+
   //TODO add diagnostics
 }

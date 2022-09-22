@@ -1,9 +1,12 @@
 import { check_definition_value, education_enabled } from "../../Definitions";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types";
-import { MinecraftData } from 'bc-minecraft-bedrock-vanilla-data';
+import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { Types } from "bc-minecraft-bedrock-types";
 
-export function behaviorpack_loot_table_diagnose(value: Types.OffsetWord | string, diagnoser: DiagnosticsBuilder): boolean {
+export function behaviorpack_loot_table_diagnose(
+  value: Types.OffsetWord | string,
+  diagnoser: DiagnosticsBuilder
+): boolean {
   const id = typeof value === "string" ? value : value.text;
 
   //Defined in McProject
@@ -18,6 +21,11 @@ export function behaviorpack_loot_table_diagnose(value: Types.OffsetWord | strin
   if (MinecraftData.BehaviorPack.hasLootTable(id, edu)) return true;
 
   //Nothing then report error
-  diagnoser.Add(value, `Cannot find behaviorpack loot_table definition: ${id}`, DiagnosticSeverity.error, "behaviorpack.loot_table.missing");
+  diagnoser.Add(
+    value,
+    `Cannot find behaviorpack loot_table definition: ${id}`,
+    DiagnosticSeverity.error,
+    "behaviorpack.loot_table.missing"
+  );
   return false;
 }

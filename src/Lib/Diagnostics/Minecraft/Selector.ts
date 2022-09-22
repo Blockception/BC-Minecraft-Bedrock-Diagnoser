@@ -1,20 +1,12 @@
 import { check_definition_value } from "../Definitions";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../Types";
 import { Minecraft } from "bc-minecraft-bedrock-types";
-import { minecraft_selector_attribute_diagnose } from "./Selector/General";
-import { minecraft_selector_hasitem_diagnose } from "./Selector/HasItem";
-import { minecraft_selector_scores_diagnose } from "./Selector/Scores";
 import { ParameterInfo } from "bc-minecraft-bedrock-command/lib/src/Lib/Data/CommandInfo";
-import { selector_attributes_duplicate } from "./Selector/Checks";
 import { Text } from "bc-minecraft-bedrock-project";
 import { Types } from "bc-minecraft-bedrock-types";
-import {
-  Selector,
-  SelectorAttribute,
-  SelectorItemAttribute,
-  SelectorScoreAttribute,
-  SelectorValueAttribute,
-} from "bc-minecraft-bedrock-types/lib/src/Minecraft/Selector";
+import { Attribute } from "./Selector/Attributes";
+import { CompactJson } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Json";
+import { Selector } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Selector";
 
 /**
  *
@@ -32,7 +24,7 @@ export function minecraft_selector_diagnose(
 
   //Is a selector?
   if (sel.startsWith("@")) {
-    minecraft_selector_diagnose_hard(pattern, value, diagnoser);
+    minecraft_selector_diagnose_hard(value, diagnoser, pattern);
     return;
   }
 
@@ -73,21 +65,28 @@ export function minecraft_selector_diagnose(
 }
 
 /**
- *
+ * Diagnoses a selector
  * @param pattern
  * @param value
  * @param diagnoser
  */
 function minecraft_selector_diagnose_hard(
-  pattern: ParameterInfo,
   value: Types.OffsetWord,
-  diagnoser: DiagnosticsBuilder
-) {
+  diagnoser: DiagnosticsBuilder,
+  pattern: ParameterInfo
+): boolean {
   const selector = Minecraft.Selector.Selector.parse(value.text, value.offset);
+
+  if (selector === undefined) {
+    diagnoser.Add(value, "Invalid selector", DiagnosticSeverity.error, "minecraft.selector.invalid");
+    return false;
+  }
+  let result = true;
 
   //If the selector is only meant to be aimed at player warn the user
   if (pattern.options?.playerOnly === true) {
-    if (selector.type === "@e") {
+    if (selector?.selectorType === "@e") {
+      result = false;
       diagnoser.Add(
         value,
         "Selector is meant to target only players",
@@ -98,6 +97,7 @@ function minecraft_selector_diagnose_hard(
   }
 
   if (!Minecraft.Selector.Selector.isValidType(selector)) {
+    result = false;
     diagnoser.Add(
       value,
       `Unknown selector type: ${selector.type}`,
@@ -106,56 +106,38 @@ function minecraft_selector_diagnose_hard(
     );
   }
 
-  //Check for duplicate scores definition
-  selector_attributes_duplicate(selector.attributes, "scores", diagnoser);
-  selector_attributes_duplicate(selector.attributes, "hasitem", diagnoser);
-
   //Check attributes
-  selector.attributes.forEach((attr) => minecraft_selector_attribute_diagnose_hard(attr, selector, diagnoser));
+  const names = selector.names();
+
+  for (const name of names) {
+    const attributes = selector.get(name);
+    //No attribute then next
+    if (attributes) {
+      result &&= minecraft_selector_attribute_diagnose_hard(
+        name,
+        attributes as CompactJson.IKeyNode[],
+        selector,
+        diagnoser
+      );
+    }
+  }
+
+  return result;
 }
 
+/**
+ * Diagnoses a selector attribute
+ * @param attribute The attribute to diagnose
+ * @param attributes The attributes to diagnose
+ * @param selector The selector to diagnose
+ * @param diagnoser The diagnoser to use
+ * @returns Returns true when the attribute is valid
+ */
 export function minecraft_selector_attribute_diagnose_hard(
-  attr: SelectorAttribute,
+  attribute: string,
+  attributes: CompactJson.IKeyNode[],
   selector: Selector,
   diagnoser: DiagnosticsBuilder
-) {
-  switch (attr.name) {
-    case "scores":
-      if (SelectorScoreAttribute.is(attr)) {
-        minecraft_selector_scores_diagnose(attr, diagnoser);
-      } else {
-        diagnoser.Add(
-          attr.getName(),
-          "Scores is not valid",
-          DiagnosticSeverity.error,
-          "minecraft.selector.attribute.invalid"
-        );
-      }
-      break;
-    case "hasitem":
-      if (SelectorItemAttribute.is(attr)) {
-        minecraft_selector_hasitem_diagnose(attr, diagnoser);
-      } else {
-        diagnoser.Add(
-          attr.getName(),
-          "Hasitem is not valid",
-          DiagnosticSeverity.error,
-          "minecraft.selector.attribute.invalid"
-        );
-      }
-      break;
-
-    default:
-      if (SelectorValueAttribute.is(attr)) {
-        minecraft_selector_attribute_diagnose(attr, selector, diagnoser);
-      } else {
-        diagnoser.Add(
-          attr.getName(),
-          attr.name + " is not valid",
-          DiagnosticSeverity.error,
-          "minecraft.selector.attribute.invalid"
-        );
-      }
-      break;
-  }
+): boolean {
+  return Attribute.diagnose(attribute, attributes as Minecraft.Json.CompactJson.IKeyNode[], selector, diagnoser);
 }

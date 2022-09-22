@@ -17,5 +17,15 @@
     "editor.wordWrap": "off"
   },
 
-  "prettier.printWidth": 150
+  "prettier.printWidth": 150,
+  "cSpell.words": [
+    "behaviorpack",
+    "entityid",
+    "gamemode",
+    "hasitem",
+    "selectorattribute",
+    "selectorattributes",
+    "slotid",
+    "slottype"
+  ]
 }

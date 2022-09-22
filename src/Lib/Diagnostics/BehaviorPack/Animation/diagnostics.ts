@@ -1,5 +1,5 @@
-import { MolangDataSetKey } from 'bc-minecraft-molang';
-import { DiagnosticsBuilder, DiagnosticSeverity } from '../../../Types';
+import { MolangDataSetKey } from "bc-minecraft-molang";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types";
 import { EntityAnimationMolangCarrier, EventCarrier } from "../../../Types/Interfaces";
 import { diagnose_molang_implementation } from "../../Molang/diagnostics";
 

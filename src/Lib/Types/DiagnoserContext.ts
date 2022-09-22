@@ -1,6 +1,6 @@
 import { TextDocument } from "bc-minecraft-bedrock-project";
 import { MCProject } from "bc-minecraft-project";
-import { DiagnosticsBuilder, DiagnosticsBuilderContent } from './DiagnosticsBuilder';
+import { DiagnosticsBuilder, DiagnosticsBuilderContent } from "./DiagnosticsBuilder";
 
 /**The context needed for the Diagnoser*/
 export interface DiagnoserContext extends DiagnosticsBuilderContent {

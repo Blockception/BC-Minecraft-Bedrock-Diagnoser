@@ -1,7 +1,6 @@
-import { AnimationCarrier, MolangCarrier, SMap } from 'bc-minecraft-bedrock-project';
+import { AnimationCarrier, MolangCarrier, SMap } from "bc-minecraft-bedrock-project";
 import { Types } from "bc-minecraft-bedrock-types";
 import { DefinedUsing, Molang } from "bc-minecraft-molang";
-
 
 export { TextDocument } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/TextDocument";
 

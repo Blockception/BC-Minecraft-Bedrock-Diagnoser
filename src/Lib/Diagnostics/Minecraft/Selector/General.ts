@@ -1,166 +1,110 @@
+import { CompactJson } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Json";
 import { Selector } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Selector/Selector";
-import { SelectorValueAttribute } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Selector/ValueAttribute";
-import { DiagnosticsBuilder } from "../../../Types";
-import { DiagnosticSeverity } from "../../../Types/Severity";
-import { behaviorpack_entityid_diagnose } from "../../BehaviorPack/Entity/diagnose";
-import { general_float_diagnose, general_positive_float_diagnose } from "../../General/Float";
-import { general_integer_diagnose, general_positive_integer_diagnose } from "../../General/Integer";
-import { mode_gamemode_diagnose, mode_selectorattribute_diagnose } from "../../Mode/diagnose";
-import { minecraft_family_diagnose } from "../Family";
-import { minecraft_name_diagnose } from "../Name";
-import { minecraft_tag_diagnose } from "../Tag";
-import { selector_attributes_duplicate } from "./Checks";
-import { selectorattribute_coordinate } from "./Coordinate";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types";
+import { diagnoseAttributes } from "./Util";
 
 /**
- *
- * @param attr
- * @param sel
- * @param diagnoser
- * @returns
+ * Attribute can only be tested positive once, but can have all the negative tests
+ * @param parameters The parameters to check
+ * @param selector The selector the parameters are from
+ * @param diagnoser The diagnoser to use
+ * @returns Returns true if the selector is valid
  */
-export function minecraft_selector_attribute_diagnose(attr: SelectorValueAttribute, sel: Selector, diagnoser: DiagnosticsBuilder): void {
-  //Attribute doesn't exist then skip it
-  if (!mode_selectorattribute_diagnose(attr, diagnoser)) return;
+export function selectorattribute_one_positive_all_negatives(
+  parameters: CompactJson.IKeyNode[],
+  selector: Selector,
+  diagnoser: DiagnosticsBuilder
+): boolean {
+  let result = true;
+  //Attribute can only be tested positive once, but can have all the negative tests
+  if (parameters.length <= 1) return result;
 
-  const word = attr.getValue();
-  if (word.text.startsWith("!")) {
-    word.text = word.text.slice(1);
-  }
-  const old = word.text;
-  word.text = old.trim();
-  word.offset += old.indexOf(word.text);
-
-  switch (attr.name) {
-    case "rxm":
-    case "rx":
-      selector_attributes_duplicate(sel.attributes, attr.name, diagnoser);
-      general_float_diagnose(word, diagnoser, { min: -90, max: 90 });
-      return;
-
-    case "ry":
-    case "rym":
-      selector_attributes_duplicate(sel.attributes, attr.name, diagnoser);
-      general_float_diagnose(word, diagnoser, { min: -180, max: 180 });
-      return;
-
-    case "x":
-    case "y":
-    case "z":
-    case "dx":
-    case "dy":
-    case "dz":
-      selector_attributes_duplicate(sel.attributes, attr.name, diagnoser);
-      return selectorattribute_coordinate(word, diagnoser);
-
-    case "r":
-    case "rm":
-      selector_attributes_duplicate(sel.attributes, attr.name, diagnoser);
-      general_positive_float_diagnose(word, diagnoser);
-      return;
-
-    case "c":
-      selector_attributes_duplicate(sel.attributes, attr.name, diagnoser);
-      general_integer_diagnose(word, diagnoser);
-      return;
-
-    case "l":
-    case "lm":
-      selector_attributes_duplicate(sel.attributes, attr.name, diagnoser);
-      general_positive_integer_diagnose(word, diagnoser);
-      return;
-
-    case "m":
-      //Types and gamemode can only be tested postive once, but can have all the negative tests
-      mode_gamemode_diagnose(word, diagnoser);
-      return selectorattribute_postive_all_negatives(attr, sel, diagnoser);
-
-    case "family":
-      //Family attribute is allowed multiple tests
-      minecraft_family_diagnose(word, diagnoser);
-      return selectorattribute_all(attr, sel, diagnoser);
-
-    case "tag":
-      //Family attribute is allowed multiple tests
-      minecraft_tag_diagnose(word, diagnoser);
-      return selectorattribute_all(attr, sel, diagnoser);
-
-    case "type":
-      //Types and gamemode can only be tested postive once, but can have all the negative tests
-      behaviorpack_entityid_diagnose(word, diagnoser);
-      return selectorattribute_postive_all_negatives(attr, sel, diagnoser);
-
-    case "name":
-      selectorattribute_postive_all_negatives(attr, sel, diagnoser);
-      return minecraft_name_diagnose(word, diagnoser);
-  }
-}
-
-/**
- *
- * @param value
- * @param selector
- * @param diagnoser
- * @returns
- */
-function selectorattribute_postive_all_negatives(value: SelectorValueAttribute, selector: Selector, diagnoser: DiagnosticsBuilder): void {
-  //Attribute can only be tested postive once, but can have all the negative tests
-  const parameters = selector.get(value.name);
-
-  if (parameters.length <= 1) return;
-
-  const name = value.name;
-  const offset = value.offset;
-
-  let Negatives = 0;
-
-  for (let index = 0; index < parameters.length; index++) {
-    const element = parameters[index];
-
-    if (SelectorValueAttribute.is(element)) {
-      if (element.value.startsWith("!")) Negatives++;
+  let negatives = 0;
+  for (const element of parameters) {
+    if (element.negative === true) {
+      negatives++;
     }
   }
 
-  //If we have less negatives then parameters - 1, then that means there are more positve thens 1
-  if (Negatives < parameters.length - 1) {
-    diagnoser.Add(
-      offset,
-      `Parameter: "${name}" can only have 1 positive test or/and multiple negatives test`,
-      DiagnosticSeverity.error,
-      "selector.attribute.test.postive_allnegatives"
-    );
+  //If we have less negatives then parameters - 1, then that means there are more positive thens 1
+  if (negatives < parameters.length - 1) {
+    result = false;
+
+    parameters.forEach((item) => {
+      diagnoser.Add(
+        CompactJson.toOffsetWord(item),
+        `Parameter: "${item.key}" can only have 1 positive test or/and multiple negatives test`,
+        DiagnosticSeverity.error,
+        "selector.attribute.test.one_positive_all_negatives"
+      );
+    });
   }
+
+  return result;
 }
 
 /**
- *
- * @param value
- * @param selector
+ * Checks if the attribute has duplicates tests
+ * @param parameters
+ * @param selector The selector the parameters are from
  * @param diagnoser
  * @returns
  */
-function selectorattribute_all(value: SelectorValueAttribute, selector: Selector, diagnoser: DiagnosticsBuilder): void {
-  const parameters = selector.get(value.name);
-
+export function selectorattribute_duplicate_check(
+  parameters: CompactJson.IKeyNode[],
+  selector: Selector,
+  diagnoser: DiagnosticsBuilder
+): boolean {
+  let result = true;
   //Just check for duplicate tests
-  if (parameters.length <= 1) return;
-
-  const name = value.name;
-  const avalue = value.value;
-  const offset = value.offset;
+  if (parameters.length <= 1) return result;
 
   for (let I = 0; I < parameters.length; I++) {
     const first = parameters[I];
 
-    if (first.offset !== offset) {
-      if (SelectorValueAttribute.is(first) && first.value == avalue)
+    for (let J = I + 1; J < parameters.length; J++) {
+      const second = parameters[J];
+
+      if (first.offset !== second.offset && first.value === second.value) {
+        result = false;
         diagnoser.Add(
-          offset + name.length + 1,
-          `Duplicate test statement found for: "${name}"`,
-          DiagnosticSeverity.warning,
-          "selector.attribute.test.duplilcate"
+          CompactJson.toOffsetWord(second),
+          `Duplicate test for parameter: "${second.key}"`,
+          DiagnosticSeverity.error,
+          "selector.attribute.test.duplicate"
         );
+      }
     }
   }
+
+  return result;
+}
+
+/**
+ * No negative tests are allowed
+ * @param parameters The parameters to check
+ * @param selector The selector the parameters are from
+ * @param diagnoser The diagnoser to use
+ */
+export function selectorattribute_no_negatives(
+  parameters: CompactJson.IKeyNode[],
+  selector: Selector,
+  diagnoser: DiagnosticsBuilder
+): boolean {
+  let result = true;
+
+  for (const p of parameters) {
+    if (p.negative === true) {
+      result = false;
+
+      diagnoser.Add(
+        CompactJson.toOffsetWord(p),
+        `Parameter: "${p.key}" can not have a negative test`,
+        DiagnosticSeverity.error,
+        "selector.attribute.test.nonegatives"
+      );
+    }
+  }
+
+  return result;
 }

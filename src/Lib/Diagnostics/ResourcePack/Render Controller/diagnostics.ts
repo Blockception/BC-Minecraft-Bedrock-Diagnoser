@@ -2,9 +2,9 @@ import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticsBuilder } from "../../../Types";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 import { education_enabled } from "../../Definitions";
-import { diagnose_molang_implementation } from '../../Molang/diagnostics';
-import { EntityAnimationMolangCarrier } from '../../../Types';
-import { MolangDataSetKey } from 'bc-minecraft-molang';
+import { diagnose_molang_implementation } from "../../Molang/diagnostics";
+import { EntityAnimationMolangCarrier } from "../../../Types";
+import { MolangDataSetKey } from "bc-minecraft-molang";
 
 /**
  *
@@ -12,20 +12,20 @@ import { MolangDataSetKey } from 'bc-minecraft-molang';
  * @param data
  * @param diagnoser
  */
-export function render_controller_diagnose_implementation(  
+export function render_controller_diagnose_implementation(
   controllerid: string,
   user: EntityAnimationMolangCarrier,
   ownerType: MolangDataSetKey,
-  diagnoser: DiagnosticsBuilder): void {
-
+  diagnoser: DiagnosticsBuilder
+): void {
   if (has_render_controller(controllerid, diagnoser)) {
     const cache = diagnoser.context.getCache();
 
     //Project has render controller
     const rp = cache.ResourcePacks.render_controllers.get(controllerid);
-  
+
     if (!rp) return;
-  
+
     diagnose_molang_implementation(rp, user, ownerType, diagnoser);
   }
 }
@@ -48,6 +48,11 @@ export function has_render_controller(id: string, diagnoser: DiagnosticsBuilder)
   if (MinecraftData.ResourcePack.hasRenderController(id, edu)) return true;
 
   //Nothing then report error
-  diagnoser.Add(id, `Cannot find render controller: ${id}`, DiagnosticSeverity.error, "resourcepack.render_controller.missing");
+  diagnoser.Add(
+    id,
+    `Cannot find render controller: ${id}`,
+    DiagnosticSeverity.error,
+    "resourcepack.render_controller.missing"
+  );
   return false;
 }

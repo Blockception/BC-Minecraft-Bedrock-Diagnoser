@@ -29,13 +29,13 @@ export namespace Json {
   }
 
   /**
-   * 
-   * @param value 
-   * @param diagnoser 
-   * @param type 
-   * @param code 
-   * @param checkfn 
-   * @returns 
+   *
+   * @param value
+   * @param diagnoser
+   * @param type
+   * @param code
+   * @param checkfn
+   * @returns
    */
   export function TypeCheck<T>(
     value: any,

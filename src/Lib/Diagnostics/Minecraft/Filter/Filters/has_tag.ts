@@ -6,11 +6,21 @@ export function diagnose_filter_has_tag(filter: Minecraft.Filter.Filter, diagnos
   const tag = filter.value;
 
   if (!tag) {
-    return diagnoser.Add("test/has_tag", "Tag is not defined", DiagnosticSeverity.error, "minecraft.filter.has_tag.type");
+    return diagnoser.Add(
+      "test/has_tag",
+      "Tag is not defined",
+      DiagnosticSeverity.error,
+      "minecraft.filter.has_tag.type"
+    );
   }
 
   if (typeof tag !== "string") {
-    return diagnoser.Add(`test/has_tag/${tag}`, "Tag is not defined", DiagnosticSeverity.error, "minecraft.filter.has_tag.type");
+    return diagnoser.Add(
+      `test/has_tag/${tag}`,
+      "Tag is not defined",
+      DiagnosticSeverity.error,
+      "minecraft.filter.has_tag.type"
+    );
   }
 
   minecraft_tag_diagnose(tag, diagnoser);

@@ -20,5 +20,10 @@ export function resourcepack_particle_diagnose(id: string | Types.OffsetWord, di
   if (MinecraftData.ResourcePack.hasParticle(particle_id, edu)) return;
 
   //Nothing then report error
-  diagnoser.Add("particle/" + id, `Cannot find particle definition: ${particle_id}`, DiagnosticSeverity.error, "resourcepack.particle.missing");
+  diagnoser.Add(
+    "particle/" + id,
+    `Cannot find particle definition: ${particle_id}`,
+    DiagnosticSeverity.error,
+    "resourcepack.particle.missing"
+  );
 }

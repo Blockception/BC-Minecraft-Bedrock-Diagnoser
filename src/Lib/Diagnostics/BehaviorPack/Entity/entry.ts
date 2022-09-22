@@ -50,10 +50,13 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
   });
 
   //Check animations / animation controllers implements
-  owner.animations.using.forEach((anim_id) => animation_or_controller_diagnose_implementation(anim_id, owner, "Entities", diagnoser));
+  owner.animations.using.forEach((anim_id) =>
+    animation_or_controller_diagnose_implementation(anim_id, owner, "Entities", diagnoser)
+  );
 
   //Script check
-  if (container.description.scripts) diagnose_script(diagnoser, container.description.scripts, container.description.animations);
+  if (container.description.scripts)
+    diagnose_script(diagnoser, container.description.scripts, container.description.animations);
 
   //Check events
   if (container.events) behaviorpack_entity_check_events(container.events, diagnoser, container.component_groups);
