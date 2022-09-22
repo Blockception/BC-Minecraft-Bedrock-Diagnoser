@@ -49,12 +49,17 @@ export function must_offset_word(
 ): diagnoseAttributes {
   return forEach((attr, sel, diagnoser) => {
     if (CompactJson.isString(attr)) {
-      const offset = CompactJson.valueToOffsetWord(attr);
-      return fn(offset, diagnoser);
+      const word = CompactJson.valueToOffsetWord(attr);
+      if (word.text.startsWith("!")) {
+        word.text = word.text.slice(1);
+        word.offset++;
+      }
+
+      return fn(word, diagnoser);
     }
 
     diagnoser.Add(
-      CompactJson.toOffsetWord(attr),
+      CompactJson.valueToOffsetWord(attr),
       "Expected a string",
       DiagnosticSeverity.error,
       "minecraft.selector.attribute.string"
