@@ -302,7 +302,7 @@ function mcfunction_diagnoseparameter(
     case ParameterType.unknown:
       diagnoser.Add(
         data.offset,
-        `Unknown parametype: ${pattern.type}:${ParameterType[pattern.type]}`,
+        `Unknown parameter type: ${pattern.type}:${ParameterType[pattern.type]}`,
         DiagnosticSeverity.warning,
         "debugger.error"
       );

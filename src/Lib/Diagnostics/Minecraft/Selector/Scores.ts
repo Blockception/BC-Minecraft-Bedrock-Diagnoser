@@ -24,7 +24,7 @@ export function selector_scores_diagnose(
       CompactJson.toOffsetWord(attr),
       `Expected a object, not a ${type}`,
       DiagnosticSeverity.error,
-      "minecraft.selector.attribute.scores.type"
+      "minecraft.selector.scores.type"
     );
 
     return result;
@@ -50,7 +50,7 @@ function minecraft_selector_scores_item_diagnose(attr: CompactJson.IKeyNode, dia
       CompactJson.toOffsetWord(attr),
       `Expected a range / integer value, not a ${type}`,
       DiagnosticSeverity.error,
-      "minecraft.selector.attribute.scores.item.type"
+      "minecraft.selector.scores.item.type"
     );
     return false;
   }

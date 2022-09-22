@@ -83,7 +83,7 @@ export class Diagnoser {
         msg = JSON.stringify(err);
       }
 
-      diagnoser.Add({ character: 0, line: 0 }, msg, DiagnosticSeverity.error, "diagnoser.internal.exception");
+      diagnoser.Add({ character: 0, line: 0 }, msg, DiagnosticSeverity.error, "debugger.internal.exception");
     }
 
     diagnoser.done();

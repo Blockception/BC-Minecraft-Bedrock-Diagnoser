@@ -37,7 +37,7 @@ export function animation_diagnose_implementation(
       `animations/${anim_id}`,
       `Animation: ${anim_id} uses particle: '${particle}', but no definition has been found`,
       DiagnosticSeverity.warning,
-      "resourcepack.animation.particle.missing"
+      "resourcepack.particle.missing"
     );
   });
 
@@ -49,7 +49,7 @@ export function animation_diagnose_implementation(
       `animations/${anim_id}`,
       `Animation: ${anim_id} uses sound: '${sound}', but no definition has been found`,
       DiagnosticSeverity.warning,
-      "resourcepack.animation.sound.missing"
+      "resourcepack.sound.missing"
     );
   });
 }

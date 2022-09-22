@@ -65,9 +65,9 @@ export function minecraft_language_line_diagnose(
     if (CommentIndex > 0) {
       diagnoser.Add(
         line,
-        "A line cannot have an identented comment",
+        "A line cannot have an indented comment",
         DiagnosticSeverity.error,
-        "minecraft.language.identation"
+        "minecraft.language.indentation"
       );
     }
 
@@ -81,9 +81,9 @@ export function minecraft_language_line_diagnose(
   if (Index < 0) {
     diagnoser.Add(
       line,
-      "A translation item needs a '=' to seperate key and value",
+      "A translation item needs a '=' to separate key and value",
       DiagnosticSeverity.error,
-      "minecraft.language.seperator"
+      "minecraft.language.separator"
     );
   } else {
     const Key = text.substring(0, Index);
@@ -130,7 +130,7 @@ export function minecraft_language_line_diagnose(
   if (Index >= text.length) {
     diagnoser.Add(
       line,
-      "A value must be atleast length of 1 or more",
+      "A value must be at least length of 1 or more",
       DiagnosticSeverity.error,
       "minecraft.language.value"
     );

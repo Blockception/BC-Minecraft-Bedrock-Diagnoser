@@ -45,7 +45,7 @@ export function animation_or_controller_diagnose(id: Types.OffsetWord, diagnoser
         id,
         `Cannot find animation / animation controller: ${id}`,
         DiagnosticSeverity.error,
-        "mcfunction.anim_or_controller.missing"
+        "resourcepack.anim_or_controller.missing"
       );
       return;
   }
@@ -75,7 +75,7 @@ export function animation_reference_diagnose(value: Types.OffsetWord, diagnoser:
     value,
     `Cannot find animation / animation controller: ${value.text}`,
     DiagnosticSeverity.error,
-    "mcfunction.anim_or_controller.missing"
+    "resourcepack.anim_or_controller.missing"
   );
 }
 

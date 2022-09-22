@@ -196,9 +196,9 @@ function diagnose_molang_context_using(
 
     diagnoser.Add(
       "context." + check,
-      `The following molang context defintion is not defined: 'context.${check}'`,
+      `The following molang context definition is not defined: 'context.${check}'`,
       DiagnosticSeverity.error,
-      `molang.context.${owner}.unknown`
+      `molang.context.missing`
     );
   }
 }

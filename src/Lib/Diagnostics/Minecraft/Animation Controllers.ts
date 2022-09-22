@@ -52,7 +52,7 @@ export function general_animation_controller(
         `${controller_id}/initial_state/${initial_state}`,
         "Cannot find initial state, minecraft will revert to state at 0 index",
         DiagnosticSeverity.warning,
-        "animation_controller.state.missing"
+        "minecraft.animation_controller.state.missing"
       );
     }
   }
@@ -89,7 +89,7 @@ function CheckTransition(
         controller + "/states/" + state,
         `missing state defined by transition: ${state}`,
         DiagnosticSeverity.error,
-        "animation_controller.state.missing"
+        "minecraft.animation_controller.state.missing"
       );
     }
   }

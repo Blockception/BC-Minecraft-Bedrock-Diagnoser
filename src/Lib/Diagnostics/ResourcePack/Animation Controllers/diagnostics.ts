@@ -35,7 +35,7 @@ export function animation_controller_diagnose_implementation(
       `animations/${controllerid}`,
       `Animation controller: ${controllerid} uses particle: '${particle}', but no definition has been found`,
       DiagnosticSeverity.warning,
-      "resourcepack.animation_controller.particle.missing"
+      "resourcepack.particle.missing"
     );
   });
 
@@ -47,7 +47,7 @@ export function animation_controller_diagnose_implementation(
       `animations/${controllerid}`,
       `Animation controller: ${controllerid} uses sound: '${sound}', but no definition has been found`,
       DiagnosticSeverity.warning,
-      "resourcepack.animation_controller.sound.missing"
+      "resourcepack.sound.missing"
     );
   });
 }

@@ -47,7 +47,7 @@ function hasDefinition(block: string, value: string, rp: ResourcePackCollection,
     `${block}/${value}`,
     "The texture is not defined in the terrain_textures.json",
     DiagnosticSeverity.error,
-    "minecraft.resourcepack.texture.undefined"
+    "resourcepack.texture.undefined"
   );
 }
 

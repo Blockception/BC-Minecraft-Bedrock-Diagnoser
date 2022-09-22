@@ -35,7 +35,7 @@ export function selectorattribute_one_positive_all_negatives(
         CompactJson.toOffsetWord(item),
         `Parameter: "${item.key}" can only have 1 positive test or/and multiple negatives test`,
         DiagnosticSeverity.error,
-        "selector.attribute.test.one_positive_all_negatives"
+        "minecraft.selector.attribute.test.one_positive_all_negatives"
       );
     });
   }
@@ -71,7 +71,7 @@ export function selectorattribute_duplicate_check(
           CompactJson.toOffsetWord(second),
           `Duplicate test for parameter: "${second.key}"`,
           DiagnosticSeverity.error,
-          "selector.attribute.test.duplicate"
+          "minecraft.selector.attribute.test.duplicate"
         );
       }
     }
@@ -101,7 +101,7 @@ export function selectorattribute_no_negatives(
         CompactJson.toOffsetWord(p),
         `Parameter: "${p.key}" can not have a negative test`,
         DiagnosticSeverity.error,
-        "selector.attribute.test.nonegatives"
+        "minecraft.selector.attribute.test.nonegatives"
       );
     }
   }

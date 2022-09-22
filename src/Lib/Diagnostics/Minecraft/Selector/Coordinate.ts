@@ -15,7 +15,7 @@ export function selectorattribute_coordinate(value: Types.OffsetWord, diagnoser:
       value,
       "Selector attribute coordinate cannot be local coordinates types, only relative or absolute",
       DiagnosticSeverity.error,
-      "selector.coordinate.invalid"
+      "minecraft.selector.coordinate.invalid"
     );
 
     return false;

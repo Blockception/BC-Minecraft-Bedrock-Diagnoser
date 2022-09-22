@@ -50,7 +50,7 @@ export function general_range_integer_diagnose(value: Types.OffsetWord, diagnose
   if (lower > upper) {
     diagnoser.Add(
       value,
-      "Lower range was greater than the high range",
+      "Lower range is greater than the upper range",
       DiagnosticSeverity.error,
       "general.range.integer.invalid"
     );
@@ -107,7 +107,7 @@ export function general_range_float_diagnose(value: Types.OffsetWord, diagnoser:
   if (lower > upper) {
     diagnoser.Add(
       value,
-      "Lower range was greater than the high range",
+      "Lower range is greater than the upper range",
       DiagnosticSeverity.error,
       "general.range.float.invalid"
     );

@@ -32,7 +32,7 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
             `${id}/timeline/${time}`,
             "Time specification is outside the animation range",
             DiagnosticSeverity.warning,
-            "animation.time.range"
+            "minecraft.animation.time.range"
           );
       }
     });

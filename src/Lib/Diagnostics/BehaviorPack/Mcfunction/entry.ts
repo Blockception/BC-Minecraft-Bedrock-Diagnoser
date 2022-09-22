@@ -12,7 +12,7 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
       0,
       "Empty mcfunction found, minecraft will not load this function",
       DiagnosticSeverity.error,
-      "mcfunction.empty"
+      "behaviorpack.mcfunction.empty"
     );
   }
 

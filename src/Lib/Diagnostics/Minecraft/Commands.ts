@@ -15,6 +15,6 @@ export function minecraft_check_command(command: Types.OffsetWord, diagnoser: Di
     command,
     "Command does not exist: " + command.text,
     DiagnosticSeverity.error,
-    "minecraft.command.invalid"
+    "minecraft.commands.invalid"
   );
 }

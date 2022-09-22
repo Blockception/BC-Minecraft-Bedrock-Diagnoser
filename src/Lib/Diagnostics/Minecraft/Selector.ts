@@ -7,6 +7,7 @@ import { Types } from "bc-minecraft-bedrock-types";
 import { Attribute } from "./Selector/Attributes";
 import { CompactJson } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Json";
 import { Selector } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Selector";
+import { Mode } from 'bc-minecraft-bedrock-types/lib/src/Modes/ModeCollection';
 
 /**
  *
@@ -60,7 +61,7 @@ export function minecraft_selector_diagnose(
     value,
     `Cannot find fake entity definition or name for: ${name}`,
     DiagnosticSeverity.warning,
-    "minecraft.name.missing"
+    "minecraft.fakeentity.missing"
   );
 }
 
@@ -85,14 +86,17 @@ function minecraft_selector_diagnose_hard(
 
   //If the selector is only meant to be aimed at player warn the user
   if (pattern.options?.playerOnly === true) {
-    if (selector?.selectorType === "@e") {
-      result = false;
-      diagnoser.Add(
-        value,
-        "Selector is meant to target only players",
-        DiagnosticSeverity.info,
-        "minecraft.selector.playeronly"
-      );
+    switch (selector.selectorType) {
+      case "@e":
+      case "@v":
+        result = false;
+        diagnoser.Add(
+          value,
+          "Selector is meant to target only players",
+          DiagnosticSeverity.info,
+          "minecraft.selector.playeronly"
+        );
+        break;
     }
   }
 
