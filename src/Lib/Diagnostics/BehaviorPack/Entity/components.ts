@@ -146,7 +146,9 @@ function checkAny(
 
   diagnoser.Add(
     dependent,
-    `Component: '${dependent}' requires one of the following components: ${JSON.stringify(needs)}`,
+    `Component: '${dependent}' requires one of the following components: '${JSON.stringify(
+      needs.map((n) => n.toString()).join(",")
+    )}'`,
     DiagnosticSeverity.error,
     "behaviorpack.entity.component.missing"
   );
@@ -167,7 +169,7 @@ function checkPatternAny(
       diagnoser.Add(
         dependent,
         `Component that follows pattern: '${dependent}' requires one of the following components that follows the pattern(s): ${JSON.stringify(
-          needs
+          needs.join(',')
         )}`,
         DiagnosticSeverity.error,
         "behaviorpack.entity.component.missing"
