@@ -28,6 +28,9 @@ const component_dependents_any: DependedMap = {
     "minecraft:behavior.nearest_attackable_target",
     "minecraft:behavior.hurt_by_target",
   ],
+  "minecraft:giveable": [
+    "minecraft:inventory",
+  ],
 };
 
 /**Checks if components dependencies are present, a component might need others to be present
