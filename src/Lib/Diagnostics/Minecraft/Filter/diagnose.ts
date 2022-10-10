@@ -10,10 +10,10 @@ export function minecraft_diagnose_filters(value: any, diagnoser: DiagnosticsBui
 }
 
 export function minecraft_diagnose_filter(value: Minecraft.Filter.Filter, diagnoser: DiagnosticsBuilder) {
-  const callfn = FilterDiagnose[value.test];
+  const callFn = FilterDiagnose[value.test];
 
-  if (callfn) {
-    callfn(value, diagnoser);
+  if (callFn) {
+    callFn(value, diagnoser);
   }
 }
 

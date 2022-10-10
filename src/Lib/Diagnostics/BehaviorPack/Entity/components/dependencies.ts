@@ -1,6 +1,7 @@
-import { Internal } from "bc-minecraft-bedrock-project";
-import { DiagnosticsBuilder, DiagnosticSeverity, hasPattern } from "../../../../Types";
 import { components_dependencies, Context, DependedMap } from "../../../../Utility/components";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../../Types";
+import { hasPattern } from '../../../../Utility/Checks';
+import { Internal } from "bc-minecraft-bedrock-project";
 
 //Map of components that are depended on all other specified components
 const component_dependents_all: DependedMap = {

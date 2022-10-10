@@ -1,4 +1,5 @@
 import { Internal, SMap } from "bc-minecraft-bedrock-project";
+import { ComponentGroups } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Components";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../../main";
 import { behaviorpack_entity_components_filters } from "./components/filters";
 
@@ -26,7 +27,7 @@ export function behaviorpack_entity_check_event(
   event: EntityEvent & { filters?: any },
   event_id: string,
   diagnoser: DiagnosticsBuilder,
-  component_groups?: SMap<Internal.BehaviorPack.EntityComponentContainer>
+  component_groups?: ComponentGroups
 ): void {
   has_groups(diagnoser, event_id, event.add?.component_groups, component_groups);
   has_groups(diagnoser, event_id, event.remove?.component_groups, component_groups);
