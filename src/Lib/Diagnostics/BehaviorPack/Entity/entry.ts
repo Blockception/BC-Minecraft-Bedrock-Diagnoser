@@ -3,12 +3,12 @@ import { behaviorpack_animation_used } from "../Animation/usage";
 import { behaviorpack_entity_check_events } from "./events";
 import { behaviorpack_entity_components_check } from "./components";
 import { behaviorpack_entity_components_dependencies } from "./components/dependencies";
-import { Context } from "./components/context";
+import { Context } from '../../../Utility/components';
 import { DefinedUsing, Molang } from "bc-minecraft-molang";
 import { diagnose_molang } from "../../Molang/diagnostics";
 import { diagnose_script } from "../../Minecraft/Script";
 import { DiagnosticsBuilder } from "../../../Types";
-import { getUsedComponents } from "./Entity";
+import { getUsedComponents } from 'bc-minecraft-bedrock-types/lib/src/Minecraft/Components';
 import { Internal, TextDocument } from "bc-minecraft-bedrock-project";
 import { Json } from "../../Json/Json";
 import { Types } from "bc-minecraft-bedrock-types";
@@ -21,14 +21,13 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
   diagnose_molang(doc.getText(), "Entities", diagnoser);
 
   const entity = Json.LoadReport<Internal.BehaviorPack.Entity>(doc, diagnoser);
-
   if (!Internal.BehaviorPack.Entity.is(entity)) return;
 
   //No resourcepack check, entities can exist without their rp side
 
   //check components
   const context: Context = {
-    components: getUsedComponents(entity),
+    components: getUsedComponents(entity['minecraft:entity']),
   };
 
   behaviorpack_entity_components_dependencies(entity, context, diagnoser);

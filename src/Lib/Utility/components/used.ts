@@ -1,4 +1,10 @@
-import { Internal, SMap } from "bc-minecraft-bedrock-project";
+
+
+interface Container {
+  components: Record<string, any>;
+  component_groups: Record<string, Record<string, any>>;
+}
+
 
 export function getUsedComponents(entity: Internal.BehaviorPack.Entity): string[] {
   const out: string[] = [];
@@ -30,20 +36,4 @@ export function getUsedGroups(entity: Internal.BehaviorPack.Entity): string[] {
   }
 
   return [];
-}
-
-/**
- *
- * @param entity
- * @param group
- * @returns
- */
-export function hasGroup(entity: Internal.BehaviorPack.Entity, group: string): boolean {
-  if (entity["minecraft:entity"].component_groups) {
-    if (entity["minecraft:entity"].component_groups[group]) {
-      return true;
-    }
-  }
-
-  return false;
 }

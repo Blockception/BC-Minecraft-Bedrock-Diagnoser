@@ -1,11 +1,8 @@
-import { behaviorpack_entity_components_economy_trade_table } from "./components/economy_trade_table";
-import { behaviorpack_entity_components_loot } from "./components/loot";
-import { behaviorpack_entity_components_trade_table } from "./components/trade";
 import { DiagnosticsBuilder } from "../../../Types";
 import { Internal } from "bc-minecraft-bedrock-project";
 import { behaviorpack_diagnose_entity_components } from "./components/diagnose";
-import { Context } from "./components/context";
-import { behaviorpack_entity_components_filters } from "./components/filters";
+import { Context } from "../../../Utility/components";
+import { ComponentContainer } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Components";
 
 export function behaviorpack_entity_components_check(
   entity: Internal.BehaviorPack.Entity,
@@ -27,16 +24,11 @@ export function behaviorpack_entity_components_check(
 }
 
 function behaviorpack_entity_componentscontainer_check(
-  container: Internal.BehaviorPack.EntityComponentContainer | undefined | null,
+  container: ComponentContainer | undefined | null,
   context: Context,
   diagnoser: DiagnosticsBuilder
 ) {
   if (container === null || typeof container !== "object") return;
-
-  behaviorpack_entity_components_loot(container, diagnoser);
-  behaviorpack_entity_components_trade_table(container, diagnoser);
-  behaviorpack_entity_components_economy_trade_table(container, diagnoser);
-  behaviorpack_entity_components_filters(container, diagnoser);
 
   behaviorpack_diagnose_entity_components(container, context, diagnoser);
 }

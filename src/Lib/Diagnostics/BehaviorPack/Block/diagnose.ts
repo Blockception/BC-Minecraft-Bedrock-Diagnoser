@@ -5,6 +5,7 @@ import { DiagnosticsBuilder } from "../../../Types";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 import { check_definition_value, education_enabled } from "../../Definitions";
 import { Types } from "bc-minecraft-bedrock-types";
+import { behaviorpack_diagnose_block_components } from './components/diagnose';
 
 /**
  *

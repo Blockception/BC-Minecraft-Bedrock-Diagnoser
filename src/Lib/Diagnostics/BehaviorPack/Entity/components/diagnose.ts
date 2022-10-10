@@ -1,6 +1,10 @@
-import { Internal } from "bc-minecraft-bedrock-project";
+import { check_loot_table } from "./loot";
+import { check_trade_table } from "./trade";
+import { ComponentBehavior } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Components";
+import { ComponentCheck, components_check } from "../../../../Utility/components/checks";
+import { Context } from "../../../../Utility/components";
 import { DiagnosticsBuilder } from "../../../../Types";
-import { Context } from "./context";
+import { behaviorpack_entity_components_filters } from './filters';
 
 /**
  *
@@ -9,19 +13,18 @@ import { Context } from "./context";
  * @param diagnoser
  */
 export function behaviorpack_diagnose_entity_components(
-  container: Internal.BehaviorPack.EntityComponentContainer,
+  container: ComponentBehavior,
   context: Context,
   diagnoser: DiagnosticsBuilder
 ): void {
-  const keys = Object.getOwnPropertyNames(container);
+  components_check(container, context, diagnoser, component_test);
 
-  keys.forEach((key) => {
-    const callbackfn = component_test[key];
-
-    if (callbackfn) {
-      callbackfn(container[key], context, diagnoser);
-    }
-  });
+  behaviorpack_entity_components_filters(container, diagnoser);
 }
 
-const component_test: Record<string, (component: any, context: Context, diagnoser: DiagnosticsBuilder) => void> = {};
+const component_test: Record<string, ComponentCheck> = {
+  "minecraft:economy_trade_table": check_trade_table,
+  "minecraft:equipment": check_loot_table,
+  "minecraft:loot": check_loot_table,
+  "minecraft:trade_table": check_trade_table,
+};
