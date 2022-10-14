@@ -184,8 +184,9 @@ function mcfunction_commandcheck(command: Command, diagnoser: DiagnosticsBuilder
   }
 }
 
+type DiagnoseCommand = (value: Types.OffsetWord, diagnoser: DiagnosticsBuilder) => void | boolean
 /**Switch data*/
-const ParameterDiagnostics: Record<number, (value: Types.OffsetWord, diagnoser: DiagnosticsBuilder) => void | boolean> =
+const ParameterDiagnostics: Record<number, DiagnoseCommand> =
   {
     [ParameterType.animation]: animation_reference_diagnose,
     [ParameterType.block]: behaviorpack_check_blockdescriptor,
