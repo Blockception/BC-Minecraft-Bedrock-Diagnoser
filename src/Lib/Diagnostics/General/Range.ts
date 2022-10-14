@@ -7,9 +7,14 @@ import { general_float_diagnose } from "./Float";
  * Diagnoses a range integer value
  * @param value The value to diagnose
  * @param diagnoser The diagnoser to use
+ * @param range The accepted range
  * @returns Returns true when the value is valid
  */
-export function general_range_integer_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function general_range_integer_diagnose(
+  value: Types.OffsetWord,
+  diagnoser: DiagnosticsBuilder,
+  range?: { min: number; max: number }
+): boolean {
   let upper = Number.MAX_SAFE_INTEGER;
   let lower = Number.MIN_SAFE_INTEGER;
 
@@ -25,11 +30,14 @@ export function general_range_integer_diagnose(value: Types.OffsetWord, diagnose
     let co = true;
 
     //If the text is filled, diagnose it as integer. if that returns false it has an error, then mark 'co'ntinue as false
-    if (lowerText !== "" && !general_integer_diagnose(Types.OffsetWord.create(lowerText, value.offset), diagnoser))
+    if (
+      lowerText !== "" &&
+      !general_integer_diagnose(Types.OffsetWord.create(lowerText, value.offset), diagnoser, range)
+    )
       co = false;
     if (
       upperText !== "" &&
-      !general_integer_diagnose(Types.OffsetWord.create(upperText, value.offset + index + 2), diagnoser)
+      !general_integer_diagnose(Types.OffsetWord.create(upperText, value.offset + index + 2), diagnoser, range)
     )
       co = false;
 
@@ -43,7 +51,7 @@ export function general_range_integer_diagnose(value: Types.OffsetWord, diagnose
     if (upperText !== "") upper = Number.parseInt(upperText);
   } else {
     //Just an integer
-    return general_integer_diagnose(value, diagnoser);
+    return general_integer_diagnose(value, diagnoser, range);
   }
 
   //Check if the lowest value is not higher then lower
@@ -64,9 +72,14 @@ export function general_range_integer_diagnose(value: Types.OffsetWord, diagnose
  * Diagnoses a range value
  * @param value The value to diagnose
  * @param diagnoser The diagnoser to use
+ * @param range The accepted range
  * @returns Returns true when the value is valid
  */
-export function general_range_float_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+export function general_range_float_diagnose(
+  value: Types.OffsetWord,
+  diagnoser: DiagnosticsBuilder,
+  range?: { min: number; max: number }
+): boolean {
   let upper = Number.MAX_VALUE;
   let lower = Number.MIN_VALUE;
 
@@ -82,11 +95,11 @@ export function general_range_float_diagnose(value: Types.OffsetWord, diagnoser:
     let co = true;
 
     //If the text is filled, diagnose it as integer. if that returns false it has an error, then mark 'co'ntinue as false
-    if (lowerText !== "" && !general_float_diagnose(Types.OffsetWord.create(lowerText, value.offset), diagnoser))
+    if (lowerText !== "" && !general_float_diagnose(Types.OffsetWord.create(lowerText, value.offset), diagnoser, range))
       co = false;
     if (
       upperText !== "" &&
-      !general_float_diagnose(Types.OffsetWord.create(upperText, value.offset + index + 2), diagnoser)
+      !general_float_diagnose(Types.OffsetWord.create(upperText, value.offset + index + 2), diagnoser, range)
     )
       co = false;
 
@@ -100,7 +113,7 @@ export function general_range_float_diagnose(value: Types.OffsetWord, diagnoser:
     if (upperText !== "") upper = Number.parseFloat(upperText);
   } else {
     //Just an integer
-    return general_float_diagnose(value, diagnoser);
+    return general_float_diagnose(value, diagnoser, range);
   }
 
   //Check if the lowest value is not higher then lower

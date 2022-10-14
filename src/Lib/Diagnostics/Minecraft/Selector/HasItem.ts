@@ -11,16 +11,20 @@ import {
 } from "./General";
 import { selectorattributes_no_duplicate as no_duplicate } from "./Checks";
 import { Types } from "bc-minecraft-bedrock-types";
+import { general_range_integer_diagnose } from '../../General';
 
 function integer_diagnose(range?: { min: number; max: number }): diagnoseAttributes {
   return must_offset_word((value, diagnoser) => general_integer_diagnose(value, diagnoser, range));
+}
+function range_integer_diagnose(range?: { min: number; max: number }): diagnoseAttributes {
+  return must_offset_word((value, diagnoser) => general_range_integer_diagnose(value, diagnoser, range));
 }
 
 export const attribute_hasitem_diagnostics: Record<string, diagnoseAttributes> = {
   item: all(no_duplicate, no_negatives, must_offset_word(behaviorpack_item_diagnose)),
   //Has extra checks down below
   data: all(no_duplicate, no_negatives, integer_diagnose({ min: -1, max: 32767 })),
-  quantity: all(one_positive_all_negatives, integer_diagnose({ min: 0, max: 32767 })),
+  quantity: all(one_positive_all_negatives, range_integer_diagnose({ min: 0, max: 32767 })),
   location: all(no_duplicate, one_positive_all_negatives, must_offset_word(mode_slottype_diagnose)),
   //Has extra checks down below
   slot: all(no_duplicate, one_positive_all_negatives, integer_diagnose({ min: 0, max: 53 })),
