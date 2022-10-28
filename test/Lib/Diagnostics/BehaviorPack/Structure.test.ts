@@ -1,28 +1,28 @@
-import { ProjectData } from 'bc-minecraft-bedrock-project';
-import { behaviorpack_structure_diagnose } from "../../../../src/Lib/Diagnostics/BehaviorPack/Structure/diagnose";
+import { ProjectData } from "bc-minecraft-bedrock-project";
+import { behaviorpack_structure_diagnose } from "../../../../src/Lib/Diagnostics/BehaviorPack/Structure";
 import { TestDiagnoser } from "../../../diagnoser";
 
 describe("BehaviorPack", () => {
   describe("Structures", () => {
-    var diagnoser : TestDiagnoser;
-    var data : ProjectData;
+    var diagnoser: TestDiagnoser;
+    var data: ProjectData;
 
-    beforeEach(()=>{
+    beforeEach(() => {
       diagnoser = TestDiagnoser.Create();
       data = diagnoser.context.getCache();
-    })
+    });
 
     it("quotes", () => {
       data.BehaviorPacks.packs[0].structures.set({
-        id: 'test/example',
+        id: "test/example",
         documentation: "",
         location: { position: 0, uri: "" },
       });
 
-      behaviorpack_structure_diagnose({ offset: 0, text: 'test/example' }, diagnoser);
-      behaviorpack_structure_diagnose({ offset: 0, text: 'test:example' }, diagnoser);
+      behaviorpack_structure_diagnose({ offset: 0, text: "test/example" }, diagnoser);
+      behaviorpack_structure_diagnose({ offset: 0, text: "test:example" }, diagnoser);
 
-      diagnoser.expectAmount(1)
+      diagnoser.expectAmount(1);
     });
 
     it("no errors", () => {
@@ -48,7 +48,7 @@ describe("BehaviorPack", () => {
       behaviorpack_structure_diagnose({ offset: 0, text: '"t/example"' }, diagnoser);
       behaviorpack_structure_diagnose({ offset: 0, text: '"t:example"' }, diagnoser);
 
-      diagnoser.expectAmount(2)
+      diagnoser.expectAmount(2);
     });
   });
 });

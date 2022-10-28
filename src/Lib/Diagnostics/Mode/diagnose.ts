@@ -8,7 +8,7 @@ import { education_enabled } from "../Definitions";
 import { SlotTypeMode } from "bc-minecraft-bedrock-types/lib/src/Modes/SlotType";
 
 /**Diagnoses the value as a value in the mode: camerashake
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_camerashake_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -16,7 +16,7 @@ export function mode_camerashake_diagnose(value: Types.OffsetWord, diagnoser: Di
 }
 
 /**Diagnoses the value as a value in the mode: camerashake
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_causetype_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -24,7 +24,7 @@ export function mode_causetype_diagnose(value: Types.OffsetWord, diagnoser: Diag
 }
 
 /**Diagnoses the value as a value in the mode: clone
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_clone_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -32,7 +32,7 @@ export function mode_clone_diagnose(value: Types.OffsetWord, diagnoser: Diagnost
 }
 
 /**Diagnoses the value as a value in the mode: difficulty
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_difficulty_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -40,7 +40,7 @@ export function mode_difficulty_diagnose(value: Types.OffsetWord, diagnoser: Dia
 }
 
 /**Diagnoses the value as a value in the mode: fill
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_fill_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -48,7 +48,7 @@ export function mode_fill_diagnose(value: Types.OffsetWord, diagnoser: Diagnosti
 }
 
 /**Diagnoses the value as a value in the mode: gamemode
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_gamemode_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -56,7 +56,7 @@ export function mode_gamemode_diagnose(value: Types.OffsetWord, diagnoser: Diagn
 }
 
 /**Diagnoses the value as a value in the mode: locatefeature
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_locatefeature_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -64,7 +64,7 @@ export function mode_locatefeature_diagnose(value: Types.OffsetWord, diagnoser: 
 }
 
 /**Diagnoses the value as a value in the mode: locatefeature
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_handtype_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -72,7 +72,7 @@ export function mode_handtype_diagnose(value: Types.OffsetWord, diagnoser: Diagn
 }
 
 /**Diagnoses the value as a value in the mode: mask
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_mask_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -80,7 +80,7 @@ export function mode_mask_diagnose(value: Types.OffsetWord, diagnoser: Diagnosti
 }
 
 /**Diagnoses the value as a value in the mode: mirror
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_mirror_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -88,7 +88,7 @@ export function mode_mirror_diagnose(value: Types.OffsetWord, diagnoser: Diagnos
 }
 
 /**Diagnoses the value as a value in the mode: musicrepeat
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_musicrepeat_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -96,7 +96,7 @@ export function mode_musicrepeat_diagnose(value: Types.OffsetWord, diagnoser: Di
 }
 
 /**Diagnoses the value as a value in the mode: oldblock
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_oldblock_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -104,7 +104,7 @@ export function mode_oldblock_diagnose(value: Types.OffsetWord, diagnoser: Diagn
 }
 
 /**Diagnoses the value as a value in the mode: operation
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_operation_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -112,7 +112,7 @@ export function mode_operation_diagnose(value: Types.OffsetWord, diagnoser: Diag
 }
 
 /**Diagnoses the value as a value in the mode: replace
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_replace_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -120,7 +120,7 @@ export function mode_replace_diagnose(value: Types.OffsetWord, diagnoser: Diagno
 }
 
 /**Diagnoses the value as a value in the mode: ridefill
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_ridefill_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -128,7 +128,7 @@ export function mode_ridefill_diagnose(value: Types.OffsetWord, diagnoser: Diagn
 }
 
 /**Diagnoses the value as a value in the mode: riderules
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_riderules_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -136,7 +136,7 @@ export function mode_riderules_diagnose(value: Types.OffsetWord, diagnoser: Diag
 }
 
 /**Diagnoses the value as a value in the mode: rotation
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_rotation_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -144,7 +144,7 @@ export function mode_rotation_diagnose(value: Types.OffsetWord, diagnoser: Diagn
 }
 
 /**Diagnoses the value as a value in the mode: save
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_save_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -152,7 +152,7 @@ export function mode_save_diagnose(value: Types.OffsetWord, diagnoser: Diagnosti
 }
 
 /**Diagnoses the value as a value in the mode: selectorattribute
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_selectorattribute_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -160,7 +160,7 @@ export function mode_selectorattribute_diagnose(value: Types.OffsetWord, diagnos
 }
 
 /**Diagnoses the value as a value in the mode: selectortype
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_selectortype_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -168,7 +168,7 @@ export function mode_selectortype_diagnose(value: Types.OffsetWord, diagnoser: D
 }
 
 /**Diagnoses the value as a value in the mode: slottype
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_slottype_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -176,7 +176,7 @@ export function mode_slottype_diagnose(value: Types.OffsetWord, diagnoser: Diagn
 }
 
 /**Diagnoses the value as a value in the mode: slotid
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_slotid_diagnose(
@@ -225,7 +225,7 @@ export function mode_slotid_diagnose(
 }
 
 /**Diagnoses the value as a value in the mode: structureanimation
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_structureanimation_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -233,7 +233,7 @@ export function mode_structureanimation_diagnose(value: Types.OffsetWord, diagno
 }
 
 /**Diagnoses the value as a value in the mode: teleportrules
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_teleportrules_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -241,7 +241,7 @@ export function mode_teleportrules_diagnose(value: Types.OffsetWord, diagnoser: 
 }
 
 /**Diagnoses the value as a value in the mode: time
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
 export function mode_time_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
@@ -249,7 +249,7 @@ export function mode_time_diagnose(value: Types.OffsetWord, diagnoser: Diagnosti
 }
 
 /**Diagnoses the value a generic collection of modes
- * @param value The value to evualate, needs the offset to report bugs
+ * @param value The value to evaluate, needs the offset to report bugs
  * @param Mode The collection of values to check against
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
