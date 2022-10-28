@@ -13,8 +13,13 @@ on:
       - completed
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  test:
+    name: 📋 Test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -26,15 +31,16 @@ jobs:
           cache-dependency-path: package-lock.json
           node-version-file: .nvmrc
 
-      - name: Setup Project
+      - name: Setup project
         run: npm ci
 
       - name: 📋 Run Tests
-        run: npm test
+        run: npm run test
 
   publish-npm:
-    needs: build
+    needs: test
     runs-on: ubuntu-latest
+    name: 🚚 Npm Publish
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -49,7 +55,7 @@ jobs:
       - name: Setup Project
         run: npm ci
 
-      - name: Npm Publish
+      - name: 🚚 Npm Publish
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}

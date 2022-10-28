@@ -35,8 +35,8 @@ jobs:
 
       - name: setup git
         run: |
-          git config --global user.email "Blockception@github.com"
-          git config --global user.name "Blockception[bot]"
+          git config --global user.email "orbi@github.com"
+          git config --global user.name "Orbi[bot]"
 
       - name: Setup Node.js Environment
         uses: actions/setup-node@v3

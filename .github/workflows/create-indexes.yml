@@ -30,12 +30,12 @@ jobs:
         with: 
           folder: ${{github.workspace}}/src/Lib
 
-      - name: Commit changes
+      - name: ✏️ Commit changes
         continue-on-error: true
         run: |
           cd ${{github.workspace}}
           git config --global user.email "Bot@Blockception.com"
-          git config --global user.name "Blockception[bot]"
+          git config --global user.name "Orbi[bot]"
           git add .
           git commit -m "auto: Generated typescript includes"
           git push
