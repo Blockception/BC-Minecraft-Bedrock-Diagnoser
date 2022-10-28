@@ -1,17 +1,16 @@
 # This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
 # For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
-
-name: Npm Package & Publish
+name: 📦 Npm Package & Publish
 
 on:
   workflow_dispatch:
-  
+
   release:
     types: [published]
   workflow_run:
     workflows: ["tagged-release"]
     types:
-    - completed
+      - completed
 
 jobs:
   build:
@@ -27,9 +26,10 @@ jobs:
           cache-dependency-path: package-lock.json
           node-version-file: .nvmrc
 
-      - name: Setup project
+      - name: Setup Project
         run: npm ci
-      - name: Run tests
+
+      - name: 📋 Run Tests
         run: npm test
 
   publish-npm:
@@ -45,9 +45,11 @@ jobs:
           cache: npm
           cache-dependency-path: package-lock.json
           node-version-file: .nvmrc
-          registry-url: https://registry.npmjs.org/
 
-      - run: npm ci
-      - run: npm publish
+      - name: Setup Project
+        run: npm ci
+
+      - name: Npm Publish
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
