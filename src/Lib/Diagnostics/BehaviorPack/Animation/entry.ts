@@ -3,7 +3,7 @@ import { DiagnosticSeverity } from "../../../../main";
 import { DiagnosticsBuilder } from "../../../Types";
 import { Json } from "../../Json/Json";
 import { diagnose_molang } from "../../Molang/diagnostics";
-import { json_commandscheck } from "../Mcfunction/commands";
+import { json_commandsCheck } from "../Mcfunction/commands";
 
 /**Diagnoses the given document as an animation
  * @param doc The text document to diagnose
@@ -22,7 +22,7 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
 
     //foreach time
     SMap.forEach(anim.timeline, (data, time) => {
-      json_commandscheck(data, doc, diagnoser);
+      json_commandsCheck(data, doc, diagnoser);
 
       if (length) {
         const temp = Number.parseFloat(time);

@@ -1,7 +1,7 @@
 import { TextDocument } from "bc-minecraft-bedrock-project";
 import { DiagnosticSeverity } from "../../../../main";
 import { DiagnosticsBuilder } from "../../../Types";
-import { mcfunction_commandscheck } from "./commands";
+import { mcfunction_commandsCheck } from "./commands";
 
 /**Diagnoses the given document as an mcfunction
  * @param doc The text document to diagnose
@@ -16,5 +16,5 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
     );
   }
 
-  mcfunction_commandscheck(doc, diagnoser);
+  mcfunction_commandsCheck(doc, diagnoser);
 }

@@ -1,4 +1,4 @@
-import { Command, Edu, Parameter, ParameterType, Vanilla } from "bc-minecraft-bedrock-command";
+import { Command, Parameter, ParameterType, CommandData } from "bc-minecraft-bedrock-command";
 import { ParameterInfo } from "bc-minecraft-bedrock-command/lib/src/Lib/Data/CommandInfo";
 import { TextDocument } from "bc-minecraft-bedrock-project";
 import { DiagnosticSeverity, DiagnosticsBuilder } from "../../../Types";
@@ -63,7 +63,7 @@ import { behaviorpack_loot_table_diagnose } from "../Loot Table/diagnose";
  * @param doc
  * @param diagnoser
  */
-export function mcfunction_commandscheck(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
+export function mcfunction_commandsCheck(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
   const edu = education_enabled(diagnoser);
   const text = doc.getText();
   const lines = text.split("\n");
@@ -94,15 +94,15 @@ export function mcfunction_commandscheck(doc: TextDocument, diagnoser: Diagnosti
  * @param doc
  * @param diagnoser
  */
-export function json_commandscheck(prop: string | string[], doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
+export function json_commandsCheck(prop: string | string[], doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
   if (typeof prop === "string") {
     if (prop.startsWith("/")) {
-      commandscheck(prop.substring(1), doc, diagnoser);
+      commandsCheck(prop.substring(1), doc, diagnoser);
     }
   } else {
     prop.forEach((p) => {
       if (p.startsWith("/")) {
-        commandscheck(p.substring(1), doc, diagnoser);
+        commandsCheck(p.substring(1), doc, diagnoser);
       }
     });
   }
@@ -110,17 +110,17 @@ export function json_commandscheck(prop: string | string[], doc: TextDocument, d
 
 /**
  *
- * @param commandtext
+ * @param commandText
  * @param doc
  * @param diagnoser
  * @returns
  */
-export function commandscheck(commandtext: string, doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
-  if (commandtext.length < 3) return;
+export function commandsCheck(commandText: string, doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
+  if (commandText.length < 3) return;
 
   const edu = education_enabled(diagnoser);
-  const offset = doc.getText().indexOf(commandtext);
-  let comm: Command | undefined = Command.parse(commandtext, offset);
+  const offset = doc.getText().indexOf(commandText);
+  let comm: Command | undefined = Command.parse(commandText, offset);
 
   if (comm.isEmpty()) return;
 
@@ -145,7 +145,7 @@ function mcfunction_commandcheck(command: Command, diagnoser: DiagnosticsBuilder
     const keyCommand = command.getKeyword();
 
     //Vanilla has this command so only the syntax is valid
-    if (Vanilla[keyCommand] !== undefined) {
+    if (CommandData.Vanilla[keyCommand] !== undefined) {
       return diagnoser.Add(
         command.parameters[0].offset,
         `Unknown syntax for: "${keyCommand}"`,
@@ -155,7 +155,7 @@ function mcfunction_commandcheck(command: Command, diagnoser: DiagnosticsBuilder
     }
 
     //Edu has it
-    if (Edu[keyCommand] !== undefined) {
+    if (CommandData.Edu[keyCommand] !== undefined) {
       if (edu) {
         return diagnoser.Add(
           command.parameters[0].offset,
@@ -184,68 +184,67 @@ function mcfunction_commandcheck(command: Command, diagnoser: DiagnosticsBuilder
   }
 }
 
-type DiagnoseCommand = (value: Types.OffsetWord, diagnoser: DiagnosticsBuilder) => void | boolean
+type DiagnoseCommand = (value: Types.OffsetWord, diagnoser: DiagnosticsBuilder) => void | boolean;
 /**Switch data*/
-const ParameterDiagnostics: Record<number, DiagnoseCommand> =
-  {
-    [ParameterType.animation]: animation_reference_diagnose,
-    [ParameterType.block]: behaviorpack_check_blockdescriptor,
-    [ParameterType.blockStates]: behaviorpack_check_blockstates,
-    [ParameterType.boolean]: general_boolean_diagnose,
-    [ParameterType.cameraShakeType]: mode_camerashake_diagnose,
-    [ParameterType.causeType]: mode_causetype_diagnose,
-    [ParameterType.cloneMode]: mode_clone_diagnose,
-    //Custom call [ParameterType.command]:,
-    [ParameterType.coordinate]: minecraft_coordinate_diagnose,
-    [ParameterType.difficulty]: mode_difficulty_diagnose,
-    [ParameterType.effect]: minecraft_effect_diagnose,
-    [ParameterType.entity]: behaviorpack_entityid_diagnose,
-    //Custom call [ParameterType.event]:behaviorpack_entity_event_diagnose,
-    [ParameterType.fillMode]: mode_fill_diagnose,
-    [ParameterType.function]: behaviorpack_functions_diagnose,
-    [ParameterType.float]: general_float_diagnose,
-    [ParameterType.gamemode]: mode_gamemode_diagnose,
-    [ParameterType.handType]: mode_handtype_diagnose,
-    [ParameterType.integer]: general_integer_diagnose,
-    [ParameterType.item]: (item, diagnoser) => {
-      if (item.text.endsWith("_spawn_egg")) {
-        behaviorpack_entity_spawnegg_diagnose(item, diagnoser);
-      } else {
-        behaviorpack_item_diagnose(item, diagnoser);
-      }
-    },
-    [ParameterType.jsonItem]: minecraft_jsonitem_diagnose,
-    [ParameterType.jsonRawText]: minecraft_jsonrawtext_diagnose,
-    //Custom call [ParameterType.keyword]:general_keyword_diagnose,
-    [ParameterType.locateFeature]: mode_locatefeature_diagnose,
-    [ParameterType.lootTable]: behaviorpack_loot_table_diagnose,
-    //Custom call [ParameterType.message]:,
-    [ParameterType.maskMode]: mode_mask_diagnose,
-    [ParameterType.mirror]: mode_mirror_diagnose,
-    [ParameterType.musicRepeatMode]: mode_musicrepeat_diagnose,
-    [ParameterType.objective]: minecraft_objectives_diagnose,
-    [ParameterType.oldBlockMode]: mode_oldblock_diagnose,
-    [ParameterType.operation]: mode_operation_diagnose,
-    [ParameterType.particle]: resourcepack_particle_diagnose,
-    [ParameterType.replaceMode]: mode_replace_diagnose,
-    [ParameterType.rideRules]: mode_riderules_diagnose,
-    [ParameterType.ridefillMode]: mode_ridefill_diagnose,
-    [ParameterType.rotation]: mode_rotation_diagnose,
-    [ParameterType.saveMode]: mode_save_diagnose,
-    //Custom call [ParameterType.selector]:minecraft_selector_diagnose,
-    [ParameterType.slotType]: mode_slottype_diagnose,
-    //Custom call [ParameterType.slotID]:,
-    [ParameterType.sound]: resourcepack_sound_diagnose,
-    [ParameterType.string]: general_string_diagnose,
-    [ParameterType.structure]: behaviorpack_structure_diagnose,
-    [ParameterType.structureAnimationMode]: mode_structureanimation_diagnose,
-    [ParameterType.tag]: minecraft_tag_diagnose,
-    [ParameterType.teleportRules]: mode_teleportrules_diagnose,
-    [ParameterType.tickingarea]: minecraft_tickingarea_diagnose,
-    [ParameterType.time]: mode_time_diagnose,
-    //Custom call ParameterType.unknown]:(item, diagnoser)=>diagnoser.Add(item.offset, "Unknown parametype: " + item.type, DiagnosticSeverity.warning, "debugger.error"),
-    [ParameterType.xp]: minecraft_xp_diagnose,
-  };
+const ParameterDiagnostics: Record<number, DiagnoseCommand> = {
+  [ParameterType.animation]: animation_reference_diagnose,
+  [ParameterType.block]: behaviorpack_check_blockdescriptor,
+  [ParameterType.blockStates]: behaviorpack_check_blockstates,
+  [ParameterType.boolean]: general_boolean_diagnose,
+  [ParameterType.cameraShakeType]: mode_camerashake_diagnose,
+  [ParameterType.causeType]: mode_causetype_diagnose,
+  [ParameterType.cloneMode]: mode_clone_diagnose,
+  //Custom call [ParameterType.command]:,
+  [ParameterType.coordinate]: minecraft_coordinate_diagnose,
+  [ParameterType.difficulty]: mode_difficulty_diagnose,
+  [ParameterType.effect]: minecraft_effect_diagnose,
+  [ParameterType.entity]: behaviorpack_entityid_diagnose,
+  //Custom call [ParameterType.event]:behaviorpack_entity_event_diagnose,
+  [ParameterType.fillMode]: mode_fill_diagnose,
+  [ParameterType.function]: behaviorpack_functions_diagnose,
+  [ParameterType.float]: general_float_diagnose,
+  [ParameterType.gamemode]: mode_gamemode_diagnose,
+  [ParameterType.handType]: mode_handtype_diagnose,
+  [ParameterType.integer]: general_integer_diagnose,
+  [ParameterType.item]: (item, diagnoser) => {
+    if (item.text.endsWith("_spawn_egg")) {
+      behaviorpack_entity_spawnegg_diagnose(item, diagnoser);
+    } else {
+      behaviorpack_item_diagnose(item, diagnoser);
+    }
+  },
+  [ParameterType.jsonItem]: minecraft_jsonitem_diagnose,
+  [ParameterType.jsonRawText]: minecraft_jsonrawtext_diagnose,
+  //Custom call [ParameterType.keyword]:general_keyword_diagnose,
+  [ParameterType.locateFeature]: mode_locatefeature_diagnose,
+  [ParameterType.lootTable]: behaviorpack_loot_table_diagnose,
+  //Custom call [ParameterType.message]:,
+  [ParameterType.maskMode]: mode_mask_diagnose,
+  [ParameterType.mirror]: mode_mirror_diagnose,
+  [ParameterType.musicRepeatMode]: mode_musicrepeat_diagnose,
+  [ParameterType.objective]: minecraft_objectives_diagnose,
+  [ParameterType.oldBlockMode]: mode_oldblock_diagnose,
+  [ParameterType.operation]: mode_operation_diagnose,
+  [ParameterType.particle]: resourcepack_particle_diagnose,
+  [ParameterType.replaceMode]: mode_replace_diagnose,
+  [ParameterType.rideRules]: mode_riderules_diagnose,
+  [ParameterType.ridefillMode]: mode_ridefill_diagnose,
+  [ParameterType.rotation]: mode_rotation_diagnose,
+  [ParameterType.saveMode]: mode_save_diagnose,
+  //Custom call [ParameterType.selector]:minecraft_selector_diagnose,
+  [ParameterType.slotType]: mode_slottype_diagnose,
+  //Custom call [ParameterType.slotID]:,
+  [ParameterType.sound]: resourcepack_sound_diagnose,
+  [ParameterType.string]: general_string_diagnose,
+  [ParameterType.structure]: behaviorpack_structure_diagnose,
+  [ParameterType.structureAnimationMode]: mode_structureanimation_diagnose,
+  [ParameterType.tag]: minecraft_tag_diagnose,
+  [ParameterType.teleportRules]: mode_teleportrules_diagnose,
+  [ParameterType.tickingarea]: minecraft_tickingarea_diagnose,
+  [ParameterType.time]: mode_time_diagnose,
+  //Custom call ParameterType.unknown]:(item, diagnoser)=>diagnoser.Add(item.offset, "Unknown parametype: " + item.type, DiagnosticSeverity.warning, "debugger.error"),
+  [ParameterType.xp]: minecraft_xp_diagnose,
+};
 
 /**
  *

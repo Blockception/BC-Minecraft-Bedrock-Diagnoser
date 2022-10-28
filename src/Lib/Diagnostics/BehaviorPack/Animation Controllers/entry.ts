@@ -3,7 +3,7 @@ import { DiagnosticsBuilder } from "../../../Types";
 import { general_animation_controllers } from "../../Minecraft/Animation Controllers";
 import { Internal } from "bc-minecraft-bedrock-project";
 import { Json } from "../../Json/Json";
-import { json_commandscheck } from "../Mcfunction/commands";
+import { json_commandsCheck } from "../Mcfunction/commands";
 import { SMap, TextDocument } from "bc-minecraft-bedrock-project";
 
 /**Diagnoses the given document as an animation controller
@@ -23,8 +23,8 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
   //foreach animation,
   SMap.forEach(controllers.animation_controllers, (controller, id) => {
     SMap.forEach(controller.states, (state, state_id) => {
-      state.on_entry?.forEach((item) => json_commandscheck(item, doc, diagnoser));
-      state.on_exit?.forEach((item) => json_commandscheck(item, doc, diagnoser));
+      state.on_entry?.forEach((item) => json_commandsCheck(item, doc, diagnoser));
+      state.on_exit?.forEach((item) => json_commandsCheck(item, doc, diagnoser));
     });
   });
 }
