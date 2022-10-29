@@ -22,9 +22,15 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
   const context: Context = {
     components: getUsedComponents(block["minecraft:block"]),
   };
+  block["minecraft:block"]?.permutations?.forEach((p) => {
+    context.components.push(...getUsedComponents(p));
+  });
 
   behaviorpack_diagnose_block_components(block["minecraft:block"], context, diagnoser);
-  
+
+  block["minecraft:block"]?.permutations?.forEach((p) => {
+    behaviorpack_diagnose_block_components(p, context, diagnoser);
+  });
 
   behaviorpack_block_components_dependencies(block, context, diagnoser);
 }
