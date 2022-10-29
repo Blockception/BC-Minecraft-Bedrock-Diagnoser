@@ -22,4 +22,6 @@ const component_test: Record<string, ComponentCheck> = {
     "Creative category is no longer supported, replace with `description.category`, needs version 1.19.30",
     "behaviorpack.block.components.deprecated"
   ),
+  //TODO minecraft:collision_box
+  //TODO minecraft:geometry
 };
