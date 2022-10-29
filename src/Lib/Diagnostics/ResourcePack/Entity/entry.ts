@@ -62,8 +62,8 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
   });
 
   //Check models
-  Types.Definition.forEach(container.geometry, (ref, modelid) =>
-    resourcepack_has_model(modelid, entityGathered.id, diagnoser)
+  Types.Definition.forEach(container.geometry, (ref, modelId) =>
+    resourcepack_has_model(modelId, diagnoser)
   );
 
   //check particles

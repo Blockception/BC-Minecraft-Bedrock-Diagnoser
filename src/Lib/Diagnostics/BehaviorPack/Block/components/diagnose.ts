@@ -2,6 +2,7 @@ import { ComponentBehavior, ComponentContainer } from "bc-minecraft-bedrock-type
 import { DiagnosticsBuilder } from "../../../../Types";
 import { Context } from "../../../../Utility/components";
 import { ComponentCheck, components_check, component_error } from "../../../../Utility/components/checks";
+import { resourcepack_has_model } from "../../../ResourcePack/Model/diagnose";
 
 /**
  *
@@ -22,6 +23,6 @@ const component_test: Record<string, ComponentCheck> = {
     "Creative category is no longer supported, replace with `description.category`, needs version 1.19.30",
     "behaviorpack.block.components.deprecated"
   ),
+  "minecraft:geometry": (name, component, context, diagnoser) => resourcepack_has_model(component.value, diagnoser),
   //TODO minecraft:collision_box
-  //TODO minecraft:geometry
 };
