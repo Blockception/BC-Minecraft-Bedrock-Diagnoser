@@ -24,5 +24,7 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
   };
 
   behaviorpack_diagnose_block_components(block["minecraft:block"], context, diagnoser);
+  
+
   behaviorpack_block_components_dependencies(block, context, diagnoser);
 }
