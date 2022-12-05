@@ -24,7 +24,7 @@ export class Diagnoser {
 
   /** Process and diagnoses the given document
    * @param doc The textdocument to process or the uri to the document
-   * @returns `true` or `false` if the diagnostics was successfull*/
+   * @returns `true` or `false` if the diagnostics was successfully*/
   Process(doc: TextDocument | string): boolean {
     if (typeof doc === "string") {
       const temp = this.context.getDocument(doc);

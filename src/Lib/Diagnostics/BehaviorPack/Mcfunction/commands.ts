@@ -179,6 +179,29 @@ function mcfunction_commandcheck(command: Command, diagnoser: DiagnosticsBuilder
   const data = info[0];
   const max = Math.min(data.parameters.length, command.parameters.length);
 
+  //is syntax obsolete
+  const obsolete = data.obsolete;
+  if (typeof obsolete !== "undefined") {
+    const keyword = command.parameters[0];
+
+    if (typeof obsolete === "boolean") {
+      diagnoser.Add(
+        keyword,
+        `The syntax for this command is marked as obsolete`,
+        DiagnosticSeverity.warning,
+        `minecraft.commands.${keyword.text}.obsolete`
+      );
+    } else {
+      let { code, message, format_version } = obsolete;
+
+      if (format_version) {
+        message += `\nThis command is obsolete since format version: ${format_version}`;
+      }
+
+      diagnoser.Add(keyword, message, DiagnosticSeverity.warning, code);
+    }
+  }
+
   for (let I = 0; I < max; I++) {
     mcfunction_diagnoseparameter(data.parameters[I], command.parameters[I], diagnoser, command, edu);
   }
