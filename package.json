@@ -43,14 +43,14 @@
     "bc-minecraft-bedrock-project": "^1.19.50-0",
     "bc-minecraft-bedrock-types": "^1.19.50-0",
     "bc-minecraft-bedrock-vanilla-data": "^1.19.50-0",
-    "bc-minecraft-molang": "^1.19.40-2",
+    "bc-minecraft-molang": "^1.19.50-1",
     "bc-minecraft-project": "^1.19.40-1",
     "jsonc": "^2.0.0"
   },
   "devDependencies": {
     "@types/chai": "^4.3.4",
     "@types/mocha": "^10.0.1",
-    "@types/node": "^18.11.10",
+    "@types/node": "^18.11.11",
     "chai": "^4.3.7",
     "mocha": "^10.0.0",
     "rimraf": "^3.0.2",
