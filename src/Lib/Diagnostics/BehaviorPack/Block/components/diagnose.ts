@@ -23,6 +23,13 @@ const component_test: Record<string, ComponentCheck> = {
     "Creative category is no longer supported, replace with `description.category`, needs version 1.19.30",
     "behaviorpack.block.components.deprecated"
   ),
-  "minecraft:geometry": (name, component, context, diagnoser) => resourcepack_has_model(component.value, diagnoser),
+  "minecraft:geometry": (name, component, context, diagnoser) => {
+    if (typeof component === "string") {
+      resourcepack_has_model(component, diagnoser);
+    } 
+    else if (typeof component === "object") {
+      if (component.value) resourcepack_has_model(component.value, diagnoser);
+    }
+  },
   //TODO minecraft:collision_box
 };
