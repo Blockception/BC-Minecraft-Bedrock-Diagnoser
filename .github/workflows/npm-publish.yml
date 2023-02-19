@@ -36,6 +36,14 @@ jobs:
       - name: 📋 Run Tests
         run: npm run test
 
+      - name: 📋 Test Reporter
+        if: ${{ always() }}
+        uses: dorny/test-reporter@v1
+        with:
+          name: 📋 Unit Test
+          reporter: jest-junit
+          path: "**/junit.xml"
+
   publish-npm:
     needs: test
     runs-on: ubuntu-latest
