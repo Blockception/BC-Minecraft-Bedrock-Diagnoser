@@ -29,6 +29,13 @@ export function behaviorpack_loot_table_short_diagnose(
 ) {
   let id = typeof value === "string" ? value : value.text;
 
+  //Strip ""
+  if (id.startsWith('"')) {
+    id = id.slice(1);
+  }
+  if (id.endsWith('"')) {
+    id = id.slice(0, -1);
+  }
   if (!id.startsWith("loot_tables/")) {
     id = "loot_tables/" + id;
   }
