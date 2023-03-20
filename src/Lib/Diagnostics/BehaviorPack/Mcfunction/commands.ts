@@ -1,11 +1,16 @@
+import { animation_reference_diagnose } from "../../ResourcePack/anim or controller";
+import { behaviorpack_check_blockdescriptor, behaviorpack_check_blockstates } from "../Block/diagnose";
+import { behaviorpack_functions_diagnose } from "./diagnose";
+import { behaviorpack_item_diagnose } from "../Item/diagnose";
+import { behaviorpack_loot_table_short_diagnose } from "../Loot Table/diagnose";
+import { behaviorpack_structure_diagnose } from "../Structure/diagnose";
 import { Command, Parameter, ParameterType, CommandData } from "bc-minecraft-bedrock-command";
-import { ParameterInfo } from "bc-minecraft-bedrock-command/lib/src/Lib/Data/CommandInfo";
-import { TextDocument } from "bc-minecraft-bedrock-project";
 import { DiagnosticSeverity, DiagnosticsBuilder } from "../../../Types";
 import { education_enabled } from "../../Definitions";
 import { general_boolean_diagnose } from "../../General/Boolean";
 import { general_float_diagnose } from "../../General/Float";
 import { general_integer_diagnose } from "../../General/Integer";
+import { general_keyword_diagnose } from "../../General/Keyword";
 import { general_string_diagnose } from "../../General/String";
 import { minecraft_check_command } from "../../Minecraft/Commands";
 import { minecraft_coordinate_diagnose } from "../../Minecraft/Coordinate";
@@ -15,14 +20,18 @@ import { minecraft_jsonrawtext_diagnose } from "../../Minecraft/JsonRawText";
 import { minecraft_objectives_diagnose } from "../../Minecraft/Objective";
 import { minecraft_selector_diagnose } from "../../Minecraft/Selector";
 import { minecraft_tag_diagnose } from "../../Minecraft/Tag";
-import { behaviorpack_structure_diagnose } from "../Structure/diagnose";
-import { behaviorpack_check_blockdescriptor, behaviorpack_check_blockstates } from "../Block/diagnose";
+import { minecraft_tickingarea_diagnose } from "../../Minecraft/Tickingarea";
+import { minecraft_xp_diagnose } from "../../Minecraft/Xp";
+import { ParameterInfo } from "bc-minecraft-bedrock-command/lib/src/Lib/Data/CommandInfo";
+import { resourcepack_particle_diagnose } from "../../ResourcePack/Particle/diagnose";
+import { resourcepack_sound_diagnose } from "../../ResourcePack/Sounds Definitions/diagnose";
+import { TextDocument } from "bc-minecraft-bedrock-project";
+import { Types } from "bc-minecraft-bedrock-types";
 import {
   behaviorpack_entityid_diagnose,
   behaviorpack_entity_event_diagnose,
   behaviorpack_entity_spawnegg_diagnose,
 } from "../Entity/diagnose";
-import { behaviorpack_functions_diagnose } from "./diagnose";
 import {
   mode_camerashake_diagnose,
   mode_causetype_diagnose,
@@ -48,15 +57,7 @@ import {
   mode_teleportrules_diagnose,
   mode_time_diagnose,
 } from "../../Mode/diagnose";
-import { behaviorpack_item_diagnose } from "../Item/diagnose";
-import { minecraft_xp_diagnose } from "../../Minecraft/Xp";
-import { general_keyword_diagnose } from "../../General/Keyword";
-import { minecraft_tickingarea_diagnose } from "../../Minecraft/Tickingarea";
-import { resourcepack_particle_diagnose } from "../../ResourcePack/Particle/diagnose";
-import { resourcepack_sound_diagnose } from "../../ResourcePack/Sounds Definitions/diagnose";
-import { animation_reference_diagnose } from "../../ResourcePack/anim or controller";
-import { Types } from "bc-minecraft-bedrock-types";
-import { behaviorpack_loot_table_diagnose } from "../Loot Table/diagnose";
+
 
 /**
  *
@@ -240,7 +241,7 @@ const ParameterDiagnostics: Record<number, DiagnoseCommand> = {
   [ParameterType.jsonRawText]: minecraft_jsonrawtext_diagnose,
   //Custom call [ParameterType.keyword]:general_keyword_diagnose,
   [ParameterType.locateFeature]: mode_locatefeature_diagnose,
-  [ParameterType.lootTable]: behaviorpack_loot_table_diagnose,
+  [ParameterType.lootTable]: behaviorpack_loot_table_short_diagnose,
   //Custom call [ParameterType.message]:,
   [ParameterType.maskMode]: mode_mask_diagnose,
   [ParameterType.mirror]: mode_mirror_diagnose,
