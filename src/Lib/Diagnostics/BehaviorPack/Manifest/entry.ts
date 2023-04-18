@@ -15,7 +15,7 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
   if (!Json.TypeCheck(manifest, diagnoser, "manifest", "minecraft.manifest.invalid", Manifest.is)) return;
 
   minecraft_manifest_diagnose(manifest, diagnoser);
-  minecraft_manifest_required_module(manifest, diagnoser, "data", "javascript");
+  minecraft_manifest_required_module(manifest, diagnoser, "data", "javascript", "script");
 
   //BP specific
   check_min_engine_version(manifest.header.min_engine_version, doc, diagnoser);
