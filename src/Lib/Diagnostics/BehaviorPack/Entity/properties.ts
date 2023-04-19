@@ -5,7 +5,7 @@ import {
   EntityProperty,
 } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/BehaviorPack/Entity";
 import { DiagnosticSeverity, DiagnosticsBuilder } from "../../../Types";
-import { EntityDescription } from 'bc-minecraft-bedrock-project/lib/src/Lib/Internal/BehaviorPack';
+import { EntityDescription } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/BehaviorPack";
 
 export function diagnose_entity_properties_definition(property: EntityProperty[], diagnoser: DiagnosticsBuilder) {
   for (const prop of property) {
@@ -103,7 +103,10 @@ function diagnose_entity_int_property_definition(property: EntityIntProperty, di
   }
 }
 
-function diagnose_entity_enum_property_definition(property: Partial<EntityEnumProperty>, diagnoser: DiagnosticsBuilder) {
+function diagnose_entity_enum_property_definition(
+  property: Partial<EntityEnumProperty>,
+  diagnoser: DiagnosticsBuilder
+) {
   //https://learn.microsoft.com/en-us/minecraft/creator/documents/introductiontoentityproperties#enum-property-restrictions
 
   // default needs to be in the list
@@ -152,15 +155,28 @@ function diagnose_entity_enum_property_definition(property: Partial<EntityEnumPr
   }
 }
 
-export function diagnose_entity_property_usage(definitions: EntityProperty[], name: string, value: string | number | boolean, diagnoser: DiagnosticsBuilder): void {
+export function diagnose_entity_property_usage(
+  definitions: EntityProperty[],
+  name: string,
+  value: string | number | boolean,
+  diagnoser: DiagnosticsBuilder
+): void {
   for (const def of definitions) {
-    check_entity_property_usage(def, name, value, diagnoser);
+    if (def.name === name) {
+      check_entity_property_usage(def, name, value, diagnoser);
+    }
   }
 }
 
-function check_entity_property_usage(definition: EntityProperty, name: string, value:  string | number | boolean, diagnoser: DiagnosticsBuilder): void {
+function check_entity_property_usage(
+  definition: EntityProperty,
+  name: string,
+  value: string | number | boolean,
+  diagnoser: DiagnosticsBuilder
+): void {
   switch (definition.type) {
     case "bool":
+      value = value ?? false;
       if (typeof value !== "boolean") {
         diagnoser.Add(
           name,
@@ -170,7 +186,7 @@ function check_entity_property_usage(definition: EntityProperty, name: string, v
         );
       }
       break;
-    
+
     case "int":
     case "float":
       if (typeof value !== "number") {
