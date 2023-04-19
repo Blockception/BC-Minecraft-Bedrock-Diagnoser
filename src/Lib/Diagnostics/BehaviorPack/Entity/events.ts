@@ -2,18 +2,23 @@ import { Internal, SMap } from "bc-minecraft-bedrock-project";
 import { ComponentGroups } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Components";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../../main";
 import { behaviorpack_entity_components_filters } from "./components/filters";
+import { EntityProperty } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/BehaviorPack/Entity";
+import { diagnose_entity_property_usage } from "./properties";
 
 type EntityEvent = Internal.BehaviorPack.EntityEvent;
 
 export function behaviorpack_entity_check_events(
   events: SMap<EntityEvent> | EntityEvent[],
   diagnoser: DiagnosticsBuilder,
+  properties: EntityProperty[],
   component_groups?: SMap<Internal.BehaviorPack.EntityComponentContainer>
 ) {
   if (Array.isArray(events)) {
-    events.forEach((event) => behaviorpack_entity_check_event(event, "", diagnoser, component_groups));
+    events.forEach((event) => behaviorpack_entity_check_event(event, "", diagnoser, properties, component_groups));
   } else {
-    SMap.forEach(events, (event, key) => behaviorpack_entity_check_event(event, key, diagnoser, component_groups));
+    SMap.forEach(events, (event, key) =>
+      behaviorpack_entity_check_event(event, key, diagnoser, properties, component_groups)
+    );
   }
 }
 
@@ -27,20 +32,27 @@ export function behaviorpack_entity_check_event(
   event: EntityEvent & { filters?: any },
   event_id: string,
   diagnoser: DiagnosticsBuilder,
+  properties: EntityProperty[],
   component_groups?: ComponentGroups
 ): void {
   has_groups(diagnoser, event_id, event.add?.component_groups, component_groups);
   has_groups(diagnoser, event_id, event.remove?.component_groups, component_groups);
 
   event.randomize?.forEach((item) => {
-    behaviorpack_entity_check_event(item, event_id, diagnoser, component_groups);
+    behaviorpack_entity_check_event(item, event_id, diagnoser, properties, component_groups);
   });
 
   event.sequence?.forEach((item) => {
-    behaviorpack_entity_check_event(item, event_id, diagnoser, component_groups);
+    behaviorpack_entity_check_event(item, event_id, diagnoser, properties, component_groups);
   });
 
   behaviorpack_entity_components_filters(event, diagnoser);
+
+  if (event.set_property) {
+    for (const [key, value] of Object.entries(event.set_property)) {
+      diagnose_entity_property_usage(properties, key, value, diagnoser);
+    }
+  }
 }
 
 function has_groups(

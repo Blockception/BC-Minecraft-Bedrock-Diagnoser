@@ -3,15 +3,16 @@ import { behaviorpack_animation_used } from "../Animation/usage";
 import { behaviorpack_entity_check_events } from "./events";
 import { behaviorpack_entity_components_check } from "./components";
 import { behaviorpack_entity_components_dependencies } from "./components/dependencies";
-import { Context } from '../../../Utility/components';
+import { Context } from "../../../Utility/components";
 import { DefinedUsing, Molang } from "bc-minecraft-molang";
 import { diagnose_molang } from "../../Molang/diagnostics";
 import { diagnose_script } from "../../Minecraft/Script";
 import { DiagnosticsBuilder } from "../../../Types";
-import { getUsedComponents } from 'bc-minecraft-bedrock-types/lib/src/Minecraft/Components';
+import { getUsedComponents } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Components";
 import { Internal, TextDocument } from "bc-minecraft-bedrock-project";
 import { Json } from "../../Json/Json";
 import { Types } from "bc-minecraft-bedrock-types";
+import { diagnose_entity_properties_definition } from "./properties";
 
 /**Diagnoses the given document as an bp entity
  * @param doc The text document to diagnose
@@ -27,7 +28,7 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
 
   //check components
   const context: Context = {
-    components: getUsedComponents(entity['minecraft:entity']),
+    components: getUsedComponents(entity["minecraft:entity"]),
   };
 
   behaviorpack_entity_components_dependencies(entity, context, diagnoser);
@@ -42,6 +43,9 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
     molang: MolangData,
     animations: DefinedUsing.create<string>(),
   };
+  const properties = Object.entries(container.description.properties ?? {})?.map(([name, value]) => {
+    return { name, ...value };
+  });
 
   //Convert animations / controllers
   Types.Definition.forEach(container.description.animations, (ref, anim_id) => {
@@ -58,9 +62,12 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
   if (container.description.scripts)
     diagnose_script(diagnoser, container.description.scripts, container.description.animations);
 
-  //Check events
-  if (container.events) behaviorpack_entity_check_events(container.events, diagnoser, container.component_groups);
-
   //Check used animations
   behaviorpack_animation_used(container.description.animations, diagnoser, container.description.scripts);
+
+  diagnose_entity_properties_definition(properties, diagnoser);
+
+  //Check events
+  if (container.events)
+    behaviorpack_entity_check_events(container.events, diagnoser, properties, container.component_groups);
 }
