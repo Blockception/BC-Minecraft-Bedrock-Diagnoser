@@ -47,7 +47,7 @@ function diagnose_entity_property_definition(property: EntityProperty, diagnoser
 function diagnose_entity_bool_property_definition(property: EntityProperty, diagnoser: DiagnosticsBuilder) {
   const { name, default: def } = property;
 
-  if (typeof def === "boolean") return;
+  if (typeof def === "boolean" || typeof def === "string") return;
 
   diagnoser.Add(
     `properties/${name}/${def}`,
@@ -58,43 +58,49 @@ function diagnose_entity_bool_property_definition(property: EntityProperty, diag
 }
 
 function diagnose_entity_float_property_definition(property: EntityFloatProperty, diagnoser: DiagnosticsBuilder) {
+  const { name, default: def } = property;
+
   // Default value needs to be a number and within the range
-  if (property.default !== undefined && Array.isArray(property.range)) {
-    if (typeof property.default !== "number") {
+  if (def === undefined) return;
+  if (typeof def !== "number" && typeof def !== "string") {
+    diagnoser.Add(
+      `properties/${name}/${def}`,
+      `Default value is not a number: ${def}`,
+      DiagnosticSeverity.error,
+      "behaviorpack.entity.property.float.default"
+    );
+    return;
+  }
+
+  if (Array.isArray(property.range) && typeof def === "number") {
+    if (def < property.range[0] || def > property.range[1]) {
       diagnoser.Add(
-        `properties/${property.name}/${property.default}`,
-        `Default value is not a number: ${property.default}`,
+        `properties/${name}/${def}`,
+        `Default value is not within the range: ${def}`,
         DiagnosticSeverity.error,
         "behaviorpack.entity.property.float.default"
       );
-    } else {
-      if (property.default < property.range[0] || property.default > property.range[1]) {
-        diagnoser.Add(
-          `properties/${property.name}/${property.default}`,
-          `Default value is not within the range: ${property.default}`,
-          DiagnosticSeverity.error,
-          "behaviorpack.entity.property.float.default"
-        );
-      }
     }
   }
 }
 
 function diagnose_entity_int_property_definition(property: EntityIntProperty, diagnoser: DiagnosticsBuilder) {
+  const { name, default: def } = property;
+
   // Default value needs to be a number and within the range
-  if (property.default !== undefined && Array.isArray(property.range)) {
-    if (typeof property.default !== "number") {
+  if (def !== undefined && Array.isArray(property.range)) {
+    if (typeof def !== "number") {
       diagnoser.Add(
-        `properties/${property.name}/${property.default}`,
-        `Default value is not a number: ${property.default}`,
+        `properties/${name}/${def}`,
+        `Default value is not a number: ${def}`,
         DiagnosticSeverity.error,
         "behaviorpack.entity.property.int.default"
       );
     } else {
-      if (property.default < property.range[0] || property.default > property.range[1]) {
+      if (def < property.range[0] || def > property.range[1]) {
         diagnoser.Add(
-          `properties/${property.name}/${property.default}`,
-          `Default value is not within the range: ${property.default}`,
+          `properties/${name}/${def}`,
+          `Default value is not within the range: ${def}`,
           DiagnosticSeverity.error,
           "behaviorpack.entity.property.int.default"
         );
@@ -107,14 +113,15 @@ function diagnose_entity_enum_property_definition(
   property: Partial<EntityEnumProperty>,
   diagnoser: DiagnosticsBuilder
 ) {
+  const { name, default: def } = property;
   //https://learn.microsoft.com/en-us/minecraft/creator/documents/introductiontoentityproperties#enum-property-restrictions
 
   // default needs to be in the list
-  if (property.default !== undefined) {
-    if (property.values?.indexOf(property.default) === -1) {
+  if (def !== undefined) {
+    if (property.values?.indexOf(def) === -1) {
       diagnoser.Add(
-        `properties/${property.name}/${property.default}`,
-        `Default value is not in the list of values: ${property.default}`,
+        `properties/${name}/${def}`,
+        `Default value is not in the list of values: ${def}`,
         DiagnosticSeverity.error,
         "behaviorpack.entity.property.enum.default"
       );
@@ -125,7 +132,7 @@ function diagnose_entity_enum_property_definition(
     // Maximum 16 entries
     if (property.values.length > 16) {
       diagnoser.Add(
-        `properties/${property.name}`,
+        `properties/${name}`,
         `Entity has too many values: ${property.values?.length}, expected 16 or less`,
         DiagnosticSeverity.error,
         "behaviorpack.entity.property.enum.values.count"
@@ -136,7 +143,7 @@ function diagnose_entity_enum_property_definition(
     for (const value of property.values) {
       if (typeof value !== "string") {
         diagnoser.Add(
-          `properties/${property.name}/${value}`,
+          `properties/${name}/${value}`,
           `Value is not a string: ${value}`,
           DiagnosticSeverity.error,
           "behaviorpack.entity.property.enum.values.type"
@@ -144,7 +151,7 @@ function diagnose_entity_enum_property_definition(
       } else {
         if (value.length > 32 || value.length < 1) {
           diagnoser.Add(
-            `properties/${property.name}/${value}`,
+            `properties/${name}/${value}`,
             `Value is not a string of length 1 to 32: ${value}`,
             DiagnosticSeverity.error,
             "behaviorpack.entity.property.enum.values.length"
