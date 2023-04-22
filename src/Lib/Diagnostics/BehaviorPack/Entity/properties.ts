@@ -5,7 +5,6 @@ import {
   EntityProperty,
 } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/BehaviorPack/Entity";
 import { DiagnosticSeverity, DiagnosticsBuilder } from "../../../Types";
-import { EntityDescription } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/BehaviorPack";
 
 export function diagnose_entity_properties_definition(property: EntityProperty[], diagnoser: DiagnosticsBuilder) {
   for (const prop of property) {
@@ -62,15 +61,6 @@ function diagnose_entity_float_property_definition(property: EntityFloatProperty
 
   // Default value needs to be a number and within the range
   if (def === undefined) return;
-  if (typeof def !== "number" && typeof def !== "string") {
-    diagnoser.Add(
-      `properties/${name}/${def}`,
-      `Default value is not a number: ${def}`,
-      DiagnosticSeverity.error,
-      "behaviorpack.entity.property.float.default"
-    );
-    return;
-  }
 
   if (Array.isArray(property.range) && typeof def === "number") {
     if (def < property.range[0] || def > property.range[1]) {
@@ -82,31 +72,43 @@ function diagnose_entity_float_property_definition(property: EntityFloatProperty
       );
     }
   }
+
+  if (typeof def === "number" || typeof def === "string") return;
+
+  diagnoser.Add(
+    `properties/${name}/${def}`,
+    `Default value is not a boolean: ${def}`,
+    DiagnosticSeverity.error,
+    "behaviorpack.entity.property.float.default"
+  );
 }
 
 function diagnose_entity_int_property_definition(property: EntityIntProperty, diagnoser: DiagnosticsBuilder) {
   const { name, default: def } = property;
 
   // Default value needs to be a number and within the range
-  if (def !== undefined && Array.isArray(property.range)) {
-    if (typeof def !== "number") {
+  if (def === undefined) return;
+
+  // Default value needs to be a number and within the range
+  if (Array.isArray(property.range) && typeof def === "number") {
+    if (def < property.range[0] || def > property.range[1]) {
       diagnoser.Add(
         `properties/${name}/${def}`,
-        `Default value is not a number: ${def}`,
+        `Default value is not within the range: ${def}`,
         DiagnosticSeverity.error,
         "behaviorpack.entity.property.int.default"
       );
-    } else {
-      if (def < property.range[0] || def > property.range[1]) {
-        diagnoser.Add(
-          `properties/${name}/${def}`,
-          `Default value is not within the range: ${def}`,
-          DiagnosticSeverity.error,
-          "behaviorpack.entity.property.int.default"
-        );
-      }
     }
   }
+
+  if (typeof def === "number" || typeof def === "string") return;
+
+  diagnoser.Add(
+    `properties/${name}/${def}`,
+    `Default value is not a boolean: ${def}`,
+    DiagnosticSeverity.error,
+    "behaviorpack.entity.property.int.default"
+  );
 }
 
 function diagnose_entity_enum_property_definition(
@@ -184,26 +186,26 @@ function check_entity_property_usage(
   switch (definition.type) {
     case "bool":
       value = value ?? false;
-      if (typeof value !== "boolean") {
-        diagnoser.Add(
-          name,
-          `Value is not a boolean: ${value}`,
-          DiagnosticSeverity.error,
-          "behaviorpack.entity.property.bool.value"
-        );
-      }
+      if (typeof value === "boolean" || typeof value === "string") return;
+
+      diagnoser.Add(
+        name,
+        `Value is not a boolean: ${value}`,
+        DiagnosticSeverity.error,
+        "behaviorpack.entity.property.bool.value"
+      );
       break;
 
     case "int":
     case "float":
-      if (typeof value !== "number") {
-        diagnoser.Add(
-          name,
-          `Value is not a number: ${value}`,
-          DiagnosticSeverity.error,
-          `behaviorpack.entity.property.${definition.type}.value`
-        );
-      }
+      if (typeof value === "number" || typeof value === "string") return;
+
+      diagnoser.Add(
+        name,
+        `Value is not a number: ${value}`,
+        DiagnosticSeverity.error,
+        `behaviorpack.entity.property.${definition.type}.value`
+      );
       break;
 
     case "enum":
