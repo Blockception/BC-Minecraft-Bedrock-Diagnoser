@@ -168,11 +168,12 @@ export function diagnose_entity_property_usage(
   definitions: EntityProperty[],
   name: string,
   value: string | number | boolean,
+  parent: "events",
   diagnoser: DiagnosticsBuilder
 ): void {
   for (const def of definitions) {
     if (def.name === name) {
-      check_entity_property_usage(def, name, value, diagnoser);
+      check_entity_property_usage(def, name, value, parent, diagnoser);
     }
   }
 }
@@ -181,6 +182,7 @@ function check_entity_property_usage(
   definition: EntityProperty,
   name: string,
   value: string | number | boolean,
+  parent: "events",
   diagnoser: DiagnosticsBuilder
 ): void {
   switch (definition.type) {
@@ -189,7 +191,7 @@ function check_entity_property_usage(
       if (typeof value === "boolean" || typeof value === "string") return;
 
       diagnoser.Add(
-        `${name}/${value}`,
+        `${parent}/${name}/${value}`,
         `Value is not a boolean: ${value}`,
         DiagnosticSeverity.error,
         "behaviorpack.entity.property.bool.value"
@@ -201,7 +203,7 @@ function check_entity_property_usage(
       if (typeof value === "number" || typeof value === "string") return;
 
       diagnoser.Add(
-        `${name}/${value}`,
+        `${parent}/${name}/${value}`,
         `Value is not a number: ${value}`,
         DiagnosticSeverity.error,
         `behaviorpack.entity.property.${definition.type}.value`
@@ -211,7 +213,7 @@ function check_entity_property_usage(
     case "enum":
       if (typeof value !== "string") {
         diagnoser.Add(
-          `${name}/${value}`,
+          `${parent}/${name}/${value}`,
           `Value is not a string: ${value}`,
           DiagnosticSeverity.error,
           "behaviorpack.entity.property.enum.value"
@@ -222,7 +224,7 @@ function check_entity_property_usage(
       // Value needs to be in the list
       if (definition.values?.indexOf(value) === -1) {
         diagnoser.Add(
-          `${name}/${value}`,
+          `${parent}/${name}/${value}`,
           `Value is not in the list of values: ${value}`,
           DiagnosticSeverity.error,
           "behaviorpack.entity.property.enum.value"

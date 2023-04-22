@@ -50,7 +50,7 @@ export function behaviorpack_entity_check_event(
 
   if (event.set_property) {
     for (const [key, value] of Object.entries(event.set_property)) {
-      diagnose_entity_property_usage(properties, key, value, diagnoser);
+      diagnose_entity_property_usage(properties, key, value, "events", diagnoser);
     }
   }
 }
