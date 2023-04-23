@@ -10,7 +10,7 @@ export function diagnose_filter_property(filter: Minecraft.Filter.Filter, diagno
     if (entity.properties) {
       const property = entity.properties.find((property) => property.name === domain);
       if (property) {
-        diagnose_entity_property_usage([property], test, value as string | number | boolean, diagnoser);
+        diagnose_entity_property_usage([property], test, value as string | number | boolean, "filter", diagnoser);
       }
     }
   });

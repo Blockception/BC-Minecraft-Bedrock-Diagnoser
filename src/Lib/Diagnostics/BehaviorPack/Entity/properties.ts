@@ -168,7 +168,7 @@ export function diagnose_entity_property_usage(
   definitions: EntityProperty[],
   name: string,
   value: string | number | boolean,
-  parent: "events",
+  parent: "events" | "filter",
   diagnoser: DiagnosticsBuilder
 ): void {
   for (const def of definitions) {
@@ -182,7 +182,7 @@ function check_entity_property_usage(
   definition: EntityProperty,
   name: string,
   value: string | number | boolean,
-  parent: "events",
+  parent: "events" | "filter",
   diagnoser: DiagnosticsBuilder
 ): void {
   switch (definition.type) {
