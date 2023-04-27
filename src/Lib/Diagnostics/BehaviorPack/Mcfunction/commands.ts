@@ -1,5 +1,5 @@
 import { animation_reference_diagnose } from "../../ResourcePack/anim or controller";
-import { behaviorpack_check_blockdescriptor, behaviorpack_check_blockstates } from "../Block/diagnose";
+import { behaviorpack_check_blockdescriptor } from "../Block/diagnose";
 import { behaviorpack_functions_diagnose } from "./diagnose";
 import { behaviorpack_item_diagnose } from "../Item/diagnose";
 import { behaviorpack_loot_table_short_diagnose } from "../Loot Table/diagnose";
@@ -57,7 +57,7 @@ import {
   mode_teleportrules_diagnose,
   mode_time_diagnose,
 } from "../../Mode/diagnose";
-
+import { behaviorpack_check_command_blockstates } from '../BlockState/diagnose';
 
 /**
  *
@@ -213,7 +213,6 @@ type DiagnoseCommand = (value: Types.OffsetWord, diagnoser: DiagnosticsBuilder) 
 const ParameterDiagnostics: Record<number, DiagnoseCommand> = {
   [ParameterType.animation]: animation_reference_diagnose,
   [ParameterType.block]: behaviorpack_check_blockdescriptor,
-  [ParameterType.blockStates]: behaviorpack_check_blockstates,
   [ParameterType.boolean]: general_boolean_diagnose,
   [ParameterType.cameraShakeType]: mode_camerashake_diagnose,
   [ParameterType.causeType]: mode_causetype_diagnose,
@@ -310,6 +309,14 @@ function mcfunction_diagnoseparameter(
 
   //Custom calls
   switch (pattern.type) {
+    case ParameterType.blockStates:
+      const index = Com.parameters.findIndex((p) => p == data);
+      const previous = Com.parameters[index - 1];
+      if (previous) {
+        behaviorpack_check_command_blockstates(previous, data, diagnoser);
+      }
+      return;
+
     case ParameterType.command:
       return minecraft_check_command(data, diagnoser, edu);
     case ParameterType.event:
