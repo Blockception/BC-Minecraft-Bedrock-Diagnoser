@@ -42,7 +42,7 @@
     "bc-minecraft-bedrock-command": "^1.19.71-3",
     "bc-minecraft-bedrock-project": "^1.19.73-1",
     "bc-minecraft-bedrock-types": "^1.19.50-0",
-    "bc-minecraft-bedrock-vanilla-data": "^1.19.71-1",
+    "bc-minecraft-bedrock-vanilla-data": "^1.19.73-1",
     "bc-minecraft-molang": "^1.19.70-0",
     "bc-minecraft-project": "^1.19.70-2",
     "jsonc": "^2.0.0"
