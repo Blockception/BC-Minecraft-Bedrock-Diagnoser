@@ -2,6 +2,7 @@
 export * as Animation from "./Animation/index";
 export * as Animation_Controllers from "./Animation Controllers/index";
 export * as Block from "./Block/index";
+export * as BlockState from "./BlockState/index";
 export * as Entity from "./Entity/index";
 export * as Events from "./Events/index";
 export * as Functions from "./Functions/index";
