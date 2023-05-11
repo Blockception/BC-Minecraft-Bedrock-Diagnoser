@@ -62,7 +62,7 @@ export function behaviorpack_check_command_blockstates(blockId: Types.OffsetWord
           );
         }
       }
-      else {
+      else if (state[0] !== "") {
         diagnoser.Add(
           states,
           `Invalid state: '${item}' in the block command, needs to be a key value pair with :`,
