@@ -111,6 +111,22 @@ export function mode_operation_diagnose(value: Types.OffsetWord, diagnoser: Diag
   return mode_generic_diagnose(value, Modes.Operation, diagnoser);
 }
 
+/**Diagnoses the value as a value in the mode: permission
+ * @param value The value to evaluate, needs the offset to report bugs
+ * @param diagnoser The diagnoser to report to
+ * @returns true or false, false is any error was found*/
+export function mode_permission_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+  return mode_generic_diagnose(value, Modes.Permission, diagnoser);
+}
+
+/**Diagnoses the value as a value in the mode: permissionState
+ * @param value The value to evaluate, needs the offset to report bugs
+ * @param diagnoser The diagnoser to report to
+ * @returns true or false, false is any error was found*/
+export function mode_permissionState_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+  return mode_generic_diagnose(value, Modes.PermissionState, diagnoser);
+}
+
 /**Diagnoses the value as a value in the mode: replace
  * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
