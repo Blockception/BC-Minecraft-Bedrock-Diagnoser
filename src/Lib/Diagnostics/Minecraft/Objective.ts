@@ -9,15 +9,6 @@ export function minecraft_objectives_diagnose(value: Types.OffsetWord, diagnoser
 
   //Length check
   const id = value.text;
-  if (id.length > 16) {
-    diagnoser.Add(
-      value,
-      `The objective: ${id} is too long for an objective, it can be a maximum, of 16 characters long`,
-      DiagnosticSeverity.error,
-      "minecraft.objective.long"
-    );
-  }
-
   if (!/^[a-zA-Z0-9\-\_\.]+$/gim.test(id)) {
     diagnoser.Add(
       value,
