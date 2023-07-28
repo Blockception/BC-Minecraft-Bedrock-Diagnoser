@@ -45,7 +45,7 @@ function hasDefinition(block: string, value: string, rp: ResourcePackCollection,
 
   diagnoser.Add(
     `${block}/${value}`,
-    "The texture is not defined in the terrain_textures.json",
+    "The texture is not defined in the terrain_texture.json",
     DiagnosticSeverity.error,
     "resourcepack.texture.undefined"
   );
