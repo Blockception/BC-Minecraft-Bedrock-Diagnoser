@@ -10,11 +10,15 @@ updates:
     open-pull-requests-limit: 50
     schedule:
       interval: "monthly"
-    assignees:
-    - "Orbi-bot"
-    reviewers:
-    - "Orbi-bot"
+    groups:
+      all:
+        patterns:
+          - "*"
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: "monthly"
+    groups:
+      all:
+        patterns:
+          - "*"
