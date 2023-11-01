@@ -140,7 +140,7 @@ function diagnose_molang_variable_using(
 
     diagnoser.Add(
       userid,
-      `The following molang variable defintion is not defined: 'variable.${check}' by '${definerid}'\n\tThe definition is used by: '${userid}'`,
+      `The molang variable 'variable.${check}' is not defined, which should be defined in this '${definerid}'\n\tThe variable is used through: '${userid}'`,
       DiagnosticSeverity.error,
       `molang.variable.missing`
     );
