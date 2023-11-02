@@ -5,7 +5,7 @@ import { Internal } from "bc-minecraft-bedrock-project";
 
 //Map of components that are depended on all other specified components
 const component_dependents_all: DependedMap = {
-  "minecraft:addrider": ["minecraft:rider"],
+  "minecraft:addrider": ["minecraft:rideable"],
   "minecraft:behavior.admire_item": ["minecraft:admire_item"],
   "minecraft:behavior.barter": ["minecraft:barter"],
   "minecraft:behavior.controlled_by_player": ["minecraft:movement", "minecraft:rideable"],
