@@ -13,16 +13,16 @@ import { MolangDataSetKey } from "bc-minecraft-molang";
  * @param diagnoser
  */
 export function render_controller_diagnose_implementation(
-  controllerid: string,
+  controllerId: string,
   user: EntityAnimationMolangCarrier,
   ownerType: MolangDataSetKey,
   diagnoser: DiagnosticsBuilder
 ): void {
-  if (has_render_controller(controllerid, diagnoser)) {
+  if (has_render_controller(controllerId, diagnoser)) {
     const cache = diagnoser.context.getCache();
 
     //Project has render controller
-    const rp = cache.ResourcePacks.render_controllers.get(controllerid);
+    const rp = cache.ResourcePacks.render_controllers.get(controllerId);
 
     if (!rp) return;
 

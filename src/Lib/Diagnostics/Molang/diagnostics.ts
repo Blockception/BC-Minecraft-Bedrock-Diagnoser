@@ -3,6 +3,7 @@ import { Types } from "bc-minecraft-bedrock-types";
 import { Defined, DefinedUsing, Molang, MolangData, MolangDataSetKey, Using } from "bc-minecraft-molang";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/Severity";
+import { diagnoser_molang_syntax } from './syntax';
 
 type MCarrier = Types.Identifiable & MolangCarrier<Molang.MolangSetOptional>;
 
@@ -16,23 +17,23 @@ export function diagnose_molang_implementation(
   ownerType: MolangDataSetKey,
   diagnoser: DiagnosticsBuilder
 ): void {
-  const userid = user.id;
+  const userId = user.id;
   const using = user.molang;
   const definer = owner.molang;
-  const definerid = owner.id;
+  const definerId = owner.id;
 
   //Is full set?
   if (Molang.MolangFullSet.isEither(using)) {
-    //Upgrade if nesscary and check
+    //Upgrade if necessary and check
     const temp = Molang.MolangFullSet.upgrade(definer);
 
-    diagnose_molang_using(userid, using.geometries, definerid, temp.geometries, diagnoser, "geometry");
-    diagnose_molang_using(userid, using.materials, definerid, temp.materials, diagnoser, "material");
-    diagnose_molang_using(userid, using.textures, definerid, temp.textures, diagnoser, "texture");
+    diagnose_molang_using(userId, using.geometries, definerId, temp.geometries, diagnoser, "geometry");
+    diagnose_molang_using(userId, using.materials, definerId, temp.materials, diagnoser, "material");
+    diagnose_molang_using(userId, using.textures, definerId, temp.textures, diagnoser, "texture");
   }
 
   //Check variable vs variables and such
-  diagnose_molang_variable_using(userid, using.variables, definerid, definer.variables, diagnoser, ownerType);
+  diagnose_molang_variable_using(userId, using.variables, definerId, definer.variables, diagnoser, ownerType);
   diagnose_molang_temp_using(using.temps, definer.temps, diagnoser, ownerType);
 }
 
@@ -46,6 +47,11 @@ export function diagnose_molang(using: string, owner: MolangDataSetKey, diagnose
   diagnose_molang_context_using(using, diagnoser, owner);
 
   diagnose_molang_allowed(using, owner, diagnoser);
+
+  try {
+    const data = JSON.parse(using);
+    diagnoser_molang_syntax(data, diagnoser);
+  } catch(err) { /** NOOP */}
 }
 
 /**Diagnoses the given using set to the given defining set
@@ -54,9 +60,9 @@ export function diagnose_molang(using: string, owner: MolangDataSetKey, diagnose
  * @param diagnoser The diagnoser to report to
  * @param name The name of the data set such as `variable` or `query`*/
 function diagnose_molang_using(
-  userid: string,
+  userId: string,
   using: DefinedUsing<string>,
-  definerid: string,
+  definerId: string,
   definer: Defined<string>,
   diagnoser: DiagnosticsBuilder,
   name: string
@@ -73,8 +79,8 @@ function diagnose_molang_using(
       continue;
     } else {
       diagnoser.Add(
-        userid,
-        `The following molang is not defined: '${name}.${check}' by '${definerid}'\n\tThe definition is used by: '${userid}'`,
+        userId,
+        `The following molang is not defined: '${name}.${check}' by '${definerId}'\n\tThe definition is used by: '${userId}'`,
         DiagnosticSeverity.error,
         `molang.${name}.missing`
       );
@@ -90,21 +96,21 @@ function diagnose_molang_allowed(using: string, owner: MolangDataSetKey, diagnos
   if (has_any(set.textures))
     diagnoser.Add(
       "textures.",
-      "Animation / Animation controllers do not have acces to textures",
+      "Animation / Animation controllers do not have access to textures",
       DiagnosticSeverity.warning,
       "molang.textures.invalid"
     );
   if (has_any(set.materials))
     diagnoser.Add(
       "material.",
-      "Animation / Animation controllers do not have acces to materials",
+      "Animation / Animation controllers do not have access to materials",
       DiagnosticSeverity.warning,
       "molang.material.invalid"
     );
   if (has_any(set.geometries))
     diagnoser.Add(
       "geometry.",
-      "Animation / Animation controllers do not have acces to geometries",
+      "Animation / Animation controllers do not have access to geometries",
       DiagnosticSeverity.warning,
       "molang.geometry.invalid"
     );
@@ -118,9 +124,9 @@ function has_any(data: Using<string> | Defined<string>): boolean {
 }
 
 function diagnose_molang_variable_using(
-  userid: string,
+  userId: string,
   using: DefinedUsing<string>,
-  definerid: string,
+  definerId: string,
   definer: Defined<string>,
   diagnoser: DiagnosticsBuilder,
   owner: MolangDataSetKey
@@ -139,8 +145,8 @@ function diagnose_molang_variable_using(
     if (InternalIdentifiable.has(MolangData.get(owner)?.Variables ?? [], check)) continue;
 
     diagnoser.Add(
-      userid,
-      `The molang variable 'variable.${check}' is not defined, which should be defined in this '${definerid}'\n\tThe variable is used through: '${userid}'`,
+      userId,
+      `The molang variable 'variable.${check}' is not defined, which should be defined in this '${definerId}'\n\tThe variable is used through: '${userId}'`,
       DiagnosticSeverity.error,
       `molang.variable.missing`
     );
@@ -168,7 +174,7 @@ function diagnose_molang_temp_using(
 
     diagnoser.Add(
       "temp." + check,
-      `The following molang temp defintion is not defined: 'temp.${check}'`,
+      `The following molang temp definition is not defined: 'temp.${check}'`,
       DiagnosticSeverity.error,
       `molang.temp.missing`
     );

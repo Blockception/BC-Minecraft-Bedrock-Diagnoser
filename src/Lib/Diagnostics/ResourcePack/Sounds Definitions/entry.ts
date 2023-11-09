@@ -9,14 +9,14 @@ import { Json } from "../../Json/Json";
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
 export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
-  const defintions = Json.LoadReport<Internal.ResourcePack.SoundDefinitions>(doc, diagnoser);
-  if (!Internal.ResourcePack.SoundDefinitions.is(defintions)) return;
+  const definitions = Json.LoadReport<Internal.ResourcePack.SoundDefinitions>(doc, diagnoser);
+  if (!Internal.ResourcePack.SoundDefinitions.is(definitions)) return;
 
   //Get pack for files search
   const pack = diagnoser.context.getCache().ResourcePacks.get(doc.uri);
   if (pack === undefined) return;
 
-  const sounds = defintions.sound_definitions;
+  const sounds = definitions.sound_definitions;
   const sound_files = diagnoser.context
     .getFiles(pack.folder, ["**/sounds/**/*.{fsb,wav,ogg}"], pack.context.ignores)
     .map((item) => item.replace(/\\/gi, "/"));

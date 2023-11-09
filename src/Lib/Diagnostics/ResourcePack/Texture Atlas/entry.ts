@@ -9,14 +9,14 @@ import { Json } from "../../Json/Json";
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
 export function DiagnoseAtlas(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
-  const defintions = Json.LoadReport<TextureAtlas>(doc, diagnoser);
-  if (!TextureAtlas.is(defintions)) return;
+  const definitions = Json.LoadReport<TextureAtlas>(doc, diagnoser);
+  if (!TextureAtlas.is(definitions)) return;
 
   //Get pack for files search
   const pack = diagnoser.context.getCache().ResourcePacks.get(doc.uri);
   if (pack === undefined) return;
 
-  const texture_data = defintions.texture_data;
+  const texture_data = definitions.texture_data;
   const texture_files = diagnoser.context
     .getFiles(pack.folder, ["**/textures/**/*.{tga,png,jpg,jpeg}"], pack.context.ignores)
     .map((item) => item.replace(/\\/gi, "/"));
