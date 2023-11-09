@@ -10,22 +10,24 @@ export namespace Json {
    * @param diagnoser The diagnoser to load from
    * @returns Either the object cast to the specific type, or undefined if failed*/
   export function LoadReport<T>(doc: TextDocument, diagnoser: DiagnosticsBuilder): T | undefined {
-    let out: T | undefined = undefined;
-
     try {
       //get text
       const text = doc.getText();
 
       //get object
-      const temp = jsonc.parse(text, { stripComments: true });
+      const temp = parse(text);
+      return temp as T;
 
       //cast object
-      out = <T>temp;
     } catch (err: any) {
       Handle_Json_Error(err, doc, diagnoser);
     }
 
-    return out;
+    return undefined;
+  }
+
+  export function parse(text: string): any {
+    return jsonc.parse(text, { stripComments: true });
   }
 
   /**
@@ -34,7 +36,7 @@ export namespace Json {
    * @param diagnoser
    * @param type
    * @param code
-   * @param checkfn
+   * @param checkFn
    * @returns
    */
   export function TypeCheck<T>(
@@ -42,9 +44,9 @@ export namespace Json {
     diagnoser: DiagnosticsBuilder,
     type: string,
     code: string,
-    checkfn: (value: any) => value is T
+    checkFn: (value: any) => value is T
   ): value is T {
-    if (checkfn(value)) {
+    if (checkFn(value)) {
       return true;
     }
 

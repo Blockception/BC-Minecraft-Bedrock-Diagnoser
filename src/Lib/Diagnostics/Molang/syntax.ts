@@ -12,7 +12,7 @@ export function diagnose_molang_syntax_expression(molang: string, diagnoser: Dia
     return;
   }
 
-  const complex = molang.includes("=") || molang.includes(";");
+  const complex = molang.includes(";") || has_assign_operator(molang);
 
   if (complex && !molang.endsWith(";")) {
     diagnoser.Add(
@@ -30,5 +30,16 @@ export function diagnose_molang_syntax_expression(molang: string, diagnoser: Dia
  * @param diagnoser 
  */
 export function diagnoser_molang_syntax(data: any, diagnoser: DiagnosticsBuilder) {
-  Molang.Traverse(data, (molang) => diagnose_molang_syntax_expression(molang, diagnoser));
+  Molang.Traverse(data, (molang, type) => {
+    // Skip commands
+    if (type === MolangType.command) {
+      return;
+    }
+    diagnose_molang_syntax_expression(molang, diagnoser)
+  });
+}
+
+function has_assign_operator(text: string): boolean {
+  // Using regex, Check for = but ensure its not = or <= or >=
+  return /[^<>!+\-*\/=]=[^<>=]/.test(text);
 }

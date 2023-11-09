@@ -5,7 +5,7 @@ import { TestDiagnoser } from "../../../diagnoser";
 describe("Molang", () => {
   describe("diagnose_molang_implementation", () => {
     it("no errors", () => {
-      const diganoser = TestDiagnoser.Create();
+      const diagnoser = TestDiagnoser.Create();
 
       const using = Molang.MolangFullSet.create();
       const owner = Molang.MolangFullSet.create();
@@ -22,14 +22,14 @@ describe("Molang", () => {
         { id: "animation.example.walk", molang: using },
         { id: "minecraft:sheep", molang: owner },
         "Entities",
-        diganoser
+        diagnoser
       );
 
-      diganoser.expectEmpty();
+      diagnoser.expectEmpty();
     });
 
     it("1 error", () => {
-      const diganoser = TestDiagnoser.Create();
+      const diagnoser = TestDiagnoser.Create();
 
       const using = Molang.MolangFullSet.create();
       const owner = Molang.MolangFullSet.create();
@@ -45,14 +45,14 @@ describe("Molang", () => {
         { id: "animation.example.walk", molang: using },
         { id: "minecraft:sheep", molang: owner },
         "Entities",
-        diganoser
+        diagnoser
       );
 
-      diganoser.expectAmount(1);
+      diagnoser.expectAmount(1);
     });
 
     it("1 error", () => {
-      const diganoser = TestDiagnoser.Create();
+      const diagnoser = TestDiagnoser.Create();
 
       const using = Molang.MolangFullSet.create();
       const owner = Molang.MolangFullSet.create();
@@ -68,10 +68,10 @@ describe("Molang", () => {
         { id: "animation.example.walk", molang: using },
         { id: "minecraft:sheep", molang: owner },
         "Entities",
-        diganoser
+        diagnoser
       );
 
-      diganoser.expectAmount(1);
+      diagnoser.expectAmount(1);
     });
   });
 });

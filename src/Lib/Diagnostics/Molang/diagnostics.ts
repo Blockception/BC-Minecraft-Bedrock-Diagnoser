@@ -4,6 +4,7 @@ import { Defined, DefinedUsing, Molang, MolangData, MolangDataSetKey, Using } fr
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/Severity";
 import { diagnoser_molang_syntax } from './syntax';
+import { Json } from '../Json';
 
 type MCarrier = Types.Identifiable & MolangCarrier<Molang.MolangSetOptional>;
 
@@ -49,7 +50,7 @@ export function diagnose_molang(using: string, owner: MolangDataSetKey, diagnose
   diagnose_molang_allowed(using, owner, diagnoser);
 
   try {
-    const data = JSON.parse(using);
+    const data = Json.parse(using);
     diagnoser_molang_syntax(data, diagnoser);
   } catch(err) { /** NOOP */}
 }
