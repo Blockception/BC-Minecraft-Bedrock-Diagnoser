@@ -1,18 +1,17 @@
-import { DiagnosticsBuilder } from "../../../Types";
-import { TextDocument } from "../../../Types/Interfaces";
+import { DocumentDiagnosticsBuilder } from "../../../Types";
 import { Json } from "../../Json/Json";
 import { texture_files_diagnose } from "./entry";
 
 /**Diagnoses the given document as a texture flipbook file
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function DiagnoseFlipbook(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
-  const flipbooks = Json.LoadReport<FlipbookTexture[]>(doc, diagnoser);
+export function DiagnoseFlipbook(diagnoser: DocumentDiagnosticsBuilder): void {
+  const flipbooks = Json.LoadReport<FlipbookTexture[]>(diagnoser);
 
   if (flipbooks === undefined) return;
   if (!Array.isArray(flipbooks)) return;
 
-  const pack = diagnoser.context.getCache().ResourcePacks.get(doc.uri);
+  const pack = diagnoser.context.getCache().ResourcePacks.get(diagnoser.document.uri);
   if (pack === undefined) return;
 
   const texture_files = diagnoser.context

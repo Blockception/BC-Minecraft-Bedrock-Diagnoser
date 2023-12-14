@@ -5,13 +5,6 @@ import { TestDiagnoser } from "../../../../../diagnoser";
 describe("BehaviorPack", () => {
   describe("Mcfunctions", () => {
     describe("Commands", () => {
-      var diagnoser: TestDiagnoser;
-      var data: ProjectData;
-
-      beforeEach(() => {
-        diagnoser = TestDiagnoser.Create();
-        data = diagnoser.context.getCache();
-      });
 
       //Correct commands
       const correctsCommands: string[] = [
@@ -36,7 +29,9 @@ describe("BehaviorPack", () => {
             },
           };
 
-          mcfunction_commandsCheck(doc, diagnoser);
+          const diagnoser = TestDiagnoser.createDocument(undefined, doc);
+
+          mcfunction_commandsCheck(diagnoser);
           diagnoser.expectEmpty();
         });
       }
@@ -51,8 +46,9 @@ describe("BehaviorPack", () => {
               return command;
             },
           };
+          const diagnoser = TestDiagnoser.createDocument(undefined, doc);
 
-          mcfunction_commandsCheck(doc, diagnoser);
+          mcfunction_commandsCheck(diagnoser);
           diagnoser.expectAny();
         });
       }

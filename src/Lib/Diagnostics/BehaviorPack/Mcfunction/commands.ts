@@ -5,7 +5,7 @@ import { behaviorpack_item_diagnose } from "../Item/diagnose";
 import { behaviorpack_loot_table_short_diagnose } from "../Loot Table/diagnose";
 import { behaviorpack_structure_diagnose } from "../Structure/diagnose";
 import { Command, Parameter, ParameterType, CommandData } from "bc-minecraft-bedrock-command";
-import { DiagnosticSeverity, DiagnosticsBuilder } from "../../../Types";
+import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../Types";
 import { education_enabled } from "../../Definitions";
 import { general_boolean_diagnose } from "../../General/Boolean";
 import { general_float_diagnose } from "../../General/Float";
@@ -65,9 +65,9 @@ import { behaviorpack_check_command_blockstates } from '../BlockState/diagnose';
  * @param doc
  * @param diagnoser
  */
-export function mcfunction_commandsCheck(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
+export function mcfunction_commandsCheck(diagnoser: DocumentDiagnosticsBuilder): void {
   const edu = education_enabled(diagnoser);
-  const text = doc.getText();
+  const text = diagnoser.document.getText();
   const lines = text.split("\n");
 
   for (let I = 0; I < lines.length; I++) {
@@ -93,21 +93,18 @@ export function mcfunction_commandsCheck(doc: TextDocument, diagnoser: Diagnosti
 /**
  *
  * @param prop
- * @param doc
  * @param diagnoser
  */
-export function json_commandsCheck(prop: string | string[], doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
+export function json_commandsCheck(prop: string | string[], diagnoser: DocumentDiagnosticsBuilder): void {
   if (typeof prop === "string") {
-    if (prop.startsWith("/")) {
-      commandsCheck(prop.substring(1), doc, diagnoser);
-    }
-  } else {
-    prop.forEach((p) => {
-      if (p.startsWith("/")) {
-        commandsCheck(p.substring(1), doc, diagnoser);
-      }
-    });
+    prop = [prop];
   }
+
+  prop.forEach((p) => {
+    if (p.startsWith("/")) {
+      commandsCheck(p.substring(1), diagnoser);
+    }
+  });
 }
 
 /**
@@ -117,11 +114,11 @@ export function json_commandsCheck(prop: string | string[], doc: TextDocument, d
  * @param diagnoser
  * @returns
  */
-export function commandsCheck(commandText: string, doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
+export function commandsCheck(commandText: string, diagnoser: DocumentDiagnosticsBuilder): void {
   if (commandText.length < 3) return;
 
   const edu = education_enabled(diagnoser);
-  const offset = doc.getText().indexOf(commandText);
+  const offset = diagnoser.document.getText().indexOf(commandText);
   let comm: Command | undefined = Command.parse(commandText, offset);
 
   if (comm.isEmpty()) return;
@@ -140,7 +137,7 @@ export function commandsCheck(commandText: string, doc: TextDocument, diagnoser:
  * @param edu
  * @returns
  */
-function mcfunction_commandcheck(command: Command, diagnoser: DiagnosticsBuilder, edu: boolean): void {
+function mcfunction_commandcheck(command: Command, diagnoser: DocumentDiagnosticsBuilder, edu: boolean): void {
   const info = command.getBestMatch(edu);
 
   if (info.length === 0) {
@@ -209,7 +206,7 @@ function mcfunction_commandcheck(command: Command, diagnoser: DiagnosticsBuilder
   }
 }
 
-type DiagnoseCommand = (value: Types.OffsetWord, diagnoser: DiagnosticsBuilder) => void | boolean;
+type DiagnoseCommand = (value: Types.OffsetWord, diagnoser: DocumentDiagnosticsBuilder) => void | boolean;
 /**Switch data*/
 const ParameterDiagnostics: Record<number, DiagnoseCommand> = {
   [ParameterType.animation]: animation_reference_diagnose,
@@ -284,7 +281,7 @@ const ParameterDiagnostics: Record<number, DiagnoseCommand> = {
 function mcfunction_diagnoseparameter(
   pattern: ParameterInfo,
   data: Parameter,
-  diagnoser: DiagnosticsBuilder,
+  diagnoser: DocumentDiagnosticsBuilder,
   Com: Command,
   edu: boolean
 ): void | boolean {

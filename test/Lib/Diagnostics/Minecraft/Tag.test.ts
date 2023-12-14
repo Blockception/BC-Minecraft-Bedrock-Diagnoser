@@ -6,7 +6,7 @@ import { TestDiagnoser } from "../../../diagnoser";
 
 describe("Tag", () => {
   it("diagnose no errors", () => {
-    const B = TestDiagnoser.Create();
+    const B = TestDiagnoser.create();
     const data = B.context.getCache();
 
     data.General.tags.set([

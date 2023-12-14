@@ -1,5 +1,5 @@
 import { Pack, PackType, TextDocument } from "bc-minecraft-bedrock-project";
-import { DiagnoserContext } from "./DiagnoserContext";
+import { DiagnoserContext, InternalDiagnosticsBuilder } from "./DiagnoserContext";
 import { DiagnosticSeverity } from "./Severity";
 import { format_diagnose_path } from "../Diagnostics/Format";
 import { MCIgnore } from "bc-minecraft-project";
@@ -10,6 +10,7 @@ import { BehaviorPack } from "../Diagnostics/BehaviorPack";
 import { ResourcePack } from "../Diagnostics/ResourcePack";
 import { SkinPack } from "../Diagnostics/SkinPack/SkinPack";
 import { WorldPack } from "../Diagnostics/WorldPack/WorldPack";
+import { DocumentDiagnosticsBuilder } from './DiagnosticsBuilder';
 
 /**The object that is responsible for diagnosing minecraft bedrock files*/
 export class Diagnoser {
@@ -42,9 +43,10 @@ export class Diagnoser {
     //Check if diagnostics for this file type is disabled
     if (pack.context.attributes["diagnostic" + ext] === "false") return false;
 
-    const diagnoser = this.context.getDiagnoser(doc, pack.context);
+    const diagnoser = this.context.getDiagnoser(doc, pack.context)  as (DocumentDiagnosticsBuilder & InternalDiagnosticsBuilder);
     if (!diagnoser) return false;
 
+    diagnoser.document = doc;
     let out = false;
 
     try {
@@ -53,24 +55,24 @@ export class Diagnoser {
 
       //Language file?
       if (doc.uri.endsWith(".lang")) {
-        minecraft_language_diagnose(doc, diagnoser);
+        minecraft_language_diagnose(diagnoser);
       } else {
         //Check per pack
         switch (pack.type) {
           case PackType.behavior_pack:
-            out = BehaviorPack.Process(doc, diagnoser);
+            out = BehaviorPack.Process(diagnoser);
             break;
 
           case PackType.resource_pack:
-            out = ResourcePack.Process(doc, diagnoser);
+            out = ResourcePack.Process(diagnoser);
             break;
 
           case PackType.skin_pack:
-            out = SkinPack.Process(doc, diagnoser);
+            out = SkinPack.Process(diagnoser);
             break;
 
           case PackType.world:
-            out = WorldPack.Process(doc, diagnoser);
+            out = WorldPack.Process(diagnoser);
             break;
         }
       }

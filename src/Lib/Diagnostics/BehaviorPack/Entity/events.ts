@@ -1,15 +1,17 @@
-import { Internal, SMap } from "bc-minecraft-bedrock-project";
+import { Internal, SMap, TextDocument } from "bc-minecraft-bedrock-project";
 import { ComponentGroups } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Components";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../../main";
 import { behaviorpack_entity_components_filters } from "./components/filters";
 import { EntityProperty } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/BehaviorPack/Entity";
 import { diagnose_entity_property_usage } from "./properties";
+import { commandsCheck, json_commandsCheck } from '../Mcfunction';
+import { DocumentDiagnosticsBuilder } from '../../../Types';
 
 type EntityEvent = Internal.BehaviorPack.EntityEvent;
 
 export function behaviorpack_entity_check_events(
   events: SMap<EntityEvent> | EntityEvent[],
-  diagnoser: DiagnosticsBuilder,
+  diagnoser: DocumentDiagnosticsBuilder,
   properties: EntityProperty[],
   component_groups?: SMap<Internal.BehaviorPack.EntityComponentContainer>
 ) {
@@ -31,7 +33,7 @@ export function behaviorpack_entity_check_events(
 export function behaviorpack_entity_check_event(
   event: EntityEvent & { filters?: any },
   event_id: string,
-  diagnoser: DiagnosticsBuilder,
+  diagnoser: DocumentDiagnosticsBuilder,
   properties: EntityProperty[],
   component_groups?: ComponentGroups
 ): void {
@@ -53,6 +55,36 @@ export function behaviorpack_entity_check_event(
       diagnose_entity_property_usage(properties, key, value, "events", diagnoser);
     }
   }
+
+  if ((event as any)["run_command"]) {
+    diagnoser.Add(
+      `events/${event_id}`,
+      `Event is using the deprecated run_command property, use queue_command instead`,
+      DiagnosticSeverity.warning,
+      "behaviorpack.entity.event.run_command"
+    );
+  }
+
+  if (event.queue_command) {
+    const c = event.queue_command.command;
+    const command = typeof c === "string" ? [c] : c;
+
+    command.forEach((cmd) => {
+      if (cmd.startsWith("/")) {
+        diagnoser.Add(
+          `events/${event_id}/cmd`,
+          `Commands in queue_command should not start with a /, remove it`,
+          DiagnosticSeverity.warning,
+          "behaviorpack.entity.event.queue_command"
+        );
+
+        cmd = cmd.slice(1);
+      };
+
+      commandsCheck(cmd, diagnoser);
+    });
+  }
+  
 }
 
 function has_groups(

@@ -1,5 +1,5 @@
 import { Internal, ResourcePack, TextDocument } from "bc-minecraft-bedrock-project";
-import { DiagnosticsBuilder } from "../../../Types";
+import { DocumentDiagnosticsBuilder} from "../../../Types";
 import { Json } from "../../Json/Json";
 import { animation_controller_diagnose_implementation } from "../Animation Controllers/diagnostics";
 import { animation_or_controller_diagnose_implementation } from "../anim or controller";
@@ -17,21 +17,21 @@ import { resourcepack_animation_used } from "../Animation/usage";
 /**Diagnoses the given document as an RP entity
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
+export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   //No behaviorpack check, entities can exist without their bp side (for servers)
 
   //Check molang math functions
-  diagnose_molang(doc.getText(), "Entities", diagnoser);
+  diagnose_molang(diagnoser.document.getText(), "Entities", diagnoser);
 
   //Load entity
-  const entity = Json.LoadReport<Internal.ResourcePack.Entity>(doc, diagnoser);
+  const entity = Json.LoadReport<Internal.ResourcePack.Entity>(diagnoser);
   if (!Internal.ResourcePack.Entity.is(entity)) return;
 
   const container = entity["minecraft:client_entity"].description;
-  const entityGathered = ResourcePack.Entity.Process(doc);
+  const entityGathered = ResourcePack.Entity.Process(diagnoser.document);
 
   if (!entityGathered) return;
-  if (!entityGathered.molang) entityGathered.molang = Molang.MolangFullSet.harvest(doc.getText());
+  if (!entityGathered.molang) entityGathered.molang = Molang.MolangFullSet.harvest(diagnoser.document.getText());
 
   //#region animations
   //Check animations / animation controllers
@@ -57,7 +57,7 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
 
   //Check render controllers
   container.render_controllers?.forEach((controller) => {
-    const temp = getkey(controller);
+    const temp = getKey(controller);
     if (temp) render_controller_diagnose_implementation(temp, entityGathered, "Entities", diagnoser);
   });
 
@@ -72,7 +72,7 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
   );
 
   //Get pack
-  const pack = diagnoser.context.getCache().ResourcePacks.get(doc.uri);
+  const pack = diagnoser.context.getCache().ResourcePacks.get(diagnoser.document.uri);
   if (pack === undefined) return;
 
   const rp_files = diagnoser.context
@@ -101,7 +101,7 @@ function flatten(data: string | Types.Definition): string | undefined {
   return undefined;
 }
 
-function getkey(data: string | Types.Definition): string | undefined {
+function getKey(data: string | Types.Definition): string | undefined {
   if (typeof data === "string") return data;
 
   return Object.getOwnPropertyNames(data)[0];

@@ -8,7 +8,7 @@ describe("BehaviorPack", () => {
     var data: ProjectData;
 
     beforeEach(() => {
-      diagnoser = TestDiagnoser.Create();
+      diagnoser = TestDiagnoser.create();
       data = diagnoser.context.getCache();
     });
 

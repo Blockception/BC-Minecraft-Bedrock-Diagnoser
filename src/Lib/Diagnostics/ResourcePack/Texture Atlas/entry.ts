@@ -1,6 +1,6 @@
-import { TextDocument, SMap } from "bc-minecraft-bedrock-project";
+import { SMap } from "bc-minecraft-bedrock-project";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
-import { DiagnosticsBuilder } from "../../../Types";
+import { DiagnosticsBuilder, DocumentDiagnosticsBuilder } from "../../../Types";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 import { education_enabled } from "../../Definitions";
 import { Json } from "../../Json/Json";
@@ -8,12 +8,12 @@ import { Json } from "../../Json/Json";
 /**Diagnoses the given document as a texture atlas
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function DiagnoseAtlas(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
-  const definitions = Json.LoadReport<TextureAtlas>(doc, diagnoser);
+export function DiagnoseAtlas(diagnoser: DocumentDiagnosticsBuilder): void {
+  const definitions = Json.LoadReport<TextureAtlas>(diagnoser);
   if (!TextureAtlas.is(definitions)) return;
 
   //Get pack for files search
-  const pack = diagnoser.context.getCache().ResourcePacks.get(doc.uri);
+  const pack = diagnoser.context.getCache().ResourcePacks.get(diagnoser.document.uri);
   if (pack === undefined) return;
 
   const texture_data = definitions.texture_data;

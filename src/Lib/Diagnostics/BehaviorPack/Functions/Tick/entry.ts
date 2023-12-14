@@ -1,16 +1,15 @@
-import { TextDocument } from "bc-minecraft-bedrock-project";
-import { DiagnosticsBuilder } from "../../../../Types";
+import { DocumentDiagnosticsBuilder } from "../../../../Types";
 import { DiagnosticSeverity } from "../../../../Types/Severity";
 import { Json } from "../../../Json/Json";
 
 /**Diagnoses the given document as an tick.json
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
-  const data = Json.LoadReport<Tick>(doc, diagnoser);
+export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+  const data = Json.LoadReport<Tick>(diagnoser);
   if (!data || !data.values) return;
 
-  const pack = diagnoser.context.getCache().BehaviorPacks.get(doc);
+  const pack = diagnoser.context.getCache().BehaviorPacks.get(diagnoser.document.uri);
   if (!pack) return;
 
   //Specific lookup in the pack

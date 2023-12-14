@@ -19,6 +19,12 @@ export interface DiagnosticsBuilder {
   Add(position: Types.DocumentLocation, message: string, severity: DiagnosticSeverity, code: string | number): void;
 }
 
+/** The interface of a diagnostics builder for a document*/
+export interface DocumentDiagnosticsBuilder extends DiagnosticsBuilder {
+  /**The document to add the diagnostics to*/
+  document: TextDocument;
+}
+
 /**The context of a diagnostics builder*/
 export interface DiagnosticsBuilderContent extends ProjectContext {
   /**Returns a textdocument object or undefined if something went wrong or nothing exists

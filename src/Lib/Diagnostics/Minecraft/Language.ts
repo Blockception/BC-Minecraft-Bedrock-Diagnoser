@@ -1,11 +1,10 @@
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../Types";
+import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../Types";
 import { Types } from "bc-minecraft-bedrock-types";
-import { TextDocument } from "bc-minecraft-bedrock-project";
 
-export function minecraft_language_diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
+export function minecraft_language_diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   const keys: Types.OffsetWord[] = [];
   let lastOffset = 0;
-  const text = doc.getText();
+  const text = diagnoser.document.getText();
   const lines = text.split("\n");
 
   for (let I = 0; I < lines.length; I++) {

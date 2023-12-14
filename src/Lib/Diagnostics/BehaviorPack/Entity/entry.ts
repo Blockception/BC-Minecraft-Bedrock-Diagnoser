@@ -7,7 +7,7 @@ import { Context } from "../../../Utility/components";
 import { DefinedUsing, Molang } from "bc-minecraft-molang";
 import { diagnose_molang } from "../../Molang/diagnostics";
 import { diagnose_script } from "../../Minecraft/Script";
-import { DiagnosticsBuilder } from "../../../Types";
+import { DocumentDiagnosticsBuilder } from "../../../Types";
 import { getUsedComponents } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Components";
 import { Internal, TextDocument } from "bc-minecraft-bedrock-project";
 import { Json } from "../../Json/Json";
@@ -17,14 +17,14 @@ import { diagnose_entity_properties_definition } from "./properties";
 /**Diagnoses the given document as an bp entity
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
+export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   //Check molang
-  diagnose_molang(doc.getText(), "Entities", diagnoser);
+  diagnose_molang(diagnoser.document.getText(), "Entities", diagnoser);
 
-  const entity = Json.LoadReport<Internal.BehaviorPack.Entity>(doc, diagnoser);
+  const entity = Json.LoadReport<Internal.BehaviorPack.Entity>(diagnoser);
   if (!Internal.BehaviorPack.Entity.is(entity)) return;
 
-  //No resourcepack check, entities can exist without their rp side
+  //No resource-pack check, entities can exist without their rp side
 
   //check components
   const context: Context = {

@@ -1,6 +1,6 @@
 import { TextDocument } from "bc-minecraft-bedrock-project";
 import { jsonc } from "jsonc";
-import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
+import { DiagnosticsBuilder, DocumentDiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/Severity";
 import { Handle_Json_Error } from "./Errors";
 
@@ -9,10 +9,10 @@ export namespace Json {
    * @param doc The text document to load from
    * @param diagnoser The diagnoser to load from
    * @returns Either the object cast to the specific type, or undefined if failed*/
-  export function LoadReport<T>(doc: TextDocument, diagnoser: DiagnosticsBuilder): T | undefined {
+  export function LoadReport<T>(diagnoser: DocumentDiagnosticsBuilder): T | undefined {
     try {
       //get text
-      const text = doc.getText();
+      const text = diagnoser.document.getText();
 
       //get object
       const temp = parse(text);
@@ -20,7 +20,7 @@ export namespace Json {
 
       //cast object
     } catch (err: any) {
-      Handle_Json_Error(err, doc, diagnoser);
+      Handle_Json_Error(err, diagnoser);
     }
 
     return undefined;

@@ -1,6 +1,6 @@
-import { Internal, SMap, TextDocument } from "bc-minecraft-bedrock-project";
+import { Internal, SMap } from "bc-minecraft-bedrock-project";
 import { DiagnosticSeverity } from "../../../../main";
-import { DiagnosticsBuilder } from "../../../Types";
+import { DocumentDiagnosticsBuilder } from "../../../Types";
 import { Json } from "../../Json/Json";
 import { diagnose_molang } from "../../Molang/diagnostics";
 import { json_commandsCheck } from "../Mcfunction/commands";
@@ -8,12 +8,12 @@ import { json_commandsCheck } from "../Mcfunction/commands";
 /**Diagnoses the given document as an animation
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
+export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   //Check molang
-  const text = doc.getText();
+  const text = diagnoser.document.getText();
   diagnose_molang(text, "Animations", diagnoser);
 
-  const anims = Json.LoadReport<Internal.BehaviorPack.Animations>(doc, diagnoser);
+  const anims = Json.LoadReport<Internal.BehaviorPack.Animations>(diagnoser);
   if (!Internal.BehaviorPack.Animations.is(anims)) return;
 
   //foreach animation,
@@ -22,7 +22,7 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
 
     //foreach time
     SMap.forEach(anim.timeline, (data, time) => {
-      json_commandsCheck(data, doc, diagnoser);
+      json_commandsCheck(data, diagnoser);
 
       if (length) {
         const temp = Number.parseFloat(time);

@@ -6,7 +6,7 @@ import { Types } from 'bc-minecraft-bedrock-types';
 
 describe("Tickingarea", () => {
   it("diagnose no errors", () => {
-    const B = TestDiagnoser.Create();
+    const B = TestDiagnoser.create();
     const data = B.context.getCache();
 
     data.General.tickingAreas.set([

@@ -1,6 +1,5 @@
-import { TextDocument } from "bc-minecraft-bedrock-project";
 import { FileType } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/BehaviorPack";
-import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
+import { DocumentDiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 
 import * as Animation from "./Animation/entry";
 import * as AnimationController from "./Animation Controllers/entry";
@@ -20,62 +19,64 @@ export namespace BehaviorPack {
   /**Processes and diagnoses the given textdocument
    * @param doc The document to process / diagnose
    * @param diagnoser The diagnoser to report to
-   * @returns `true` or `false` whenever or not it was succesfull*/
-  export function Process(doc: TextDocument, diagnoser: DiagnosticsBuilder): boolean {
+   * @returns `true` or `false` whenever or not it was successful*/
+  export function Process(diagnoser: DocumentDiagnosticsBuilder): boolean {
+    const uri = diagnoser.document.uri;
+
     //retrieve filter doc type
-    const Type = FileType.detect(doc.uri);
+    const Type = FileType.detect(uri);
 
     switch (Type) {
       case FileType.animation:
-        Animation.Diagnose(doc, diagnoser);
+        Animation.Diagnose(diagnoser);
         break;
 
       case FileType.animation_controller:
-        AnimationController.Diagnose(doc, diagnoser);
+        AnimationController.Diagnose(diagnoser);
         break;
 
       case FileType.block:
-        Block.Diagnose(doc, diagnoser);
+        Block.Diagnose(diagnoser);
         break;
 
       case FileType.entity:
-        Entity.Diagnose(doc, diagnoser);
+        Entity.Diagnose(diagnoser);
         break;
 
       case FileType.function:
-        if (doc.uri.endsWith("tick.json")) {
-          Tick.Diagnose(doc, diagnoser);
+        if (uri.endsWith("tick.json")) {
+          Tick.Diagnose(diagnoser);
         } else {
-          Mcfunction.Diagnose(doc, diagnoser);
+          Mcfunction.Diagnose(diagnoser);
         }
         break;
 
       case FileType.item:
-        Item.Diagnose(doc, diagnoser);
+        Item.Diagnose(diagnoser);
         break;
 
       case FileType.loot_table:
-        LootTable.Diagnose(doc, diagnoser);
+        LootTable.Diagnose(diagnoser);
         break;
 
       case FileType.manifest:
-        Manifest.Diagnose(doc, diagnoser);
+        Manifest.Diagnose(diagnoser);
         break;
 
       case FileType.script:
-        Script.Diagnose(doc, diagnoser);
+        Script.Diagnose(diagnoser);
         break;
 
       case FileType.spawn_rule:
-        SpawnRule.Diagnose(doc, diagnoser);
+        SpawnRule.Diagnose(diagnoser);
         break;
 
       case FileType.structure:
-        Structure.Diagnose(doc, diagnoser);
+        Structure.Diagnose(diagnoser);
         break;
 
       case FileType.trading:
-        Trading.Diagnose(doc, diagnoser);
+        Trading.Diagnose(diagnoser);
         break;
 
       default:

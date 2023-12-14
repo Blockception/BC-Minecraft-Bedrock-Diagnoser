@@ -5,7 +5,7 @@ import { TestDiagnoser } from "../../../diagnoser";
 describe("Molang", () => {
   describe("diagnose_molang_implementation", () => {
     it("no errors", () => {
-      const diagnoser = TestDiagnoser.Create();
+      const diagnoser = TestDiagnoser.create();
 
       const using = Molang.MolangFullSet.create();
       const owner = Molang.MolangFullSet.create();
@@ -29,7 +29,7 @@ describe("Molang", () => {
     });
 
     it("1 error", () => {
-      const diagnoser = TestDiagnoser.Create();
+      const diagnoser = TestDiagnoser.create();
 
       const using = Molang.MolangFullSet.create();
       const owner = Molang.MolangFullSet.create();
@@ -52,7 +52,7 @@ describe("Molang", () => {
     });
 
     it("1 error", () => {
-      const diagnoser = TestDiagnoser.Create();
+      const diagnoser = TestDiagnoser.create();
 
       const using = Molang.MolangFullSet.create();
       const owner = Molang.MolangFullSet.create();

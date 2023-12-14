@@ -11,13 +11,13 @@ import { MolangDataSetKey } from "bc-minecraft-molang";
  * @param diagnoser
  */
 export function animation_controller_diagnose_implementation(
-  controllerid: string,
+  controllerId: string,
   user: EntityAnimationMolangCarrier & EventCarrier,
   ownerType: MolangDataSetKey,
   diagnoser: DiagnosticsBuilder
 ): void {
-  if (has_animation_controller(controllerid, diagnoser)) {
-    const controller = diagnoser.context.getCache().BehaviorPacks.animation_controllers.get(controllerid);
+  if (has_animation_controller(controllerId, diagnoser)) {
+    const controller = diagnoser.context.getCache().BehaviorPacks.animation_controllers.get(controllerId);
 
     if (!controller) return;
 

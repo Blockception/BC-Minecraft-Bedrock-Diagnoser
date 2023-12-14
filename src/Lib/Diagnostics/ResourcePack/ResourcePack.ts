@@ -1,4 +1,4 @@
-import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
+import { DocumentDiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 import { ResourcePack as RP } from "bc-minecraft-bedrock-project";
 
 import * as Animation from "./Animation/entry";
@@ -21,7 +21,6 @@ import * as SoundsDefinitions from "./Sounds Definitions/entry";
 import * as Texture from "./Texture/entry";
 import * as TextureAtlas from "./Texture Atlas/entry";
 import * as Flipbook from "./Texture Atlas/flipbook";
-import { TextDocument } from "bc-minecraft-bedrock-project";
 
 /** The namespace that deals with resourcepack diagnostics */
 export namespace ResourcePack {
@@ -29,90 +28,91 @@ export namespace ResourcePack {
    * @param doc The document to process / diagnose
    * @param diagnoser The diagnoser to report to
    * @returns `true` or `false` whenever or not it was succesfull */
-  export function Process(doc: TextDocument, diagnoser: DiagnosticsBuilder): boolean {
-    const Type = RP.FileType.detect(doc.uri);
+  export function Process(diagnoser: DocumentDiagnosticsBuilder): boolean {
+    const uri = diagnoser.document.uri;
+    const type = RP.FileType.detect(uri);
 
-    switch (Type) {
+    switch (type) {
       case RP.FileType.animation:
-        Animation.Diagnose(doc, diagnoser);
+        Animation.Diagnose(diagnoser);
         break;
 
       case RP.FileType.animation_controller:
-        AnimationController.Diagnose(doc, diagnoser);
+        AnimationController.Diagnose(diagnoser);
         break;
 
       case RP.FileType.attachable:
-        Attachable.Diagnose(doc, diagnoser);
+        Attachable.Diagnose(diagnoser);
         break;
 
       case RP.FileType.biomes_client:
-        BiomesClient.Diagnose(doc, diagnoser);
+        BiomesClient.Diagnose(diagnoser);
         break;
 
       case RP.FileType.block:
-        if (doc.uri.endsWith("blocks.json")) {
-          Blocks.Diagnose(doc, diagnoser);
+        if (uri.endsWith("blocks.json")) {
+          Blocks.Diagnose(diagnoser);
         } else {
-          Block.Diagnose(doc, diagnoser);
+          Block.Diagnose(diagnoser);
         }
 
         break;
 
       case RP.FileType.entity:
-        Entity.Diagnose(doc, diagnoser);
+        Entity.Diagnose(diagnoser);
         break;
 
       case RP.FileType.fog:
-        Fog.Diagnose(doc, diagnoser);
+        Fog.Diagnose(diagnoser);
         break;
 
       case RP.FileType.item:
-        Item.Diagnose(doc, diagnoser);
+        Item.Diagnose(diagnoser);
         break;
 
       case RP.FileType.manifest:
-        Manifest.Diagnose(doc, diagnoser);
+        Manifest.Diagnose(diagnoser);
         break;
 
       case RP.FileType.material:
-        Material.Diagnose(doc, diagnoser);
+        Material.Diagnose(diagnoser);
         break;
 
       case RP.FileType.model:
-        Model.Diagnose(doc, diagnoser);
+        Model.Diagnose(diagnoser);
         break;
 
       case RP.FileType.music_definitions:
-        MusicDefinitions.Diagnose(doc, diagnoser);
+        MusicDefinitions.Diagnose(diagnoser);
         break;
 
       case RP.FileType.particle:
-        Particle.Diagnose(doc, diagnoser);
+        Particle.Diagnose(diagnoser);
         break;
 
       case RP.FileType.render_controller:
-        RenderController.Diagnose(doc, diagnoser);
+        RenderController.Diagnose(diagnoser);
         break;
 
       case RP.FileType.sounds:
-        Sounds.Diagnose(doc, diagnoser);
+        Sounds.Diagnose(diagnoser);
         break;
 
       case RP.FileType.sounds_definitions:
-        SoundsDefinitions.Diagnose(doc, diagnoser);
+        SoundsDefinitions.Diagnose(diagnoser);
         break;
 
       case RP.FileType.texture:
-        Texture.Diagnose(doc, diagnoser);
+        Texture.Diagnose(diagnoser);
         break;
 
       case RP.FileType.texture_flipbook_atlas:
-        Flipbook.DiagnoseFlipbook(doc, diagnoser);
+        Flipbook.DiagnoseFlipbook(diagnoser);
         break;
 
       case RP.FileType.texture_item_atlas:
       case RP.FileType.texture_terrain_atlas:
-        TextureAtlas.DiagnoseAtlas(doc, diagnoser);
+        TextureAtlas.DiagnoseAtlas(diagnoser);
         break;
 
       default:

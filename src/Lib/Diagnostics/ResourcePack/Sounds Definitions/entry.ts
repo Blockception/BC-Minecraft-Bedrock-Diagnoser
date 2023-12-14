@@ -1,19 +1,19 @@
-import { Internal, SMap, TextDocument } from "bc-minecraft-bedrock-project";
+import { Internal, SMap } from "bc-minecraft-bedrock-project";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticSeverity } from "../../../../main";
-import { DiagnosticsBuilder } from "../../../Types";
+import { DiagnosticsBuilder, DocumentDiagnosticsBuilder} from "../../../Types";
 import { education_enabled } from "../../Definitions";
 import { Json } from "../../Json/Json";
 
 /**Diagnoses the given document as a `sound_definitions` file
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
-  const definitions = Json.LoadReport<Internal.ResourcePack.SoundDefinitions>(doc, diagnoser);
+export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+  const definitions = Json.LoadReport<Internal.ResourcePack.SoundDefinitions>(diagnoser);
   if (!Internal.ResourcePack.SoundDefinitions.is(definitions)) return;
 
   //Get pack for files search
-  const pack = diagnoser.context.getCache().ResourcePacks.get(doc.uri);
+  const pack = diagnoser.context.getCache().ResourcePacks.get(diagnoser.document.uri);
   if (pack === undefined) return;
 
   const sounds = definitions.sound_definitions;

@@ -43,13 +43,13 @@ describe("ResourcePack", () => {
         }`,
       };
 
-      const diagnoser = TestDiagnoser.Create();
+      const diagnoser = TestDiagnoser.createDocument(undefined, doc);
       diagnoser.context.getFiles = () => {
         return ["textures/blocks/stone_andesite", "textures/blocks/anvil_base", "textures/blocks/grass_side"];
       };
 
       try {
-        const value = ResourcePack.Process(doc, diagnoser);
+        const value = ResourcePack.Process(diagnoser);
       } catch (err: any) {
         if (typeof err.message !== "undefined") expect.fail("Expect no errors: " + err.message);
       }

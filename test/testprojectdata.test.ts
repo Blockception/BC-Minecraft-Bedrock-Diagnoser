@@ -3,7 +3,7 @@ import { ProjectData, TextDocument } from "bc-minecraft-bedrock-project";
 import { MCIgnore, MCProject } from "bc-minecraft-project";
 import path = require("path");
 
-export namespace TestProjecData {
+export namespace TestProjectData {
   export function CreateTestData(files: Map<string, string> | undefined = undefined): ProjectData {
     return CreateContext(files).getCache();
   }
@@ -21,11 +21,11 @@ export namespace TestProjecData {
 }
 
 export class InternalTest implements DiagnosticsBuilderContent {
-  public __projecdata: ProjectData | undefined;
+  public __projectData: ProjectData | undefined;
   public __files: Map<string, string>;
 
-  constructor(projectdata: ProjectData | undefined, files: Map<string, string> | undefined) {
-    this.__projecdata = projectdata;
+  constructor(projectData: ProjectData | undefined, files: Map<string, string> | undefined) {
+    this.__projectData = projectData;
     this.__files = files ?? new Map<string, string>();
   }
 
@@ -42,10 +42,10 @@ export class InternalTest implements DiagnosticsBuilderContent {
   }
 
   getCache() {
-    if (!this.__projecdata) {
-      return (this.__projecdata = new ProjectData(this));
+    if (!this.__projectData) {
+      return (this.__projectData = new ProjectData(this));
     }
 
-    return this.__projecdata;
+    return this.__projectData;
   }
 }

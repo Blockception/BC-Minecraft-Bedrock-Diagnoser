@@ -1,14 +1,14 @@
 import { TextDocument } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/TextDocument";
 import { ResourcePackCollection } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/ResourcePack/ResourcePackCollection";
-import { DiagnosticsBuilder } from "../../../Types";
+import { DiagnosticsBuilder, DocumentDiagnosticsBuilder} from "../../../Types";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 import { Json } from "../../Json/Json";
 
 /**Diagnoses the given document as a block
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
-  const blocks = Json.LoadReport<Blocks>(doc, diagnoser);
+export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+  const blocks = Json.LoadReport<Blocks>(diagnoser);
 
   if (!Json.TypeCheck(blocks, diagnoser, "blocks.json", "minecraft.resourcepack.blocks.invalid", is)) return;
 

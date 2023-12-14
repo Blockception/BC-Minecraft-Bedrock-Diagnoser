@@ -1,6 +1,4 @@
-import { TextDocument } from "bc-minecraft-bedrock-project";
-import { Types } from "bc-minecraft-bedrock-types";
-import { DiagnosticsBuilder } from "../../../Types";
+import { DocumentDiagnosticsBuilder} from "../../../Types";
 import { Json } from "../../Json/Json";
 import { behaviorpack_item_diagnose } from "../Item/diagnose";
 import { behaviorpack_loot_table_diagnose } from "./diagnose";
@@ -11,8 +9,8 @@ import { minecraft_get_item } from "../../Minecraft/Items";
 /**Diagnoses the given document as an loot table
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void {
-  const table = Json.LoadReport<LootTable>(doc, diagnoser);
+export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+  const table = Json.LoadReport<LootTable>(diagnoser);
   if (typeof table !== "object") return;
 
   table.pools?.forEach((pool) => {
@@ -20,11 +18,11 @@ export function Diagnose(doc: TextDocument, diagnoser: DiagnosticsBuilder): void
       //Is item then check if item exists
       switch (entry.type) {
         case "item":
-          if (entry.name) behaviorpack_item_diagnose(minecraft_get_item(entry.name, doc), diagnoser);
+          if (entry.name) behaviorpack_item_diagnose(minecraft_get_item(entry.name, diagnoser.document), diagnoser);
           break;
 
         case "loot_table":
-          if (entry.name) behaviorpack_loot_table_diagnose(minecraft_get_item(entry.name, doc), diagnoser);
+          if (entry.name) behaviorpack_loot_table_diagnose(minecraft_get_item(entry.name, diagnoser.document), diagnoser);
           break;
       }
 

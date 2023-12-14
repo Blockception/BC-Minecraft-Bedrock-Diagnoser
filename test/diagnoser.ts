@@ -1,11 +1,11 @@
-import { DiagnosticsBuilderContent } from "../src/Lib/Types/DiagnosticsBuilder";
+import { DiagnosticsBuilderContent, DocumentDiagnosticsBuilder } from "../src/Lib/Types/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../src/Lib/Types/Severity";
-import { ProjectData } from "bc-minecraft-bedrock-project";
 import { Types } from "bc-minecraft-bedrock-types";
 import { MCProject } from "bc-minecraft-project";
 import { expect } from "chai";
 import { InternalDiagnosticsBuilder } from "../src/main";
-import { TestProjecData } from "./testprojectdata.test";
+import { TestProjectData } from "./testprojectdata.test";
+import { TextDocument } from 'bc-minecraft-bedrock-project';
 
 export interface Error {
   position: Types.DocumentLocation;
@@ -23,10 +23,11 @@ export class TestDiagnoser implements InternalDiagnosticsBuilder {
 
   constructor(context: DiagnosticsBuilderContent | undefined = undefined, project: MCProject | undefined = undefined) {
     this.doneMark = false;
-    this.context = context ?? TestProjecData.CreateContext();
+    this.context = context ?? TestProjectData.CreateContext();
     this.project = project ?? MCProject.createEmpty();
     this.items = [];
   }
+  
 
   done(): void {
     this.doneMark = true;
@@ -181,14 +182,29 @@ export class TestDiagnoser implements InternalDiagnosticsBuilder {
   }
 }
 
+export class TestDocumentDiagnoser extends TestDiagnoser implements DocumentDiagnosticsBuilder {
+  public document: TextDocument;
+
+  constructor(document: TextDocument, context: DiagnosticsBuilderContent | undefined = undefined, project: MCProject | undefined = undefined) {
+    super(context, project);
+    this.document = document;
+  }
+}
+
 export namespace TestDiagnoser {
-  export function Create(files: Map<string, string> | undefined = undefined): TestDiagnoser {
-    const context = TestProjecData.CreateContext(files);
+  export function create(files: Map<string, string> | undefined = undefined): TestDiagnoser {
+    const context = TestProjectData.CreateContext(files);
 
     return new TestDiagnoser(context, undefined);
   }
 
+  export function createDocument(files: Map<string, string> | undefined, document: TextDocument): TestDocumentDiagnoser {
+    const context = TestProjectData.CreateContext(files);
+
+    return new TestDocumentDiagnoser(document, context, undefined);
+  }
+
   export function emptyContext(files: Map<string, string> | undefined = undefined): DiagnosticsBuilderContent {
-    return TestProjecData.CreateContext(files);
+    return TestProjectData.CreateContext(files);
   }
 }
