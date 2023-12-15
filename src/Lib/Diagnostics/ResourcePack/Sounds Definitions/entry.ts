@@ -1,7 +1,7 @@
 import { Internal, SMap } from "bc-minecraft-bedrock-project";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticSeverity } from "../../../../main";
-import { DiagnosticsBuilder, DocumentDiagnosticsBuilder} from "../../../Types";
+import { DiagnosticsBuilder, DocumentDiagnosticsBuilder } from "../../../Types";
 import { education_enabled } from "../../Definitions";
 import { Json } from "../../Json/Json";
 
@@ -23,9 +23,6 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
 
   //For each sound definition
   SMap.forEach(sounds, (sound, sound_id) => {
-    //The counter for how many loads have been specified
-    let loads = 0;
-
     //For each file reference
     sound.sounds.forEach((soundSpec) => {
       if (typeof soundSpec === "string") {
@@ -35,22 +32,8 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
         if (typeof name === "string") {
           sound_files_diagnose(sound_id, name, sound_files, diagnoser);
         }
-
-        //Count the amount of sounds that specified to load on low memory not
-        if (soundSpec.load_on_low_memory !== undefined) {
-          loads++;
-        }
       }
     });
-
-    if (sound.sounds.length > 2 && loads <= 1) {
-      diagnoser.Add(
-        sound_id,
-        "It is best, when using multiple sound, to mark one of them with `load_on_low_memory': true, and the others to false, this will reduce the amount of memory needed for lower tier devices",
-        DiagnosticSeverity.info,
-        "resourcepack.sound.load_on_low_memory"
-      );
-    }
   });
 }
 
