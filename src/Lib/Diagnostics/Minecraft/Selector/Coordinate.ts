@@ -11,7 +11,7 @@ import { minecraft_coordinate_diagnose } from "../Coordinate";
  */
 export function selectorattribute_coordinate(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   if (value.text.startsWith("^")) {
-    diagnoser.Add(
+    diagnoser.add(
       value,
       "Selector attribute coordinate cannot be local coordinates types, only relative or absolute",
       DiagnosticSeverity.error,

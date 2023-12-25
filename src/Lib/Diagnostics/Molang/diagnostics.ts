@@ -79,7 +79,7 @@ function diagnose_molang_using(
       //Valid
       continue;
     } else {
-      diagnoser.Add(
+      diagnoser.add(
         userId,
         `The following molang is not defined: '${name}.${check}' by '${definerId}'\n\tThe definition is used by: '${userId}'`,
         DiagnosticSeverity.error,
@@ -95,21 +95,21 @@ function diagnose_molang_allowed(using: string, owner: MolangDataSetKey, diagnos
   const set = Molang.MolangFullSet.harvest(using);
 
   if (has_any(set.textures))
-    diagnoser.Add(
+    diagnoser.add(
       "textures.",
       "Animation / Animation controllers do not have access to textures",
       DiagnosticSeverity.warning,
       "molang.textures.invalid"
     );
   if (has_any(set.materials))
-    diagnoser.Add(
+    diagnoser.add(
       "material.",
       "Animation / Animation controllers do not have access to materials",
       DiagnosticSeverity.warning,
       "molang.material.invalid"
     );
   if (has_any(set.geometries))
-    diagnoser.Add(
+    diagnoser.add(
       "geometry.",
       "Animation / Animation controllers do not have access to geometries",
       DiagnosticSeverity.warning,
@@ -145,7 +145,7 @@ function diagnose_molang_variable_using(
     //Vanilla provides?
     if (InternalIdentifiable.has(MolangData.get(owner)?.Variables ?? [], check)) continue;
 
-    diagnoser.Add(
+    diagnoser.add(
       userId,
       `The molang variable 'variable.${check}' is not defined, which should be defined in this '${definerId}'\n\tThe variable is used through: '${userId}'`,
       DiagnosticSeverity.error,
@@ -173,7 +173,7 @@ function diagnose_molang_temp_using(
     //Vanilla provides?
     if (InternalIdentifiable.has(MolangData.get(owner)?.Temps ?? [], check)) continue;
 
-    diagnoser.Add(
+    diagnoser.add(
       "temp." + check,
       `The following molang temp definition is not defined: 'temp.${check}'`,
       DiagnosticSeverity.error,
@@ -201,7 +201,7 @@ function diagnose_molang_context_using(
     //Vanilla provides?
     if (InternalIdentifiable.has(MolangData.get(owner)?.Contexts ?? [], check)) continue;
 
-    diagnoser.Add(
+    diagnoser.add(
       "context." + check,
       `The following molang context definition is not defined: 'context.${check}'`,
       DiagnosticSeverity.error,
@@ -232,7 +232,7 @@ export function diagnose_molang_query_using(using: Using<string> | string, diagn
     const query = MolangData.General.getQuery(check);
     if (query) {
       if (typeof query.deprecated === "string") {
-        diagnoser.Add(
+        diagnoser.add(
           "query." + check,
           `Molang query: 'query.${check}' has been deprecated, use: '${query.deprecated}'`,
           DiagnosticSeverity.error,
@@ -243,7 +243,7 @@ export function diagnose_molang_query_using(using: Using<string> | string, diagn
       continue;
     }
 
-    diagnoser.Add(
+    diagnoser.add(
       "query." + check,
       `Unknown molang query function: ${check}`,
       DiagnosticSeverity.error,
@@ -275,7 +275,7 @@ export function diagnose_molang_math_using(using: Using<string> | string, diagno
     //Vanilla provides?
     if (InternalIdentifiable.has(MolangData.General.Math, check)) continue;
 
-    diagnoser.Add(
+    diagnoser.add(
       "math." + check,
       `Unknown molang math function: ${check}`,
       DiagnosticSeverity.error,

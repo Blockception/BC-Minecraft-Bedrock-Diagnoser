@@ -18,5 +18,5 @@ export function resourcepack_check_entityid(id: string, diagnoser: DiagnosticsBu
   if (MinecraftData.ResourcePack.hasEntity(id, edu)) return;
 
   //Nothing then report error
-  diagnoser.Add(id, `Cannot find entity definition: ${id}`, DiagnosticSeverity.error, "resourcepack.entity.missing");
+  diagnoser.add(id, `Cannot find entity definition: ${id}`, DiagnosticSeverity.error, "resourcepack.entity.missing");
 }

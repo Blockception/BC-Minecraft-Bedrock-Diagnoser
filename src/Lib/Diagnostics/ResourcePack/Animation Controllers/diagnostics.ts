@@ -31,7 +31,7 @@ export function animation_controller_diagnose_implementation(
   controller.particles.using.forEach((particle) => {
     if (particles && particles[particle] !== undefined) return;
 
-    diagnoser.Add(
+    diagnoser.add(
       `animations/${controllerid}`,
       `Animation controller: ${controllerid} uses particle: '${particle}', but no definition has been found`,
       DiagnosticSeverity.warning,
@@ -43,7 +43,7 @@ export function animation_controller_diagnose_implementation(
   controller.sounds.using.forEach((sound) => {
     if (sounds && sounds[sound] !== undefined) return;
 
-    diagnoser.Add(
+    diagnoser.add(
       `animations/${controllerid}`,
       `Animation controller: ${controllerid} uses sound: '${sound}', but no definition has been found`,
       DiagnosticSeverity.warning,
@@ -70,7 +70,7 @@ export function has_animation_controller(id: string, diagnoser: DiagnosticsBuild
   if (MinecraftData.ResourcePack.hasAnimationController(id, edu)) return true;
 
   //Nothing then report error
-  diagnoser.Add(
+  diagnoser.add(
     `"${id}"`,
     `Cannot find resourcepack animation controller: ${id}`,
     DiagnosticSeverity.error,

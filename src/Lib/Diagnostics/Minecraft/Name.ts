@@ -23,7 +23,7 @@ export function minecraft_name_diagnose(value: Types.OffsetWord, diagnoser: Diag
       return true;
     }
 
-    diagnoser.Add(
+    diagnoser.add(
       value,
       "Name includes whitespace, but hasn't been properly escaped with quotes",
       DiagnosticSeverity.error,

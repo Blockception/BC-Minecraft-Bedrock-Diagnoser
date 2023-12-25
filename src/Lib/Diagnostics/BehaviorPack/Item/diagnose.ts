@@ -34,7 +34,7 @@ export function behaviorpack_item_diagnose(value: Item, diagnoser: DiagnosticsBu
   }
 
   //Nothing then report error
-  diagnoser.Add(
+  diagnoser.add(
     value,
     `Cannot find behaviorpack item definition: ${id}`,
     DiagnosticSeverity.error,
@@ -68,7 +68,7 @@ function checkData(value: Item, diagnoser: DiagnosticsBuilder): boolean {
   const item = MinecraftData.BehaviorPack.getItem(value.text, edu);
   if (item && typeof value.data === "number") {
     if (value.data <= item.max_damage) {
-      diagnoser.Add(
+      diagnoser.add(
         value,
         `Item data is for ${value.text} is 0..${item.max_damage}`,
         DiagnosticSeverity.error,

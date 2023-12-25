@@ -1,10 +1,10 @@
-import { ProjectData } from "bc-minecraft-bedrock-project";
+import { ProjectData, TextDocument } from "bc-minecraft-bedrock-project";
 import { behaviorpack_structure_diagnose } from "../../../../src/Lib/Diagnostics/BehaviorPack/Structure";
 import { TestDiagnoser } from "../../../diagnoser";
 
 describe("BehaviorPack", () => {
   describe("Structures", () => {
-    var diagnoser: TestDiagnoser;
+    var diagnoser: TestDiagnoser<TextDocument>;
     var data: ProjectData;
 
     beforeEach(() => {

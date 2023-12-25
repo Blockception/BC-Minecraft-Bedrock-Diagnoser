@@ -52,14 +52,14 @@ function checkMovements(diagnoser: DiagnosticsBuilder, components: string[]): vo
 
   if (Count > 0 && Count != 2) {
     if (hasMovement == 0)
-      diagnoser.Add(
+      diagnoser.add(
         "minecraft:movement",
         `Missing a movement component such as: 'minecraft:movement.basic'`,
         DiagnosticSeverity.error,
         "behaviorpack.entity.component.missing"
       );
     if (hasNavigation == 0)
-      diagnoser.Add(
+      diagnoser.add(
         "minecraft:movement",
         `Missing a movement component such as: 'minecraft:navigation.generic'`,
         DiagnosticSeverity.error,

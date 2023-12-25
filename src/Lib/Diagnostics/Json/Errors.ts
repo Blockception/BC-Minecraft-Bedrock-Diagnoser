@@ -4,7 +4,7 @@ import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 
 export function Handle_Json_Error(err: any, diagnoser: DiagnosticsBuilder): void {
   if (typeof err.message !== "string") {
-    diagnoser.Add(
+    diagnoser.add(
       0,
       "Invalid json structure\nmessage:" + JSON.stringify(err),
       DiagnosticSeverity.error,
@@ -24,7 +24,7 @@ export function Handle_Json_Error(err: any, diagnoser: DiagnosticsBuilder): void
   const pos = safe_first_get(/position (\d+)/gim, message);
   if (pos) word.offset = Number.parseInt(pos);
 
-  diagnoser.Add(word, message, DiagnosticSeverity.error, "json.invalid");
+  diagnoser.add(word, message, DiagnosticSeverity.error, "json.invalid");
 }
 
 function safe_first_get(regex: RegExp, text: string): string | undefined {

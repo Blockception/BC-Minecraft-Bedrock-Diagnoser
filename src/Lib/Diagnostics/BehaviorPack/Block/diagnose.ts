@@ -54,6 +54,6 @@ export function behaviorpack_check_blockid(blockDescriptor: Types.OffsetWord, di
   if (MinecraftData.BehaviorPack.hasBlock(id, edu)) return true;
 
   //Nothing then report error
-  diagnoser.Add(id, `Cannot find block definition: ${id}`, DiagnosticSeverity.error, "behaviorpack.block.missing");
+  diagnoser.add(id, `Cannot find block definition: ${id}`, DiagnosticSeverity.error, "behaviorpack.block.missing");
   return false;
 }

@@ -56,7 +56,7 @@ export function behaviorpack_entityid_diagnose(
   }
 
   //Nothing then report error
-  diagnoser.Add(value, `Cannot find entity definition: ${id}`, DiagnosticSeverity.error, "behaviorpack.entity.missing");
+  diagnoser.add(value, `Cannot find entity definition: ${id}`, DiagnosticSeverity.error, "behaviorpack.entity.missing");
   return false;
 }
 
@@ -105,7 +105,7 @@ export function behaviorpack_entity_event_diagnose(
     if (entity) {
       //Events not found
       if (!entity.events.includes(data.text)) {
-        diagnoser.Add(
+        diagnoser.add(
           data.offset,
           `Entity: ${entityid} has no event declared: ${data.text}`,
           DiagnosticSeverity.error,

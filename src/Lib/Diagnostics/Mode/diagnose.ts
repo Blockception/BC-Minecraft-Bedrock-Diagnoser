@@ -214,7 +214,7 @@ export function mode_slotid_diagnose(
   if (m === undefined) return false;
 
   if (m.eduOnly === true && education_enabled(diagnoser) === false) {
-    diagnoser.Add(
+    diagnoser.add(
       value.offset,
       "This is an education only mode, and education is disabled",
       DiagnosticSeverity.error,
@@ -227,7 +227,7 @@ export function mode_slotid_diagnose(
     const n = Number.parseInt(value.text);
 
     if (n < m.range.min || n > m.range.max) {
-      diagnoser.Add(
+      diagnoser.add(
         value.offset,
         `The value is ${n} not in the range of ${m.range.min} to ${m.range.max}`,
         DiagnosticSeverity.error,
@@ -276,7 +276,7 @@ function mode_generic_diagnose(value: Types.OffsetWord, Mode: ModeHandler, diagn
   if (m) return true;
 
   const name = Mode.name.toLowerCase();
-  diagnoser.Add(
+  diagnoser.add(
     value,
     `value: '${value.text}' is not defined in mode: '${name}'`,
     DiagnosticSeverity.error,

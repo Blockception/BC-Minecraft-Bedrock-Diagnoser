@@ -1,24 +1,8 @@
+import { TextDocument } from 'bc-minecraft-bedrock-project';
 import { DiagnoserContext } from "./DiagnoserContext";
 
 /**An object that carriers Diagnoser context*/
-export interface DiagnoserContextCarrier {
+export interface DiagnoserContextCarrier<T extends TextDocument = TextDocument> {
   /**The context needed to diagnose*/
-  readonly context: DiagnoserContext;
-}
-
-/**
- *
- */
-export namespace DiagnoserContextCarrier {
-  /**
-   *
-   * @param value
-   */
-  export function is(value: any): value is DiagnoserContextCarrier {
-    if (typeof value === "object") {
-      if (DiagnoserContext.is(value.context)) return true;
-    }
-
-    return false;
-  }
+  readonly context: DiagnoserContext<T>;
 }

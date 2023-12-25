@@ -17,7 +17,7 @@ export function selectorattributes_no_duplicate(
   if (attrs.length <= 1) return true;
 
   attrs.forEach((item) =>
-    diagnoser.Add(
+    diagnoser.add(
       CompactJson.toOffsetWord(item),
       `Duplicate selector attribute: ${item.key}, but only one allowed`,
       DiagnosticSeverity.error,

@@ -58,7 +58,7 @@ export function must_offset_word(
       return fn(word, diagnoser);
     }
 
-    diagnoser.Add(
+    diagnoser.add(
       CompactJson.valueToOffsetWord(attr),
       "Expected a string",
       DiagnosticSeverity.error,

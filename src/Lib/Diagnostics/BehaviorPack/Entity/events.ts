@@ -57,7 +57,7 @@ export function behaviorpack_entity_check_event(
   }
 
   if ((event as any)["run_command"]) {
-    diagnoser.Add(
+    diagnoser.add(
       `events/${event_id}`,
       `Event is using the deprecated run_command property, use queue_command instead`,
       DiagnosticSeverity.warning,
@@ -71,7 +71,7 @@ export function behaviorpack_entity_check_event(
 
     command.forEach((cmd) => {
       if (cmd.startsWith("/")) {
-        diagnoser.Add(
+        diagnoser.add(
           `events/${event_id}/cmd`,
           `Commands in queue_command should not start with a /, remove it`,
           DiagnosticSeverity.warning,
@@ -103,7 +103,7 @@ function has_groups(
       if (component_groups[group] !== undefined) continue;
     }
 
-    diagnoser.Add(
+    diagnoser.add(
       `events/${id}/${group}`,
       `Event is calling component group: ${group}, but the component group was not found`,
       DiagnosticSeverity.warning,

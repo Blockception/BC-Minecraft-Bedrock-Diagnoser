@@ -50,7 +50,7 @@ export namespace Json {
       return true;
     }
 
-    diagnoser.Add(0, "Json cannot be casted to: " + type, DiagnosticSeverity.error, code);
+    diagnoser.add(0, "Json cannot be casted to: " + type, DiagnosticSeverity.error, code);
     return false;
   }
 }

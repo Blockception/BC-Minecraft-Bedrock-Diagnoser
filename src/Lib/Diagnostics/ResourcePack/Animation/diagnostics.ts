@@ -33,7 +33,7 @@ export function animation_diagnose_implementation(
   anim.particles.using.forEach((particle) => {
     if (particles && particles[particle] !== undefined) return;
 
-    diagnoser.Add(
+    diagnoser.add(
       `animations/${anim_id}`,
       `Animation: ${anim_id} uses particle: '${particle}', but no definition has been found`,
       DiagnosticSeverity.warning,
@@ -45,7 +45,7 @@ export function animation_diagnose_implementation(
   anim.sounds.using.forEach((sound) => {
     if (sounds && sounds[sound] !== undefined) return;
 
-    diagnoser.Add(
+    diagnoser.add(
       `animations/${anim_id}`,
       `Animation: ${anim_id} uses sound: '${sound}', but no definition has been found`,
       DiagnosticSeverity.warning,
@@ -72,7 +72,7 @@ export function has_animation(id: string, diagnoser: DiagnosticsBuilder): boolea
   if (MinecraftData.ResourcePack.hasAnimation(id, edu)) return true;
 
   //Nothing then report error
-  diagnoser.Add(
+  diagnoser.add(
     `"${id}"`,
     `Cannot find resourcepack animation: ${id}`,
     DiagnosticSeverity.error,

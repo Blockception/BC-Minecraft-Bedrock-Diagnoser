@@ -43,7 +43,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
 function hasDefinition(block: string, value: string, rp: ResourcePackCollection, diagnoser: DiagnosticsBuilder): void {
   if (rp.textures.has(value)) return;
 
-  diagnoser.Add(
+  diagnoser.add(
     `${block}/${value}`,
     "The texture is not defined in the terrain_texture.json",
     DiagnosticSeverity.error,

@@ -28,7 +28,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
         const temp = Number.parseFloat(time);
 
         if (temp > length)
-          diagnoser.Add(
+          diagnoser.add(
             `${id}/timeline/${time}`,
             "Time specification is outside the animation range",
             DiagnosticSeverity.warning,

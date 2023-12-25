@@ -21,7 +21,7 @@ export function behaviorpack_trading_diagnose(
   if (MinecraftData.BehaviorPack.hasTrading(id, edu)) return true;
 
   //Nothing then report error
-  diagnoser.Add(
+  diagnoser.add(
     value,
     `Cannot find behaviorpack trading definition: ${id}`,
     DiagnosticSeverity.error,

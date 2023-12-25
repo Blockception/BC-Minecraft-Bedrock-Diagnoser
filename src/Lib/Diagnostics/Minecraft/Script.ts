@@ -26,7 +26,7 @@ export function diagnose_script(
 }
 
 function has_ref(
-  builder: DiagnosticsBuilder,
+  diagnoser: DiagnosticsBuilder,
   ref_id: string,
   Animations?: Types.Definition,
   Controllers?: Types.Definition
@@ -34,7 +34,7 @@ function has_ref(
   if (Animations && Animations[ref_id] !== undefined) return;
   if (Controllers && Controllers[ref_id] !== undefined) return;
 
-  builder.Add(
+  diagnoser.add(
     `scripts/animate/${ref_id}`,
     "Cannot find animation or controller definition of: " + ref_id,
     DiagnosticSeverity.error,

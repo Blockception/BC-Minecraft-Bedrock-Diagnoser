@@ -56,7 +56,7 @@ export function general_range_integer_diagnose(
 
   //Check if the lowest value is not higher then lower
   if (lower > upper) {
-    diagnoser.Add(
+    diagnoser.add(
       value,
       "Lower range is greater than the upper range",
       DiagnosticSeverity.error,
@@ -118,7 +118,7 @@ export function general_range_float_diagnose(
 
   //Check if the lowest value is not higher then lower
   if (lower > upper) {
-    diagnoser.Add(
+    diagnoser.add(
       value,
       "Lower range is greater than the upper range",
       DiagnosticSeverity.error,

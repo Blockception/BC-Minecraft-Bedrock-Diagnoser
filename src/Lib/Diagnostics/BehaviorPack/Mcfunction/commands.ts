@@ -146,7 +146,7 @@ function mcfunction_commandcheck(command: Command, diagnoser: DocumentDiagnostic
 
     //Vanilla has this command so only the syntax is valid
     if (CommandData.Vanilla[keyCommand] !== undefined) {
-      return diagnoser.Add(
+      return diagnoser.add(
         command.parameters[0].offset,
         `Unknown syntax for: "${keyCommand}"`,
         DiagnosticSeverity.error,
@@ -157,7 +157,7 @@ function mcfunction_commandcheck(command: Command, diagnoser: DocumentDiagnostic
     //Edu has it
     if (CommandData.Edu[keyCommand] !== undefined) {
       if (edu) {
-        return diagnoser.Add(
+        return diagnoser.add(
           command.parameters[0].offset,
           `Unknown edu syntax for: "${keyCommand}"`,
           DiagnosticSeverity.error,
@@ -165,7 +165,7 @@ function mcfunction_commandcheck(command: Command, diagnoser: DocumentDiagnostic
         );
       }
 
-      return diagnoser.Add(
+      return diagnoser.add(
         command.parameters[0].offset,
         `This is a edu command, but education is not turned on:\nYou can turn it on by setting \`education.enable=true\` in the settings`,
         DiagnosticSeverity.error,
@@ -185,7 +185,7 @@ function mcfunction_commandcheck(command: Command, diagnoser: DocumentDiagnostic
     const keyword = command.parameters[0];
 
     if (typeof obsolete === "boolean") {
-      diagnoser.Add(
+      diagnoser.add(
         keyword,
         `The syntax for this command is marked as obsolete`,
         DiagnosticSeverity.warning,
@@ -198,7 +198,7 @@ function mcfunction_commandcheck(command: Command, diagnoser: DocumentDiagnostic
         message += `\nThis command is obsolete since format version: ${format_version}`;
       }
 
-      diagnoser.Add(keyword, message, DiagnosticSeverity.warning, code);
+      diagnoser.add(keyword, message, DiagnosticSeverity.warning, code);
     }
   }
 
@@ -266,7 +266,7 @@ const ParameterDiagnostics: Record<number, DiagnoseCommand> = {
   [ParameterType.teleportRules]: mode_teleportrules_diagnose,
   [ParameterType.tickingarea]: minecraft_tickingarea_diagnose,
   [ParameterType.time]: mode_time_diagnose,
-  //Custom call ParameterType.unknown]:(item, diagnoser)=>diagnoser.Add(item.offset, "Unknown parametype: " + item.type, DiagnosticSeverity.warning, "debugger.error"),
+  //Custom call ParameterType.unknown]:(item, diagnoser)=>diagnoser.add(item.offset, "Unknown parametype: " + item.type, DiagnosticSeverity.warning, "debugger.error"),
   [ParameterType.xp]: minecraft_xp_diagnose,
 };
 
@@ -332,7 +332,7 @@ function mcfunction_diagnoseparameter(
       return mode_slotid_diagnose(data, Com, diagnoser);
 
     case ParameterType.unknown:
-      diagnoser.Add(
+      diagnoser.add(
         data.offset,
         `Unknown parameter type: ${pattern.type}:${ParameterType[pattern.type]}`,
         DiagnosticSeverity.warning,

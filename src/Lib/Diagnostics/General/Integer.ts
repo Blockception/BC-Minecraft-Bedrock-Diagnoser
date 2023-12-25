@@ -13,14 +13,14 @@ export function general_integer_diagnose(
       const v = Number.parseInt(value.text);
 
       if (v < range.min)
-        diagnoser.Add(
+        diagnoser.add(
           value,
           `The value of ${v} is lower than the allowed minimum: ${range.min}`,
           DiagnosticSeverity.error,
           "general.integer.minimum"
         );
       if (v > range.max)
-        diagnoser.Add(
+        diagnoser.add(
           value,
           `The value of ${v} is higher than the allowed minimum: ${range.max}`,
           DiagnosticSeverity.error,
@@ -31,7 +31,7 @@ export function general_integer_diagnose(
     return true;
   }
 
-  diagnoser.Add(value, "Invalid integer value: " + value.text, DiagnosticSeverity.error, "general.integer.invalid");
+  diagnoser.add(value, "Invalid integer value: " + value.text, DiagnosticSeverity.error, "general.integer.invalid");
   return false;
 }
 
@@ -43,7 +43,7 @@ export function general_positive_integer_diagnose(value: Types.OffsetWord, diagn
 
   if (n >= 0) return true;
 
-  diagnoser.Add(
+  diagnoser.add(
     value,
     `expected a positive integer but got: ${n}`,
     DiagnosticSeverity.error,

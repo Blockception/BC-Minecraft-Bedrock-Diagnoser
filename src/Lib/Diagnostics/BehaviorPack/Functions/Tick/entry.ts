@@ -15,7 +15,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   //Specific lookup in the pack
   data.values?.forEach((path) => {
     if (!pack.functions.has(path)) {
-      diagnoser.Add(
+      diagnoser.add(
         path,
         "Cannot find mcfunction: " + path,
         DiagnosticSeverity.error,

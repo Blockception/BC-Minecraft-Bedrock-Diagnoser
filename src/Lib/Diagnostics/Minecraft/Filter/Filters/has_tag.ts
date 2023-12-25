@@ -6,7 +6,7 @@ export function diagnose_filter_has_tag(filter: Minecraft.Filter.Filter, diagnos
   const tag = filter.value;
 
   if (!tag) {
-    return diagnoser.Add(
+    return diagnoser.add(
       "test/has_tag",
       "Tag is not defined",
       DiagnosticSeverity.error,
@@ -15,7 +15,7 @@ export function diagnose_filter_has_tag(filter: Minecraft.Filter.Filter, diagnos
   }
 
   if (typeof tag !== "string") {
-    return diagnoser.Add(
+    return diagnoser.add(
       `test/has_tag/${tag}`,
       "Tag is not defined",
       DiagnosticSeverity.error,

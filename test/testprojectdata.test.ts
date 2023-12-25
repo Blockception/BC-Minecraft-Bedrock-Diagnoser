@@ -4,12 +4,12 @@ import { MCIgnore, MCProject } from "bc-minecraft-project";
 import path = require("path");
 
 export namespace TestProjectData {
-  export function CreateTestData(files: Map<string, string> | undefined = undefined): ProjectData {
-    return CreateContext(files).getCache();
+  export function createTestData(files: Map<string, string> | undefined = undefined): ProjectData {
+    return createContext(files).getCache();
   }
 
-  export function CreateContext(files: Map<string, string> | undefined = undefined): DiagnosticsBuilderContent {
-    const context = new InternalTest(undefined, files);
+  export function createContext<T extends TextDocument = TextDocument>(files: Map<string, string> | undefined = undefined): DiagnosticsBuilderContent<T> {
+    const context = new InternalTest<T>(undefined, files);
 
     const data = context.getCache();
 
@@ -20,7 +20,7 @@ export namespace TestProjectData {
   }
 }
 
-export class InternalTest implements DiagnosticsBuilderContent {
+export class InternalTest<T extends TextDocument = TextDocument> implements DiagnosticsBuilderContent<T> {
   public __projectData: ProjectData | undefined;
   public __files: Map<string, string>;
 
@@ -29,10 +29,10 @@ export class InternalTest implements DiagnosticsBuilderContent {
     this.__files = files ?? new Map<string, string>();
   }
 
-  getDocument(uri: string): TextDocument | undefined {
+  getDocument(uri: string): T | undefined {
     const out = this.__files.get(uri);
 
-    if (out) return { uri: uri, getText: (range) => out };
+    if (out) return { uri: uri, getText: (range) => out } as T;
 
     return undefined;
   }

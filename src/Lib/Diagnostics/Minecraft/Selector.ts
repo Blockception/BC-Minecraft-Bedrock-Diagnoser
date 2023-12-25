@@ -34,12 +34,12 @@ export function minecraft_selector_diagnose(
 
   //Fake players have been banned
   if (pattern.options?.allowFakePlayers === false) {
-    diagnoser.Add(value, "No fake players / names allowed", DiagnosticSeverity.error, "minecraft.selector.invalid");
+    diagnoser.add(value, "No fake players / names allowed", DiagnosticSeverity.error, "minecraft.selector.invalid");
     return;
   }
 
   if (pattern.options?.playerOnly === true) {
-    diagnoser.Add(
+    diagnoser.add(
       value,
       "Only players selector allowed to be used",
       DiagnosticSeverity.error,
@@ -57,7 +57,7 @@ export function minecraft_selector_diagnose(
   if (data.General.fakeEntities.has(name)) return;
 
   //Found nothing then report
-  diagnoser.Add(
+  diagnoser.add(
     value,
     `Cannot find fake entity definition or name for: ${name}`,
     DiagnosticSeverity.warning,
@@ -79,7 +79,7 @@ function minecraft_selector_diagnose_hard(
   const selector = Minecraft.Selector.Selector.parse(value.text, value.offset);
 
   if (selector === undefined) {
-    diagnoser.Add(value, "Invalid selector", DiagnosticSeverity.error, "minecraft.selector.invalid");
+    diagnoser.add(value, "Invalid selector", DiagnosticSeverity.error, "minecraft.selector.invalid");
     return false;
   }
   let result = true;
@@ -90,7 +90,7 @@ function minecraft_selector_diagnose_hard(
       case "@e":
       case "@v":
         result = false;
-        diagnoser.Add(
+        diagnoser.add(
           value,
           "Selector is meant to target only players",
           DiagnosticSeverity.info,
@@ -102,7 +102,7 @@ function minecraft_selector_diagnose_hard(
 
   if (!Minecraft.Selector.Selector.isValidType(selector)) {
     result = false;
-    diagnoser.Add(
+    diagnoser.add(
       value,
       `Unknown selector type: ${selector.type}`,
       DiagnosticSeverity.error,

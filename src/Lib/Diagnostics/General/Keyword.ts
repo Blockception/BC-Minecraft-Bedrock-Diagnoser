@@ -9,7 +9,7 @@ export function general_keyword_diagnose(
   //Keyword matches the given value, then stop
   if (value.text === keyword) return;
 
-  diagnoser.Add(
+  diagnoser.add(
     value,
     `Invalid keyword: ${value}, expected keyword: ${value}`,
     DiagnosticSeverity.error,

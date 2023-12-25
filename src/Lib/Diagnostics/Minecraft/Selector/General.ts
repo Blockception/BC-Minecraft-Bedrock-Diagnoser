@@ -30,7 +30,7 @@ export function selectorattribute_one_positive_all_negatives(
     result = false;
 
     parameters.forEach((item) => {
-      diagnoser.Add(
+      diagnoser.add(
         CompactJson.toOffsetWord(item),
         `Parameter: "${item.key}" can only have 1 positive test or/and multiple negatives test`,
         DiagnosticSeverity.error,
@@ -66,7 +66,7 @@ export function selectorattribute_duplicate_check(
 
       if (first.offset !== second.offset && first.value === second.value) {
         result = false;
-        diagnoser.Add(
+        diagnoser.add(
           CompactJson.toOffsetWord(second),
           `Duplicate test for parameter: "${second.key}"`,
           DiagnosticSeverity.error,
@@ -96,7 +96,7 @@ export function selectorattribute_no_negatives(
     if (p.negative === true) {
       result = false;
 
-      diagnoser.Add(
+      diagnoser.add(
         CompactJson.toOffsetWord(p),
         `Parameter: "${p.key}" can not have a negative test`,
         DiagnosticSeverity.error,

@@ -15,7 +15,7 @@ export function minecraft_tag_diagnose(value: Types.OffsetWord | string, diagnos
   }
 
   if (!/^[a-zA-Z0-9\-\_\.]+$/gim.test(id)) {
-    diagnoser.Add(value, `Illegal character found in tag: ${id}`, DiagnosticSeverity.error, "minecraft.tag.invalid");
+    diagnoser.add(value, `Illegal character found in tag: ${id}`, DiagnosticSeverity.error, "minecraft.tag.invalid");
   }
 
   //Defined in McProject
@@ -31,6 +31,6 @@ export function minecraft_tag_diagnose(value: Types.OffsetWord | string, diagnos
   }
 
   //Nothing then report error
-  diagnoser.Add(value, `Cannot find tag definition: ${id}`, DiagnosticSeverity.error, "minecraft.tag.missing");
+  diagnoser.add(value, `Cannot find tag definition: ${id}`, DiagnosticSeverity.error, "minecraft.tag.missing");
   return false;
 }

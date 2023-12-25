@@ -33,7 +33,7 @@ export function minecraft_animation_used(
   Types.Definition.forEach(animations, (ref, id) => {
     //If the used animations does not contain the referenced animation, then its unused
     if (!used.includes(ref)) {
-      diagnoser.Add(
+      diagnoser.add(
         `${ref}/${id}`,
         `Animation: ${id} is not being used, could be removed`,
         DiagnosticSeverity.info,

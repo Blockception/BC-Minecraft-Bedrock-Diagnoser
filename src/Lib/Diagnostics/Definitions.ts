@@ -26,7 +26,7 @@ export function check_definition_value(
 
     //Is excluded
     if (container.excluded.includes(value)) {
-      diagnoser.Add(
+      diagnoser.add(
         value,
         "Value has been blacklisted through the project files",
         DiagnosticSeverity.error,

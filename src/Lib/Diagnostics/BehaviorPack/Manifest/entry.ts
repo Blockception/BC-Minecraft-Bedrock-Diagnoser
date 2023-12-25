@@ -37,7 +37,7 @@ function check_min_engine_version(
     if (Types.Version.compare(version, { major: 1, minor: 8, patch: 0 }) >= 0) return;
   }
 
-  return diagnoser.Add(
+  return diagnoser.add(
     "header",
     "Behaviorpacks with mcfunctions need `min_engine_version` of at-least value: '1.8.0'",
     DiagnosticSeverity.error,

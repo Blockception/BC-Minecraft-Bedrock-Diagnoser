@@ -1,7 +1,7 @@
 import { DiagnosticsBuilder } from "../../../Types";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 
-export function diagnose_events(any: any | undefined, events: string[], Builder: DiagnosticsBuilder) {
+export function diagnose_events(any: any | undefined, events: string[], diagnoser: DiagnosticsBuilder) {
   if (typeof any !== "object") return;
 
   for (const prop in any) {
@@ -12,13 +12,13 @@ export function diagnose_events(any: any | undefined, events: string[], Builder:
 
       if ((target === "self" || target === undefined) && typeof value === "string") {
         if (!events.includes(value)) {
-          Builder.Add(value, "Couldn't find event: " + value, DiagnosticSeverity.error, "event.missing");
+          diagnoser.add(value, "Couldn't find event: " + value, DiagnosticSeverity.error, "event.missing");
         }
       }
     }
 
     if (typeof value === "object") {
-      diagnose_events(value, events, Builder);
+      diagnose_events(value, events, diagnoser);
     }
   }
 }

@@ -13,7 +13,7 @@ export function diagnose_entity_properties_definition(property: EntityProperty[]
 
   // https://learn.microsoft.com/en-us/minecraft/creator/documents/introductiontoentityproperties#number-of-entity-properties-per-entity-type
   if (property.length > 32) {
-    diagnoser.Add(
+    diagnoser.add(
       `properties`,
       `Entity has too many properties: ${property.length}, expected 32 or less`,
       DiagnosticSeverity.warning,
@@ -35,7 +35,7 @@ function diagnose_entity_property_definition(property: EntityProperty, diagnoser
       return diagnose_entity_enum_property_definition(property, diagnoser);
   }
 
-  diagnoser.Add(
+  diagnoser.add(
     `properties/${name}`,
     `Unknown property type: ${type}`,
     DiagnosticSeverity.error,
@@ -48,7 +48,7 @@ function diagnose_entity_bool_property_definition(property: EntityProperty, diag
 
   if (typeof def === "boolean" || typeof def === "string") return;
 
-  diagnoser.Add(
+  diagnoser.add(
     `properties/${name}/${def}`,
     `Default value is not a boolean: ${def}`,
     DiagnosticSeverity.error,
@@ -64,7 +64,7 @@ function diagnose_entity_float_property_definition(property: EntityFloatProperty
 
   if (Array.isArray(property.range) && typeof def === "number") {
     if (def < property.range[0] || def > property.range[1]) {
-      diagnoser.Add(
+      diagnoser.add(
         `properties/${name}/${def}`,
         `Default value is not within the range: ${def}`,
         DiagnosticSeverity.error,
@@ -75,7 +75,7 @@ function diagnose_entity_float_property_definition(property: EntityFloatProperty
 
   if (typeof def === "number" || typeof def === "string") return;
 
-  diagnoser.Add(
+  diagnoser.add(
     `properties/${name}/${def}`,
     `Default value is not a boolean: ${def}`,
     DiagnosticSeverity.error,
@@ -92,7 +92,7 @@ function diagnose_entity_int_property_definition(property: EntityIntProperty, di
   // Default value needs to be a number and within the range
   if (Array.isArray(property.range) && typeof def === "number") {
     if (def < property.range[0] || def > property.range[1]) {
-      diagnoser.Add(
+      diagnoser.add(
         `properties/${name}/${def}`,
         `Default value is not within the range: ${def}`,
         DiagnosticSeverity.error,
@@ -103,7 +103,7 @@ function diagnose_entity_int_property_definition(property: EntityIntProperty, di
 
   if (typeof def === "number" || typeof def === "string") return;
 
-  diagnoser.Add(
+  diagnoser.add(
     `properties/${name}/${def}`,
     `Default value is not a boolean: ${def}`,
     DiagnosticSeverity.error,
@@ -121,7 +121,7 @@ function diagnose_entity_enum_property_definition(
   // default needs to be in the list
   if (def !== undefined) {
     if (property.values?.indexOf(def) === -1) {
-      diagnoser.Add(
+      diagnoser.add(
         `properties/${name}/${def}`,
         `Default value is not in the list of values: ${def}`,
         DiagnosticSeverity.error,
@@ -133,7 +133,7 @@ function diagnose_entity_enum_property_definition(
   if (property.values !== undefined) {
     // Maximum 16 entries
     if (property.values.length > 16) {
-      diagnoser.Add(
+      diagnoser.add(
         `properties/${name}`,
         `Entity has too many values: ${property.values?.length}, expected 16 or less`,
         DiagnosticSeverity.error,
@@ -144,7 +144,7 @@ function diagnose_entity_enum_property_definition(
     // Each entry needs to be a string of length 1 to 32
     for (const value of property.values) {
       if (typeof value !== "string") {
-        diagnoser.Add(
+        diagnoser.add(
           `properties/${name}/${value}`,
           `Value is not a string: ${value}`,
           DiagnosticSeverity.error,
@@ -152,7 +152,7 @@ function diagnose_entity_enum_property_definition(
         );
       } else {
         if (value.length > 32 || value.length < 1) {
-          diagnoser.Add(
+          diagnoser.add(
             `properties/${name}/${value}`,
             `Value is not a string of length 1 to 32: ${value}`,
             DiagnosticSeverity.error,
@@ -190,7 +190,7 @@ function check_entity_property_usage(
       value = value ?? false;
       if (typeof value === "boolean" || typeof value === "string") return;
 
-      diagnoser.Add(
+      diagnoser.add(
         `${parent}/${name}/${value}`,
         `Value is not a boolean: ${value}`,
         DiagnosticSeverity.error,
@@ -202,7 +202,7 @@ function check_entity_property_usage(
     case "float":
       if (typeof value === "number" || typeof value === "string") return;
 
-      diagnoser.Add(
+      diagnoser.add(
         `${parent}/${name}/${value}`,
         `Value is not a number: ${value}`,
         DiagnosticSeverity.error,
@@ -212,7 +212,7 @@ function check_entity_property_usage(
 
     case "enum":
       if (typeof value !== "string") {
-        diagnoser.Add(
+        diagnoser.add(
           `${parent}/${name}/${value}`,
           `Value is not a string: ${value}`,
           DiagnosticSeverity.error,
@@ -223,7 +223,7 @@ function check_entity_property_usage(
 
       // Value needs to be in the list
       if (definition.values?.indexOf(value) === -1) {
-        diagnoser.Add(
+        diagnoser.add(
           `${parent}/${name}/${value}`,
           `Value is not in the list of values: ${value}`,
           DiagnosticSeverity.error,

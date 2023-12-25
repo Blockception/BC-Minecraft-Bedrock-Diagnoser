@@ -48,7 +48,7 @@ export function general_animation_controller(
     const initial_state = controller.initial_state;
 
     if (controller.states[initial_state] === undefined) {
-      diagnoser.Add(
+      diagnoser.add(
         `${controller_id}/initial_state/${initial_state}`,
         "Cannot find initial state, minecraft will revert to state at 0 index",
         DiagnosticSeverity.warning,
@@ -85,7 +85,7 @@ function CheckTransition(
 
     //check is map contains any value
     if (States[state] === undefined) {
-      diagnoser.Add(
+      diagnoser.add(
         controller + "/states/" + state,
         `missing state defined by transition: ${state}`,
         DiagnosticSeverity.error,
@@ -107,7 +107,7 @@ export function general_animation_controllers_implementation(
   controller.animations.using.forEach((anim_id) => {
     if (user.animations.defined.includes(anim_id)) return;
 
-    diagnoser.Add(
+    diagnoser.add(
       `${user.id}/${controller.id}`,
       `Animation controller (${controller.id}) is using animation: '${anim_id}' but ${user.id} has nothing defined that matches the given key\nMinecraft will still run but might return null errors on the animation`,
       DiagnosticSeverity.warning,

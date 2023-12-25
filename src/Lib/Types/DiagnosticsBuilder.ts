@@ -3,10 +3,26 @@ import { TextDocument, ProjectData, ProjectContext } from "bc-minecraft-bedrock-
 import { MCIgnore, MCProject } from "bc-minecraft-project";
 import { Types } from "bc-minecraft-bedrock-types";
 
+/**The context of a diagnostics builder*/
+export interface DiagnosticsBuilderContent<T extends TextDocument = TextDocument> extends ProjectContext<T> {
+  /**Returns a textdocument object or undefined if something went wrong or nothing exists
+   * @param uri The document uri to read*/
+  getDocument(uri: string): T | undefined;
+
+  /**Returns all files in the given directory and sub directories.
+   * @param folder The folder to start the search from
+   * @param patterns The glob patterns that need to match
+   * @param ignores The project settings for ignores or includes*/
+  getFiles(folder: string, patterns: string[], ignores: MCIgnore): string[];
+
+  /**The project cache data*/
+  getCache(): ProjectData;
+}
+
 /**The interface of a diagnostics builder*/
-export interface DiagnosticsBuilder {
+export interface DiagnosticsBuilder<T extends TextDocument = TextDocument> {
   /**The context of the given */
-  context: DiagnosticsBuilderContent;
+  context: DiagnosticsBuilderContent<T>;
 
   /**The project settings for this given document*/
   project: MCProject;
@@ -16,27 +32,11 @@ export interface DiagnosticsBuilder {
    * @param message The message to add
    * @param severity The severity of the issue
    * @param code The code of the diagnostic error*/
-  Add(position: Types.DocumentLocation, message: string, severity: DiagnosticSeverity, code: string | number): void;
+  add(position: Types.DocumentLocation, message: string, severity: DiagnosticSeverity, code: string | number): void;
 }
 
 /** The interface of a diagnostics builder for a document*/
-export interface DocumentDiagnosticsBuilder extends DiagnosticsBuilder {
+export interface DocumentDiagnosticsBuilder<T extends TextDocument = TextDocument> extends DiagnosticsBuilder<T> {
   /**The document to add the diagnostics to*/
-  document: TextDocument;
-}
-
-/**The context of a diagnostics builder*/
-export interface DiagnosticsBuilderContent extends ProjectContext {
-  /**Returns a textdocument object or undefined if something went wrong or nothing exists
-   * @param uri The document uri to read*/
-  getDocument(uri: string): TextDocument | undefined;
-
-  /**Returns all files in the given directory and sub directories.
-   * @param folder The folder to start the search from
-   * @param patterns The glob patterns that need to match
-   * @param ignores The project settings for ignores or includements*/
-  getFiles(folder: string, patterns: string[], ignores: MCIgnore): string[];
-
-  /**The project cache data*/
-  getCache(): ProjectData;
+  document: T;
 }

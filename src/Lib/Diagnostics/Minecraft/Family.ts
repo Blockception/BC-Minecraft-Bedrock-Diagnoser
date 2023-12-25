@@ -24,6 +24,6 @@ export function minecraft_family_diagnose(value: Types.OffsetWord | string, diag
   if (MinecraftData.General.Entities.families.includes(id)) return true;
 
   //Nothing then report error
-  diagnoser.Add(value, `Cannot find family definition: ${id}`, DiagnosticSeverity.error, "minecraft.family.missing");
+  diagnoser.add(value, `Cannot find family definition: ${id}`, DiagnosticSeverity.error, "minecraft.family.missing");
   return false;
 }

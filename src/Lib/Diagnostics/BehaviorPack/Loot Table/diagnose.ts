@@ -14,7 +14,7 @@ export function behaviorpack_loot_table_diagnose(
   }
 
   //Nothing then report error
-  diagnoser.Add(
+  diagnoser.add(
     value,
     `Cannot find behaviorpack loot_table definition: ${id}`,
     DiagnosticSeverity.error,
@@ -47,7 +47,7 @@ export function behaviorpack_loot_table_short_diagnose(
     return true;
   }
 
-  diagnoser.Add(
+  diagnoser.add(
     value,
     `Cannot find behaviorpack loot_table definition: ${id}`,
     DiagnosticSeverity.error,

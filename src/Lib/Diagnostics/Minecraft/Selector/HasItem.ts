@@ -42,7 +42,7 @@ export function minecraft_selector_hasitem_diagnose(
   diagnoser: DiagnosticsBuilder
 ): boolean {
   if (CompactJson.isString(attr)) {
-    diagnoser.Add(
+    diagnoser.add(
       CompactJson.toOffsetWord(attr),
       "The hasitem attribute needs to be either a array or object",
       DiagnosticSeverity.error,
@@ -68,7 +68,7 @@ export function minecraft_selector_hasitem_diagnose(
             diagnoser
           ) && result;
       } else {
-        diagnoser.Add(
+        diagnoser.add(
           CompactJson.toOffsetWord(a),
           "Expected a object",
           DiagnosticSeverity.error,
@@ -92,7 +92,7 @@ function diagnose_hasitem_object(
 
   //Hasitem needs to contain the item attribute
   if (!reader.contains("item")) {
-    diagnoser.Add(
+    diagnoser.add(
       CompactJson.toOffsetWord(attr),
       "Missing item selector attribute",
       DiagnosticSeverity.error,
@@ -138,7 +138,7 @@ function defaultAttribute(
   const msg = `Unknown attribute: ${attribute}`;
 
   attributes.forEach((a) => {
-    diagnoser.Add(
+    diagnoser.add(
       CompactJson.toOffsetWord(a),
       msg,
       DiagnosticSeverity.error,

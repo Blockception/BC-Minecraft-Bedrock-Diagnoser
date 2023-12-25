@@ -10,7 +10,7 @@ export function minecraft_objectives_diagnose(value: Types.OffsetWord, diagnoser
   //Length check
   const id = value.text;
   if (!/^[a-zA-Z0-9\-\_\.]+$/gim.test(id)) {
-    diagnoser.Add(
+    diagnoser.add(
       value,
       `Illegal character found in objective: ${id}`,
       DiagnosticSeverity.error,
@@ -30,7 +30,7 @@ export function minecraft_objectives_diagnose(value: Types.OffsetWord, diagnoser
   }
 
   //Nothing then report error
-  diagnoser.Add(
+  diagnoser.add(
     value,
     `Cannot find objective definition: ${id}`,
     DiagnosticSeverity.error,

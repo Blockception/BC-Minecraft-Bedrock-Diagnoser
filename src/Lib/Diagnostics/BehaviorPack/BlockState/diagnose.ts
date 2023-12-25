@@ -54,7 +54,7 @@ export function behaviorpack_check_command_blockstates(blockId: Types.OffsetWord
           blockData.states.push({value, property});
 
         } else {
-          diagnoser.Add(
+          diagnoser.add(
             blockId,
             `Invalid state: '${property}' in '${item}' on the block state definition: '${states.text}', needs to be a string literal with ""`,
             DiagnosticSeverity.error,
@@ -63,7 +63,7 @@ export function behaviorpack_check_command_blockstates(blockId: Types.OffsetWord
         }
       }
       else if (state[0] !== "") {
-        diagnoser.Add(
+        diagnoser.add(
           states,
           `Invalid state: '${item}' in the block command, needs to be a key value pair with :`,
           DiagnosticSeverity.error,
@@ -73,7 +73,7 @@ export function behaviorpack_check_command_blockstates(blockId: Types.OffsetWord
     }
 
   } else {
-    diagnoser.Add(
+    diagnoser.add(
       states,
       `Invalid states: '${states.text}' in the block command, needs to be a list with []`,
       DiagnosticSeverity.error,
@@ -94,7 +94,7 @@ function check_block_definition(blockDefinition: Minecraft.Block, location: Docu
   if (block.states.length == 0 && blockDefinition.states.length > 0) {
     //Block has not defined states, but states are being used
 
-    diagnoser.Add(
+    diagnoser.add(
       location,
       `Block: ${block.id} has no defined states`,
       DiagnosticSeverity.error,
@@ -136,7 +136,7 @@ function check_state(
         if (actual.startsWith('"') && actual.endsWith('"')) {
           actual = actual.substring(1, actual.length - 1);
         } else {
-          diagnoser.Add(
+          diagnoser.add(
             location,
             `Invalid state value: '${state.value}' for state: '${state.property}' in the block definition: '${
               data.id
@@ -157,7 +157,7 @@ function check_state(
         }
       }
 
-      diagnoser.Add(
+      diagnoser.add(
         location,
         `Invalid state value: '${state.value}' for state: '${state.property}' in the block definition: '${
           data.id
@@ -171,7 +171,7 @@ function check_state(
   }
 
   //No state matching found
-  diagnoser.Add(
+  diagnoser.add(
     location,
     `Missing state: '${state.property}' in the block definition: '${data.id}'`,
     DiagnosticSeverity.error,

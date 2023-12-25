@@ -73,7 +73,7 @@ function defaultAttribute(
   const msg = `Unknown attribute: ${attribute}`;
 
   attributes.forEach((a) => {
-    diagnoser.Add(CompactJson.toOffsetWord(a), msg, DiagnosticSeverity.error, "minecraft.selector.attribute.unknown");
+    diagnoser.add(CompactJson.toOffsetWord(a), msg, DiagnosticSeverity.error, "minecraft.selector.attribute.unknown");
   });
 
   return false;

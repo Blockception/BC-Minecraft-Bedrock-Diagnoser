@@ -6,7 +6,7 @@ import { DiagnosticSeverity } from "../../Types/Severity";
 export function minecraft_coordinate_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   if (Minecraft.Coordinate.is(value.text)) return true;
 
-  diagnoser.Add(
+  diagnoser.add(
     value,
     "Invalid coordinate value: " + value.text,
     DiagnosticSeverity.error,

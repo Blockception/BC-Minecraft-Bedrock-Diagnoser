@@ -7,7 +7,7 @@ import { GeneralInfo } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/Ge
 import { Location } from "bc-minecraft-bedrock-types/lib/src/Types";
 
 describe("Selector", () => {
-  const context = TestProjectData.CreateContext();
+  const context = TestProjectData.createContext();
   const pi: ParameterInfo = { required: false, text: "", type: ParameterType.selector };
   const cache = context.getCache();
   cache.General.objectives.set(GeneralInfo.create("data", Location.create("test"), "test objective"));

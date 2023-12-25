@@ -59,7 +59,7 @@ export function checkAll(
 
     //If any fails then report
     if (!isMatch(need, components)) {
-      diagnoser.Add(
+      diagnoser.add(
         dependent,
         `Component: '${dependent}' requires a ${need} component to be present`,
         DiagnosticSeverity.error,
@@ -93,7 +93,7 @@ export function checkAny(
     if (isMatch(need, components)) return;
   }
 
-  diagnoser.Add(
+  diagnoser.add(
     dependent,
     `Component: '${dependent}' requires one of the following components: '${JSON.stringify(
       needs.map((n) => n.toString()).join(",")

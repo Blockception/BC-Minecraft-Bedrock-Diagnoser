@@ -14,7 +14,7 @@ export function resourcepack_has_model(modelId: string, diagnoser: DiagnosticsBu
   //Check vanilla data
   if (MinecraftData.ResourcePack.hasModel(modelId, edu)) return true;
 
-  diagnoser.Add(
+  diagnoser.add(
     modelId,
     `Cannot find model definition: ${modelId}`,
     DiagnosticSeverity.error,

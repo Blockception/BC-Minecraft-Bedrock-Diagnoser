@@ -15,7 +15,7 @@ export function diagnose_molang_syntax_expression(molang: string, diagnoser: Dia
   const complex = molang.includes(";") || has_assign_operator(molang);
 
   if (complex && !molang.endsWith(";")) {
-    diagnoser.Add(
+    diagnoser.add(
       molang,
       `Molang expression is complex and should end with a ';'`,
       DiagnosticSeverity.error,

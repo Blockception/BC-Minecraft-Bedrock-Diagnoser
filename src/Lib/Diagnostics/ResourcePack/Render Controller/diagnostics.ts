@@ -48,7 +48,7 @@ export function has_render_controller(id: string, diagnoser: DiagnosticsBuilder)
   if (MinecraftData.ResourcePack.hasRenderController(id, edu)) return true;
 
   //Nothing then report error
-  diagnoser.Add(
+  diagnoser.add(
     id,
     `Cannot find render controller: ${id}`,
     DiagnosticSeverity.error,

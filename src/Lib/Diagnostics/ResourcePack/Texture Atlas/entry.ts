@@ -74,7 +74,7 @@ export function texture_files_diagnose(
 
   if (MinecraftData.ResourcePack.hasTexture(file, education_enabled(diagnoser))) return;
 
-  diagnoser.Add(
+  diagnoser.add(
     `${owner}/${file}`,
     `Cannot find file: ${file}`,
     DiagnosticSeverity.error,

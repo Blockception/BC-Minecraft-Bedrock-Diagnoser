@@ -1,7 +1,7 @@
 import { Types } from "bc-minecraft-bedrock-types";
 import { Selector } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Selector";
 import { CompactJson } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Json";
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../../main";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types";
 import { general_range_integer_diagnose } from "../../General/Range";
 import { minecraft_objectives_diagnose } from "../Objective";
 
@@ -20,7 +20,7 @@ export function selector_scores_diagnose(
     const type = CompactJson.Type[attr.type];
 
     result = false;
-    diagnoser.Add(
+    diagnoser.add(
       CompactJson.toOffsetWord(attr),
       `Expected a object, not a ${type}`,
       DiagnosticSeverity.error,
@@ -46,7 +46,7 @@ function minecraft_selector_scores_item_diagnose(attr: CompactJson.IKeyNode, dia
   if (!CompactJson.isString(attr)) {
     const type = CompactJson.Type[attr.type];
 
-    diagnoser.Add(
+    diagnoser.add(
       CompactJson.toOffsetWord(attr),
       `Expected a range / integer value, not a ${type}`,
       DiagnosticSeverity.error,

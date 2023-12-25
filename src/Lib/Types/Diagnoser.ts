@@ -1,5 +1,5 @@
 import { Pack, PackType, TextDocument } from "bc-minecraft-bedrock-project";
-import { DiagnoserContext, InternalDiagnosticsBuilder } from "./DiagnoserContext";
+import { DiagnoserContext, ManagedDiagnosticsBuilder } from "./DiagnoserContext";
 import { DiagnosticSeverity } from "./Severity";
 import { format_diagnose_path } from "../Diagnostics/Format";
 import { MCIgnore } from "bc-minecraft-project";
@@ -10,23 +10,23 @@ import { BehaviorPack } from "../Diagnostics/BehaviorPack";
 import { ResourcePack } from "../Diagnostics/ResourcePack";
 import { SkinPack } from "../Diagnostics/SkinPack/SkinPack";
 import { WorldPack } from "../Diagnostics/WorldPack/WorldPack";
-import { DocumentDiagnosticsBuilder } from './DiagnosticsBuilder';
+import { DocumentDiagnosticsBuilder } from "./DiagnosticsBuilder";
 
 /**The object that is responsible for diagnosing minecraft bedrock files*/
-export class Diagnoser {
+export class Diagnoser<T extends TextDocument = TextDocument> {
   /**The context needed to perform diagnostics*/
-  readonly context: DiagnoserContext;
+  readonly context: DiagnoserContext<T>;
 
   /**Create a new instance of Diagnoser
    * @param context The context needed to perform diagnostics*/
-  constructor(context: DiagnoserContext) {
+  constructor(context: DiagnoserContext<T>) {
     this.context = context;
   }
 
   /** Process and diagnoses the given document
    * @param doc The textdocument to process or the uri to the document
    * @returns `true` or `false` if the diagnostics was successfully*/
-  Process(doc: TextDocument | string): boolean {
+  process(doc: T | string): boolean {
     if (typeof doc === "string") {
       const temp = this.context.getDocument(doc);
 
@@ -43,7 +43,8 @@ export class Diagnoser {
     //Check if diagnostics for this file type is disabled
     if (pack.context.attributes["diagnostic" + ext] === "false") return false;
 
-    const diagnoser = this.context.getDiagnoser(doc, pack.context)  as (DocumentDiagnosticsBuilder & InternalDiagnosticsBuilder);
+    const diagnoser = this.context.getDiagnoser(doc, pack.context) as DocumentDiagnosticsBuilder<T> &
+      ManagedDiagnosticsBuilder<T>;
     if (!diagnoser) return false;
 
     diagnoser.document = doc;
@@ -85,7 +86,7 @@ export class Diagnoser {
         msg = JSON.stringify(err);
       }
 
-      diagnoser.Add({ character: 0, line: 0 }, msg, DiagnosticSeverity.error, "debugger.internal.exception");
+      diagnoser.add({ character: 0, line: 0 }, msg, DiagnosticSeverity.error, "debugger.internal.exception");
     }
 
     diagnoser.done();
@@ -96,12 +97,12 @@ export class Diagnoser {
   /**Diagnoses the entire given folder
    * @param folder The folder to retrieve files of
    * @param ignores The pattern to ignore on files*/
-  ProcessFolder(folder: string, ignores: MCIgnore): boolean {
+  processFolder(folder: string, ignores: MCIgnore): boolean {
     const files = this.context.getFiles(folder, ["*"], ignores);
     let out = false;
 
     for (let I = 0; I < files.length; I++) {
-      out = this.Process(files[I]) || out;
+      out = this.process(files[I]) || out;
     }
 
     return out;
@@ -110,7 +111,7 @@ export class Diagnoser {
   /**Process the entire given pack
    * @param pack The pack to process
    * @returns True or false is something was processed*/
-  ProcessPack(pack: Pack): boolean {
-    return this.ProcessFolder(pack.folder, pack.context.ignores);
+  processPack(pack: Pack): boolean {
+    return this.processFolder(pack.folder, pack.context.ignores);
   }
 }

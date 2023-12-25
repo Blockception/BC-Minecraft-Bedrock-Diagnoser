@@ -25,7 +25,7 @@ export function animation_or_controller_diagnose_implementation(
       return animation_controller_diagnose_implementation(id, user, ownerType, diagnoser, particles, sounds);
 
     case anim_or_contr.neither:
-      diagnoser.Add(
+      diagnoser.add(
         id,
         `Cannot find animation / animation controller: ${id}`,
         DiagnosticSeverity.error,
@@ -41,7 +41,7 @@ export function animation_or_controller_diagnose(id: Types.OffsetWord, diagnoser
       return;
 
     case anim_or_contr.neither:
-      diagnoser.Add(
+      diagnoser.add(
         id,
         `Cannot find animation / animation controller: ${id}`,
         DiagnosticSeverity.error,
@@ -71,7 +71,7 @@ export function animation_reference_diagnose(value: Types.OffsetWord, diagnoser:
 
   if (out) return;
 
-  diagnoser.Add(
+  diagnoser.add(
     value,
     `Cannot find animation / animation controller: ${value.text}`,
     DiagnosticSeverity.error,

@@ -14,7 +14,7 @@ export function minecraft_tickingarea_diagnose(value: Types.OffsetWord, diagnose
   if (data.General.tickingAreas.has(id)) return;
 
   //Nothing then report error
-  diagnoser.Add(
+  diagnoser.add(
     value,
     `Cannot find tickingarea definition: ${id}`,
     DiagnosticSeverity.error,

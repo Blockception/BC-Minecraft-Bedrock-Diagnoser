@@ -40,7 +40,7 @@ export function has_animation(id: string, diagnoser: DiagnosticsBuilder): boolea
   if (cache.BehaviorPacks.animations.has(id)) return true;
 
   //Nothing then report error
-  diagnoser.Add(
+  diagnoser.add(
     `"${id}"`,
     `Cannot find behaviorpack animation: ${id}`,
     DiagnosticSeverity.error,

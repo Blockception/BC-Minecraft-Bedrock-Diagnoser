@@ -37,7 +37,7 @@ export function minecraft_manifest_required_module(
   }
 
   //No correct module found
-  diagnoser.Add(
+  diagnoser.add(
     "modules",
     "This manifest is required to have the following module type one of " + required_type.join(", "),
     DiagnosticSeverity.error,
@@ -49,7 +49,7 @@ export function minecraft_manifest_required_module(
 
 export function minecraft_manifest_version(version: number[], diagnoser: DiagnosticsBuilder, path: string): void {
   if (version.length != 3) {
-    diagnoser.Add(
+    diagnoser.add(
       path,
       "The version number needs to be an array of 3 items",
       DiagnosticSeverity.error,
@@ -58,7 +58,7 @@ export function minecraft_manifest_version(version: number[], diagnoser: Diagnos
   }
 
   if (version[0] < 1) {
-    diagnoser.Add(
+    diagnoser.add(
       `${path}/${version[0]}`,
       "By convention, the version numbering needs to be atleast [1, 0, 0]",
       DiagnosticSeverity.warning,

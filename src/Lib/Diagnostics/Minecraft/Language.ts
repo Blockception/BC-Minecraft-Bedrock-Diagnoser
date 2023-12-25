@@ -38,14 +38,14 @@ export function minecraft_language_line_diagnose(
   if (CommentIndex >= 0) {
     //Ensuring that comment has started right '##'
     if (text.substring(CommentIndex, CommentIndex + 2) !== "##") {
-      diagnoser.Add(line, "A comment is always ##", DiagnosticSeverity.error, "minecraft.language.comment.invalid");
+      diagnoser.add(line, "A comment is always ##", DiagnosticSeverity.error, "minecraft.language.comment.invalid");
     }
 
     //Check if the comment doesn't start at the start of the line
     if (CommentIndex > 0) {
       //Comments need to be predicated with a tab if they do not start at the beginning of the line
       if (text.charAt(CommentIndex - 1) !== "\t") {
-        diagnoser.Add(
+        diagnoser.add(
           line,
           "Before a comment must be a tab",
           DiagnosticSeverity.error,
@@ -62,7 +62,7 @@ export function minecraft_language_line_diagnose(
   if (text === "" || text === "\r" || text === "\r\n" || text == "") {
     //If the line was an identend comment, it will leave an empty line
     if (CommentIndex > 0) {
-      diagnoser.Add(
+      diagnoser.add(
         line,
         "A line cannot have an indented comment",
         DiagnosticSeverity.error,
@@ -78,7 +78,7 @@ export function minecraft_language_line_diagnose(
 
   //If no key definition has been found, it means an invalid line has been given
   if (Index < 0) {
-    diagnoser.Add(
+    diagnoser.add(
       line,
       "A translation item needs a '=' to separate key and value",
       DiagnosticSeverity.error,
@@ -92,8 +92,8 @@ export function minecraft_language_line_diagnose(
     if (KeyIndex >= 0) {
       const secondKey = keys[KeyIndex];
 
-      diagnoser.Add(line, "Duplicate key found", DiagnosticSeverity.error, "minecraft.language.duplicate");
-      diagnoser.Add(secondKey, "Duplicate key found", DiagnosticSeverity.error, "minecraft.language.duplicate");
+      diagnoser.add(line, "Duplicate key found", DiagnosticSeverity.error, "minecraft.language.duplicate");
+      diagnoser.add(secondKey, "Duplicate key found", DiagnosticSeverity.error, "minecraft.language.duplicate");
     }
 
     keys.push(Types.OffsetWord.create(Key, line.offset));
@@ -103,21 +103,21 @@ export function minecraft_language_line_diagnose(
     let offset = line.offset + Index + 1;
     let index;
     if ((index = value.indexOf("\\n")) > -1)
-      diagnoser.Add(
+      diagnoser.add(
         index + offset,
         "Illegal text, minecraft doesn't accept this unfortunately",
         DiagnosticSeverity.error,
         "minecraft.language.illegal"
       );
     if ((index = value.indexOf("\\r")) > -1)
-      diagnoser.Add(
+      diagnoser.add(
         index + offset,
         "Illegal text, minecraft doesn't accept this unfortunately",
         DiagnosticSeverity.error,
         "minecraft.language.illegal"
       );
     if ((index = value.indexOf("\\t")) > -1)
-      diagnoser.Add(
+      diagnoser.add(
         index + offset,
         "Illegal text, minecraft doesn't accept this unfortunately",
         DiagnosticSeverity.error,
@@ -127,7 +127,7 @@ export function minecraft_language_line_diagnose(
 
   //The value needs to be something
   if (Index >= text.length) {
-    diagnoser.Add(
+    diagnoser.add(
       line,
       "A value must be at least length of 1 or more",
       DiagnosticSeverity.error,

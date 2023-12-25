@@ -6,7 +6,7 @@ export function diagnose_filter_is_family(filter: Minecraft.Filter.Filter, diagn
   const family = filter.value;
 
   if (!family) {
-    return diagnoser.Add(
+    return diagnoser.add(
       "test/is_family",
       "Family is not defined",
       DiagnosticSeverity.error,
@@ -15,7 +15,7 @@ export function diagnose_filter_is_family(filter: Minecraft.Filter.Filter, diagn
   }
 
   if (typeof family !== "string") {
-    return diagnoser.Add(
+    return diagnoser.add(
       `test/is_family/${family}`,
       "Family is not defined",
       DiagnosticSeverity.error,

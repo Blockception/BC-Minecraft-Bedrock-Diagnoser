@@ -10,7 +10,7 @@ export function minecraft_fakentity_diagnose(value: Types.OffsetWord, diagnoser:
   if (data.General.fakeEntities.has(id)) return;
 
   //Nothing then report error
-  diagnoser.Add(
+  diagnoser.add(
     value,
     `Cannot find fake entity definition: ${id}`,
     DiagnosticSeverity.error,

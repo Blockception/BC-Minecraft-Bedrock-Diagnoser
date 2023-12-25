@@ -6,13 +6,13 @@ export type ComponentCheck = (name: string, component: any, context: Context, di
 
 export function component_error(message: string, code: string | number): ComponentCheck {
   return (name, component, context, diagnoser) => {
-    diagnoser.Add(name, message, DiagnosticSeverity.error, code);
+    diagnoser.add(name, message, DiagnosticSeverity.error, code);
   };
 }
 
 export function component_warning(message: string, code: string | number): ComponentCheck {
   return (name, component, context, diagnoser) => {
-    diagnoser.Add(name, message, DiagnosticSeverity.warning, code);
+    diagnoser.add(name, message, DiagnosticSeverity.warning, code);
   };
 }
 

@@ -9,7 +9,7 @@ export function behaviorpack_structure_diagnose(value: Types.OffsetWord, diagnos
   if (id.includes("/")) {
     if (id.startsWith('"') && id.endsWith('"')) {
     } else {
-      diagnoser.Add(
+      diagnoser.add(
         value,
         `A structure id with '/' needs quotes surrounding it: ${id} => "${id}"`,
         DiagnosticSeverity.error,
@@ -36,7 +36,7 @@ export function behaviorpack_structure_diagnose(value: Types.OffsetWord, diagnos
   }
 
   //Nothing then report error
-  diagnoser.Add(
+  diagnoser.add(
     value,
     `Cannot find behaviorpack mcstructure: ${id}`,
     DiagnosticSeverity.error,

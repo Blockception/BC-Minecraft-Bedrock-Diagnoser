@@ -14,7 +14,7 @@ export function diagnose_resourcepack_sounds(data: Types.Definition | undefined,
     if (pdata.ResourcePacks.sounds.has(id)) return;
     if (MinecraftData.ResourcePack.hasSound(id, edu)) return;
 
-    diagnoser.Add(
+    diagnoser.add(
       ref + "/" + id,
       `Cannot find sound definition: ${id}`,
       DiagnosticSeverity.error,
