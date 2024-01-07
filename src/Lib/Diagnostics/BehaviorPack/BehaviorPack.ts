@@ -24,9 +24,9 @@ export namespace BehaviorPack {
     const uri = diagnoser.document.uri;
 
     //retrieve filter doc type
-    const Type = FileType.detect(uri);
+    const type = FileType.detect(uri);
 
-    switch (Type) {
+    switch (type) {
       case FileType.animation:
         Animation.Diagnose(diagnoser);
         break;
