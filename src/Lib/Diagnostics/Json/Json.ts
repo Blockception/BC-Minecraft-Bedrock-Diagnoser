@@ -19,7 +19,7 @@ export namespace Json {
       const temp = parse(text);
       
       // Format version
-      diagnoseFormatVersionIf(temp, diagnoser);
+      // diagnoseFormatVersionIf(temp, diagnoser);
 
       return temp as T;
 
