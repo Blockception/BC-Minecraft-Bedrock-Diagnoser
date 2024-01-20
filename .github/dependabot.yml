@@ -5,16 +5,21 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: "npm" # See documentation for possible values
+    directory: "/" # Location of package manifests
     schedule:
       interval: "monthly"
     groups:
+      internal:
+        patterns:
+          - "bc-minecraft-*"
       all:
         patterns:
           - "*"
-  - package-ecosystem: github-actions
-    directory: /
+        exclude-patterns:
+          - "node-fetch"
+  - package-ecosystem: "github-actions" # See documentation for possible values
+    directory: "/" # Location of package manifests
     schedule:
       interval: "monthly"
     groups:
