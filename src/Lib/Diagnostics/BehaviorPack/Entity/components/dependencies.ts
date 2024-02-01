@@ -1,6 +1,6 @@
 import { components_dependencies, Context, DependedMap } from "../../../../Utility/components";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../../Types";
-import { hasPattern } from '../../../../Utility/Checks';
+import { hasPattern } from "../../../../Utility/Checks";
 import { Internal } from "bc-minecraft-bedrock-project";
 
 //Map of components that are depended on all other specified components
@@ -45,25 +45,32 @@ export function behaviorpack_entity_components_dependencies(
 }
 
 function checkMovements(diagnoser: DiagnosticsBuilder, components: string[]): void {
-  const hasMovement = hasPattern("minecraft:movement.", components) ? 1 : 0;
-  const hasNavigation = hasPattern("minecraft:navigation.", components) ? 1 : 0;
+  const hasMovement = hasPattern("minecraft:movement.", components);
+  const hasNavigation = hasPattern("minecraft:navigation.", components);
 
-  const Count = hasMovement + hasNavigation;
+  // Check if
+  if (components.includes("minecraft:movement.glide")) {
+    return;
+  }
 
-  if (Count > 0 && Count != 2) {
-    if (hasMovement == 0)
-      diagnoser.add(
-        "minecraft:movement",
-        `Missing a movement component such as: 'minecraft:movement.basic'`,
-        DiagnosticSeverity.error,
-        "behaviorpack.entity.component.missing"
-      );
-    if (hasNavigation == 0)
-      diagnoser.add(
-        "minecraft:movement",
-        `Missing a movement component such as: 'minecraft:navigation.generic'`,
-        DiagnosticSeverity.error,
-        "behaviorpack.entity.component.missing"
-      );
+  if (hasMovement && hasNavigation) {
+    return;
+  }
+
+  if (!hasMovement) {
+    diagnoser.add(
+      "minecraft:movement",
+      `Missing a movement component such as: 'minecraft:movement.basic'`,
+      DiagnosticSeverity.error,
+      "behaviorpack.entity.component.missing"
+    );
+  }
+  if (!hasNavigation) {
+    diagnoser.add(
+      "minecraft:movement",
+      `Missing a movement component such as: 'minecraft:navigation.generic'`,
+      DiagnosticSeverity.error,
+      "behaviorpack.entity.component.missing"
+    );
   }
 }
