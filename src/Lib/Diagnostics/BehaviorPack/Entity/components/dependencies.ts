@@ -1,6 +1,5 @@
 import { components_dependencies, Context, DependedMap } from "../../../../Utility/components";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../../Types";
-import { hasPattern } from "../../../../Utility/Checks";
 import { Internal } from "bc-minecraft-bedrock-project";
 
 //Map of components that are depended on all other specified components
@@ -39,25 +38,27 @@ export function behaviorpack_entity_components_dependencies(
   diagnoser: DiagnosticsBuilder
 ): void {
   const components = context.components;
+
   checkMovements(diagnoser, components);
 
   components_dependencies("entity", context, diagnoser, component_dependents_all, component_dependents_any);
 }
 
 function checkMovements(diagnoser: DiagnosticsBuilder, components: string[]): void {
-  const hasMovement = hasPattern("minecraft:movement.", components);
-  const hasNavigation = hasPattern("minecraft:navigation.", components);
+  const movementComps = components.filter((comp) => comp.startsWith("minecraft:movement."));
+  const navigationComps = components.filter((comp) => comp.startsWith("minecraft:navigation."));
 
-  // Check if
-  if (components.includes("minecraft:movement.glide")) {
+  // Check for glide
+  if (movementComps.length === 1 && movementComps.includes("minecraft:movement.glide")) {
     return;
   }
 
-  if (hasMovement && hasNavigation) {
+  // If we have nothing to check, then we can return
+  if (movementComps.length == 0 && navigationComps.length == 0) {
     return;
   }
 
-  if (!hasMovement) {
+  if (movementComps.length === 0) {
     diagnoser.add(
       "minecraft:movement",
       `Missing a movement component such as: 'minecraft:movement.basic'`,
@@ -65,7 +66,7 @@ function checkMovements(diagnoser: DiagnosticsBuilder, components: string[]): vo
       "behaviorpack.entity.component.missing"
     );
   }
-  if (!hasNavigation) {
+  if (navigationComps.length === 0) {
     diagnoser.add(
       "minecraft:movement",
       `Missing a movement component such as: 'minecraft:navigation.generic'`,
