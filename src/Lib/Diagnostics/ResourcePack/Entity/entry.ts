@@ -1,4 +1,4 @@
-import { Internal, ResourcePack, TextDocument } from "bc-minecraft-bedrock-project";
+import { Internal, ResourcePack } from "bc-minecraft-bedrock-project";
 import { DocumentDiagnosticsBuilder} from "../../../Types";
 import { Json } from "../../Json/Json";
 import { animation_controller_diagnose_implementation } from "../Animation Controllers/diagnostics";
@@ -27,7 +27,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   const entity = Json.LoadReport<Internal.ResourcePack.Entity>(diagnoser);
   if (!Internal.ResourcePack.Entity.is(entity)) return;
 
-  const container = entity["minecraft:client_entity"].description;
+  const description = entity["minecraft:client_entity"].description;
   const entityGathered = ResourcePack.Entity.Process(diagnoser.document);
 
   if (!entityGathered) return;
@@ -35,39 +35,39 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
 
   //#region animations
   //Check animations / animation controllers
-  Types.Definition.forEach(container.animations, (reference, anim_id) =>
+  Types.Definition.forEach(description.animations, (reference, anim_id) =>
     animation_or_controller_diagnose_implementation(
       anim_id,
       entityGathered,
       "Entities",
       diagnoser,
-      container.particle_effects,
-      container.sound_effects
+      description.particle_effects,
+      description.sound_effects
     )
   );
   //Check used animations
-  resourcepack_animation_used(container.animations, diagnoser, container.scripts);
+  resourcepack_animation_used(description.animations, diagnoser, description.scripts);
   //#endregion
 
   //Check animation controllers
-  container.animation_controllers?.forEach((controller) => {
+  description.animation_controllers?.forEach((controller) => {
     const temp = flatten(controller);
     if (temp) animation_controller_diagnose_implementation(temp, entityGathered, "Entities", diagnoser);
   });
 
   //Check render controllers
-  container.render_controllers?.forEach((controller) => {
+  description.render_controllers?.forEach((controller) => {
     const temp = getKey(controller);
     if (temp) render_controller_diagnose_implementation(temp, entityGathered, "Entities", diagnoser);
   });
 
   //Check models
-  Types.Definition.forEach(container.geometry, (ref, modelId) =>
+  Types.Definition.forEach(description.geometry, (ref, modelId) =>
     resourcepack_has_model(modelId, diagnoser)
   );
 
   //check particles
-  Types.Definition.forEach(container.particle_effects, (ref, part_id) =>
+  Types.Definition.forEach(description.particle_effects, (ref, part_id) =>
     resourcepack_particle_diagnose(part_id, diagnoser)
   );
 
@@ -80,15 +80,15 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
     .map((item) => item.replace(/\\/gi, "/"));
 
   //Check if entity has textures defined
-  Types.Definition.forEach(container.textures, (ref, id) => {
-    texture_files_diagnose(container.identifier, id, rp_files, diagnoser);
+  Types.Definition.forEach(description.textures, (ref, id) => {
+    texture_files_diagnose(description.identifier, id, rp_files, diagnoser);
   });
 
   //Check if entity has sounds defined
-  diagnose_resourcepack_sounds(container.sound_effects, diagnoser);
+  diagnose_resourcepack_sounds(description.sound_effects, diagnoser);
 
   //Script check
-  if (container.scripts) diagnose_script(diagnoser, container.scripts, container.animations);
+  if (description.scripts) diagnose_script(diagnoser, description.scripts, description.animations);
 }
 
 function flatten(data: string | Types.Definition): string | undefined {
