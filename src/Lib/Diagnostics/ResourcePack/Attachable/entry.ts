@@ -26,18 +26,18 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   if (!Internal.ResourcePack.Attachable.is(attacble)) return;
 
   const description = attacble["minecraft:attachable"].description;
-  const entityGathered = ResourcePack.Entity.Process(diagnoser.document);
+  const attachableGathered = ResourcePack.Attachable.Process(diagnoser.document);
 
-  if (!entityGathered) return;
-  if (!entityGathered.molang) entityGathered.molang = Molang.MolangFullSet.harvest(diagnoser.document.getText());
+  if (!attachableGathered) return;
+  if (!attachableGathered.molang) attachableGathered.molang = Molang.MolangFullSet.harvest(diagnoser.document.getText());
 
   //#region animations
   //Check animations / animation controllers
   Types.Definition.forEach(description.animations, (reference, anim_id) =>
     animation_or_controller_diagnose_implementation(
       anim_id,
-      entityGathered,
-      "Entities",
+      attachableGathered,
+      "Attachables",
       diagnoser,
       description.particle_effects,
       description.sound_effects
@@ -50,13 +50,13 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   //Check animation controllers
   description.animation_controllers?.forEach((controller) => {
     const temp = flatten(controller);
-    if (temp) animation_controller_diagnose_implementation(temp, entityGathered, "Entities", diagnoser);
+    if (temp) animation_controller_diagnose_implementation(temp, attachableGathered, "Attachables", diagnoser);
   });
 
   //Check render controllers
   description.render_controllers?.forEach((controller) => {
     const temp = getKey(controller);
-    if (temp) render_controller_diagnose_implementation(temp, entityGathered, "Entities", diagnoser);
+    if (temp) render_controller_diagnose_implementation(temp, attachableGathered, "Attachables", diagnoser);
   });
 
   //Check models
@@ -77,12 +77,12 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
     .getFiles(pack.folder, ["**/textures/**/*.{tga,png,jpg,jpeg}"], pack.context.ignores)
     .map((item) => item.replace(/\\/gi, "/"));
 
-  //Check if entity has textures defined
+  //Check if attachable has textures defined
   Types.Definition.forEach(description.textures, (ref, id) => {
     texture_files_diagnose(description.identifier, id, rp_files, diagnoser);
   });
 
-  //Check if entity has sounds defined
+  //Check if attachable has sounds defined
   diagnose_resourcepack_sounds(description.sound_effects, diagnoser);
 
   //Script check
