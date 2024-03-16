@@ -55,21 +55,27 @@ export function animation_reference_diagnose(value: Types.OffsetWord, diagnoser:
   const data = diagnoser.context.getCache();
   const id = value.text;
 
-  let out = false;
-
-  //Project?
-  data.ResourcePacks.entities.forEach((entity) => {
-    if (entity.animations.defined.includes(id)) out = true;
-  });
-
-  if (out) return;
+  //Project in entity
+  if (data.ResourcePacks.entities.find((entity) => entity.animations.defined.includes(id)) !== undefined) {
+    return;
+  }
+  if (data.ResourcePacks.animations.find((anim) => anim.id === id) !== undefined) {
+    return;
+  }
+  if (data.ResourcePacks.animation_controllers.find((anim) => anim.id === id) !== undefined) {
+    return;
+  }
 
   //Vanilla?
-  MinecraftData.vanilla.ResourcePack.entities.forEach((entity) => {
-    if (entity.animations.includes(id)) out = true;
-  });
-
-  if (out) return;
+  if (MinecraftData.vanilla.ResourcePack.entities.some((entity) => entity.animations.includes(id))) {
+    return;
+  }
+  if (MinecraftData.vanilla.ResourcePack.animations.some((anim) => anim === id)) {
+    return;
+  }
+  if (MinecraftData.vanilla.ResourcePack.animation_controllers.some((anim) => anim === id)) {
+    return;
+  }
 
   diagnoser.add(
     value,
