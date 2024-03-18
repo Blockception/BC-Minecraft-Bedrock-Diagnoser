@@ -10,7 +10,7 @@ import { Json } from "../../Json/Json";
 export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   const blocks = Json.LoadReport<Blocks>(diagnoser);
 
-  if (!Json.TypeCheck(blocks, diagnoser, "blocks.json", "minecraft.resourcepack.blocks.invalid", is)) return;
+  if (!Json.TypeCheck(blocks, diagnoser, "blocks.json", "resourcepack.blocks.invalid", is)) return;
 
   const keys = Object.keys(blocks);
   const rp = diagnoser.context.getCache().ResourcePacks;
