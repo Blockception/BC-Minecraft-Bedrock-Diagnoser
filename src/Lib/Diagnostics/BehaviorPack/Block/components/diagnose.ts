@@ -4,6 +4,7 @@ import { Context } from "../../../../Utility/components";
 import { ComponentCheck, components_check, component_error } from "../../../../Utility/components/checks";
 import { resourcepack_has_model } from "../../../ResourcePack/Model/diagnose";
 import { check_geo_and_rules } from '../../../ResourcePack/BlockCulling';
+import { behaviorpack_loot_table_diagnose } from '../../Loot Table';
 
 /**
  *
@@ -34,5 +35,7 @@ const component_test: Record<string, ComponentCheck> = {
       if (component.culling && component.identifier) check_geo_and_rules(component.identifier, component.culling, diagnoser);
     }
   },
-  //TODO minecraft:collision_box
+  "minecraft:loot": (name, component, context, diagnoser) => {
+    if (typeof component === "string") behaviorpack_loot_table_diagnose(component, diagnoser);
+  },
 };
