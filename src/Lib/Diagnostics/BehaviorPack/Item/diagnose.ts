@@ -3,7 +3,6 @@ import { check_definition_value, education_enabled } from "../../Definitions";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { Types } from "bc-minecraft-bedrock-types";
-import { OffsetWord } from "bc-minecraft-bedrock-types/lib/src/Types";
 
 interface Item extends Types.OffsetWord {
   data?: number;

@@ -1,7 +1,7 @@
-import { CompactJson } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Json";
-import { Selector } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Selector";
-import { OffsetWord } from "bc-minecraft-bedrock-types/lib/src/Types";
-import { Diagnoser, DiagnosticSeverity } from "../../../Types";
+import { CompactJson } from "bc-minecraft-bedrock-types/lib/src/minecraft/json";
+import { Selector } from "bc-minecraft-bedrock-types/lib/src/minecraft/selector";
+import { OffsetWord } from "bc-minecraft-bedrock-types/lib/src/types";
+import { DiagnosticSeverity } from "../../../Types";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
 
 export type diagnoseAttribute = (

@@ -1,5 +1,5 @@
-import { CompactJson, CompactJsonReader } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Json";
-import { Selector } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Selector";
+import { CompactJson, CompactJsonReader } from "bc-minecraft-bedrock-types/lib/src/minecraft/json";
+import { Selector } from "bc-minecraft-bedrock-types/lib/src/minecraft/selector";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types";
 import { behaviorpack_item_diagnose } from "../../BehaviorPack/Item/diagnose";
 import { general_integer_diagnose } from "../../General/Integer";

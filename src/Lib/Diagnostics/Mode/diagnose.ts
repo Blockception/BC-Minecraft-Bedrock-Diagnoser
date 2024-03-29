@@ -1,11 +1,11 @@
 import { Command } from "bc-minecraft-bedrock-command";
 import { Modes } from "bc-minecraft-bedrock-types";
-import { ModeHandler } from "bc-minecraft-bedrock-types/lib/src/Modes/ModeHandler";
+import { ModeHandler } from "bc-minecraft-bedrock-types/lib/src/modes/mode-handler";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/Severity";
 import { Types } from "bc-minecraft-bedrock-types";
 import { education_enabled } from "../Definitions";
-import { SlotTypeMode } from "bc-minecraft-bedrock-types/lib/src/Modes/SlotType";
+import { SlotTypeMode } from "bc-minecraft-bedrock-types/lib/src/modes/slot-type";
 
 /**Diagnoses the value as a value in the mode: camerashake
  * @param value The value to evaluate, needs the offset to report bugs

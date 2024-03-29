@@ -4,6 +4,7 @@ import { ResourcePack as RP } from "bc-minecraft-bedrock-project";
 import * as Animation from "./Animation/entry";
 import * as AnimationController from "./Animation Controllers/entry";
 import * as Attachable from "./Attachable/entry";
+import * as BlockCulling from "./BlockCulling/entry";
 import * as BiomesClient from "./Biomes Client/entry";
 import * as Block from "./Block/entry";
 import * as Blocks from "./Block/entry";
@@ -43,6 +44,10 @@ export namespace ResourcePack {
 
       case RP.FileType.attachable:
         Attachable.Diagnose(diagnoser);
+        break;
+
+      case RP.FileType.block_culling_rules:
+        BlockCulling.Diagnose(diagnoser);
         break;
 
       case RP.FileType.biomes_client:

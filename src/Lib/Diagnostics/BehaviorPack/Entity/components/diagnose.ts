@@ -1,6 +1,6 @@
 import { check_loot_table } from "./loot";
 import { check_trade_table } from "./trade";
-import { ComponentBehavior } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Components";
+import { ComponentBehavior } from "bc-minecraft-bedrock-types/lib/src/minecraft/components";
 import { ComponentCheck, components_check } from "../../../../Utility/components/checks";
 import { Context } from "../../../../Utility/components";
 import { DiagnosticsBuilder } from "../../../../Types";

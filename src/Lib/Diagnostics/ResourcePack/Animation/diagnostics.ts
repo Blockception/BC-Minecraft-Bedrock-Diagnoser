@@ -1,4 +1,4 @@
-import { Definition } from "bc-minecraft-bedrock-types/lib/src/Types/Definition";
+import { Definition } from "bc-minecraft-bedrock-types/lib/src/types/definition";
 import { DiagnosticsBuilder } from "../../../Types";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 import { education_enabled } from "../../Definitions";

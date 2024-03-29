@@ -1,7 +1,6 @@
 import { BehaviorPack } from 'bc-minecraft-bedrock-project';
 import { Types, Minecraft } from 'bc-minecraft-bedrock-types';
-import { BlockState } from 'bc-minecraft-bedrock-types/lib/src/Minecraft';
-import { DocumentLocation, Location } from 'bc-minecraft-bedrock-types/lib/src/Types';
+import { DocumentLocation, Location } from 'bc-minecraft-bedrock-types/lib/src/types';
 import { MinecraftData } from 'bc-minecraft-bedrock-vanilla-data';
 import { MolangSet } from 'bc-minecraft-molang/lib/src/Molang';
 import { DiagnosticsBuilder, DiagnosticSeverity } from '../../../Types';

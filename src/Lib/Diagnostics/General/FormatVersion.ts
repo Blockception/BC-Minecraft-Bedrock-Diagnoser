@@ -1,4 +1,4 @@
-import { FormatVersion } from 'bc-minecraft-bedrock-types/lib/src/Minecraft';
+import { FormatVersion } from 'bc-minecraft-bedrock-types/lib/src/minecraft';
 import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../Types";
 import { Versions } from 'bc-minecraft-bedrock-vanilla-data/lib/src/Lib';
 

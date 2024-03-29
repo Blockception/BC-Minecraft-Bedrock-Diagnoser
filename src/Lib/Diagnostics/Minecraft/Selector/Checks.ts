@@ -1,5 +1,5 @@
-import { CompactJson } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Json";
-import { Selector } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Selector";
+import { CompactJson } from "bc-minecraft-bedrock-types/lib/src/minecraft/json";
+import { Selector } from "bc-minecraft-bedrock-types/lib/src/minecraft/selector";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types";
 
 /**

@@ -1,5 +1,5 @@
 import { Internal, SMap, TextDocument } from "bc-minecraft-bedrock-project";
-import { ComponentGroups } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Components";
+import { ComponentGroups } from "bc-minecraft-bedrock-types/lib/src/minecraft/components";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../../main";
 import { behaviorpack_entity_components_filters } from "./components/filters";
 import { EntityProperty } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/BehaviorPack/Entity";

@@ -2,7 +2,7 @@ import { DiagnosticsBuilder } from "../../../Types";
 import { Internal } from "bc-minecraft-bedrock-project";
 import { behaviorpack_diagnose_entity_components } from "./components/diagnose";
 import { Context } from "../../../Utility/components";
-import { ComponentContainer } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Components";
+import { ComponentContainer } from "bc-minecraft-bedrock-types/lib/src/minecraft/components";
 
 export function behaviorpack_entity_components_check(
   entity: Internal.BehaviorPack.Entity,

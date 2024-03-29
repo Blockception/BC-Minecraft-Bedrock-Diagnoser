@@ -4,7 +4,7 @@ import { DiagnosticsBuilder, DocumentDiagnosticsBuilder} from "../../../Types";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 import { Json } from "../../Json/Json";
 
-/**Diagnoses the given document as a block
+/**Diagnoses the given document as a block.json
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
 export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {

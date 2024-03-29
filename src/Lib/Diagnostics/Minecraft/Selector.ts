@@ -5,9 +5,8 @@ import { ParameterInfo } from "bc-minecraft-bedrock-command/lib/src/Lib/Data/Com
 import { Text } from "bc-minecraft-bedrock-project";
 import { Types } from "bc-minecraft-bedrock-types";
 import { Attribute } from "./Selector/Attributes";
-import { CompactJson } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Json";
-import { Selector } from "bc-minecraft-bedrock-types/lib/src/Minecraft/Selector";
-import { Mode } from 'bc-minecraft-bedrock-types/lib/src/Modes/ModeCollection';
+import { CompactJson } from "bc-minecraft-bedrock-types/lib/src/minecraft/json";
+import { Selector } from "bc-minecraft-bedrock-types/lib/src/minecraft/selector";
 
 /**
  *
