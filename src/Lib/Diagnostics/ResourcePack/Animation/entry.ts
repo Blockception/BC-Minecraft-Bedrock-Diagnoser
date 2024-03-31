@@ -24,7 +24,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
       bones.push({ bone_id, parent_id: anim_id });
 
       if (typeof length === "number") {
-        check_bone_time(bone, length, diagnoser);
+        check_bone_time(`${anim_id}/${bone_id}`, bone, length, diagnoser);
       }
     });
   });
@@ -32,15 +32,15 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   checkBonesExists(bones, diagnoser);
 }
 
-function check_bone_time(bone: BoneAnimation, length: number, diagnoser: DocumentDiagnosticsBuilder) {
-  check_bone_property_time(bone.position, length, diagnoser);
-  check_bone_property_time(bone.rotation, length, diagnoser);
-  check_bone_property_time(bone.scale, length, diagnoser);
+function check_bone_time(parentid: string, bone: BoneAnimation, animation_length: number, diagnoser: DocumentDiagnosticsBuilder) {
+  check_bone_property_time(parentid, bone.position, animation_length, diagnoser);
+  check_bone_property_time(parentid, bone.rotation, animation_length, diagnoser);
+  check_bone_property_time(parentid, bone.scale, animation_length, diagnoser);
 }
 
 type BoneProperties = BoneAnimation["position" | "rotation" | "scale"];
 
-function check_bone_property_time(property: BoneProperties, length: number, diagnoser: DocumentDiagnosticsBuilder) {
+function check_bone_property_time(parentid: string, property: BoneProperties, animation_length: number, diagnoser: DocumentDiagnosticsBuilder) {
   if (typeof property !== "object") return;
   if (Array.isArray(property)) return;
 
@@ -50,16 +50,16 @@ function check_bone_property_time(property: BoneProperties, length: number, diag
       const time = parseFloat(k);
       if (isNaN(time)) {
         diagnoser.add(k, `Failed to parse time value: ${k}`, DiagnosticSeverity.error, "general.float.invalid");
-      } else if (time > length) {
+      } else if (time > animation_length) {
         diagnoser.add(
-          k,
-          `Time value of bone ${k} is greater than the animation length`,
+          `${parentid}/${k}`,
+          `Time value of bone ${k} is greater than the animation length: ${animation_length}`,
           DiagnosticSeverity.error,
           "resourcepack.animation.time.exceeds"
         );
       }
     } catch (err) {
-      diagnoser.add(k, `Failed to parse time value: ${k}`, DiagnosticSeverity.error, "general.float.invalid");
+      diagnoser.add(k, `Failed to parse time value: ${k}\n${err}`, DiagnosticSeverity.error, "general.float.invalid");
     }
   }
 }
