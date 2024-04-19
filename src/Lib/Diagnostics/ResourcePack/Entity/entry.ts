@@ -1,5 +1,5 @@
 import { Internal, ResourcePack } from "bc-minecraft-bedrock-project";
-import { DocumentDiagnosticsBuilder} from "../../../Types";
+import { DocumentDiagnosticsBuilder } from "../../../Types";
 import { Json } from "../../Json/Json";
 import { animation_controller_diagnose_implementation } from "../Animation Controllers/diagnostics";
 import { animation_or_controller_diagnose_implementation } from "../anim or controller";
@@ -33,9 +33,25 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   if (!entityGathered) return;
   if (!entityGathered.molang) entityGathered.molang = Molang.MolangFullSet.harvest(diagnoser.document.getText());
 
+  // Collect all animations and animation controllers
+  const animations: Types.Definition = {};
+  Types.Definition.forEach(description.animations, (ref, anim_id) => {
+    animations[anim_id] = ref;
+  });
+  description.animation_controllers?.forEach((controller) => {
+    if (typeof controller === "string") {
+      animations[controller] = controller;
+      return;
+    }
+
+    Types.Definition.forEach(controller, (ref, anim_id) => {
+      animations[anim_id] = ref;
+    });
+  });
+
   //#region animations
   //Check animations / animation controllers
-  Types.Definition.forEach(description.animations, (reference, anim_id) =>
+  Types.Definition.forEach(animations, (ref, anim_id) =>
     animation_or_controller_diagnose_implementation(
       anim_id,
       entityGathered,
@@ -46,7 +62,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
     )
   );
   //Check used animations
-  resourcepack_animation_used(description.animations, diagnoser, description.scripts);
+  resourcepack_animation_used(animations, diagnoser, description.scripts);
   //#endregion
 
   //Check animation controllers
@@ -62,9 +78,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   });
 
   //Check models
-  Types.Definition.forEach(description.geometry, (ref, modelId) =>
-    resourcepack_has_model(modelId, diagnoser)
-  );
+  Types.Definition.forEach(description.geometry, (ref, modelId) => resourcepack_has_model(modelId, diagnoser));
 
   //check particles
   Types.Definition.forEach(description.particle_effects, (ref, part_id) =>
