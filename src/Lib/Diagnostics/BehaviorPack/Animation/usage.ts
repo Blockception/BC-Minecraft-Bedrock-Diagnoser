@@ -1,19 +1,13 @@
-import { Script } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/Types";
-import { Types } from "bc-minecraft-bedrock-types";
 import { DiagnosticsBuilder } from "../../../Types";
-import { minecraft_animation_used } from "../../Minecraft/Animation";
+import { AnimationUsage, minecraft_animation_used } from "../../Minecraft/Animation";
 
-export function behaviorpack_animation_used(
-  animations: Types.Definition | undefined,
-  diagnoser: DiagnosticsBuilder,
-  script?: Script
-): void {
-  if (animations === undefined) return;
+/**
+ * Checks if the animations and animation controllers which are defined are used
+ * @param data The dataset to check
+ * @param diagnoser The diagnoser builder to receive the errors
+ */
+export function behaviorpack_animation_used(data: AnimationUsage, diagnoser: DiagnosticsBuilder): void {
+  const controllers = diagnoser.context.getCache().BehaviorPacks.animation_controllers;
 
-  minecraft_animation_used(
-    animations,
-    diagnoser,
-    diagnoser.context.getCache().BehaviorPacks.animation_controllers,
-    script
-  );
+  minecraft_animation_used(data, diagnoser, controllers);
 }

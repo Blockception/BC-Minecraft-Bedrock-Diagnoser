@@ -13,6 +13,7 @@ import { resourcepack_particle_diagnose } from "../Particle/diagnose";
 import { diagnose_script } from "../../Minecraft/Script";
 import { diagnose_resourcepack_sounds } from "../Sounds/diagnostics";
 import { resourcepack_animation_used } from "../Animation/usage";
+import { AnimationUsage } from '../../Minecraft';
 
 /**Diagnoses the given document as an attachable
  * @param doc The text document to diagnose
@@ -33,7 +34,31 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
 
   //#region animations
   //Check animations / animation controllers
-  Types.Definition.forEach(description.animations, (reference, anim_id) =>
+  const anim_data: AnimationUsage = {
+    animation_controllers: {},
+    animations: description.animations ?? {},
+    script: description.scripts ?? {},
+  };
+  description.animation_controllers?.forEach((controller) => {
+    if (typeof controller === "string") {
+      anim_data.animation_controllers[controller] = controller;
+      return;
+    }
+
+    Types.Definition.forEach(controller, (ref, anim_id) => anim_data.animation_controllers[ref] = anim_id);
+  });
+
+  Types.Definition.forEach(anim_data.animations, (reference, anim_id) =>
+    animation_or_controller_diagnose_implementation(
+      anim_id,
+      attachableGathered,
+      "Attachables",
+      diagnoser,
+      description.particle_effects,
+      description.sound_effects
+    )
+  );
+  Types.Definition.forEach(anim_data.animation_controllers, (ref, anim_id) =>
     animation_or_controller_diagnose_implementation(
       anim_id,
       attachableGathered,
@@ -44,14 +69,8 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
     )
   );
   //Check used animations
-  resourcepack_animation_used(description.animations, diagnoser, description.scripts);
+  resourcepack_animation_used(anim_data, diagnoser);
   //#endregion
-
-  //Check animation controllers
-  description.animation_controllers?.forEach((controller) => {
-    const temp = flatten(controller);
-    if (temp) animation_controller_diagnose_implementation(temp, attachableGathered, "Attachables", diagnoser);
-  });
 
   //Check render controllers
   description.render_controllers?.forEach((controller) => {
@@ -88,16 +107,6 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   //Script check
   if (description.scripts) diagnose_script(diagnoser, description.scripts, description.animations);
 
-}
-
-function flatten(data: string | Types.Definition): string | undefined {
-  if (typeof data === "string") return data;
-
-  const key = Object.getOwnPropertyNames(data)[0];
-
-  if (key) return data[key];
-
-  return undefined;
 }
 
 function getKey(data: string | Types.Definition): string | undefined {

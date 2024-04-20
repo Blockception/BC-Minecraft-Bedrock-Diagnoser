@@ -13,6 +13,7 @@ import { resourcepack_particle_diagnose } from "../Particle/diagnose";
 import { diagnose_script } from "../../Minecraft/Script";
 import { diagnose_resourcepack_sounds } from "../Sounds/diagnostics";
 import { resourcepack_animation_used } from "../Animation/usage";
+import { AnimationUsage } from "../../Minecraft";
 
 /**Diagnoses the given document as an RP entity
  * @param doc The text document to diagnose
@@ -34,24 +35,23 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   if (!entityGathered.molang) entityGathered.molang = Molang.MolangFullSet.harvest(diagnoser.document.getText());
 
   // Collect all animations and animation controllers
-  const animations: Types.Definition = {};
-  Types.Definition.forEach(description.animations, (ref, anim_id) => {
-    animations[anim_id] = ref;
-  });
+  const anim_data: AnimationUsage = {
+    animation_controllers: {},
+    animations: description.animations ?? {},
+    script: description.scripts ?? {},
+  };
   description.animation_controllers?.forEach((controller) => {
     if (typeof controller === "string") {
-      animations[controller] = controller;
+      anim_data.animation_controllers[controller] = controller;
       return;
     }
 
-    Types.Definition.forEach(controller, (ref, anim_id) => {
-      animations[anim_id] = ref;
-    });
+    Types.Definition.forEach(controller, (ref, anim_id) => anim_data.animation_controllers[ref] = anim_id);
   });
 
   //#region animations
   //Check animations / animation controllers
-  Types.Definition.forEach(animations, (ref, anim_id) =>
+  Types.Definition.forEach(anim_data.animations, (ref, anim_id) =>
     animation_or_controller_diagnose_implementation(
       anim_id,
       entityGathered,
@@ -61,8 +61,19 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
       description.sound_effects
     )
   );
+  Types.Definition.forEach(anim_data.animation_controllers, (ref, anim_id) =>
+    animation_or_controller_diagnose_implementation(
+      anim_id,
+      entityGathered,
+      "Entities",
+      diagnoser,
+      description.particle_effects,
+      description.sound_effects
+    )
+  );
+
   //Check used animations
-  resourcepack_animation_used(animations, diagnoser, description.scripts);
+  resourcepack_animation_used(anim_data, diagnoser);
   //#endregion
 
   //Check animation controllers
