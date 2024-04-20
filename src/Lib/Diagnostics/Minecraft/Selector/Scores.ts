@@ -19,7 +19,6 @@ export function selector_scores_diagnose(
   if (!CompactJson.isObject(attr)) {
     const type = CompactJson.Type[attr.type];
 
-    result = false;
     diagnoser.add(
       CompactJson.toOffsetWord(attr),
       `Expected a object, not a ${type}`,
@@ -27,7 +26,7 @@ export function selector_scores_diagnose(
       "minecraft.selector.scores.type"
     );
 
-    return result;
+    return false;
   }
 
   attr.value.forEach((item) => {

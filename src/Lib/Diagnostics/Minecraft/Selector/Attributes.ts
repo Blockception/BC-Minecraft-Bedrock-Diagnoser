@@ -17,6 +17,7 @@ import { minecraft_name_diagnose } from "../Name";
 import { selector_scores_diagnose } from "./Scores";
 import { minecraft_selector_hasitem_diagnose } from "./HasItem";
 import { all, diagnoseAttributes, forEach, must_offset_word } from "./Util";
+import { minecraft_selector_has_property_diagnose } from './has_property';
 
 function float_diagnose(range?: { min: number; max: number }): diagnoseAttributes {
   return must_offset_word((value, diagnoser) => general_float_diagnose(value, diagnoser, range));
@@ -28,6 +29,7 @@ export const attribute_diagnostics: Record<string, diagnoseAttributes> = {
   dy: all(no_duplicate, must_offset_word(coordinate)),
   dz: all(no_duplicate, must_offset_word(coordinate)),
   family: all(duplicate_check, must_offset_word(minecraft_family_diagnose)),
+  has_property: all(forEach(minecraft_selector_has_property_diagnose)),
   hasitem: all(no_duplicate, forEach(minecraft_selector_hasitem_diagnose)),
   l: all(duplicate_check, must_offset_word(general_integer_diagnose)),
   lm: all(duplicate_check, must_offset_word(general_integer_diagnose)),
@@ -60,21 +62,15 @@ export namespace Attribute {
       return fn(attributes, sel, diagnoser);
     }
 
-    return defaultAttribute(attribute, attributes, sel, diagnoser);
+    attributes.forEach((a) =>
+      diagnoser.add(
+        CompactJson.toOffsetWord(a),
+        `Unknown attribute: ${attribute}`,
+        DiagnosticSeverity.error,
+        "minecraft.selector.attribute.unknown"
+      )
+    );
+
+    return false;
   }
-}
-
-function defaultAttribute(
-  attribute: string,
-  attributes: CompactJson.INode[],
-  sel: Selector,
-  diagnoser: DiagnosticsBuilder
-): boolean {
-  const msg = `Unknown attribute: ${attribute}`;
-
-  attributes.forEach((a) => {
-    diagnoser.add(CompactJson.toOffsetWord(a), msg, DiagnosticSeverity.error, "minecraft.selector.attribute.unknown");
-  });
-
-  return false;
 }
