@@ -40,6 +40,8 @@ import {
   mode_fill_diagnose,
   mode_gamemode_diagnose,
   mode_handtype_diagnose,
+  mode_hudelement_diagnose,
+  mode_hudvisibility_diagnose,
   mode_locatefeature_diagnose,
   mode_mask_diagnose,
   mode_mirror_diagnose,
@@ -227,6 +229,8 @@ const ParameterDiagnostics: Record<number, DiagnoseCommand> = {
   [ParameterType.float]: general_float_diagnose,
   [ParameterType.gamemode]: mode_gamemode_diagnose,
   [ParameterType.handType]: mode_handtype_diagnose,
+  [ParameterType.hudElement]: mode_hudelement_diagnose,
+  [ParameterType.hudVisibility]: mode_hudvisibility_diagnose,
   [ParameterType.integer]: general_integer_diagnose,
   [ParameterType.item]: (item, diagnoser) => {
     if (item.text.endsWith("_spawn_egg")) {

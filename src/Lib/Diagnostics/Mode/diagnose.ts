@@ -71,6 +71,22 @@ export function mode_handtype_diagnose(value: Types.OffsetWord, diagnoser: Diagn
   return mode_generic_diagnose(value, Modes.HandType, diagnoser);
 }
 
+/**Diagnoses the value as a value in the mode: hudelement
+ * @param value The value to evaluate, needs the offset to report bugs
+ * @param diagnoser The diagnoser to report to
+ * @returns true or false, false is any error was found*/
+export function mode_hudelement_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+  return mode_generic_diagnose(value, Modes.HudElement, diagnoser);
+}
+
+/**Diagnoses the value as a value in the mode: hudvisibility
+ * @param value The value to evaluate, needs the offset to report bugs
+ * @param diagnoser The diagnoser to report to
+ * @returns true or false, false is any error was found*/
+export function mode_hudvisibility_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+  return mode_generic_diagnose(value, Modes.HudVisibility, diagnoser);
+}
+
 /**Diagnoses the value as a value in the mode: mask
  * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
