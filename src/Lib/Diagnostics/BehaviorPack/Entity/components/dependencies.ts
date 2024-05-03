@@ -39,14 +39,25 @@ export function behaviorpack_entity_components_dependencies(
 ): void {
   const components = context.components;
 
-  checkMovements(diagnoser, components);
+  checkMovements(diagnoser, components, entity);
 
   components_dependencies("entity", context, diagnoser, component_dependents_all, component_dependents_any);
 }
 
-function checkMovements(diagnoser: DiagnosticsBuilder, components: string[]): void {
+export function checkMovements(diagnoser: DiagnosticsBuilder, components: string[], entity: Internal.BehaviorPack.Entity): void {
   const movementComps = components.filter((comp) => comp.startsWith("minecraft:movement."));
   const navigationComps = components.filter((comp) => comp.startsWith("minecraft:navigation."));
+  const runtimeId = entity['minecraft:entity'].description.runtime_identifier || ''
+
+  // Check for dolphin runtime
+  if (movementComps.length === 1 && runtimeId === 'minecraft:dolphin') {
+    diagnoser.add(
+      "runtime_identifier",
+      `Entity runtime 'minecraft:dolphin' is not compatible with ${movementComps[0]}`,
+      DiagnosticSeverity.error,
+      "behaviorpack.entity.component.incompatible_runtime"
+    )
+  }
 
   // Check for glide
   if (movementComps.length === 1 && movementComps.includes("minecraft:movement.glide")) {
@@ -58,7 +69,8 @@ function checkMovements(diagnoser: DiagnosticsBuilder, components: string[]): vo
     return;
   }
 
-  if (movementComps.length === 0) {
+  // Accounting for ghastruntime
+  if (movementComps.length === 0 && runtimeId !== 'minecraft:ghast') {
     diagnoser.add(
       "minecraft:movement",
       `Missing a movement component such as: 'minecraft:movement.basic'`,
