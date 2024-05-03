@@ -164,6 +164,14 @@ function diagnose_entity_enum_property_definition(
   }
 }
 
+/**
+ * Checks if the property is used correctly
+ * @param definitions The definitions to check against
+ * @param name The property name to check
+ * @param value The value to check
+ * @param parent The parent of the property
+ * @param diagnoser The diagnoser to report to
+ */
 export function diagnose_entity_property_usage(
   definitions: EntityProperty[],
   name: string,
@@ -177,6 +185,7 @@ export function diagnose_entity_property_usage(
     }
   }
 }
+
 
 function check_entity_property_usage(
   definition: EntityProperty,
@@ -192,7 +201,7 @@ function check_entity_property_usage(
 
       diagnoser.add(
         `${parent}/${name}/${value}`,
-        `Value is not a boolean: ${value}`,
+        `Property value is not a boolean: ${value}`,
         DiagnosticSeverity.error,
         "behaviorpack.entity.property.bool.value"
       );
@@ -204,7 +213,7 @@ function check_entity_property_usage(
 
       diagnoser.add(
         `${parent}/${name}/${value}`,
-        `Value is not a number: ${value}`,
+        `Property value is not a number: ${value}`,
         DiagnosticSeverity.error,
         `behaviorpack.entity.property.${definition.type}.value`
       );
@@ -214,7 +223,7 @@ function check_entity_property_usage(
       if (typeof value !== "string") {
         diagnoser.add(
           `${parent}/${name}/${value}`,
-          `Value is not a string: ${value}`,
+          `Property value is not a string: ${value}`,
           DiagnosticSeverity.error,
           "behaviorpack.entity.property.enum.value"
         );
@@ -225,7 +234,7 @@ function check_entity_property_usage(
       if (definition.values?.indexOf(value) === -1) {
         diagnoser.add(
           `${parent}/${name}/${value}`,
-          `Value is not in the list of values: ${value}`,
+          `Property value is not in the list of enum values: ${value}, expecting ${definition.values?.join(", ")}`,
           DiagnosticSeverity.error,
           "behaviorpack.entity.property.enum.value"
         );
