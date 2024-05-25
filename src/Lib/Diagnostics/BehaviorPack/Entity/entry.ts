@@ -13,7 +13,9 @@ import { Internal } from "bc-minecraft-bedrock-project";
 import { Json } from "../../Json/Json";
 import { Types } from "bc-minecraft-bedrock-types";
 import { diagnose_entity_properties_definition } from "./properties";
-import { AnimationUsage } from '../../Minecraft';
+import { AnimationUsage } from "../../Minecraft";
+import { EntityProperty as DefinedEP } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/BehaviorPack/Entity";
+import { EntityProperty as ProjectEP } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/BehaviorPack/Entity";
 
 /**Diagnoses the given document as an bp entity
  * @param doc The text document to diagnose
@@ -44,11 +46,11 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
     molang: MolangData,
     animations: DefinedUsing.create<string>(),
   };
-  const properties = Object.entries(container.description.properties ?? {})?.map(([name, value]) => {
-    return { name, ...value };
-  });
+  const properties = Object.entries(container.description.properties ?? {})?.map(([name, value]) =>
+    propertyToProjectProperty(name, value)
+  );
 
-  //Convert animations / controllers  
+  //Convert animations / controllers
   Types.Definition.forEach(container.description.animations, (ref, anim_id) => {
     owner.animations.defined.push(ref);
     owner.animations.using.push(anim_id);
@@ -77,4 +79,31 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   //Check events
   if (container.events)
     behaviorpack_entity_check_events(container.events, diagnoser, properties, container.component_groups);
+}
+
+function propertyToProjectProperty(name: string, value: DefinedEP): ProjectEP {
+  switch (value.type) {
+    case "bool":
+      return {
+        name: name,
+        type: value.type,
+        default: value.default == true,
+      };
+    case "float":
+    case "int":
+      return {
+        name: name,
+        type: value.type,
+        default: Number(value.default),
+        range: value.range,
+      };
+    case "enum":
+      return {
+        name: name,
+        type: "enum",
+        default: value.default,
+        values: value.values,
+        client_sync: value.client_sync,
+      };
+  }
 }
