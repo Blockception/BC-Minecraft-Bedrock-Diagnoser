@@ -24,9 +24,6 @@ export function minecraft_animation_used(
 
   // Animations field is to be used by script and animations controllers
   Types.Definition.forEach(animations, (ref, id) => {
-    // Mark as unused
-    refsUsed[ref] = false;
-
     controllers.get(id)?.animations.using.forEach((anim) => (refsUsed[anim] = true));
   });
 
@@ -35,8 +32,6 @@ export function minecraft_animation_used(
 
   // Animation controllers are assumed to be always active
   Types.Definition.forEach(animation_controllers, (ref, id) => {
-    refsUsed[ref] = true
-  
     controllers.get(id)?.animations.using.forEach((anim) => (refsUsed[anim] = true));
   });
 
