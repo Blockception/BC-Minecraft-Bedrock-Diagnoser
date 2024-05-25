@@ -32,6 +32,8 @@ export function minecraft_animation_used(
 
   // Animation controllers are assumed to be always active
   Types.Definition.forEach(animation_controllers, (ref, id) => {
+    refsUsed[ref] = true;
+
     controllers.get(id)?.animations.using.forEach((anim) => (refsUsed[anim] = true));
   });
 
