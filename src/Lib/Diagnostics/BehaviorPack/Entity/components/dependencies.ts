@@ -55,7 +55,7 @@ export function checkMovements(diagnoser: DiagnosticsBuilder, components: string
       "runtime_identifier",
       `Entity runtime 'minecraft:dolphin' is not compatible with ${movementComps[0]}`,
       DiagnosticSeverity.error,
-      "behaviorpack.entity.component.incompatible_runtime"
+      "behaviorpack.entity.incompatible_runtime"
     )
   }
 
