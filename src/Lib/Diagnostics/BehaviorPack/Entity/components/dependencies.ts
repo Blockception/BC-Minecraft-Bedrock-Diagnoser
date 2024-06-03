@@ -55,7 +55,7 @@ export function checkMovements(diagnoser: DiagnosticsBuilder, components: string
       "runtime_identifier",
       `Entity runtime 'minecraft:dolphin' is not compatible with ${movementComps[0]}`,
       DiagnosticSeverity.error,
-      "behaviorpack.entity.component.incompatible_runtime"
+      "behaviorpack.entity.incompatible_runtime"
     )
   }
 
@@ -69,8 +69,10 @@ export function checkMovements(diagnoser: DiagnosticsBuilder, components: string
     return;
   }
 
+  if (movementComps.length === 0 && (runtimeId === 'minecraft:ghast' || runtimeId === 'minecraft:dolphin')) return;
+
   // Accounting for ghastruntime
-  if (movementComps.length === 0 && runtimeId !== 'minecraft:ghast') {
+  if (movementComps.length === 0) {
     diagnoser.add(
       "minecraft:movement",
       `Missing a movement component such as: 'minecraft:movement.basic'`,
