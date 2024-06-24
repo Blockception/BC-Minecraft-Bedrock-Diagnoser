@@ -22,6 +22,7 @@ const component_dependents_any: DependedMap = {
     "minecraft:behavior.hurt_by_target",
   ],
   "minecraft:behavior.stalk_and_pounce_on_target": [
+    "minecraft:behavior.nearest_prioritized_attackable_target",
     "minecraft:behavior.nearest_attackable_target",
     "minecraft:behavior.hurt_by_target",
   ],
@@ -48,15 +49,17 @@ export function checkMovements(diagnoser: DiagnosticsBuilder, components: string
   const movementComps = components.filter((comp) => comp.startsWith("minecraft:movement."));
   const navigationComps = components.filter((comp) => comp.startsWith("minecraft:navigation."));
   const runtimeId = entity['minecraft:entity'].description.runtime_identifier || ''
+  const id = entity['minecraft:entity'].description.identifier || ''
 
   // Check for dolphin runtime
-  if (movementComps.length === 1 && runtimeId === 'minecraft:dolphin') {
-    diagnoser.add(
+  if (runtimeId === 'minecraft:dolphin' || id === 'minecraft:dolphin') {
+     if (movementComps.length >= 1) diagnoser.add(
       "runtime_identifier",
       `Entity runtime 'minecraft:dolphin' is not compatible with ${movementComps[0]}`,
       DiagnosticSeverity.error,
       "behaviorpack.entity.incompatible_runtime"
     )
+    else return;
   }
 
   // Check for glide
@@ -69,7 +72,7 @@ export function checkMovements(diagnoser: DiagnosticsBuilder, components: string
     return;
   }
 
-  if (movementComps.length === 0 && (runtimeId === 'minecraft:ghast' || runtimeId === 'minecraft:dolphin')) return;
+  if (movementComps.length === 0 && (runtimeId === 'minecraft:ghast' || runtimeId === 'minecraft:dolphin' || id === 'minecraft:ghast' || id === 'minecraft:dolphin')) return;
 
   // Accounting for ghastruntime
   if (movementComps.length === 0) {
