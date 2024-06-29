@@ -17,6 +17,12 @@ export function behaviorpack_check_blockstates(blockDescriptor: Types.OffsetWord
 
   //Parses states
   const blockData = Minecraft.Block.fromBlockDescriptor(blockDescriptor.text);
+
+  // ^ Returns ['"state"'] instead of ['state']; this fixes that
+  blockData.states.forEach(state => {
+    if (state.property.startsWith('"') && state.property.endsWith('"')) state.property = state.property.substring(1, state.property.length - 1)
+  })
+
   check_block_definition(blockData, blockDescriptor, diagnoser);
 }
 
@@ -41,7 +47,7 @@ export function behaviorpack_check_command_blockstates(blockId: Types.OffsetWord
     // For each state
     for (var I = 0; I < split.length; I++) {
       const item = split[I];
-      const state = split[I].split(':');
+      const state = split[I].split('=').map(part => part.trim());
 
       // Is state properly defined
       if (state.length == 2) {
@@ -64,7 +70,7 @@ export function behaviorpack_check_command_blockstates(blockId: Types.OffsetWord
       else if (state[0] !== "") {
         diagnoser.add(
           states,
-          `Invalid state: '${item}' in the block command, needs to be a key value pair with :`,
+          `Invalid state: '${item}' in the block command, needs to be in the format ["state"=value] :`,
           DiagnosticSeverity.error,
           "behaviorpack.block.states.invalid"
         );
@@ -151,7 +157,7 @@ function check_state(
       //Check if the state value is valid
       for (let expect of values) {
         // Compare int/bool/string values
-        if (expect == actual) {
+        if (String(expect) == actual) { // String() because "true" != true unlike "2" == 2
           return;
         }
       }
