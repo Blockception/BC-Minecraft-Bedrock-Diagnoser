@@ -8,7 +8,7 @@ describe("BehaviorPack", () => {
 
       //Correct commands
       const correctsCommands: string[] = [
-        'setblock ~ ~ ~ spruce_log ["pillar_axis":"x"]',
+        'setblock ~ ~ ~ spruce_log ["pillar_axis"="x"]',
         "setblock ~ ~ ~ spruce_log []",
       ];
 
