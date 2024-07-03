@@ -3,7 +3,7 @@ import { Types } from "bc-minecraft-bedrock-types";
 import { check_definition_value } from "../Definitions";
 
 export function minecraft_tag_diagnose(value: Types.OffsetWord | string, diagnoser: DiagnosticsBuilder): boolean {
-  if (diagnoser.project.attributes["diagnostic.tag"] === "false") {
+  if (diagnoser.project.attributes["diagnostic.tags"] === "false") {
     return true;
   }
 
