@@ -1,6 +1,6 @@
 import { behaviorpack_diagnose_block_components } from "./components/diagnose";
 import { diagnose_molang } from "../../Molang/diagnostics";
-import { DocumentDiagnosticsBuilder } from "../../../Types";
+import { DocumentDiagnosticsBuilder, DiagnosticSeverity } from "../../../Types";
 import { Internal } from "bc-minecraft-bedrock-project";
 import { getUsedComponents } from "bc-minecraft-bedrock-types/lib/src/minecraft/components";
 import { Json } from "../../Json";
@@ -32,4 +32,12 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   });
 
   behaviorpack_block_components_dependencies(block, context, diagnoser);
+
+  if (block["minecraft:block"]["events"]) diagnoser.add(
+    `events`,
+    `Block events have been deprecated in favour of \`minecraft:custom_components\`.`,
+    DiagnosticSeverity.error,
+    "behaviorpack.block.deprecated"
+  );
+
 }

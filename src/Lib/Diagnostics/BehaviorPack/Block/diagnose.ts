@@ -14,8 +14,12 @@ export function behaviorpack_check_blockdescriptor(
   blockDescriptor: Types.OffsetWord,
   diagnoser: DiagnosticsBuilder
 ): void {
-  behaviorpack_check_blockid(blockDescriptor, diagnoser);
+  behaviorpack_check_blockid_from_descriptor(blockDescriptor, diagnoser);
   behaviorpack_check_blockstates(blockDescriptor, diagnoser);
+}
+
+export function behaviorpack_check_blockid_from_descriptor(blockDescriptor: Types.OffsetWord, diagnoser: DiagnosticsBuilder) :boolean {
+  return behaviorpack_check_blockid(Minecraft.Block.getId(blockDescriptor.text), diagnoser)
 }
 
 /**Checks if the blocks exists in the project or in vanilla, if not then a bug is reported
@@ -23,8 +27,7 @@ export function behaviorpack_check_blockdescriptor(
  * @param diagnoser
  * @returns
  */
-export function behaviorpack_check_blockid(blockDescriptor: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  let id = Minecraft.Block.getId(blockDescriptor.text);
+export function behaviorpack_check_blockid(id: string, diagnoser: DiagnosticsBuilder): boolean {
 
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.block, id, diagnoser)) return true;
