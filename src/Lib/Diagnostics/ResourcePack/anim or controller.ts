@@ -22,7 +22,7 @@ export function animation_or_controller_diagnose_implementation(
       return animation_diagnose_implementation(id, user, ownerType, diagnoser, particles, sounds);
 
     case anim_or_contr.controller:
-      return animation_controller_diagnose_implementation(id, user, ownerType, diagnoser, particles, sounds);
+      return animation_controller_diagnose_implementation(id, user, ownerType, diagnoser, { particles, sounds });
 
     case anim_or_contr.neither:
       diagnoser.add(

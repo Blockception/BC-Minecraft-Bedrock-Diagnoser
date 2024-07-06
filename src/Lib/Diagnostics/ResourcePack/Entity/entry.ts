@@ -79,7 +79,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   //Check animation controllers
   description.animation_controllers?.forEach((controller) => {
     const temp = flatten(controller);
-    if (temp) animation_controller_diagnose_implementation(temp, entityGathered, "Entities", diagnoser);
+    if (temp) animation_controller_diagnose_implementation(temp, entityGathered, "Entities", diagnoser, {});
   });
 
   //Check render controllers
