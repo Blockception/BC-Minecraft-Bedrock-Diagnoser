@@ -70,10 +70,10 @@ export function animation_reference_diagnose(value: Types.OffsetWord, diagnoser:
   if (MinecraftData.vanilla.ResourcePack.entities.some((entity) => entity.animations.includes(id))) {
     return;
   }
-  if (MinecraftData.vanilla.ResourcePack.animations.some((anim) => anim === id)) {
+  if (MinecraftData.vanilla.ResourcePack.animations.some((anim) => anim.id === id)) {
     return;
   }
-  if (MinecraftData.vanilla.ResourcePack.animation_controllers.some((anim) => anim === id)) {
+  if (MinecraftData.vanilla.ResourcePack.animation_controllers.some((anim) => anim.id === id)) {
     return;
   }
 

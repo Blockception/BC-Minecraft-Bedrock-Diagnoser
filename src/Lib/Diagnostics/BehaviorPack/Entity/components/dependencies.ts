@@ -1,4 +1,4 @@
-import { components_dependencies, Context, DependedMap } from "../../../../Utility/components";
+import { components_dependencies, Context, DependedMap } from "../../../../utility/components";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../../Types";
 import { Internal } from "bc-minecraft-bedrock-project";
 

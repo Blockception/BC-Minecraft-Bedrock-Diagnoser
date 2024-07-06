@@ -1,7 +1,7 @@
 import { ComponentBehavior } from "bc-minecraft-bedrock-types/lib/src/minecraft/components";
 import { DiagnosticsBuilder } from "../../../../Types";
-import { Context } from "../../../../Utility/components";
-import { ComponentCheck, components_check, component_error } from "../../../../Utility/components/checks";
+import { Context } from "../../../../utility/components";
+import { ComponentCheck, components_check, component_error } from "../../../../utility/components/checks";
 import { resourcepack_has_model } from "../../../ResourcePack/Model/diagnose";
 import { check_geo_and_rules } from '../../../ResourcePack/BlockCulling';
 import { behaviorpack_loot_table_diagnose } from '../../Loot Table';

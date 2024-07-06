@@ -12,6 +12,7 @@ import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/Severity";
 import { State } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/BehaviorPack/AnimationController";
 import { Types } from "bc-minecraft-bedrock-types";
+import { forEach } from '../../utility/using-defined';
 
 export type animation_controllers =
   | Internal.BehaviorPack.AnimationControllers
@@ -95,16 +96,17 @@ function CheckTransition(
   }
 }
 
+
+export type Controller = ResourcePack.AnimationController.AnimationController | BehaviorPack.AnimationController.AnimationController;
+
 export function general_animation_controllers_implementation(
-  controller:
-    | ResourcePack.AnimationController.AnimationController
-    | BehaviorPack.AnimationController.AnimationController,
+  controller: Controller,
   user: Types.Identifiable & AnimationCarrier<Defined<string>> & MolangCarrier<Molang.MolangSetOptional>,
   ownerType: MolangDataSetKey,
   diagnoser: DiagnosticsBuilder
 ) {
-  //for each animation
-  controller.animations.using.forEach((anim_id) => {
+  //for each animation, check if the defined animation is also used
+  forEach(controller?.animations.using, (anim_id) => {
     if (user.animations.defined.includes(anim_id)) return;
 
     diagnoser.add(
