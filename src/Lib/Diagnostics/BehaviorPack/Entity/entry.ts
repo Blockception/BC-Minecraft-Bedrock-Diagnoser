@@ -3,7 +3,7 @@ import { behaviorpack_animation_used } from "../Animation/usage";
 import { behaviorpack_entity_check_events } from "./events";
 import { behaviorpack_entity_components_check } from "./components";
 import { behaviorpack_entity_components_dependencies } from "./components/dependencies";
-import { Context } from "../../../Utility/components";
+import { Context } from "../../../utility/components";
 import { DefinedUsing, Molang } from "bc-minecraft-molang";
 import { diagnose_molang } from "../../Molang/diagnostics";
 import { diagnose_script } from "../../Minecraft/Script";

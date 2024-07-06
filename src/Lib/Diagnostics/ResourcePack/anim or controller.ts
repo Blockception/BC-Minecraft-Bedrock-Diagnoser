@@ -22,7 +22,7 @@ export function animation_or_controller_diagnose_implementation(
       return animation_diagnose_implementation(id, user, ownerType, diagnoser, particles, sounds);
 
     case anim_or_contr.controller:
-      return animation_controller_diagnose_implementation(id, user, ownerType, diagnoser, particles, sounds);
+      return animation_controller_diagnose_implementation(id, user, ownerType, diagnoser, { particles, sounds });
 
     case anim_or_contr.neither:
       diagnoser.add(
@@ -70,10 +70,10 @@ export function animation_reference_diagnose(value: Types.OffsetWord, diagnoser:
   if (MinecraftData.vanilla.ResourcePack.entities.some((entity) => entity.animations.includes(id))) {
     return;
   }
-  if (MinecraftData.vanilla.ResourcePack.animations.some((anim) => anim === id)) {
+  if (MinecraftData.vanilla.ResourcePack.animations.some((anim) => anim.id === id)) {
     return;
   }
-  if (MinecraftData.vanilla.ResourcePack.animation_controllers.some((anim) => anim === id)) {
+  if (MinecraftData.vanilla.ResourcePack.animation_controllers.some((anim) => anim.id === id)) {
     return;
   }
 

@@ -5,7 +5,11 @@ import { education_enabled } from "../../Definitions";
 import { general_animation_controllers_implementation } from "../../Minecraft/Animation Controllers";
 import { Definition } from "bc-minecraft-bedrock-types/lib/src/types/definition";
 import { EntityAnimationMolangCarrier } from "../../../Types";
-import { MolangDataSetKey } from "bc-minecraft-molang";
+import { MolangDataSetKey, Using } from "bc-minecraft-molang";
+import { Storage } from '../../../storage/storage';
+import { forEach } from '../../../utility/using-defined';
+import { AnimationControllers } from 'bc-minecraft-bedrock-vanilla-data/lib/src/Lib/Vanilla/ResourcePack';
+
 
 /**
  *
@@ -18,18 +22,22 @@ export function animation_controller_diagnose_implementation(
   user: EntityAnimationMolangCarrier,
   ownerType: MolangDataSetKey,
   diagnoser: DiagnosticsBuilder,
-  particles?: Definition,
-  sounds?: Definition
+  definitions: {
+    particles?: Definition;
+    sounds?: Definition;
+  }
 ): void {
   if (!has_animation_controller(controllerid, diagnoser)) return;
-  const controller = diagnoser.context.getCache().ResourcePacks.animation_controllers.get(controllerid);
 
+  const controller = diagnoser.context.getCache().ResourcePacks.animation_controllers.get(controllerid);
   if (!controller) return;
+
   general_animation_controllers_implementation(controller, user, ownerType, diagnoser);
 
   //Particle check
-  controller.particles.using.forEach((particle) => {
-    if (particles && particles[particle] !== undefined) return;
+  const particles = definitions.particles || {};
+  forEach(controller.particles, (particle) => {
+    if (particles[particle] !== undefined) return;
 
     diagnoser.add(
       `animations/${controllerid}`,
@@ -40,8 +48,9 @@ export function animation_controller_diagnose_implementation(
   });
 
   //Sound check
-  controller.sounds.using.forEach((sound) => {
-    if (sounds && sounds[sound] !== undefined) return;
+  const sounds = definitions.sounds || {};
+  forEach(controller.sounds, (sound) => {
+    if (sounds[sound] !== undefined) return;
 
     diagnoser.add(
       `animations/${controllerid}`,

@@ -4,7 +4,7 @@ import { DocumentDiagnosticsBuilder, DiagnosticSeverity } from "../../../Types";
 import { Internal } from "bc-minecraft-bedrock-project";
 import { getUsedComponents } from "bc-minecraft-bedrock-types/lib/src/minecraft/components";
 import { Json } from "../../Json";
-import { Context } from "../../../Utility/components";
+import { Context } from "../../../utility/components";
 import { behaviorpack_block_components_dependencies } from "./components/dependencies";
 
 /**Diagnoses the given document as an bp block
