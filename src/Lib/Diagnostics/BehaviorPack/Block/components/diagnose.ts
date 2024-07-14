@@ -47,7 +47,7 @@ const component_test: Record<string, ComponentCheck> = {
   "minecraft:unit_cube": deprecated_component('geometry.minecraft:full_block'),
   "minecraft:placement_filter": (name, component, context, diagnoser) => {
     for (const condition of component.conditions) {
-      condition.block_filter.forEach((block: string) => {
+      condition.block_filter?.forEach((block: string) => {
         behaviorpack_check_blockid(block, diagnoser)
       });
     }
