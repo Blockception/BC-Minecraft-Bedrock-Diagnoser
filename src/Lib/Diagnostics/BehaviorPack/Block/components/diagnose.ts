@@ -45,6 +45,11 @@ const component_test: Record<string, ComponentCheck> = {
   "minecraft:on_player_placing": deprecated_component('minecraft:custom_components'),
   "minecraft:on_interact": deprecated_component('minecraft:custom_components'),
   "minecraft:unit_cube": deprecated_component('geometry.minecraft:full_block'),
+  "minecraft:breakonpush": deprecated_component(),
+  "minecraft:immovable": deprecated_component(),
+  "minecraft:onlypistonpush": deprecated_component(),
+  "minecraft:preventsjumping": deprecated_component(),
+  "minecraft:unwalkable": deprecated_component(),
   "minecraft:placement_filter": (name, component, context, diagnoser) => {
     for (const condition of component.conditions) {
       condition.block_filter?.forEach((block: string) => {
