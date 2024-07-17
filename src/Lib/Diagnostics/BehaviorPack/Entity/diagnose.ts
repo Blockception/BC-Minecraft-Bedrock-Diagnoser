@@ -15,7 +15,7 @@ export function behaviorpack_entityid_diagnose(
   value: Types.OffsetWord | string,
   diagnoser: DiagnosticsBuilder
 ): boolean {
-  let id = typeof value === "string" ? value : value.text;
+  let id = typeof value === "string" ? value.split('<')[0] : value.text.split('<')[0];
 
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.entity, id, diagnoser)) {

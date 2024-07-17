@@ -52,7 +52,7 @@ const component_test: Record<string, ComponentCheck> = {
     if (Array.isArray(component.use_on)) component.use_on.forEach((block: string) => {
       behaviorpack_check_blockid(block, diagnoser)
     });
-    if (component.entity) behaviorpack_entityid_diagnose(component.entity.split('<')[0], diagnoser)
+    if (component.entity) behaviorpack_entityid_diagnose(component.entity, diagnoser)
   },
   "minecraft:block_placer": (name, component, context, diagnoser) => {
     if (Array.isArray(component.use_on)) component.use_on.forEach((block: string) => {
@@ -61,7 +61,7 @@ const component_test: Record<string, ComponentCheck> = {
     if (component.block) behaviorpack_check_blockid(component.block, diagnoser)
   },
   "minecraft:projectile": (name, component, context, diagnoser) => {
-    if (component.projectile_entity) behaviorpack_entityid_diagnose(component.projectile_entity.split('<')[0], diagnoser)
+    if (component.projectile_entity) behaviorpack_entityid_diagnose(component.projectile_entity, diagnoser)
   },
   "minecraft:repairable": (name, component, context, diagnoser) => {
     if (Array.isArray(component.repair_items)) component.repair_items.forEach((repairEntry: any) => {
