@@ -3,6 +3,15 @@ import { Script } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/Types"
 import { Types } from "bc-minecraft-bedrock-types";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/Severity";
+import { Vanilla } from 'bc-minecraft-bedrock-vanilla-data';
+
+// Vanilla aniamtions and controllers that aren't played via the typical means; the controllers aren't under scripts.animate and the animations aren't in controllers. Vanilla player stuff so no point in flagging it
+const whitelist = [
+  'controller.animation.player.base',
+  'controller.animation.player.hudplayer',
+  'animation.player.look_at_target.inverted',
+  'controller.animation.persona.blink'
+]
 
 export interface AnimationUsage {
   animation_controllers: Types.Definition;
@@ -22,6 +31,9 @@ export function minecraft_animation_used(
   const refsUsed: Record<string, boolean> = {};
   const { animation_controllers, animations, script } = data;
 
+  // Check against vanilla controllers
+  Vanilla.ResourcePack.AnimationControllers.forEach(controller => controller.animations.forEach(anim => refsUsed[anim] = true))
+
   // Animations field is to be used by script and animations controllers
   Types.Definition.forEach(animations, (ref, id) => {
     controllers.get(id)?.animations.using.forEach((anim) => (refsUsed[anim] = true));
@@ -39,6 +51,9 @@ export function minecraft_animation_used(
 
   // Check if animations are used
   Types.Definition.forEach(animations, (ref, id) => {
+
+    if (whitelist.includes(id)) return;
+
     //If the used animations does not contain the referenced animation, then its unused
     if (refsUsed[ref] === true) {
       return;
