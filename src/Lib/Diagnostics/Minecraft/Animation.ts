@@ -5,7 +5,7 @@ import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/Severity";
 import { Vanilla } from 'bc-minecraft-bedrock-vanilla-data';
 
-// Vanilla aniamtions and controllers that aren't played via the typical means; the controllers aren't under scripts.animate and the animations aren't in controllers. Vanilla player stuff so no point in flagging it
+// Vanilla animations and controllers that aren't played via the typical means; the controllers aren't under scripts.animate and the animations aren't in controllers. Vanilla player stuff so no point in flagging it
 const whitelist = [
   'controller.animation.player.base',
   'controller.animation.player.hudplayer',
