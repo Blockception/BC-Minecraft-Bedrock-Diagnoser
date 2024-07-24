@@ -22,10 +22,9 @@ import { minecraft_selector_diagnose } from "../../Minecraft/Selector";
 import { minecraft_tag_diagnose } from "../../Minecraft/Tag";
 import { minecraft_tickingarea_diagnose } from "../../Minecraft/Tickingarea";
 import { minecraft_xp_diagnose } from "../../Minecraft/Xp";
-import { ParameterInfo } from "bc-minecraft-bedrock-command/lib/src/Lib/Data/CommandInfo";
+import { ParameterInfo } from "bc-minecraft-bedrock-command";
 import { resourcepack_particle_diagnose } from "../../ResourcePack/Particle/diagnose";
 import { resourcepack_sound_diagnose } from "../../ResourcePack/Sounds Definitions/diagnose";
-import { TextDocument } from "bc-minecraft-bedrock-project";
 import { Types } from "bc-minecraft-bedrock-types";
 import {
   behaviorpack_entityid_diagnose,
@@ -61,7 +60,7 @@ import {
   mode_teleportrules_diagnose,
   mode_time_diagnose,
 } from "../../Mode/diagnose";
-import { behaviorpack_check_command_blockstates } from '../BlockState/diagnose';
+import { behaviorpack_check_command_blockstates } from "../BlockState/diagnose";
 
 /**
  *
