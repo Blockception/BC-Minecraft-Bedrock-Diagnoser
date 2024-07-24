@@ -28,7 +28,7 @@ export function behaviorpack_structure_diagnose(value: Types.OffsetWord, diagnos
 
   //structures can be identified with : or /
   if (id.includes(":")) {
-    const cid = id.replace(":", "/");
+    const cid = id.replace('mystructure:', '').replace(":", "/");
 
     if (check_definition_value(diagnoser.project.definitions.structure, cid, diagnoser)) return true;
     if (data.BehaviorPacks.structures.has(cid)) return true;
