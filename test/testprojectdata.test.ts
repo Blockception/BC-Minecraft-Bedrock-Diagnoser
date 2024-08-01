@@ -1,5 +1,6 @@
 import { DiagnosticsBuilderContent } from "../src/Lib/Types/DiagnosticsBuilder";
 import { ProjectData, TextDocument } from "bc-minecraft-bedrock-project";
+import { Manifest } from 'bc-minecraft-bedrock-project/lib/src/Lib/Internal/Types';
 import { MCIgnore, MCProject } from "bc-minecraft-project";
 import path = require("path");
 
@@ -10,11 +11,10 @@ export namespace TestProjectData {
 
   export function createContext<T extends TextDocument = TextDocument>(files: Map<string, string> | undefined = undefined): DiagnosticsBuilderContent<T> {
     const context = new InternalTest<T>(undefined, files);
-
     const data = context.getCache();
 
-    data.BehaviorPacks.add(path.join("c:", "bp"), MCProject.createEmpty());
-    data.ResourcePacks.add(path.join("c:", "rp"), MCProject.createEmpty());
+    data.behaviorPacks.add(path.join("c:", "bp"), MCProject.createEmpty(), {} as Manifest);
+    data.resourcePacks.add(path.join("c:", "rp"), MCProject.createEmpty(), {} as Manifest);
 
     return context;
   }

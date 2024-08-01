@@ -56,13 +56,13 @@ export function animation_reference_diagnose(value: Types.OffsetWord, diagnoser:
   const id = value.text;
 
   //Project in entity
-  if (data.ResourcePacks.entities.find((entity) => entity.animations.defined.includes(id)) !== undefined) {
+  if (data.resourcePacks.entities.find((entity) => entity.animations.defined.includes(id)) !== undefined) {
     return;
   }
-  if (data.ResourcePacks.animations.find((anim) => anim.id === id) !== undefined) {
+  if (data.resourcePacks.animations.find((anim) => anim.id === id) !== undefined) {
     return;
   }
-  if (data.ResourcePacks.animation_controllers.find((anim) => anim.id === id) !== undefined) {
+  if (data.resourcePacks.animation_controllers.find((anim) => anim.id === id) !== undefined) {
     return;
   }
 
@@ -100,8 +100,8 @@ export enum anim_or_contr {
 export function is_animation_or_controller(id: string, diagnoser: DiagnosticsBuilder): anim_or_contr {
   const cache = diagnoser.context.getCache();
 
-  if (cache.ResourcePacks.animations.has(id)) return anim_or_contr.animation;
-  if (cache.ResourcePacks.animation_controllers.has(id)) return anim_or_contr.controller;
+  if (cache.resourcePacks.animations.has(id)) return anim_or_contr.animation;
+  if (cache.resourcePacks.animation_controllers.has(id)) return anim_or_contr.controller;
 
   const edu = education_enabled(diagnoser);
 

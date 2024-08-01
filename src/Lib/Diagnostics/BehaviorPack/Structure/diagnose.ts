@@ -23,16 +23,16 @@ export function behaviorpack_structure_diagnose(value: Types.OffsetWord, diagnos
   const data = diagnoser.context.getCache();
 
   //Project has structure
-  if (data.BehaviorPacks.structures.has(id)) return true;
-  if (data.General.structures.has(id)) return true;
+  if (data.behaviorPacks.structures.has(id)) return true;
+  if (data.general.structures.has(id)) return true;
 
   //structures can be identified with : or /
   if (id.includes(":")) {
     const cid = id.replace('mystructure:', '').replace(":", "/");
 
     if (check_definition_value(diagnoser.project.definitions.structure, cid, diagnoser)) return true;
-    if (data.BehaviorPacks.structures.has(cid)) return true;
-    if (data.General.structures.has(cid)) return true;
+    if (data.behaviorPacks.structures.has(cid)) return true;
+    if (data.general.structures.has(cid)) return true;
   }
 
   //Nothing then report error

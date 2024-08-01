@@ -13,7 +13,7 @@ export function checkBonesExists(bones: BoneUsage[], diagnoser: DiagnosticsBuild
     if (bone.bone_id.includes('*')) continue;
 
     // Find a bone that is not in the project
-    if (!projectData.ResourcePacks.models.find((m) => m.bones?.includes(bone.bone_id))) {
+    if (!projectData.resourcePacks.models.find((m) => m.bones?.includes(bone.bone_id))) {
       diagnoser.add(
         `${bone.parent_id}/${bone.bone_id}`,
         `Bone: ${bone.bone_id} does not exist in the project, though animation can work with missing bones`,

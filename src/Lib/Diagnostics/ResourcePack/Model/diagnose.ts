@@ -7,7 +7,7 @@ export function resourcepack_has_model(modelId: string, diagnoser: DiagnosticsBu
   const data = diagnoser.context.getCache();
 
   //Has project data
-  if (data.ResourcePacks.models.has(modelId)) return true;
+  if (data.resourcePacks.models.has(modelId)) return true;
 
   const edu = education_enabled(diagnoser);
 

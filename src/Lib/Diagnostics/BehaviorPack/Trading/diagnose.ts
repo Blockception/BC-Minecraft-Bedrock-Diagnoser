@@ -14,7 +14,7 @@ export function behaviorpack_trading_diagnose(
   const data = diagnoser.context.getCache();
 
   //Project has loot_table
-  if (data.BehaviorPacks.trading.has(id)) return true;
+  if (data.behaviorPacks.trading.has(id)) return true;
   const edu = education_enabled(diagnoser);
 
   //Vanilla has loot_table

@@ -29,7 +29,7 @@ export function animation_controller_diagnose_implementation(
 ): void {
   if (!has_animation_controller(controllerid, diagnoser)) return;
 
-  const controller = diagnoser.context.getCache().ResourcePacks.animation_controllers.get(controllerid);
+  const controller = diagnoser.context.getCache().resourcePacks.animation_controllers.get(controllerid);
   if (!controller) return;
 
   general_animation_controllers_implementation(controller, user, ownerType, diagnoser);
@@ -71,7 +71,7 @@ export function has_animation_controller(id: string, diagnoser: DiagnosticsBuild
   const cache = diagnoser.context.getCache();
 
   //Project has animation controller
-  if (cache.ResourcePacks.animation_controllers.has(id)) return true;
+  if (cache.resourcePacks.animation_controllers.has(id)) return true;
 
   const edu = education_enabled(diagnoser);
 

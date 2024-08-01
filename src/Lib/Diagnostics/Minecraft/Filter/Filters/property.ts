@@ -5,7 +5,7 @@ import { diagnose_entity_property_usage } from "../../../BehaviorPack/Entity/pro
 export function diagnose_filter_property(filter: Minecraft.Filter.Filter, diagnoser: DiagnosticsBuilder) {
   const { test, domain, value } = filter;
 
-  const entities = diagnoser.context.getCache().BehaviorPacks.entities;
+  const entities = diagnoser.context.getCache().behaviorPacks.entities;
   entities.forEach((entity) => {
     if (entity.properties) {
       const property = entity.properties.find((property) => property.name === domain);

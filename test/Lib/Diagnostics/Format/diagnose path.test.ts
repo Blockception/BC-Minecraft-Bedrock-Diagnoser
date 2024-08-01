@@ -2,6 +2,7 @@ import { BehaviorPack } from "bc-minecraft-bedrock-project";
 import { MCProject } from "bc-minecraft-project";
 import { format_diagnose_path } from "../../../../src/Lib/Diagnostics/Format/diagnose";
 import { TestDiagnoser } from "../../../diagnoser";
+import { Manifest } from 'bc-minecraft-bedrock-project/lib/src/Lib/Internal/Types';
 
 describe("Filepath lengths", () => {
   var diagnoser: TestDiagnoser;
@@ -9,7 +10,7 @@ describe("Filepath lengths", () => {
 
   beforeEach(() => {
     diagnoser = new TestDiagnoser();
-    pack = new BehaviorPack.BehaviorPack("Content/world_template/behavior_packs/TE-bp", MCProject.createEmpty());
+    pack = new BehaviorPack.BehaviorPack("Content/world_template/behavior_packs/TE-bp", MCProject.createEmpty(), {} as Manifest);
   });
 
   it("Total length", () => {

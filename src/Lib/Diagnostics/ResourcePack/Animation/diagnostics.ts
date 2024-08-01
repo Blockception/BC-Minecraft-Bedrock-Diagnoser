@@ -23,7 +23,7 @@ export function animation_diagnose_implementation(
 ): void {
   if (!has_animation(anim_id, diagnoser)) return;
   //Project has animation
-  const anim = diagnoser.context.getCache().ResourcePacks.animations.get(anim_id);
+  const anim = diagnoser.context.getCache().resourcePacks.animations.get(anim_id);
 
   if (!anim) return;
 
@@ -64,7 +64,7 @@ export function has_animation(id: string, diagnoser: DiagnosticsBuilder): boolea
   const cache = diagnoser.context.getCache();
 
   //Project has render controller
-  if (cache.ResourcePacks.animations.has(id)) return true;
+  if (cache.resourcePacks.animations.has(id)) return true;
 
   const edu = education_enabled(diagnoser);
 

@@ -13,7 +13,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   if (!Internal.ResourcePack.SoundDefinitions.is(definitions)) return;
 
   //Get pack for files search
-  const pack = diagnoser.context.getCache().ResourcePacks.get(diagnoser.document.uri);
+  const pack = diagnoser.context.getCache().resourcePacks.get(diagnoser.document.uri);
   if (pack === undefined) return;
 
   const sounds = definitions.sound_definitions;

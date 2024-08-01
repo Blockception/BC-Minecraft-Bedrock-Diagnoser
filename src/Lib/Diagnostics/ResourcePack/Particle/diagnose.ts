@@ -12,7 +12,7 @@ export function resourcepack_particle_diagnose(id: string | Types.OffsetWord, di
   const data = diagnoser.context.getCache();
 
   //Project has entity
-  if (data.ResourcePacks.particles.has(particle_id)) return;
+  if (data.resourcePacks.particles.has(particle_id)) return;
 
   const edu = education_enabled(diagnoser);
 

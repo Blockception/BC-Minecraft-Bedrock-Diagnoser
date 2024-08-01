@@ -7,7 +7,7 @@ export function minecraft_fakentity_diagnose(value: Types.OffsetWord, diagnoser:
   const id = Text.UnQuote(value.text);
 
   //Project has defined
-  if (data.General.fakeEntities.has(id)) return;
+  if (data.general.fakeEntities.has(id)) return;
 
   //Nothing then report error
   diagnoser.add(

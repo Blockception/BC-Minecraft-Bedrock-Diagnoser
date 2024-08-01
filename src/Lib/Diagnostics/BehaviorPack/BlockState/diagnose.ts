@@ -91,7 +91,7 @@ export function behaviorpack_check_command_blockstates(blockId: Types.OffsetWord
 
 function check_block_definition(blockDefinition: Minecraft.Block, location: DocumentLocation, diagnoser: DiagnosticsBuilder) {
   const data = diagnoser.context.getCache();
-  const block = data.BehaviorPacks.blocks.get(blockDefinition.id) ?? vanilla_block(diagnoser, blockDefinition.id);
+  const block = data.behaviorPacks.blocks.get(blockDefinition.id) ?? vanilla_block(diagnoser, blockDefinition.id);
 
   //No block found, expecting behaviorpack_check_blockId has been run
   if (!block) return;

@@ -46,7 +46,7 @@ function entity_has_property(attr: CompactJson.IKeyNode, diagnoser: DiagnosticsB
     return false;
   }
 
-  const entityData = diagnoser.context.getCache().BehaviorPacks.entities;
+  const entityData = diagnoser.context.getCache().behaviorPacks.entities;
   const key = Types.OffsetWord.create(attr.key, attr.offset);
   const value = CompactJson.valueToOffsetWord(attr);
 

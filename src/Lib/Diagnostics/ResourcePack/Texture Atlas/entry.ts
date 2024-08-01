@@ -13,7 +13,7 @@ export function DiagnoseAtlas(diagnoser: DocumentDiagnosticsBuilder): void {
   if (!TextureAtlas.is(definitions)) return;
 
   //Get pack for files search
-  const pack = diagnoser.context.getCache().ResourcePacks.get(diagnoser.document.uri);
+  const pack = diagnoser.context.getCache().resourcePacks.get(diagnoser.document.uri);
   if (pack === undefined) return;
 
   const texture_data = definitions.texture_data;

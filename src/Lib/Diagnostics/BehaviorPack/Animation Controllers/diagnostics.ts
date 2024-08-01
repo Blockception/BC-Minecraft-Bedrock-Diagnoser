@@ -17,7 +17,7 @@ export function animation_controller_diagnose_implementation(
   diagnoser: DiagnosticsBuilder
 ): void {
   if (has_animation_controller(controllerId, diagnoser)) {
-    const controller = diagnoser.context.getCache().BehaviorPacks.animation_controllers.get(controllerId);
+    const controller = diagnoser.context.getCache().behaviorPacks.animation_controllers.get(controllerId);
 
     if (!controller) return;
 
@@ -35,7 +35,7 @@ export function has_animation_controller(id: string, diagnoser: DiagnosticsBuild
   const cache = diagnoser.context.getCache();
 
   //Project has animation controller
-  if (cache.BehaviorPacks.animation_controllers.has(id)) return true;
+  if (cache.behaviorPacks.animation_controllers.has(id)) return true;
 
   //Nothing then report error
   diagnoser.add(

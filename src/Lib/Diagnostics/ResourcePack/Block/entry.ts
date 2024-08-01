@@ -13,7 +13,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   if (!Json.TypeCheck(blocks, diagnoser, "blocks.json", "resourcepack.blocks.invalid", is)) return;
 
   const keys = Object.keys(blocks);
-  const rp = diagnoser.context.getCache().ResourcePacks;
+  const rp = diagnoser.context.getCache().resourcePacks;
 
   for (let I = 0; I < keys.length; I++) {
     const key = keys[I];

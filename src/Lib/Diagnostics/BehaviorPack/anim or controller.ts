@@ -52,8 +52,8 @@ export enum anim_or_contr {
 export function is_animation_or_controller(id: string, diagnoser: DiagnosticsBuilder): anim_or_contr {
   const cache = diagnoser.context.getCache();
 
-  if (cache.BehaviorPacks.animations.has(id)) return anim_or_contr.animation;
-  if (cache.BehaviorPacks.animation_controllers.has(id)) return anim_or_contr.controller;
+  if (cache.behaviorPacks.animations.has(id)) return anim_or_contr.animation;
+  if (cache.behaviorPacks.animation_controllers.has(id)) return anim_or_contr.controller;
 
   return anim_or_contr.neither;
 }

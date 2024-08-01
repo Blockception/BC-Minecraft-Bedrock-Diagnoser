@@ -11,7 +11,7 @@ export function behaviorpack_functions_diagnose(value: Types.OffsetWord, diagnos
   if (check_definition_value(diagnoser.project.definitions.function, id, diagnoser)) return true;
 
   //If project has function then ignore
-  if (data.BehaviorPacks.functions.has(id)) return true;
+  if (data.behaviorPacks.functions.has(id)) return true;
 
   diagnoser.add(
     value.offset,

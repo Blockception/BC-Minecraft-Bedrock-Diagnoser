@@ -11,7 +11,7 @@ export function diagnose_resourcepack_sounds(data: Types.Definition | undefined,
   const edu = education_enabled(diagnoser);
 
   Types.Definition.forEach(data, (ref, id) => {
-    if (pdata.ResourcePacks.sounds.has(id)) return;
+    if (pdata.resourcePacks.sounds.has(id)) return;
     if (MinecraftData.ResourcePack.hasSound(id, edu)) return;
 
     diagnoser.add(

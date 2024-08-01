@@ -9,7 +9,7 @@ describe("Tag", () => {
     const B = TestDiagnoser.create();
     const data = B.context.getCache();
 
-    data.General.tags.set([
+    data.general.tags.set([
       GeneralInfo.create("init", Location.create(""), "main tickingarea"),
       GeneralInfo.create("Flying", Location.create(""), "main tickingarea"),
       GeneralInfo.create("Follow", Location.create(""), "main tickingarea"),
@@ -38,7 +38,7 @@ describe("Tag", () => {
   it("diagnose with errors", () => {
     const B = new TestDiagnoser();
 
-    const objectivesData = B.context.getCache().General.tags;
+    const objectivesData = B.context.getCache().general.tags;
     const tags: string[] = ["te/st", "test!example", "Test@Example", "Test#Example"];
     
     tags.forEach((t) => objectivesData.set(GeneralInfo.create(t, Location.create(""))));

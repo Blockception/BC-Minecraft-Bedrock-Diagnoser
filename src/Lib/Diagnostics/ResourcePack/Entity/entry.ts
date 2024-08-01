@@ -97,7 +97,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   );
 
   //Get pack
-  const pack = diagnoser.context.getCache().ResourcePacks.get(diagnoser.document.uri);
+  const pack = diagnoser.context.getCache().resourcePacks.get(diagnoser.document.uri);
   if (pack === undefined) return;
 
   const rp_files = diagnoser.context

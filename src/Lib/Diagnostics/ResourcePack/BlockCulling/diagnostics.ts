@@ -3,10 +3,10 @@ import { DiagnosticSeverity, DiagnosticsBuilder } from '../../../Types';
 
 export function check_geo_and_rules(geoId: string, culling: string, diagnoser: DiagnosticsBuilder) {
   const projectData = diagnoser.context.getCache();
-  const model = projectData.ResourcePacks.models.get(geoId);
+  const model = projectData.resourcePacks.models.get(geoId);
   if (!model) return;
 
-  const cullingRule = projectData.ResourcePacks.block_culling_rules.get(culling);
+  const cullingRule = projectData.resourcePacks.block_culling_rules.get(culling);
   if (!cullingRule) return;
 
   for (var i = 0; i < cullingRule.affected_bones.length; i++) {

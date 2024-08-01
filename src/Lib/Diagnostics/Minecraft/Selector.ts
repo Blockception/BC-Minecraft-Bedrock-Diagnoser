@@ -53,7 +53,7 @@ export function minecraft_selector_diagnose(
   if (check_definition_value(diagnoser.project.definitions.name, name, diagnoser)) return;
 
   //Project has defined this fake entity
-  if (data.General.fakeEntities.has(name)) return;
+  if (data.general.fakeEntities.has(name)) return;
 
   //Found nothing then report
   diagnoser.add(

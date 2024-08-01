@@ -11,7 +11,7 @@ export function minecraft_tickingarea_diagnose(value: Types.OffsetWord, diagnose
   if (check_definition_value(diagnoser.project.definitions.tickingarea, id, diagnoser)) return;
 
   //Project has defined
-  if (data.General.tickingAreas.has(id)) return;
+  if (data.general.tickingAreas.has(id)) return;
 
   //Nothing then report error
   diagnoser.add(

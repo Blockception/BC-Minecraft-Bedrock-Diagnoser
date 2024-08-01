@@ -14,7 +14,7 @@ export function minecraft_family_diagnose(value: Types.OffsetWord | string, diag
 
   const data = diagnoser.context.getCache();
   //Project has defined
-  data.BehaviorPacks.entities.forEach((entity) => {
+  data.behaviorPacks.entities.forEach((entity) => {
     if (entity.families.includes(id)) out = true;
   });
 

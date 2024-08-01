@@ -26,7 +26,7 @@ export function minecraft_objectives_diagnose(value: Types.OffsetWord, diagnoser
 
   //Project has defined
   const data = diagnoser.context.getCache();
-  if (data.General.objectives.has(id)) {
+  if (data.general.objectives.has(id)) {
     return true;
   }
 

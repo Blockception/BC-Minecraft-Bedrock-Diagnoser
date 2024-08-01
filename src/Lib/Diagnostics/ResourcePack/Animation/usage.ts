@@ -7,7 +7,7 @@ import { AnimationUsage, minecraft_animation_used } from "../../Minecraft/Animat
  * @param diagnoser The diagnoser builder to receive the errors
  */
 export function resourcepack_animation_used(data: AnimationUsage, diagnoser: DiagnosticsBuilder): void {
-  const controllers = diagnoser.context.getCache().ResourcePacks.animation_controllers;
+  const controllers = diagnoser.context.getCache().resourcePacks.animation_controllers;
 
   minecraft_animation_used(data, diagnoser, controllers);
 }

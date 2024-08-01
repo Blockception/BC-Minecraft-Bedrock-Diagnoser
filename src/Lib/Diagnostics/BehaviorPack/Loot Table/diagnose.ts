@@ -62,7 +62,7 @@ function has_loot_table(id: string, diagnoser: DiagnosticsBuilder): boolean {
   const data = diagnoser.context.getCache();
 
   //Project has loot_table
-  if (data.BehaviorPacks.loot_tables.has(id)) return true;
+  if (data.behaviorPacks.loot_tables.has(id)) return true;
   const edu = education_enabled(diagnoser);
 
   //Vanilla has loot_table

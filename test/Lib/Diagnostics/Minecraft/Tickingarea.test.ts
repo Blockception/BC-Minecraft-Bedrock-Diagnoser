@@ -9,7 +9,7 @@ describe("Tickingarea", () => {
     const B = TestDiagnoser.create();
     const data = B.context.getCache();
 
-    data.General.tickingAreas.set([
+    data.general.tickingAreas.set([
       GeneralInfo.create("main", Location.create(""), "main tickingarea"),
       GeneralInfo.create("calc", Location.create(""), "calculation area"),
       GeneralInfo.create("spawn", Location.create(""), "spawn location"),

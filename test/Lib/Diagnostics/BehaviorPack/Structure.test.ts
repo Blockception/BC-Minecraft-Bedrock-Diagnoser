@@ -13,7 +13,7 @@ describe("BehaviorPack", () => {
     });
 
     it("quotes", () => {
-      data.BehaviorPacks.packs[0].structures.set({
+      data.behaviorPacks.packs[0].structures.set({
         id: "test/example",
         documentation: "",
         location: { position: 0, uri: "" },
@@ -26,7 +26,7 @@ describe("BehaviorPack", () => {
     });
 
     it("no errors", () => {
-      data.BehaviorPacks.packs[0].structures.set({
+      data.behaviorPacks.packs[0].structures.set({
         id: '"test/example"',
         documentation: "",
         location: { position: 0, uri: "" },
@@ -39,7 +39,7 @@ describe("BehaviorPack", () => {
     });
 
     it("missing", () => {
-      data.BehaviorPacks.packs[0].structures.set({
+      data.behaviorPacks.packs[0].structures.set({
         id: '"test/example"',
         documentation: "",
         location: { position: 0, uri: "" },

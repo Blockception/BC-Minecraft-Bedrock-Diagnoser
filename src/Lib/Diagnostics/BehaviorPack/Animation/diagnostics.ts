@@ -20,7 +20,7 @@ export function animation_diagnose_implementation(
   if (!has_animation(anim_id, diagnoser)) return;
 
   //Project has animation
-  const anim = diagnoser.context.getCache().BehaviorPacks.animations.get(anim_id);
+  const anim = diagnoser.context.getCache().behaviorPacks.animations.get(anim_id);
 
   if (!anim) return;
 
@@ -37,7 +37,7 @@ export function has_animation(id: string, diagnoser: DiagnosticsBuilder): boolea
   const cache = diagnoser.context.getCache();
 
   //Project has render controller
-  if (cache.BehaviorPacks.animations.has(id)) return true;
+  if (cache.behaviorPacks.animations.has(id)) return true;
 
   //Nothing then report error
   diagnoser.add(

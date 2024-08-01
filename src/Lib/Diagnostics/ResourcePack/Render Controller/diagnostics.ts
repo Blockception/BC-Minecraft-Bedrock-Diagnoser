@@ -22,7 +22,7 @@ export function render_controller_diagnose_implementation(
     const cache = diagnoser.context.getCache();
 
     //Project has render controller
-    const rp = cache.ResourcePacks.render_controllers.get(controllerId);
+    const rp = cache.resourcePacks.render_controllers.get(controllerId);
 
     if (!rp) return;
 
@@ -40,7 +40,7 @@ export function has_render_controller(id: string, diagnoser: DiagnosticsBuilder)
   const cache = diagnoser.context.getCache();
 
   //Project has render controller
-  if (cache.ResourcePacks.render_controllers.has(id)) return true;
+  if (cache.resourcePacks.render_controllers.has(id)) return true;
 
   const edu = education_enabled(diagnoser);
 

@@ -99,7 +99,7 @@ export function behaviorpack_entity_event_diagnose(
 
   if (entityid) {
     //Get entity
-    const entity = diagnoser.context.getCache().BehaviorPacks.entities.get(entityid);
+    const entity = diagnoser.context.getCache().behaviorPacks.entities.get(entityid);
 
     //Entity found
     if (entity) {

@@ -10,8 +10,8 @@ describe("Selector", () => {
   const context = TestProjectData.createContext();
   const pi: ParameterInfo = { required: false, text: "", type: ParameterType.selector };
   const cache = context.getCache();
-  cache.General.objectives.set(GeneralInfo.create("data", Location.create("test"), "test objective"));
-  cache.General.tags.set(GeneralInfo.create("foo", Location.create("test"), "test tag"));
+  cache.general.objectives.set(GeneralInfo.create("data", Location.create("test"), "test objective"));
+  cache.general.tags.set(GeneralInfo.create("foo", Location.create("test"), "test tag"));
 
   it("Double negative types should not return errors", () => {
     const B = new TestDiagnoser(context);

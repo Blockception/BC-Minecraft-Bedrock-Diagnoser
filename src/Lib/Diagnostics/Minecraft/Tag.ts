@@ -26,7 +26,7 @@ export function minecraft_tag_diagnose(value: Types.OffsetWord | string, diagnos
   const data = diagnoser.context.getCache();
 
   //Project has defined
-  if (data.General.tags.has(id)) {
+  if (data.general.tags.has(id)) {
     return true;
   }
 
