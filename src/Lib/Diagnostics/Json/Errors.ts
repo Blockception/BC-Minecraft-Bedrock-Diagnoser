@@ -13,7 +13,7 @@ export function Handle_Json_Error(err: any, diagnoser: DiagnosticsBuilder): void
   }
 
   const message = err.message;
-  let word: OffsetWord = {
+  const word: OffsetWord = {
     offset: 0,
     text: " ",
   };

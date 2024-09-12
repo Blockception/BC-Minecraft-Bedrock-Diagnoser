@@ -52,6 +52,7 @@ export function diagnose_molang(using: string, owner: MolangDataSetKey, diagnose
   try {
     const data = Json.parse(using);
     diagnoser_molang_syntax(data, diagnoser);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch(err) { /** NOOP */}
 }
 
@@ -72,7 +73,7 @@ function diagnose_molang_using(
   const defined1 = definer.defined;
   const defined2 = using.defined;
 
-  for (var I = 0; I < checks.length; I++) {
+  for (let I = 0; I < checks.length; I++) {
     const check = checks[I];
 
     if (defined1.includes(check) || defined2.includes(check)) {
@@ -136,7 +137,7 @@ function diagnose_molang_variable_using(
   const defined1 = definer.defined;
   const defined2 = using.defined;
 
-  for (var I = 0; I < checks.length; I++) {
+  for (let I = 0; I < checks.length; I++) {
     const check = checks[I];
 
     //Check if the variable is defined
@@ -164,7 +165,7 @@ function diagnose_molang_temp_using(
   const defined1 = definer.defined;
   const defined2 = using.defined;
 
-  for (var I = 0; I < checks.length; I++) {
+  for (let I = 0; I < checks.length; I++) {
     const check = checks[I];
 
     //Check if the temp is defined
@@ -195,7 +196,7 @@ function diagnose_molang_context_using(
 
   const checks = using.using;
 
-  for (var I = 0; I < checks.length; I++) {
+  for (let I = 0; I < checks.length; I++) {
     const check = checks[I];
 
     //Vanilla provides?

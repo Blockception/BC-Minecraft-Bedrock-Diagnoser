@@ -1,5 +1,5 @@
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../Types";
 import { Types } from "bc-minecraft-bedrock-types";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../Types";
 import { check_definition_value } from "../Definitions";
 
 export function minecraft_tag_diagnose(value: Types.OffsetWord | string, diagnoser: DiagnosticsBuilder): boolean {
@@ -14,7 +14,7 @@ export function minecraft_tag_diagnose(value: Types.OffsetWord | string, diagnos
     return true;
   }
 
-  if (!/^[a-zA-Z0-9\-\_\.]+$/gim.test(id)) {
+  if (!/^[a-zA-Z0-9\-_.]+$/gim.test(id)) {
     diagnoser.add(value, `Illegal character found in tag: ${id}`, DiagnosticSeverity.error, "minecraft.tag.invalid");
   }
 

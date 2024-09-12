@@ -1,4 +1,3 @@
-import { Internal, TextDocument } from "bc-minecraft-bedrock-project";
 import { Manifest } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/Types";
 import { DocumentDiagnosticsBuilder} from "../../../Types";
 import { Json } from "../../Json/Json";

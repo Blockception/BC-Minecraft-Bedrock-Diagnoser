@@ -21,7 +21,7 @@ export function diagnose_script(
   if (script.animate) {
     const animates = script.animate;
 
-    Types.Conditional.forEach(animates, (ref_id, conditional) => has_ref(builder, ref_id, Animations, Controllers));
+    Types.Conditional.forEach(animates, (ref_id) => has_ref(builder, ref_id, Animations, Controllers));
   }
 }
 

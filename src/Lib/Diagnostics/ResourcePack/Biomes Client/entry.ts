@@ -1,5 +1,5 @@
-import { TextDocument } from "bc-minecraft-bedrock-project";
-import { DocumentDiagnosticsBuilder} from "../../../Types";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { DocumentDiagnosticsBuilder } from "../../../Types";
 
 /**Diagnoses the given document as a biome_client file
  * @param doc The text document to diagnose

@@ -20,7 +20,7 @@ export type animation_controllers =
 export type animation_controller =
   | Internal.BehaviorPack.AnimationController
   | Internal.ResourcePack.AnimationController;
-export type animationsOwner = Types.Identifiable & MolangCarrier<Molang.MolangSet> & AnimationCarrier<Defined<String>>;
+export type animationsOwner = Types.Identifiable & MolangCarrier<Molang.MolangSet> & AnimationCarrier<Defined<string>>;
 
 /**
  *
@@ -79,7 +79,7 @@ function CheckTransition(
   diagnoser: DiagnosticsBuilder
 ): void {
   //Loop over the transitions
-  for (var I = 0; I < Transitions.length; I++) {
+  for (let I = 0; I < Transitions.length; I++) {
     const trans = Transitions[I];
     //Get state identification refered
     const state: string = typeof trans === "string" ? trans : Object.getOwnPropertyNames(trans)[0];
