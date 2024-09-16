@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Pack } from "bc-minecraft-bedrock-project";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../Types/";
 
@@ -26,7 +27,7 @@ export function format_diagnose_path(pack: Pack, uri: string, diagnoser: Diagnos
   }
 
   //Check each segment of the path
-  relpath.split(/[\\\/]/gim).forEach((seg) => {
+  relpath.split(/[\\/]/gim).forEach((seg) => {
     if (seg.length > SegmentLength) {
       diagnoser.add(
         0,

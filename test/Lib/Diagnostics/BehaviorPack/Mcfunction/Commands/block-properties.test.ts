@@ -1,11 +1,10 @@
-import { ProjectData, TextDocument } from "bc-minecraft-bedrock-project";
+import { TextDocument } from "bc-minecraft-bedrock-project";
 import { mcfunction_commandsCheck } from "../../../../../../src/Lib/Diagnostics/BehaviorPack/Mcfunction";
 import { TestDiagnoser } from "../../../../../diagnoser";
 
 describe("BehaviorPack", () => {
   describe("Mcfunctions", () => {
     describe("Commands", () => {
-
       //Correct commands
       const correctsCommands: string[] = [
         'setblock ~ ~ ~ spruce_log ["pillar_axis"="x"]',
@@ -24,7 +23,7 @@ describe("BehaviorPack", () => {
         it(`correct ${command}`, () => {
           const doc: TextDocument = {
             uri: "fake",
-            getText(range) {
+            getText() {
               return command;
             },
           };
@@ -42,7 +41,7 @@ describe("BehaviorPack", () => {
         it(`incorrect ${command}`, () => {
           const doc: TextDocument = {
             uri: "fake",
-            getText(range) {
+            getText() {
               return command;
             },
           };

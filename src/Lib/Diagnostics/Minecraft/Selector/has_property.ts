@@ -1,11 +1,10 @@
-import { CompactJson } from "bc-minecraft-bedrock-types/lib/src/minecraft/json";
-import { DiagnosticSeverity, DiagnosticsBuilder } from "../../../Types";
-import { Selector } from "bc-minecraft-bedrock-types/lib/src/minecraft/selector";
-import { Types } from "bc-minecraft-bedrock-types";
-import { general_range_float_diagnose, general_range_integer_diagnose } from "../../General";
-import { EntityProperty } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/BehaviorPack/Entity";
 import { Entity } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/BehaviorPack";
-import { NoopDiagnoser } from '../../../Types/noop';
+import { Types } from "bc-minecraft-bedrock-types";
+import { CompactJson } from "bc-minecraft-bedrock-types/lib/src/minecraft/json";
+import { Selector } from "bc-minecraft-bedrock-types/lib/src/minecraft/selector";
+import { DiagnosticSeverity, DiagnosticsBuilder } from "../../../Types";
+import { NoopDiagnoser } from "../../../Types/noop";
+import { general_range_float_diagnose, general_range_integer_diagnose } from "../../General";
 
 export function minecraft_selector_has_property_diagnose(
   attr: CompactJson.IKeyNode,

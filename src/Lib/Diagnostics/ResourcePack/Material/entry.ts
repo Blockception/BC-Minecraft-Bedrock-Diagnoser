@@ -1,4 +1,4 @@
-import { TextDocument } from "bc-minecraft-bedrock-project";
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { DocumentDiagnosticsBuilder} from "../../../Types";
 
 /**Diagnoses the given document as a material

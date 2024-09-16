@@ -1,9 +1,9 @@
+import { MolangDataSetKey } from "bc-minecraft-molang";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
+import { EntityAnimationMolangCarrier, EventCarrier } from "../../Types/Interfaces";
 import { DiagnosticSeverity } from "../../Types/Severity";
-import { EntityAnimationMolangCarrier, EventCarrier, TextDocument } from "../../Types/Interfaces";
 import { animation_controller_diagnose_implementation } from "./Animation Controllers/diagnostics";
 import { animation_diagnose_implementation } from "./Animation/diagnostics";
-import { MolangDataSetKey } from "bc-minecraft-molang";
 
 /**
  * @param id

@@ -2,7 +2,7 @@ import { DataSetConnector, Pack, ProjectData } from "bc-minecraft-bedrock-projec
 import { Types } from "bc-minecraft-bedrock-types";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { Identifiable } from "bc-minecraft-bedrock-vanilla-data/lib/src/Lib/Types";
-import { Diagnoser, DiagnosticsBuilder } from "../Types";
+import { DiagnosticsBuilder } from "../Types";
 import { education_enabled } from "../Diagnostics";
 
 export type ItemBase = Identifiable & Types.Locatable;
@@ -104,7 +104,7 @@ export class Exporter<T extends ItemBase, V, U extends Pack> {
   }
 
   get(id: string): T | V | undefined {
-    let item = this._cache.get(id);
+    const item = this._cache.get(id);
     if (item !== undefined) return item;
 
     return this._vanilla(id, this._useEducation);

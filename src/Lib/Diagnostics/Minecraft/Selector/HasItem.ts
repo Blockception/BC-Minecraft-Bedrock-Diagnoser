@@ -58,7 +58,7 @@ export function minecraft_selector_hasitem_diagnose(
   let result = true;
 
   if (CompactJson.isArray(attr)) {
-    for (let a of attr.value) {
+    for (const a of attr.value) {
       //Sub items need to be a object
       if (CompactJson.isObject(a)) {
         result =

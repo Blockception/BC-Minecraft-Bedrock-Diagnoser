@@ -9,7 +9,7 @@ export function check_geo_and_rules(geoId: string, culling: string, diagnoser: D
   const cullingRule = projectData.resourcePacks.block_culling_rules.get(culling);
   if (!cullingRule) return;
 
-  for (var i = 0; i < cullingRule.affected_bones.length; i++) {
+  for (let i = 0; i < cullingRule.affected_bones.length; i++) {
     const bone = cullingRule.affected_bones[i];
     if (model.bones.includes(bone)) continue;
 
