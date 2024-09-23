@@ -7,7 +7,7 @@ import { Context } from "../../../utility/components";
 import { DefinedUsing, Molang } from "bc-minecraft-molang";
 import { diagnose_molang } from "../../Molang/diagnostics";
 import { diagnose_script } from "../../Minecraft/Script";
-import { DocumentDiagnosticsBuilder } from "../../../Types";
+import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../Types";
 import { getUsedComponents } from "bc-minecraft-bedrock-types/lib/src/minecraft/components";
 import { Internal } from "bc-minecraft-bedrock-project";
 import { Json } from "../../Json/Json";
@@ -59,6 +59,22 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   //Check animations / animation controllers implements
   owner.animations.using.forEach((anim_id) =>
     animation_or_controller_diagnose_implementation(anim_id, owner, "Entities", diagnoser)
+  );
+
+  //@ts-ignore
+  if (container["permutations"]) diagnoser.add(
+    `permutations`,
+    `Entity permutations have been deprecated.`,
+    DiagnosticSeverity.error,
+    "behaviorpack.entity.permutations"
+  );
+
+  //@ts-ignore
+  if (container.description["aliases"]) diagnoser.add(
+    `aliases`,
+    `Entity aliases have been deprecated.`,
+    DiagnosticSeverity.error,
+    "behaviorpack.entity.aliases"
   );
 
   //Script check
