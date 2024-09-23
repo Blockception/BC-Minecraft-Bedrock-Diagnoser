@@ -6,7 +6,9 @@ import { components_dependencies, Context, DependedMap } from '../../../../utili
 const component_dependents_all: DependedMap = {
   "minecraft:food": ["minecraft:use_modifiers"],
   "minecraft:shooter": ["minecraft:projectile"],
-  "minecraft:throwable": ["minecraft:projectile"]
+  "minecraft:throwable": ["minecraft:projectile"],
+  "minecraft:bundle_interaction": ["minecraft:storage_item"],
+  "minecraft:storage_item": ["minecraft:bundle_interaction"]
 };
 
 //Map of components that are depended on one of the other specified components
