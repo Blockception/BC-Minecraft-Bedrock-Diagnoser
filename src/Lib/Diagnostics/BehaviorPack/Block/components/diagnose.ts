@@ -1,5 +1,5 @@
 import { ComponentBehavior } from "bc-minecraft-bedrock-types/lib/src/minecraft/components";
-import { DiagnosticsBuilder } from "../../../../Types";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../../Types";
 import { Context } from "../../../../utility/components";
 import { ComponentCheck, components_check, component_error } from "../../../../utility/components/checks";
 import { resourcepack_has_model } from "../../../ResourcePack/Model/diagnose";
@@ -50,6 +50,21 @@ const component_test: Record<string, ComponentCheck> = {
   "minecraft:onlypistonpush": deprecated_component(),
   "minecraft:preventsjumping": deprecated_component(),
   "minecraft:unwalkable": deprecated_component(),
+  "minecraft:destructible_by_mining": (name, component, context, diagnoser) => {
+    const destroyTime = component.seconds_to_destroy;
+    if (!destroyTime) return;
+    component.item_specific_speeds?.forEach((specific_speed: any) => {
+        if (specific_speed.destroy_speed && specific_speed.destroy_speed > destroyTime) {
+          diagnoser.add(
+            specific_speed.destroy_speed,
+            `Item specific destroy speed ${specific_speed.destroy_speed} cannot be higher than block's destroy time ${destroyTime}`,
+            DiagnosticSeverity.error,
+            "behaviorpack.block.components.fast_break_speed"
+          );
+          return false;
+        }
+    });
+  },
   "minecraft:placement_filter": (name, component, context, diagnoser) => {
     for (const condition of component.conditions) {
       condition.block_filter?.forEach((block: string) => {
