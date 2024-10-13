@@ -8,7 +8,7 @@ import { DefinedUsing, Molang } from "bc-minecraft-molang";
 import { diagnose_molang } from "../../Molang/diagnostics";
 import { diagnose_script } from "../../Minecraft/Script";
 import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../Types";
-import { getUsedComponents } from "bc-minecraft-bedrock-types/lib/src/minecraft/components";
+import { getUsedComponents } from "bc-minecraft-bedrock-types/lib/minecraft/components";
 import { Internal } from "bc-minecraft-bedrock-project";
 import { Json } from "../../Json/Json";
 import { Types } from "bc-minecraft-bedrock-types";

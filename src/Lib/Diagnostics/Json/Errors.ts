@@ -1,4 +1,4 @@
-import { OffsetWord } from "bc-minecraft-bedrock-types/lib/src/types/offset-word";
+import { OffsetWord } from "bc-minecraft-bedrock-types/lib/types/offset-word";
 import { DiagnosticSeverity } from "../../../main";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 

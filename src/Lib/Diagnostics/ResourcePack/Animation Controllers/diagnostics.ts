@@ -1,4 +1,4 @@
-import { Definition } from "bc-minecraft-bedrock-types/lib/src/types/definition";
+import { Definition } from "bc-minecraft-bedrock-types/lib/types/definition";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { MolangDataSetKey } from "bc-minecraft-molang";
 import { DiagnosticsBuilder, EntityAnimationMolangCarrier } from "../../../Types";

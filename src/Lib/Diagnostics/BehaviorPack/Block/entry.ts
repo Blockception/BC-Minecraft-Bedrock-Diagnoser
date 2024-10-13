@@ -2,7 +2,7 @@ import { behaviorpack_diagnose_block_components } from "./components/diagnose";
 import { diagnose_molang } from "../../Molang/diagnostics";
 import { DocumentDiagnosticsBuilder, DiagnosticSeverity } from "../../../Types";
 import { Internal } from "bc-minecraft-bedrock-project";
-import { getUsedComponents } from "bc-minecraft-bedrock-types/lib/src/minecraft/components";
+import { getUsedComponents } from "bc-minecraft-bedrock-types/lib/minecraft/components";
 import { Json } from "../../Json";
 import { Context } from "../../../utility/components";
 import { behaviorpack_block_components_dependencies } from "./components/dependencies";

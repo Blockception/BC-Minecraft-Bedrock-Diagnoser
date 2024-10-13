@@ -1,6 +1,6 @@
-import { CompactJson } from "bc-minecraft-bedrock-types/lib/src/minecraft/json";
-import { Selector } from "bc-minecraft-bedrock-types/lib/src/minecraft/selector";
-import { OffsetWord } from "bc-minecraft-bedrock-types/lib/src/types";
+import { CompactJson } from "bc-minecraft-bedrock-types/lib/minecraft/json";
+import { Selector } from "bc-minecraft-bedrock-types/lib/minecraft/selector";
+import { OffsetWord } from "bc-minecraft-bedrock-types/lib/types";
 import { DiagnosticSeverity } from "../../../Types";
 import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
 

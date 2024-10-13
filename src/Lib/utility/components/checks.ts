@@ -1,4 +1,4 @@
-import { ComponentBehavior, ComponentContainer } from "bc-minecraft-bedrock-types/lib/src/minecraft/components";
+import { ComponentBehavior, ComponentContainer } from "bc-minecraft-bedrock-types/lib/minecraft/components";
 import { DocumentDiagnosticsBuilder, DiagnosticSeverity } from "../../Types";
 import { Context } from "./components";
 

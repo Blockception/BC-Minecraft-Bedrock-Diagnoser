@@ -1,5 +1,5 @@
 import { Internal } from "bc-minecraft-bedrock-project";
-import { ComponentContainer } from "bc-minecraft-bedrock-types/lib/src/minecraft/components";
+import { ComponentContainer } from "bc-minecraft-bedrock-types/lib/minecraft/components";
 import { DocumentDiagnosticsBuilder } from "../../../Types";
 import { Context } from "../../../utility/components";
 import { behaviorpack_diagnose_entity_components } from "./components/diagnose";

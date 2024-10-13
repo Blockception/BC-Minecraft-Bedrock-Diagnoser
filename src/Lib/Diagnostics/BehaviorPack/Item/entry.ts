@@ -3,7 +3,7 @@ import { diagnose_molang } from "../../Molang/diagnostics";
 import { Json } from "../../Json";
 import { Internal } from "bc-minecraft-bedrock-project";
 import { Context } from "../../../utility/components";
-import { getUsedComponents } from "bc-minecraft-bedrock-types/lib/src/minecraft/components";
+import { getUsedComponents } from "bc-minecraft-bedrock-types/lib/minecraft/components";
 import { behaviorpack_item_components_dependencies } from "./components/dependencies";
 import { behaviorpack_diagnose_item_components } from "./components/diagnose";
 

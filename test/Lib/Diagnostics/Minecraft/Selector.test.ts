@@ -4,7 +4,7 @@ import { Types } from "bc-minecraft-bedrock-types";
 import { TestDiagnoser } from "../../../diagnoser";
 import { TestProjectData } from "../../../testprojectdata";
 import { GeneralInfo } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/General/Types";
-import { Location } from "bc-minecraft-bedrock-types/lib/src/types";
+import { Location } from "bc-minecraft-bedrock-types/lib/types";
 
 describe("Selector", () => {
   const context = TestProjectData.createContext();
