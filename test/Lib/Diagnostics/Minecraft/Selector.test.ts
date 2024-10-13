@@ -1,10 +1,10 @@
 import { ParameterInfo, ParameterType } from "bc-minecraft-bedrock-command";
-import { minecraft_selector_diagnose } from "../../../../src/Lib/Diagnostics/Minecraft/Selector";
+import { GeneralInfo } from "bc-minecraft-bedrock-project/lib/src/project/general/types";
 import { Types } from "bc-minecraft-bedrock-types";
+import { Location } from "bc-minecraft-bedrock-types/lib/types";
+import { minecraft_selector_diagnose } from "../../../../src/Lib/Diagnostics/Minecraft/Selector";
 import { TestDiagnoser } from "../../../diagnoser";
 import { TestProjectData } from "../../../testprojectdata";
-import { GeneralInfo } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/General/Types";
-import { Location } from "bc-minecraft-bedrock-types/lib/types";
 
 describe("Selector", () => {
   const context = TestProjectData.createContext();

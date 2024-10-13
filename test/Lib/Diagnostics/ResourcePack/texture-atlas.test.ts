@@ -1,4 +1,4 @@
-import { TextDocument } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/TextDocument";
+import { TextDocument } from "bc-minecraft-bedrock-project/lib/src/types";
 import { ResourcePack } from "../../../../src/Lib/Diagnostics/ResourcePack/ResourcePack";
 import { TestDiagnoser } from "../../../diagnoser";
 

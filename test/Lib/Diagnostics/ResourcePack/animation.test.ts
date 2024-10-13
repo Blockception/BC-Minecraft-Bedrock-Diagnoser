@@ -1,11 +1,10 @@
-import { TextDocument } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/TextDocument";
+import { TextDocument } from 'bc-minecraft-bedrock-project/lib/src/types';
 import { ResourcePack } from "../../../../src/Lib/Diagnostics/ResourcePack/ResourcePack";
 import { TestDiagnoser } from "../../../diagnoser";
 
 describe("ResourcePack", () => {
   describe("Animation", () => {
     it("returns errors for the times outside of the animation_length", () => {
-
       // One time is outside of the animation_length
       // One time is inside of the animation_length
 

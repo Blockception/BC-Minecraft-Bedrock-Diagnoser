@@ -2,7 +2,7 @@ import { BehaviorPack } from "bc-minecraft-bedrock-project";
 import { MCProject } from "bc-minecraft-project";
 import { format_diagnose_path } from "../../../../src/Lib/Diagnostics/Format/diagnose";
 import { TestDiagnoser } from "../../../diagnoser";
-import { Manifest } from 'bc-minecraft-bedrock-project/lib/src/Lib/Internal/Types';
+import { Manifest } from 'bc-minecraft-bedrock-project/lib/src/internal/types';
 
 describe("Filepath lengths", () => {
   let diagnoser: TestDiagnoser;

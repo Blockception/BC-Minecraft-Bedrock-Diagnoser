@@ -1,4 +1,4 @@
-import { Manifest, ManifestHeader } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/Types";
+import { Manifest, ManifestHeader } from "bc-minecraft-bedrock-project/lib/src/internal/types";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../Types";
 
 export function minecraft_manifest_diagnose(m: Manifest, diagnoser: DiagnosticsBuilder): void {

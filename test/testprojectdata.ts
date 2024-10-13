@@ -1,6 +1,6 @@
 import { DiagnosticsBuilderContent } from "../src/Lib/Types/DiagnosticsBuilder";
 import { ProjectData, TextDocument } from "bc-minecraft-bedrock-project";
-import { Manifest } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/Types";
+import { Manifest } from "bc-minecraft-bedrock-project/lib/src/internal/types";
 import { MCProject } from "bc-minecraft-project";
 import path from "path";
 

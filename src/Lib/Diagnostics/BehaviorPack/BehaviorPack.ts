@@ -1,15 +1,15 @@
-import { FileType } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/BehaviorPack";
+import { FileType } from "bc-minecraft-bedrock-project/lib/src/project/behavior-pack";
 import { DocumentDiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 
-import * as Animation from "./Animation/entry";
 import * as AnimationController from "./Animation Controllers/entry";
+import * as Animation from "./Animation/entry";
 import * as Block from "./Block/entry";
 import * as Entity from "./Entity/entry";
-import * as Mcfunction from "./Mcfunction/entry";
 import * as Tick from "./Functions/Tick/entry";
 import * as Item from "./Item/entry";
 import * as LootTable from "./Loot Table/entry";
 import * as Manifest from "./Manifest/entry";
+import * as Mcfunction from "./Mcfunction/entry";
 import * as Script from "./Script/entry";
 import * as SpawnRule from "./Spawn Rule/entry";
 import * as Structure from "./Structure/entry";

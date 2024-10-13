@@ -1,11 +1,11 @@
-import { Internal, SMap, TextDocument } from "bc-minecraft-bedrock-project";
+import { Internal, SMap } from "bc-minecraft-bedrock-project";
+import { EntityProperty } from "bc-minecraft-bedrock-project/lib/src/project/behavior-pack/entity";
 import { ComponentGroups } from "bc-minecraft-bedrock-types/lib/minecraft/components";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../../main";
+import { DocumentDiagnosticsBuilder } from "../../../Types";
+import { commandsCheck } from "../Mcfunction";
 import { behaviorpack_entity_components_filters } from "./components/filters";
-import { EntityProperty } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/BehaviorPack/Entity";
 import { diagnose_entity_property_usage } from "./properties";
-import { commandsCheck, json_commandsCheck } from '../Mcfunction';
-import { DocumentDiagnosticsBuilder } from '../../../Types';
 
 type EntityEvent = Internal.BehaviorPack.EntityEvent;
 
@@ -79,12 +79,11 @@ export function behaviorpack_entity_check_event(
         );
 
         cmd = cmd.slice(1);
-      };
+      }
 
       commandsCheck(cmd, diagnoser);
     });
   }
-  
 }
 
 function has_groups(

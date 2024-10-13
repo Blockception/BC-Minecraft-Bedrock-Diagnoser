@@ -1,5 +1,5 @@
 import { BehaviorPack, DataSetConnector, ResourcePack } from "bc-minecraft-bedrock-project";
-import { Script } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/Types";
+import { Script } from "bc-minecraft-bedrock-project/lib/src/internal/types";
 import { Types } from "bc-minecraft-bedrock-types";
 import { Vanilla } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";

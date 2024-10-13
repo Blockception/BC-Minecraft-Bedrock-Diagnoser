@@ -4,7 +4,7 @@ import { Json } from "../../Json/Json";
 import { minecraft_manifest_diagnose, minecraft_manifest_required_module } from "../../Minecraft/Manifest";
 import { Types } from "bc-minecraft-bedrock-types";
 import { DiagnosticSeverity } from "../../../../main";
-import { Manifest } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/Types";
+import { Manifest } from "bc-minecraft-bedrock-project/lib/src/internal/types";
 
 /**Diagnoses the given document as an bp manifest
  * @param doc The text document to diagnose

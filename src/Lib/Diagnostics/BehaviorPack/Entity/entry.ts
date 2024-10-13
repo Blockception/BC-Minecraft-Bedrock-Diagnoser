@@ -1,21 +1,21 @@
+import { Internal } from "bc-minecraft-bedrock-project";
+import { EntityProperty as DefinedEP } from "bc-minecraft-bedrock-project/lib/src/internal/behavior-pack/entity";
+import { EntityProperty as ProjectEP } from "bc-minecraft-bedrock-project/lib/src/project/behavior-pack/entity";
+import { Types } from "bc-minecraft-bedrock-types";
+import { getUsedComponents } from "bc-minecraft-bedrock-types/lib/minecraft/components";
+import { DefinedUsing, Molang } from "bc-minecraft-molang";
+import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../Types";
+import { Context } from "../../../utility/components";
+import { Json } from "../../Json/Json";
+import { AnimationUsage } from "../../Minecraft";
+import { diagnose_script } from "../../Minecraft/Script";
+import { diagnose_molang } from "../../Molang/diagnostics";
 import { animation_or_controller_diagnose_implementation } from "../anim or controller";
 import { behaviorpack_animation_used } from "../Animation/usage";
-import { behaviorpack_entity_check_events } from "./events";
 import { behaviorpack_entity_components_check } from "./components";
 import { behaviorpack_entity_components_dependencies } from "./components/dependencies";
-import { Context } from "../../../utility/components";
-import { DefinedUsing, Molang } from "bc-minecraft-molang";
-import { diagnose_molang } from "../../Molang/diagnostics";
-import { diagnose_script } from "../../Minecraft/Script";
-import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../Types";
-import { getUsedComponents } from "bc-minecraft-bedrock-types/lib/minecraft/components";
-import { Internal } from "bc-minecraft-bedrock-project";
-import { Json } from "../../Json/Json";
-import { Types } from "bc-minecraft-bedrock-types";
+import { behaviorpack_entity_check_events } from "./events";
 import { diagnose_entity_properties_definition } from "./properties";
-import { AnimationUsage } from "../../Minecraft";
-import { EntityProperty as DefinedEP } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/BehaviorPack/Entity";
-import { EntityProperty as ProjectEP } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/BehaviorPack/Entity";
 
 /**Diagnoses the given document as an bp entity
  * @param doc The text document to diagnose
@@ -61,21 +61,21 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
     animation_or_controller_diagnose_implementation(anim_id, owner, "Entities", diagnoser)
   );
 
-  //@ts-ignore
-  if (container["permutations"]) diagnoser.add(
-    `permutations`,
-    `Entity permutations have been deprecated.`,
-    DiagnosticSeverity.error,
-    "behaviorpack.entity.permutations"
-  );
+  if ("permutations" in container)
+    diagnoser.add(
+      `permutations`,
+      `Entity permutations have been deprecated.`,
+      DiagnosticSeverity.error,
+      "behaviorpack.entity.permutations"
+    );
 
-  //@ts-ignore
-  if (container.description["aliases"]) diagnoser.add(
-    `aliases`,
-    `Entity aliases have been deprecated.`,
-    DiagnosticSeverity.error,
-    "behaviorpack.entity.aliases"
-  );
+  if ("aliases" in container.description)
+    diagnoser.add(
+      `aliases`,
+      `Entity aliases have been deprecated.`,
+      DiagnosticSeverity.error,
+      "behaviorpack.entity.aliases"
+    );
 
   //Script check
   if (container.description.scripts)

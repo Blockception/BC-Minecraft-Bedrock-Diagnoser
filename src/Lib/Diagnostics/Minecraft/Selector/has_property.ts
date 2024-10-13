@@ -1,4 +1,4 @@
-import { Entity } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/BehaviorPack";
+import { Entity } from "bc-minecraft-bedrock-project/lib/src/project/behavior-pack";
 import { Types } from "bc-minecraft-bedrock-types";
 import { CompactJson } from "bc-minecraft-bedrock-types/lib/minecraft/json";
 import { Selector } from "bc-minecraft-bedrock-types/lib/minecraft/selector";

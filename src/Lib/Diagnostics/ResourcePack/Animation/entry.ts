@@ -2,7 +2,7 @@ import { Internal, SMap } from "bc-minecraft-bedrock-project";
 import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../Types";
 import { diagnose_molang } from "../../Molang/diagnostics";
 import { Json } from "../../Json/Json";
-import { BoneAnimation } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/ResourcePack";
+import { BoneAnimation } from "bc-minecraft-bedrock-project/lib/src/internal/resource-pack";
 import { BoneUsage, checkBonesExists } from "../Model";
 
 /**Diagnoses the given document as an animation

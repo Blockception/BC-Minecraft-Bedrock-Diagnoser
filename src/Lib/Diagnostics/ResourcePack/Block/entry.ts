@@ -1,4 +1,4 @@
-import { ResourcePackCollection } from 'bc-minecraft-bedrock-project/lib/src/Lib/Project/ResourcePack';
+import { ResourcePackCollection } from "bc-minecraft-bedrock-project/lib/src/project/resource-pack";
 import { DiagnosticsBuilder, DocumentDiagnosticsBuilder } from "../../../Types";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 import { Json } from "../../Json/Json";
