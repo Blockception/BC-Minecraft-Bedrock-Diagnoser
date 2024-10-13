@@ -1,6 +1,6 @@
 import { Molang } from 'bc-minecraft-molang';
-import { DiagnosticSeverity, DiagnosticsBuilder } from "../../Types";
 import { IsMolangType, MolangType } from 'bc-minecraft-molang/lib/src/Molang';
+import { DiagnosticSeverity, DiagnosticsBuilder } from "../../Types";
 
 /**
  *
@@ -41,5 +41,5 @@ export function diagnoser_molang_syntax(data: any, diagnoser: DiagnosticsBuilder
 
 function has_assign_operator(text: string): boolean {
   // Using regex, Check for = but ensure its not = or <= or >=
-  return /[^<>!+\-*\/=]=[^<>=]/.test(text);
+  return /[^<>!+\-*/=]=[^<>=]/.test(text);
 }

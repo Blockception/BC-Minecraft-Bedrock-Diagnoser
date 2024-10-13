@@ -23,8 +23,8 @@ export function general_range_integer_diagnose(
   //has ..
   if (index >= 0) {
     //Grab texts
-    let lowerText = value.text.slice(0, index);
-    let upperText = value.text.slice(index + 2);
+    const lowerText = value.text.slice(0, index);
+    const upperText = value.text.slice(index + 2);
 
     //To continue or not
     let co = true;
@@ -88,8 +88,8 @@ export function general_range_float_diagnose(
   //has ..
   if (index >= 0) {
     //Grab texts
-    let lowerText = value.text.slice(0, index);
-    let upperText = value.text.slice(index + 2);
+    const lowerText = value.text.slice(0, index);
+    const upperText = value.text.slice(index + 2);
 
     //To continue or not
     let co = true;

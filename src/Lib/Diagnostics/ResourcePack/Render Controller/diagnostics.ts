@@ -1,5 +1,5 @@
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
-import { DiagnosticsBuilder, DocumentDiagnosticsBuilder} from "../../../Types";
+import { DiagnosticsBuilder } from "../../../Types";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 import { education_enabled } from "../../Definitions";
 import { diagnose_molang_implementation } from "../../Molang/diagnostics";

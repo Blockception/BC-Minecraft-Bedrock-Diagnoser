@@ -2,8 +2,6 @@ import { AnimationCarrier, MolangCarrier, SMap } from "bc-minecraft-bedrock-proj
 import { Types } from "bc-minecraft-bedrock-types";
 import { DefinedUsing, Molang } from "bc-minecraft-molang";
 
-export { TextDocument } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/TextDocument";
-
 /**
  * The type that is used to store the animation data & molang data
  */

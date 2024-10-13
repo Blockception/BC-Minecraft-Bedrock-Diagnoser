@@ -4,13 +4,13 @@ import { DiagnosticSeverity } from "./Severity";
 import { format_diagnose_path } from "../Diagnostics/Format";
 import { MCIgnore } from "bc-minecraft-project";
 import { minecraft_language_diagnose } from "../Diagnostics/Minecraft";
-
-import path = require("path");
 import { BehaviorPack } from "../Diagnostics/BehaviorPack";
 import { ResourcePack } from "../Diagnostics/ResourcePack";
 import { SkinPack } from "../Diagnostics/SkinPack/SkinPack";
 import { WorldPack } from "../Diagnostics/WorldPack/WorldPack";
 import { DocumentDiagnosticsBuilder } from "./DiagnosticsBuilder";
+
+import path from "path";
 
 /**The object that is responsible for diagnosing minecraft bedrock files*/
 export class Diagnoser<T extends TextDocument = TextDocument> {

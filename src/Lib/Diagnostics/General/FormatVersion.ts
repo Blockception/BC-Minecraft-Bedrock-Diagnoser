@@ -1,6 +1,6 @@
-import { FormatVersion } from 'bc-minecraft-bedrock-types/lib/src/minecraft';
+import { FormatVersion } from "bc-minecraft-bedrock-types/lib/minecraft";
+import { Versions } from "bc-minecraft-bedrock-vanilla-data/lib/src/Lib";
 import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../Types";
-import { Versions } from 'bc-minecraft-bedrock-vanilla-data/lib/src/Lib';
 
 interface FormatVersionContainer {
   format_version: FormatVersion;
@@ -16,10 +16,12 @@ namespace FormatVersionContainer {
   }
 }
 
-
 const latestVersion = FormatVersion.parse(Versions.latest);
 
-export function diagnoseFormatVersionIf(data: Partial<FormatVersionContainer>, diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnoseFormatVersionIf(
+  data: Partial<FormatVersionContainer>,
+  diagnoser: DocumentDiagnosticsBuilder
+): void {
   if (FormatVersionContainer.is(data)) diagnoseFormatVersion(data, diagnoser);
 }
 
@@ -38,6 +40,7 @@ export function diagnoseFormatVersion(data: FormatVersionContainer, diagnoser: D
   let v;
   try {
     v = FormatVersion.parse(data.format_version);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {
     return diagnoser.add(
       "Format version is not a valid number",
@@ -46,9 +49,6 @@ export function diagnoseFormatVersion(data: FormatVersionContainer, diagnoser: D
       "minecraft.format_version"
     );
   }
-
-  let [latestVersionMajor, latestVersionMinor, latestVersionPatch] = latestVersion;
-  let [major, minor, patch] = v;
 
   // If version is less then latest recommend upgrade
 

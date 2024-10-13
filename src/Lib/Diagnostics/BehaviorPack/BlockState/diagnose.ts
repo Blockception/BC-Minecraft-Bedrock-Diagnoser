@@ -1,6 +1,6 @@
 import { BehaviorPack } from 'bc-minecraft-bedrock-project';
 import { Types, Minecraft } from 'bc-minecraft-bedrock-types';
-import { DocumentLocation, Location } from 'bc-minecraft-bedrock-types/lib/src/types';
+import { DocumentLocation, Location } from 'bc-minecraft-bedrock-types/lib/types';
 import { MinecraftData } from 'bc-minecraft-bedrock-vanilla-data';
 import { MolangSet } from 'bc-minecraft-molang/lib/src/Molang';
 import { DiagnosticsBuilder, DiagnosticSeverity } from '../../../Types';
@@ -45,12 +45,13 @@ export function behaviorpack_check_command_blockstates(blockId: Types.OffsetWord
     const split = value.split(',');
 
     // For each state
-    for (var I = 0; I < split.length; I++) {
+    for (let I = 0; I < split.length; I++) {
       const item = split[I];
       const state = split[I].split('=').map(part => part.trim());
 
       // Is state properly defined
       if (state.length == 2) {
+        // eslint-disable-next-line prefer-const
         let [property, value] = state;
 
         // property is a string literal?
@@ -109,7 +110,7 @@ function check_block_definition(blockDefinition: Minecraft.Block, location: Docu
     return;
   }
 
-  for (var I = 0; I < blockDefinition.states.length; I++) {
+  for (let I = 0; I < blockDefinition.states.length; I++) {
     const state = blockDefinition.states[I];
     check_state(state, block, location, diagnoser);
   }
@@ -129,7 +130,7 @@ function check_state(
   location: DocumentLocation,
   diagnoser: DiagnosticsBuilder
 ) {
-  for (var I = 0; I < data.states.length; I++) {
+  for (let I = 0; I < data.states.length; I++) {
     const stateData = data.states[I];
 
     //If found state with the same name
@@ -155,7 +156,7 @@ function check_state(
       }
 
       //Check if the state value is valid
-      for (let expect of values) {
+      for (const expect of values) {
         // Compare int/bool/string values
         if (String(expect) == actual) { // String() because "true" != true unlike "2" == 2
           return;
@@ -201,7 +202,7 @@ function vanilla_block(diagnoser: DiagnosticsBuilder, blockId: string): Behavior
       states: [],
     };
 
-    for (let prop of block.properties) {
+    for (const prop of block.properties) {
       const state = MinecraftData.BehaviorPack.getBlockState(prop);
       if (state) result.states.push(state);
     }

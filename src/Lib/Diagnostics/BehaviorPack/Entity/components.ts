@@ -1,13 +1,13 @@
-import { DiagnosticsBuilder } from "../../../Types";
 import { Internal } from "bc-minecraft-bedrock-project";
-import { behaviorpack_diagnose_entity_components } from "./components/diagnose";
+import { ComponentContainer } from "bc-minecraft-bedrock-types/lib/minecraft/components";
+import { DocumentDiagnosticsBuilder } from "../../../Types";
 import { Context } from "../../../utility/components";
-import { ComponentContainer } from "bc-minecraft-bedrock-types/lib/src/minecraft/components";
+import { behaviorpack_diagnose_entity_components } from "./components/diagnose";
 
 export function behaviorpack_entity_components_check(
   entity: Internal.BehaviorPack.Entity,
   context: Context,
-  diagnoser: DiagnosticsBuilder
+  diagnoser: DocumentDiagnosticsBuilder
 ) {
   const desc = entity["minecraft:entity"];
 
@@ -26,7 +26,7 @@ export function behaviorpack_entity_components_check(
 function behaviorpack_entity_componentscontainer_check(
   container: ComponentContainer | undefined | null,
   context: Context,
-  diagnoser: DiagnosticsBuilder
+  diagnoser: DocumentDiagnosticsBuilder
 ) {
   if (container === null || typeof container !== "object") return;
 

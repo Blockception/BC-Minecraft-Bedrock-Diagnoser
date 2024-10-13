@@ -16,7 +16,7 @@ export function behaviorpack_entityid_diagnose(
   diagnoser: DiagnosticsBuilder
 ): boolean {
   let id = typeof value === "string" ? value : value.text;
-  id = id.split('<')[0];
+  id = id.split("<")[0];
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.entity, id, diagnoser)) {
     return true;
@@ -86,9 +86,7 @@ export function behaviorpack_entity_event_diagnose(
 
   if (matches.length !== 1) return;
 
-  const entityid_index = matches[0].parameters.findIndex((p) => {
-    p.type === ParameterType.entity;
-  });
+  const entityid_index = matches[0].parameters.findIndex((p) => p.type === ParameterType.entity);
   let entityid: string | undefined = undefined;
 
   if (entityid_index >= 0) {

@@ -1,10 +1,9 @@
-import { Definition } from "bc-minecraft-bedrock-types/lib/src/types/definition";
-import { DiagnosticsBuilder } from "../../../Types";
+import { Definition } from "bc-minecraft-bedrock-types/lib/types/definition";
+import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
+import { MolangDataSetKey } from "bc-minecraft-molang";
+import { DiagnosticsBuilder, EntityAnimationMolangCarrier } from "../../../Types";
 import { DiagnosticSeverity } from "../../../Types/Severity";
 import { education_enabled } from "../../Definitions";
-import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
-import { EntityAnimationMolangCarrier } from "../../../Types";
-import { MolangDataSetKey } from "bc-minecraft-molang";
 import { diagnose_molang_implementation } from "../../Molang";
 
 /**

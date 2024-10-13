@@ -1,10 +1,5 @@
-import { animation_reference_diagnose } from "../../ResourcePack/anim or controller";
-import { behaviorpack_check_blockdescriptor } from "../Block/diagnose";
-import { behaviorpack_functions_diagnose } from "./diagnose";
-import { behaviorpack_item_diagnose } from "../Item/diagnose";
-import { behaviorpack_loot_table_short_diagnose } from "../Loot Table/diagnose";
-import { behaviorpack_structure_diagnose } from "../Structure/diagnose";
-import { Command, Parameter, ParameterType, CommandData } from "bc-minecraft-bedrock-command";
+import { Command, CommandData, Parameter, ParameterInfo, ParameterType } from "bc-minecraft-bedrock-command";
+import { Types } from "bc-minecraft-bedrock-types";
 import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../Types";
 import { education_enabled } from "../../Definitions";
 import { general_boolean_diagnose } from "../../General/Boolean";
@@ -22,15 +17,6 @@ import { minecraft_selector_diagnose } from "../../Minecraft/Selector";
 import { minecraft_tag_diagnose } from "../../Minecraft/Tag";
 import { minecraft_tickingarea_diagnose } from "../../Minecraft/Tickingarea";
 import { minecraft_xp_diagnose } from "../../Minecraft/Xp";
-import { ParameterInfo } from "bc-minecraft-bedrock-command";
-import { resourcepack_particle_diagnose } from "../../ResourcePack/Particle/diagnose";
-import { resourcepack_sound_diagnose } from "../../ResourcePack/Sounds Definitions/diagnose";
-import { Types } from "bc-minecraft-bedrock-types";
-import {
-  behaviorpack_entityid_diagnose,
-  behaviorpack_entity_event_diagnose,
-  behaviorpack_entity_spawnegg_diagnose,
-} from "../Entity/diagnose";
 import {
   mode_camerashake_diagnose,
   mode_causetype_diagnose,
@@ -60,7 +46,20 @@ import {
   mode_teleportrules_diagnose,
   mode_time_diagnose,
 } from "../../Mode/diagnose";
+import { animation_reference_diagnose } from "../../ResourcePack/anim or controller";
+import { resourcepack_particle_diagnose } from "../../ResourcePack/Particle/diagnose";
+import { resourcepack_sound_diagnose } from "../../ResourcePack/Sounds Definitions/diagnose";
+import { behaviorpack_check_blockdescriptor } from "../Block/diagnose";
 import { behaviorpack_check_command_blockstates } from "../BlockState/diagnose";
+import {
+  behaviorpack_entity_event_diagnose,
+  behaviorpack_entity_spawnegg_diagnose,
+  behaviorpack_entityid_diagnose,
+} from "../Entity/diagnose";
+import { behaviorpack_item_diagnose } from "../Item/diagnose";
+import { behaviorpack_loot_table_short_diagnose } from "../Loot Table/diagnose";
+import { behaviorpack_structure_diagnose } from "../Structure/diagnose";
+import { behaviorpack_functions_diagnose } from "./diagnose";
 
 /**
  *
@@ -193,7 +192,8 @@ function mcfunction_commandcheck(command: Command, diagnoser: DocumentDiagnostic
         `minecraft.commands.${keyword.text}.obsolete`
       );
     } else {
-      let { code, message, format_version } = obsolete;
+      let { message } = obsolete;
+      const { code, format_version } = obsolete
 
       if (format_version) {
         message += `\nThis command is obsolete since format version: ${format_version}`;

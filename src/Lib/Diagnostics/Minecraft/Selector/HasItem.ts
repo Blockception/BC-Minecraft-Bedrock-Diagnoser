@@ -1,5 +1,5 @@
-import { CompactJson, CompactJsonReader } from "bc-minecraft-bedrock-types/lib/src/minecraft/json";
-import { Selector } from "bc-minecraft-bedrock-types/lib/src/minecraft/selector";
+import { CompactJson, CompactJsonReader } from "bc-minecraft-bedrock-types/lib/minecraft/json";
+import { Selector } from "bc-minecraft-bedrock-types/lib/minecraft/selector";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types";
 import { behaviorpack_item_diagnose } from "../../BehaviorPack/Item/diagnose";
 import { general_integer_diagnose } from "../../General/Integer";
@@ -58,7 +58,7 @@ export function minecraft_selector_hasitem_diagnose(
   let result = true;
 
   if (CompactJson.isArray(attr)) {
-    for (let a of attr.value) {
+    for (const a of attr.value) {
       //Sub items need to be a object
       if (CompactJson.isObject(a)) {
         result =

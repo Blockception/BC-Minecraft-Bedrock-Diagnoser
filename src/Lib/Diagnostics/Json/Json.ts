@@ -1,9 +1,7 @@
-import { TextDocument } from "bc-minecraft-bedrock-project";
 import { jsonc } from "jsonc";
 import { DiagnosticsBuilder, DocumentDiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/Severity";
 import { Handle_Json_Error } from "./Errors";
-import { diagnoseFormatVersionIf } from '../General/FormatVersion';
 
 export namespace Json {
   /**Loads the object and casts it to the specified type, if it fails then undefined is loaded and the error message is send to the diagnoser

@@ -1,5 +1,4 @@
-import { TextDocument } from "bc-minecraft-bedrock-project/lib/src/Lib/Types/TextDocument";
-import { expect } from "chai";
+import { TextDocument } from "bc-minecraft-bedrock-project/lib/src/types";
 import { ResourcePack } from "../../../../src/Lib/Diagnostics/ResourcePack/ResourcePack";
 import { TestDiagnoser } from "../../../diagnoser";
 
@@ -49,9 +48,9 @@ describe("ResourcePack", () => {
       };
 
       try {
-        const value = ResourcePack.Process(diagnoser);
+        ResourcePack.Process(diagnoser);
       } catch (err: any) {
-        if (typeof err.message !== "undefined") expect.fail("Expect no errors: " + err.message);
+        if (typeof err.message !== "undefined") throw new Error("Expect no errors: " + err.message);
       }
     });
   });

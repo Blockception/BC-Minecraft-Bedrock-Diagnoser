@@ -1,10 +1,10 @@
+import { ComponentBehavior } from "bc-minecraft-bedrock-types/lib/minecraft/components";
+import { DocumentDiagnosticsBuilder } from "../../../../Types";
+import { Context } from "../../../../utility/components";
+import { ComponentCheck, components_check } from "../../../../utility/components/checks";
+import { behaviorpack_entity_components_filters } from './filters';
 import { check_loot_table } from "./loot";
 import { check_trade_table } from "./trade";
-import { ComponentBehavior } from "bc-minecraft-bedrock-types/lib/src/minecraft/components";
-import { ComponentCheck, components_check } from "../../../../utility/components/checks";
-import { Context } from "../../../../utility/components";
-import { DiagnosticsBuilder } from "../../../../Types";
-import { behaviorpack_entity_components_filters } from './filters';
 
 /**
  *
@@ -15,7 +15,7 @@ import { behaviorpack_entity_components_filters } from './filters';
 export function behaviorpack_diagnose_entity_components(
   container: ComponentBehavior,
   context: Context,
-  diagnoser: DiagnosticsBuilder
+  diagnoser: DocumentDiagnosticsBuilder
 ): void {
   components_check(container, context, diagnoser, component_test);
 

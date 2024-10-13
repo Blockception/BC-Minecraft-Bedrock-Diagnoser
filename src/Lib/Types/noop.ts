@@ -1,9 +1,6 @@
-import { TextDocument } from 'bc-minecraft-bedrock-project';
-import { DocumentLocation } from 'bc-minecraft-bedrock-types/lib/src/types';
-import { MCProject } from 'bc-minecraft-project';
-import { DiagnosticsBuilder, DiagnosticsBuilderContent } from './DiagnosticsBuilder';
-import { DiagnosticSeverity } from './Severity';
-
+import { TextDocument } from "bc-minecraft-bedrock-project";
+import { MCProject } from "bc-minecraft-project";
+import { DiagnosticsBuilder, DiagnosticsBuilderContent } from "./DiagnosticsBuilder";
 
 export class NoopDiagnoser<T extends TextDocument> implements DiagnosticsBuilder<T> {
   context: DiagnosticsBuilderContent<T>;
@@ -14,7 +11,7 @@ export class NoopDiagnoser<T extends TextDocument> implements DiagnosticsBuilder
     this.project = base.project;
   }
 
-  add(position: DocumentLocation, message: string, severity: DiagnosticSeverity, code: string | number): void {
+  add(): void {
     //Do nothing
   }
 }

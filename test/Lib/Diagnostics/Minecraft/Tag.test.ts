@@ -1,7 +1,7 @@
-import { GeneralInfo } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/General/Types/GeneralInfo";
-import { Location } from "bc-minecraft-bedrock-types/lib/src/types";
-import { minecraft_tag_diagnose } from "../../../../src/Lib/Diagnostics/Minecraft/Tag";
+import { GeneralInfo } from 'bc-minecraft-bedrock-project/lib/src/project/general/types';
 import { Types } from "bc-minecraft-bedrock-types";
+import { Location } from "bc-minecraft-bedrock-types/lib/types";
+import { minecraft_tag_diagnose } from "../../../../src/Lib/Diagnostics/Minecraft/Tag";
 import { TestDiagnoser } from "../../../diagnoser";
 
 describe("Tag", () => {

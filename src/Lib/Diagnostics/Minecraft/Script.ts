@@ -1,4 +1,4 @@
-import { Script } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/Types";
+import { Script } from "bc-minecraft-bedrock-project/lib/src/internal/types";
 import { Types } from "bc-minecraft-bedrock-types";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../Types";
 
@@ -21,7 +21,7 @@ export function diagnose_script(
   if (script.animate) {
     const animates = script.animate;
 
-    Types.Conditional.forEach(animates, (ref_id, conditional) => has_ref(builder, ref_id, Animations, Controllers));
+    Types.Conditional.forEach(animates, (ref_id) => has_ref(builder, ref_id, Animations, Controllers));
   }
 }
 

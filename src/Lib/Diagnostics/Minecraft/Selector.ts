@@ -1,10 +1,10 @@
 import { Attribute } from "./Selector/Attributes";
 import { check_definition_value } from "../Definitions";
-import { CompactJson } from "bc-minecraft-bedrock-types/lib/src/minecraft/json";
+import { CompactJson } from "bc-minecraft-bedrock-types/lib/minecraft/json";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../Types";
 import { Minecraft } from "bc-minecraft-bedrock-types";
 import { ParameterInfo } from "bc-minecraft-bedrock-command";
-import { Selector } from "bc-minecraft-bedrock-types/lib/src/minecraft/selector";
+import { Selector } from "bc-minecraft-bedrock-types/lib/minecraft/selector";
 import { Text } from "bc-minecraft-bedrock-project";
 import { Types } from "bc-minecraft-bedrock-types";
 

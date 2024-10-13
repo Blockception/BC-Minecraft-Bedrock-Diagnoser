@@ -1,6 +1,5 @@
-import { TextDocument } from "bc-minecraft-bedrock-project";
 import { DocumentDiagnosticsBuilder} from "../../../Types";
-import { Internal, ResourcePack } from "bc-minecraft-bedrock-project";
+import { Internal } from "bc-minecraft-bedrock-project";
 import { Json } from '../../Json';
 
 /**Diagnoses the given document as a model

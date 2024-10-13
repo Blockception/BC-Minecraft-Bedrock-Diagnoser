@@ -6,7 +6,7 @@ import { education_enabled } from "../Definitions";
 import { animation_controller_diagnose_implementation } from "./Animation Controllers/diagnostics";
 import { animation_diagnose_implementation } from "./Animation/diagnostics";
 import { Types } from "bc-minecraft-bedrock-types";
-import { Definition } from "bc-minecraft-bedrock-types/lib/src/types/definition";
+import { Definition } from "bc-minecraft-bedrock-types/lib/types/definition";
 import { EntityAnimationMolangCarrier } from "../../Types";
 
 export function animation_or_controller_diagnose_implementation(

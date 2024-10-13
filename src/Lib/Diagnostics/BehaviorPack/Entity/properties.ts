@@ -3,7 +3,7 @@ import {
   EntityFloatProperty,
   EntityIntProperty,
   EntityProperty,
-} from "bc-minecraft-bedrock-project/lib/src/Lib/Project/BehaviorPack/Entity";
+} from "bc-minecraft-bedrock-project/lib/src/project/behavior-pack/entity";
 import { DiagnosticSeverity, DiagnosticsBuilder } from "../../../Types";
 
 export function diagnose_entity_properties_definition(property: EntityProperty[], diagnoser: DiagnosticsBuilder) {
@@ -185,7 +185,6 @@ export function diagnose_entity_property_usage(
     }
   }
 }
-
 
 function check_entity_property_usage(
   definition: EntityProperty,

@@ -1,4 +1,3 @@
-import { TextDocument } from "bc-minecraft-bedrock-project";
 import { DocumentDiagnosticsBuilder} from "../../../Types";
 import { diagnose_molang } from '../../Molang/diagnostics';
 

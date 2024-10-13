@@ -1,14 +1,11 @@
+import { Definition } from "bc-minecraft-bedrock-types/lib/types/definition";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
-import { DiagnosticsBuilder } from "../../../Types";
+import { MolangDataSetKey } from "bc-minecraft-molang";
+import { DiagnosticsBuilder, EntityAnimationMolangCarrier } from "../../../Types";
 import { DiagnosticSeverity } from "../../../Types/Severity";
+import { forEach } from '../../../utility/using-defined';
 import { education_enabled } from "../../Definitions";
 import { general_animation_controllers_implementation } from "../../Minecraft/Animation Controllers";
-import { Definition } from "bc-minecraft-bedrock-types/lib/src/types/definition";
-import { EntityAnimationMolangCarrier } from "../../../Types";
-import { MolangDataSetKey, Using } from "bc-minecraft-molang";
-import { Storage } from '../../../storage/storage';
-import { forEach } from '../../../utility/using-defined';
-import { AnimationControllers } from 'bc-minecraft-bedrock-vanilla-data/lib/src/Lib/Vanilla/ResourcePack';
 
 
 /**

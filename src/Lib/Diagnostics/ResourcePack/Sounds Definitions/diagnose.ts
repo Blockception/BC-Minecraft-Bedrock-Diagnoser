@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { DiagnosticsBuilder } from "../../../../main";
 import { Types } from "bc-minecraft-bedrock-types";
 

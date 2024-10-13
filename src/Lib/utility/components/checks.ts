@@ -1,8 +1,8 @@
-import { ComponentBehavior, ComponentContainer } from "bc-minecraft-bedrock-types/lib/src/minecraft/components";
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../Types";
+import { ComponentBehavior, ComponentContainer } from "bc-minecraft-bedrock-types/lib/minecraft/components";
+import { DocumentDiagnosticsBuilder, DiagnosticSeverity } from "../../Types";
 import { Context } from "./components";
 
-export type ComponentCheck = (name: string, component: any, context: Context, diagnoser: DiagnosticsBuilder) => void;
+export type ComponentCheck = (name: string, component: any, context: Context, diagnoser: DocumentDiagnosticsBuilder) => void;
 
 export function component_error(message: string, code: string | number): ComponentCheck {
   return (name, component, context, diagnoser) => {
@@ -19,7 +19,7 @@ export function component_warning(message: string, code: string | number): Compo
 export function components_check(
   data: ComponentBehavior | undefined,
   context: Context,
-  diagnoser: DiagnosticsBuilder,
+  diagnoser: DocumentDiagnosticsBuilder,
   component_test: Record<string, ComponentCheck>
 ): void {
   if (data === undefined) return;
@@ -27,7 +27,7 @@ export function components_check(
   compContainerCheck(data.components, context, diagnoser, component_test);
 
   if (data.component_groups) {
-    Object.entries(data.component_groups).forEach(([key, group]) => {
+    Object.entries(data.component_groups).forEach(([, group]) => {
       compContainerCheck(group, context, diagnoser, component_test);
     });
   }
@@ -36,7 +36,7 @@ export function components_check(
 function compContainerCheck(
   container: ComponentContainer | undefined,
   context: Context,
-  diagnoser: DiagnosticsBuilder,
+  diagnoser: DocumentDiagnosticsBuilder,
   component_test: Record<string, ComponentCheck>
 ): void {
   if (container === undefined) return;

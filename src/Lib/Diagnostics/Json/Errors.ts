@@ -1,4 +1,4 @@
-import { OffsetWord } from "bc-minecraft-bedrock-types/lib/src/types/offset-word";
+import { OffsetWord } from "bc-minecraft-bedrock-types/lib/types/offset-word";
 import { DiagnosticSeverity } from "../../../main";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 
@@ -13,7 +13,7 @@ export function Handle_Json_Error(err: any, diagnoser: DiagnosticsBuilder): void
   }
 
   const message = err.message;
-  let word: OffsetWord = {
+  const word: OffsetWord = {
     offset: 0,
     text: " ",
   };

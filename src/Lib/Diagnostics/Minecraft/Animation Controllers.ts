@@ -10,9 +10,9 @@ import { Defined, Molang, MolangDataSetKey } from "bc-minecraft-molang";
 import { diagnose_molang_implementation } from "../Molang/diagnostics";
 import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
 import { DiagnosticSeverity } from "../../Types/Severity";
-import { State } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/BehaviorPack/AnimationController";
+import { State } from "bc-minecraft-bedrock-project/lib/src/internal/behavior-pack";
 import { Types } from "bc-minecraft-bedrock-types";
-import { forEach } from '../../utility/using-defined';
+import { forEach } from "../../utility/using-defined";
 
 export type animation_controllers =
   | Internal.BehaviorPack.AnimationControllers
@@ -20,7 +20,7 @@ export type animation_controllers =
 export type animation_controller =
   | Internal.BehaviorPack.AnimationController
   | Internal.ResourcePack.AnimationController;
-export type animationsOwner = Types.Identifiable & MolangCarrier<Molang.MolangSet> & AnimationCarrier<Defined<String>>;
+export type animationsOwner = Types.Identifiable & MolangCarrier<Molang.MolangSet> & AnimationCarrier<Defined<string>>;
 
 /**
  *
@@ -59,7 +59,7 @@ export function general_animation_controller(
   }
 
   //Check states
-  SMap.forEach(controller.states, (state, state_id) => {
+  SMap.forEach(controller.states, (state) => {
     //Check transitions
     if (state.transitions) CheckTransition(controller_id, state.transitions, controller.states, diagnoser);
   });
@@ -79,7 +79,7 @@ function CheckTransition(
   diagnoser: DiagnosticsBuilder
 ): void {
   //Loop over the transitions
-  for (var I = 0; I < Transitions.length; I++) {
+  for (let I = 0; I < Transitions.length; I++) {
     const trans = Transitions[I];
     //Get state identification refered
     const state: string = typeof trans === "string" ? trans : Object.getOwnPropertyNames(trans)[0];
@@ -96,8 +96,9 @@ function CheckTransition(
   }
 }
 
-
-export type Controller = ResourcePack.AnimationController.AnimationController | BehaviorPack.AnimationController.AnimationController;
+export type Controller =
+  | ResourcePack.AnimationController.AnimationController
+  | BehaviorPack.AnimationController.AnimationController;
 
 export function general_animation_controllers_implementation(
   controller: Controller,
