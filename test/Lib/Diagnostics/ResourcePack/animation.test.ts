@@ -30,11 +30,7 @@ describe("ResourcePack", () => {
 
       const diagnoser = TestDiagnoser.createDocument(undefined, doc);
 
-      try {
-        ResourcePack.Process(diagnoser);
-      } catch (err: any) {
-        if (typeof err.message !== "undefined") throw new Error("Expect no errors: " + err.message);
-      }
+      ResourcePack.Process(diagnoser);
 
       diagnoser.expectAmount(2);
       const item = diagnoser.getSeverity(3);

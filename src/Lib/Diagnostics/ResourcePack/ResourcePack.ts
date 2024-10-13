@@ -1,5 +1,5 @@
 import { DocumentDiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
-import { ResourcePack as RP } from "bc-minecraft-bedrock-project";
+import { FileType } from "bc-minecraft-bedrock-project/lib/src/project/resource-pack";
 
 import * as Animation from "./Animation/entry";
 import * as AnimationController from "./Animation Controllers/entry";
@@ -31,30 +31,30 @@ export namespace ResourcePack {
    * @returns `true` or `false` whenever or not it was succesfull */
   export function Process(diagnoser: DocumentDiagnosticsBuilder): boolean {
     const uri = diagnoser.document.uri;
-    const type = RP.FileType.detect(uri);
+    const type = FileType.detect(uri);
 
     switch (type) {
-      case RP.FileType.animation:
+      case FileType.animation:
         Animation.Diagnose(diagnoser);
         break;
 
-      case RP.FileType.animation_controller:
+      case FileType.animation_controller:
         AnimationController.Diagnose(diagnoser);
         break;
 
-      case RP.FileType.attachable:
+      case FileType.attachable:
         Attachable.Diagnose(diagnoser);
         break;
 
-      case RP.FileType.block_culling_rules:
+      case FileType.block_culling_rules:
         BlockCulling.Diagnose(diagnoser);
         break;
 
-      case RP.FileType.biomes_client:
+      case FileType.biomes_client:
         BiomesClient.Diagnose(diagnoser);
         break;
 
-      case RP.FileType.block:
+      case FileType.block:
         if (uri.endsWith("blocks.json")) {
           Blocks.Diagnose(diagnoser);
         } else {
@@ -63,65 +63,65 @@ export namespace ResourcePack {
 
         break;
 
-      case RP.FileType.entity:
+      case FileType.entity:
         Entity.Diagnose(diagnoser);
         break;
 
-      case RP.FileType.fog:
+      case FileType.fog:
         Fog.Diagnose(diagnoser);
         break;
 
-      case RP.FileType.item:
+      case FileType.item:
         Item.Diagnose(diagnoser);
         break;
 
-      case RP.FileType.manifest:
+      case FileType.manifest:
         Manifest.Diagnose(diagnoser);
         break;
 
-      case RP.FileType.material:
+      case FileType.material:
         Material.Diagnose(diagnoser);
         break;
 
-      case RP.FileType.model:
+      case FileType.model:
         Model.Diagnose(diagnoser);
         break;
 
-      case RP.FileType.music_definitions:
+      case FileType.music_definitions:
         MusicDefinitions.Diagnose(diagnoser);
         break;
 
-      case RP.FileType.particle:
+      case FileType.particle:
         Particle.Diagnose(diagnoser);
         break;
 
-      case RP.FileType.render_controller:
+      case FileType.render_controller:
         RenderController.Diagnose(diagnoser);
         break;
 
-      case RP.FileType.sounds:
+      case FileType.sounds:
         Sounds.Diagnose(diagnoser);
         break;
 
-      case RP.FileType.sounds_definitions:
+      case FileType.sounds_definitions:
         SoundsDefinitions.Diagnose(diagnoser);
         break;
 
-      case RP.FileType.texture:
+      case FileType.texture:
         Texture.Diagnose(diagnoser);
         break;
 
-      case RP.FileType.texture_flipbook_atlas:
+      case FileType.texture_flipbook_atlas:
         Flipbook.DiagnoseFlipbook(diagnoser);
         break;
 
-      case RP.FileType.texture_item_atlas:
-      case RP.FileType.texture_terrain_atlas:
+      case FileType.texture_item_atlas:
+      case FileType.texture_terrain_atlas:
         TextureAtlas.DiagnoseAtlas(diagnoser);
         break;
 
       default:
-      case RP.FileType.unknown:
+      case FileType.unknown:
         return false;
     }
 
