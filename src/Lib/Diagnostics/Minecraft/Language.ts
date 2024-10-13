@@ -98,7 +98,7 @@ export function minecraft_language_line_diagnose(
 
     const value = text.substring(assignIndex + 1);
 
-    let offset = line.offset + assignIndex + 1;
+    const offset = line.offset + assignIndex + 1;
     let index;
     if ((index = value.indexOf("\\n")) > -1)
       diagnoser.add(

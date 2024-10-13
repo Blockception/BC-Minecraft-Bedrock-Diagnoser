@@ -4,8 +4,8 @@ import { TestDiagnoser } from "../../../diagnoser";
 
 describe("BehaviorPack", () => {
   describe("Structures", () => {
-    var diagnoser: TestDiagnoser<TextDocument>;
-    var data: ProjectData;
+    let diagnoser: TestDiagnoser<TextDocument>;
+    let data: ProjectData;
 
     beforeEach(() => {
       diagnoser = TestDiagnoser.create();

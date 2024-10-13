@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import * as path from 'path';
 
 describe("Diagnoser", ()=>{
@@ -6,6 +5,6 @@ describe("Diagnoser", ()=>{
     const filepath = "file:///c:/temp/test.mcfunction";
 
     const ext = path.extname(filepath);
-    expect(ext).to.equal(".mcfunction");
+    expect(ext).toEqual(".mcfunction");
   });
 })

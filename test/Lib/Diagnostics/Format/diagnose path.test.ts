@@ -5,8 +5,8 @@ import { TestDiagnoser } from "../../../diagnoser";
 import { Manifest } from 'bc-minecraft-bedrock-project/lib/src/Lib/Internal/Types';
 
 describe("Filepath lengths", () => {
-  var diagnoser: TestDiagnoser;
-  var pack:  BehaviorPack.BehaviorPack;
+  let diagnoser: TestDiagnoser;
+  let pack:  BehaviorPack.BehaviorPack;
 
   beforeEach(() => {
     diagnoser = new TestDiagnoser();

@@ -88,6 +88,6 @@ const component_test: Record<string, ComponentCheck> = {
 };
 
 function deprecated_component(replacement?: string) {
-  let str = replacement ? ", replace with " + replacement : ''
+  const str = replacement ? ", replace with " + replacement : ''
   return component_error("This component is no longer supported" + str + '. You are recommended to use the latest format version.', 'behaviorpack.block.components.deprecated')
 }

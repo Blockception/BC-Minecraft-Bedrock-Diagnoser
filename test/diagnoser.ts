@@ -2,10 +2,9 @@ import { DiagnosticsBuilderContent, DocumentDiagnosticsBuilder } from "../src/Li
 import { DiagnosticSeverity } from "../src/Lib/Types/Severity";
 import { Types } from "bc-minecraft-bedrock-types";
 import { MCProject } from "bc-minecraft-project";
-import { expect } from "chai";
 import { ManagedDiagnosticsBuilder } from "../src/main";
-import { TestProjectData } from "./testprojectdata.test";
-import { TextDocument } from 'bc-minecraft-bedrock-project';
+import { TestProjectData } from "./testprojectdata";
+import { TextDocument } from "bc-minecraft-bedrock-project";
 
 export interface Error {
   position: Types.DocumentLocation;
@@ -21,13 +20,15 @@ export class TestDiagnoser<T extends TextDocument = TextDocument> implements Man
   public project: MCProject;
   public doneMark: boolean;
 
-  constructor(context: DiagnosticsBuilderContent<T> | undefined = undefined, project: MCProject | undefined = undefined) {
+  constructor(
+    context: DiagnosticsBuilderContent<T> | undefined = undefined,
+    project: MCProject | undefined = undefined
+  ) {
     this.doneMark = false;
     this.context = context ?? TestProjectData.createContext();
     this.project = project ?? MCProject.createEmpty();
     this.items = [];
   }
-  
 
   done(): void {
     this.doneMark = true;
@@ -53,11 +54,11 @@ export class TestDiagnoser<T extends TextDocument = TextDocument> implements Man
    *
    */
   expectEmpty(): void {
-    expect(this.items.length).to.lessThanOrEqual(0, `Expected no errors/warnings, but has received ${this.items.length}:\n${this.writeItemsMessage()}`);
+    expect(this.items.length).toBeLessThanOrEqual(0);
   }
 
   expectAny(): void {
-    expect(this.items.length).to.greaterThan(0, `Expected any errors/warnings, but has received none`);
+    expect(this.items.length).toBeGreaterThan(0);
   }
 
   /**
@@ -65,7 +66,7 @@ export class TestDiagnoser<T extends TextDocument = TextDocument> implements Man
    * @param number
    */
   expectAmount(number: number): void {
-    expect(this.items.length).to.equal(number, `Expected ${number} errors/warnings, but has received ${this.items.length}:\n${this.writeItemsMessage()}`);
+    expect(this.items).toHaveLength(number);
   }
 
   /**
@@ -73,7 +74,7 @@ export class TestDiagnoser<T extends TextDocument = TextDocument> implements Man
    * @param number
    */
   expectGreaterThan(number: number): void {
-    expect(this.items.length).to.greaterThan(number, `Expected more ${number} errors/warnings, but has received ${this.items.length}:\n${this.writeItemsMessage()}`);
+    expect(this.items.length).toBeGreaterThan(number);
   }
 
   /**
@@ -81,18 +82,15 @@ export class TestDiagnoser<T extends TextDocument = TextDocument> implements Man
    * @param number
    */
   expectGreaterThanOrEqual(number: number): void {
-    expect(this.items.length).to.greaterThanOrEqual(
-      number,
-      `Expected more or equal ${number} errors/warnings, but has received ${this.items.length}:\n${this.writeItemsMessage()}`
-    );
+    expect(this.items.length).toBeGreaterThanOrEqual(number);
   }
 
-  writeItemsMessage() : string {
+  writeItemsMessage(): string {
     let out = "";
 
-    this.items.forEach(item=>{
+    this.items.forEach((item) => {
       out += `\t\t[${DiagnosticSeverity[item.severity]}: ${item.position}] ${item.message} (${item.code})\n`;
-    })
+    });
 
     return out;
   }
@@ -185,7 +183,11 @@ export class TestDiagnoser<T extends TextDocument = TextDocument> implements Man
 export class TestDocumentDiagnoser extends TestDiagnoser implements DocumentDiagnosticsBuilder {
   public document: TextDocument;
 
-  constructor(document: TextDocument, context: DiagnosticsBuilderContent | undefined = undefined, project: MCProject | undefined = undefined) {
+  constructor(
+    document: TextDocument,
+    context: DiagnosticsBuilderContent | undefined = undefined,
+    project: MCProject | undefined = undefined
+  ) {
     super(context, project);
     this.document = document;
   }
@@ -198,7 +200,10 @@ export namespace TestDiagnoser {
     return new TestDiagnoser(context, undefined);
   }
 
-  export function createDocument(files: Map<string, string> | undefined, document: TextDocument): TestDocumentDiagnoser {
+  export function createDocument(
+    files: Map<string, string> | undefined,
+    document: TextDocument
+  ): TestDocumentDiagnoser {
     const context = TestProjectData.createContext(files);
 
     return new TestDocumentDiagnoser(document, context, undefined);

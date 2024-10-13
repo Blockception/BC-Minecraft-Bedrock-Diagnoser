@@ -1,19 +1,18 @@
 import { Internal, ResourcePack } from "bc-minecraft-bedrock-project";
-import { DocumentDiagnosticsBuilder} from "../../../Types";
-import { Json } from "../../Json/Json";
-import { animation_controller_diagnose_implementation } from "../Animation Controllers/diagnostics";
-import { animation_or_controller_diagnose_implementation } from "../anim or controller";
-import { Molang } from "bc-minecraft-molang";
 import { Types } from "bc-minecraft-bedrock-types";
-import { diagnose_molang } from "../../Molang/diagnostics";
-import { render_controller_diagnose_implementation } from "../Render Controller/diagnostics";
-import { resourcepack_has_model } from "../Model/diagnose";
-import { texture_files_diagnose } from "../Texture Atlas/entry";
-import { resourcepack_particle_diagnose } from "../Particle/diagnose";
+import { Molang } from "bc-minecraft-molang";
+import { DocumentDiagnosticsBuilder } from "../../../Types";
+import { Json } from "../../Json/Json";
+import { AnimationUsage } from "../../Minecraft";
 import { diagnose_script } from "../../Minecraft/Script";
-import { diagnose_resourcepack_sounds } from "../Sounds/diagnostics";
+import { diagnose_molang } from "../../Molang/diagnostics";
+import { animation_or_controller_diagnose_implementation } from "../anim or controller";
 import { resourcepack_animation_used } from "../Animation/usage";
-import { AnimationUsage } from '../../Minecraft';
+import { resourcepack_has_model } from "../Model/diagnose";
+import { resourcepack_particle_diagnose } from "../Particle/diagnose";
+import { render_controller_diagnose_implementation } from "../Render Controller/diagnostics";
+import { diagnose_resourcepack_sounds } from "../Sounds/diagnostics";
+import { texture_files_diagnose } from "../Texture Atlas/entry";
 
 /**Diagnoses the given document as an attachable
  * @param doc The text document to diagnose
@@ -30,7 +29,8 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   const attachableGathered = ResourcePack.Attachable.Process(diagnoser.document);
 
   if (!attachableGathered) return;
-  if (!attachableGathered.molang) attachableGathered.molang = Molang.MolangFullSet.harvest(diagnoser.document.getText());
+  if (!attachableGathered.molang)
+    attachableGathered.molang = Molang.MolangFullSet.harvest(diagnoser.document.getText());
 
   //#region animations
   //Check animations / animation controllers
@@ -45,7 +45,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
       return;
     }
 
-    Types.Definition.forEach(controller, (ref, anim_id) => anim_data.animation_controllers[ref] = anim_id);
+    Types.Definition.forEach(controller, (ref, anim_id) => (anim_data.animation_controllers[ref] = anim_id));
   });
 
   Types.Definition.forEach(anim_data.animations, (reference, anim_id) =>
@@ -79,9 +79,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   });
 
   //Check models
-  Types.Definition.forEach(description.geometry, (ref, modelId) =>
-    resourcepack_has_model(modelId, diagnoser)
-  );
+  Types.Definition.forEach(description.geometry, (ref, modelId) => resourcepack_has_model(modelId, diagnoser));
 
   //check particles
   Types.Definition.forEach(description.particle_effects, (ref, part_id) =>
@@ -106,7 +104,6 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
 
   //Script check
   if (description.scripts) diagnose_script(diagnoser, description.scripts, description.animations);
-
 }
 
 function getKey(data: string | Types.Definition): string | undefined {

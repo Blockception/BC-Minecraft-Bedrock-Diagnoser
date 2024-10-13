@@ -2,7 +2,7 @@ import { ParameterInfo, ParameterType } from "bc-minecraft-bedrock-command";
 import { minecraft_selector_diagnose } from "../../../../src/Lib/Diagnostics/Minecraft/Selector";
 import { Types } from "bc-minecraft-bedrock-types";
 import { TestDiagnoser } from "../../../diagnoser";
-import { TestProjectData } from "../../../testprojectdata.test";
+import { TestProjectData } from "../../../testprojectdata";
 import { GeneralInfo } from "bc-minecraft-bedrock-project/lib/src/Lib/Project/General/Types";
 import { Location } from "bc-minecraft-bedrock-types/lib/src/types";
 

@@ -1,7 +1,7 @@
-import { SMap, TextDocument } from "bc-minecraft-bedrock-project";
+import { SMap } from "bc-minecraft-bedrock-project";
 import { DocumentDiagnosticsBuilder} from "../../../Types";
 import { diagnose_molang } from '../../Molang/diagnostics';
-import { Internal, ResourcePack } from "bc-minecraft-bedrock-project";
+import { Internal } from "bc-minecraft-bedrock-project";
 import { Json } from '../../Json';
 import { BoneUsage, checkBonesExists } from '../Model';
 

@@ -55,7 +55,7 @@ function minecraft_selector_scores_item_diagnose(attr: CompactJson.IKeyNode, dia
   }
 
   //Check objective references
-  let result = minecraft_objectives_diagnose(Types.OffsetWord.create(attr.key, attr.offset), diagnoser);
+  const result = minecraft_objectives_diagnose(Types.OffsetWord.create(attr.key, attr.offset), diagnoser);
 
   //Check range value
   return general_range_integer_diagnose(CompactJson.valueToOffsetWord(attr), diagnoser) && result;

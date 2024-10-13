@@ -10,7 +10,7 @@ export function minecraft_objectives_diagnose(value: Types.OffsetWord, diagnoser
   //Length check
   const id = value.text;
  
-  if (!/^[a-zA-Z0-9\-\_\.:]+$/gim.test(id)) {
+  if (!/^[a-zA-Z0-9\-_.:]+$/gim.test(id)) {
     diagnoser.add(
       value,
       `Illegal character found in objective: '${id}'.`,

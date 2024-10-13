@@ -1,15 +1,17 @@
 import { DiagnosticsBuilderContent } from "../src/Lib/Types/DiagnosticsBuilder";
 import { ProjectData, TextDocument } from "bc-minecraft-bedrock-project";
-import { Manifest } from 'bc-minecraft-bedrock-project/lib/src/Lib/Internal/Types';
-import { MCIgnore, MCProject } from "bc-minecraft-project";
-import path = require("path");
+import { Manifest } from "bc-minecraft-bedrock-project/lib/src/Lib/Internal/Types";
+import { MCProject } from "bc-minecraft-project";
+import path from "path";
 
 export namespace TestProjectData {
   export function createTestData(files: Map<string, string> | undefined = undefined): ProjectData {
     return createContext(files).getCache();
   }
 
-  export function createContext<T extends TextDocument = TextDocument>(files: Map<string, string> | undefined = undefined): DiagnosticsBuilderContent<T> {
+  export function createContext<T extends TextDocument = TextDocument>(
+    files: Map<string, string> | undefined = undefined
+  ): DiagnosticsBuilderContent<T> {
     const context = new InternalTest<T>(undefined, files);
     const data = context.getCache();
 
@@ -32,12 +34,12 @@ export class InternalTest<T extends TextDocument = TextDocument> implements Diag
   getDocument(uri: string): T | undefined {
     const out = this.__files.get(uri);
 
-    if (out) return { uri: uri, getText: (range) => out } as T;
+    if (out) return { uri: uri, getText: () => out } as T;
 
     return undefined;
   }
-  
-  getFiles(folder: string, patterns : string[], ignores: MCIgnore): string[] {
+
+  getFiles(): string[] {
     return [];
   }
 
