@@ -3,17 +3,16 @@ import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   {
-    files: ["**/*.ts"],
     ignores: [
-      "coverage/",
-      "coverage/*",
-      "coverage/**/*",
-      "lib/",
-      "lib/*",
-      "lib/**/*",
-      "node_modules/",
-      "node_modules/*",
+      '**/coverage/*',
+      '**/lib/*',
+      '**/node_modules/*',
+      'lib/*'
     ],
+  },
+  {
+    files: ["**/*.ts"],
+
     extends: [eslint.configs.recommended, ...tseslint.configs.recommended],
     plugins: {
       jest: {},

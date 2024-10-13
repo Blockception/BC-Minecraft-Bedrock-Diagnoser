@@ -8,6 +8,7 @@ export function behaviorpack_structure_diagnose(value: Types.OffsetWord, diagnos
   //If it has a slash it needs ""
   if (id.includes("/")) {
     if (id.startsWith('"') && id.endsWith('"')) {
+      // Do nothing
     } else {
       diagnoser.add(
         value,

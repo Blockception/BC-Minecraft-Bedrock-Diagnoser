@@ -51,6 +51,7 @@ export function behaviorpack_check_command_blockstates(blockId: Types.OffsetWord
 
       // Is state properly defined
       if (state.length == 2) {
+        // eslint-disable-next-line prefer-const
         let [property, value] = state;
 
         // property is a string literal?

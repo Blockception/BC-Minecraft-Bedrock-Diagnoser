@@ -1,10 +1,9 @@
-import { diagnose_molang } from "../../Molang/diagnostics";
+import { Internal, SMap } from "bc-minecraft-bedrock-project";
 import { DocumentDiagnosticsBuilder } from "../../../Types";
-import { general_animation_controllers } from "../../Minecraft/Animation Controllers";
-import { Internal } from "bc-minecraft-bedrock-project";
 import { Json } from "../../Json/Json";
+import { general_animation_controllers } from "../../Minecraft/Animation Controllers";
+import { diagnose_molang } from "../../Molang/diagnostics";
 import { json_commandsCheck } from "../Mcfunction/commands";
-import { SMap } from "bc-minecraft-bedrock-project";
 
 /**Diagnoses the given document as an animation controller
  * @param doc The text document to diagnose
@@ -21,8 +20,8 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   general_animation_controllers(controllers, diagnoser);
 
   //foreach animation,
-  SMap.forEach(controllers.animation_controllers, (controller, id) => {
-    SMap.forEach(controller.states, (state, state_id) => {
+  SMap.forEach(controllers.animation_controllers, (controller) => {
+    SMap.forEach(controller.states, (state) => {
       state.on_entry?.forEach((item) => json_commandsCheck(item, diagnoser));
       state.on_exit?.forEach((item) => json_commandsCheck(item, diagnoser));
     });
