@@ -73,11 +73,11 @@ function diagnose_entity_float_property_definition(property: EntityFloatProperty
     }
   }
 
-  if (typeof def === "number" || typeof def === "string") return;
+  if ((typeof def === "number" && !Number.isInteger(def)) || typeof def === "string") return;
 
   diagnoser.add(
     `properties/${name}/${def}`,
-    `Default value is not a boolean: ${def}`,
+    `Default value is not a float: ${def}`,
     DiagnosticSeverity.error,
     "behaviorpack.entity.property.float.default"
   );
@@ -101,11 +101,11 @@ function diagnose_entity_int_property_definition(property: EntityIntProperty, di
     }
   }
 
-  if (typeof def === "number" || typeof def === "string") return;
+  if ((typeof def === "number" && Number.isInteger(def)) || typeof def === "string") return;
 
   diagnoser.add(
     `properties/${name}/${def}`,
-    `Default value is not a boolean: ${def}`,
+    `Default value is not an integer: ${def}`,
     DiagnosticSeverity.error,
     "behaviorpack.entity.property.int.default"
   );
@@ -207,12 +207,22 @@ function check_entity_property_usage(
       break;
 
     case "int":
-    case "float":
-      if (typeof value === "number" || typeof value === "string") return;
+      if ((typeof value === "number" && Number.isInteger(value)) || typeof value === "string") return;
 
       diagnoser.add(
         `${parent}/${name}/${value}`,
-        `Property value is not a number: ${value}`,
+        `Property value is not a integer: ${value}`,
+        DiagnosticSeverity.error,
+        `behaviorpack.entity.property.${definition.type}.value`
+      );
+      break;
+
+    case "float":
+      if ((typeof value === "number" && !Number.isInteger(value)) || typeof value === "string") return;
+
+      diagnoser.add(
+        `${parent}/${name}/${value}`,
+        `Property value is not a float: ${value}`,
         DiagnosticSeverity.error,
         `behaviorpack.entity.property.${definition.type}.value`
       );
