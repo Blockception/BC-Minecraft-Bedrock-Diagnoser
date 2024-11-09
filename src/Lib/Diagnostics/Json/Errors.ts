@@ -1,6 +1,5 @@
 import { OffsetWord } from "bc-minecraft-bedrock-types/lib/types/offset-word";
-import { DiagnosticSeverity } from "../../../main";
-import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
+import { DiagnosticsBuilder, DiagnosticSeverity } from '../../Types';
 
 export function Handle_Json_Error(err: any, diagnoser: DiagnosticsBuilder): void {
   if (typeof err.message !== "string") {

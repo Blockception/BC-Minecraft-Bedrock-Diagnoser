@@ -1,6 +1,5 @@
 import { Internal, SMap } from "bc-minecraft-bedrock-project";
-import { DiagnosticSeverity } from "../../../../main";
-import { DocumentDiagnosticsBuilder } from "../../../Types";
+import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from '../../../Types';
 import { Json } from "../../Json/Json";
 import { diagnose_molang } from "../../Molang/diagnostics";
 import { json_commandsCheck } from "../Mcfunction/commands";

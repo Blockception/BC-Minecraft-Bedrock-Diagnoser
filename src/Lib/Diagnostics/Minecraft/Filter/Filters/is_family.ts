@@ -1,5 +1,5 @@
 import { Minecraft } from "bc-minecraft-bedrock-types";
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../../../main";
+import { DiagnosticsBuilder, DiagnosticSeverity } from '../../../../Types';
 import { minecraft_family_diagnose } from "../../Family";
 
 export function diagnose_filter_is_family(filter: Minecraft.Filter.Filter, diagnoser: DiagnosticsBuilder) {

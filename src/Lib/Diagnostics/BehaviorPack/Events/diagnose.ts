@@ -1,5 +1,4 @@
-import { DiagnosticsBuilder } from "../../../Types";
-import { DiagnosticSeverity } from "../../../Types/Severity";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types";
 
 export function diagnose_events(any: any | undefined, events: string[], diagnoser: DiagnosticsBuilder) {
   if (typeof any !== "object") return;

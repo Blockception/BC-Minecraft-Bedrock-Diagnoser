@@ -2,8 +2,7 @@ import { BehaviorPack, DataSetConnector, ResourcePack } from "bc-minecraft-bedro
 import { Script } from "bc-minecraft-bedrock-project/lib/src/internal/types";
 import { Types } from "bc-minecraft-bedrock-types";
 import { Vanilla } from "bc-minecraft-bedrock-vanilla-data";
-import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
-import { DiagnosticSeverity } from "../../Types/Severity";
+import { DiagnosticsBuilder, DiagnosticSeverity } from '../../Types';
 
 // Vanilla animations and controllers that aren't played via the typical means; the controllers aren't under scripts.animate and the animations aren't in controllers. Vanilla player stuff so no point in flagging it
 const whitelist = [

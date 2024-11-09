@@ -1,8 +1,7 @@
 import { Internal, SMap } from "bc-minecraft-bedrock-project";
 import { EntityProperty } from "bc-minecraft-bedrock-project/lib/src/project/behavior-pack/entity";
 import { ComponentGroups } from "bc-minecraft-bedrock-types/lib/minecraft/components";
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../../main";
-import { DocumentDiagnosticsBuilder } from "../../../Types";
+import { DiagnosticSeverity, DiagnosticsBuilder, DocumentDiagnosticsBuilder } from '../../../Types';
 import { commandsCheck } from "../Mcfunction";
 import { behaviorpack_entity_components_filters } from "./components/filters";
 import { diagnose_entity_property_usage } from "./properties";

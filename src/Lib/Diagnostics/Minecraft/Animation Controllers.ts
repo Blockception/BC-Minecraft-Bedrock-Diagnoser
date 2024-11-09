@@ -8,11 +8,10 @@ import {
 } from "bc-minecraft-bedrock-project";
 import { Defined, Molang, MolangDataSetKey } from "bc-minecraft-molang";
 import { diagnose_molang_implementation } from "../Molang/diagnostics";
-import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
-import { DiagnosticSeverity } from "../../Types/Severity";
 import { State } from "bc-minecraft-bedrock-project/lib/src/internal/behavior-pack";
 import { Types } from "bc-minecraft-bedrock-types";
 import { forEach } from "../../utility/using-defined";
+import { DiagnosticsBuilder, DiagnosticSeverity } from '../../Types';
 
 export type animation_controllers =
   | Internal.BehaviorPack.AnimationControllers

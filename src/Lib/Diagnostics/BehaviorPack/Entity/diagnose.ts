@@ -1,9 +1,8 @@
-import { check_definition_value, education_enabled } from "../../Definitions";
 import { Command, ParameterType } from "bc-minecraft-bedrock-command";
-import { DiagnosticsBuilder } from "../../../Types";
-import { DiagnosticSeverity } from "../../../Types/Severity";
-import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { Types } from "bc-minecraft-bedrock-types";
+import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types";
+import { check_definition_value, education_enabled } from "../../Definitions";
 
 /**
  * Checks if the entities exists in the project or in vanilla, if not then a bug is reported

@@ -1,5 +1,4 @@
-import { DiagnosticSeverity } from "../../../../main";
-import { DocumentDiagnosticsBuilder } from "../../../Types";
+import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../Types";
 import { mcfunction_commandsCheck } from "./commands";
 
 /**Diagnoses the given document as an mcfunction

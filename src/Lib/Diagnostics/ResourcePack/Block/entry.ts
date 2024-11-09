@@ -1,6 +1,5 @@
 import { ResourcePackCollection } from "bc-minecraft-bedrock-project/lib/src/project/resource-pack";
-import { DiagnosticsBuilder, DocumentDiagnosticsBuilder } from "../../../Types";
-import { DiagnosticSeverity } from "../../../Types/Severity";
+import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from '../../../Types';
 import { Json } from "../../Json/Json";
 
 /**Diagnoses the given document as a block.json
