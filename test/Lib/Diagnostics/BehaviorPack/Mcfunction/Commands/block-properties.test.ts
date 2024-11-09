@@ -22,7 +22,7 @@ describe("BehaviorPack", () => {
 
         it(`correct ${command}`, () => {
           const doc: TextDocument = {
-            uri: "fake",
+            uri: "behavior_pack\\functions\\test.mcfunction",
             getText() {
               return command;
             },
@@ -40,7 +40,7 @@ describe("BehaviorPack", () => {
 
         it(`incorrect ${command}`, () => {
           const doc: TextDocument = {
-            uri: "fake",
+            uri: "behavior_pack\\functions\\test.mcfunction",
             getText() {
               return command;
             },

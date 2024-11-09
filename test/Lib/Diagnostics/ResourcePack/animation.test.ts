@@ -9,7 +9,7 @@ describe("ResourcePack", () => {
       // One time is inside of the animation_length
 
       const doc: TextDocument = {
-        uri: "c:\\test-rp\\animations\\test.animation.json",
+        uri: "resource_pack\\animations\\test.animation.json",
         getText: () => `{
           "format_version": "1.8.0",
           "animations": {

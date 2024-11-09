@@ -50,7 +50,7 @@ export function sound_files_diagnose(
     }
   }
 
-  if (MinecraftData.ResourcePack.hasSound(file, education_enabled(diagnoser))) return;
+  if (MinecraftData.ResourcePack.getSoundFile(file, education_enabled(diagnoser))) return;
 
   diagnoser.add(
     `${owner}/${file}`,
