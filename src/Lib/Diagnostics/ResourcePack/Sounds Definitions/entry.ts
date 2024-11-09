@@ -22,7 +22,6 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
 
   //For each sound definition
   SMap.forEach(sounds, (sound, sound_id) => {
-    console.log(sound, sound_id);
     //For each file reference
     sound.sounds.forEach((soundSpec) => {
       if (typeof soundSpec === "string") {
