@@ -1,9 +1,8 @@
-import { behaviorpack_check_blockstates } from "../BlockState/diagnose";
-import { check_definition_value, education_enabled } from "../../Definitions";
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types";
-import { Minecraft } from "bc-minecraft-bedrock-types";
+import { Minecraft, Types } from "bc-minecraft-bedrock-types";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
-import { Types } from "bc-minecraft-bedrock-types";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types";
+import { check_definition_value, education_enabled } from "../../Definitions";
+import { behaviorpack_check_blockstates } from "../BlockState/diagnose";
 
 /**
  *

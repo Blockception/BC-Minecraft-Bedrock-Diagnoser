@@ -1,8 +1,7 @@
 import { Definition } from "bc-minecraft-bedrock-types/lib/types/definition";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { MolangDataSetKey } from "bc-minecraft-molang";
-import { DiagnosticsBuilder, EntityAnimationMolangCarrier } from "../../../Types";
-import { DiagnosticSeverity } from "../../../Types/Severity";
+import { DiagnosticsBuilder, EntityAnimationMolangCarrier, DiagnosticSeverity } from "../../../Types";
 import { education_enabled } from "../../Definitions";
 import { diagnose_molang_implementation } from "../../Molang";
 

@@ -1,6 +1,5 @@
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
-import { DiagnosticsBuilder } from "../../../Types";
-import { DiagnosticSeverity } from "../../../Types/Severity";
+import { DiagnosticsBuilder, DiagnosticSeverity } from '../../../Types';
 import { check_definition_value, education_enabled } from "../../Definitions";
 
 export function resourcepack_check_entityid(id: string, diagnoser: DiagnosticsBuilder) {

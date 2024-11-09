@@ -1,7 +1,6 @@
 import { SMap } from "bc-minecraft-bedrock-project";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
-import { DiagnosticsBuilder, DocumentDiagnosticsBuilder } from "../../../Types";
-import { DiagnosticSeverity } from "../../../Types/Severity";
+import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from '../../../Types';
 import { education_enabled } from "../../Definitions";
 import { Json } from "../../Json/Json";
 

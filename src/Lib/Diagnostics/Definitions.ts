@@ -1,6 +1,5 @@
 import { Definition } from "bc-minecraft-project";
-import { DiagnosticsBuilder } from "../Types/DiagnosticsBuilder";
-import { DiagnosticSeverity } from "../Types/Severity";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../Types";
 
 /**Returns if the project has education enabled
  * @param diagnoser The diagnostics builder to add the errors to

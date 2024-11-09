@@ -1,6 +1,6 @@
 import { Minecraft } from "bc-minecraft-bedrock-types";
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../../../main";
 import { minecraft_tag_diagnose } from "../../Tag";
+import { DiagnosticsBuilder, DiagnosticSeverity } from '../../../../Types';
 
 export function diagnose_filter_has_tag(filter: Minecraft.Filter.Filter, diagnoser: DiagnosticsBuilder) {
   const tag = filter.value;

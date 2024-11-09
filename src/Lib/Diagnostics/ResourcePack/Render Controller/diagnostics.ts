@@ -1,10 +1,8 @@
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
-import { DiagnosticsBuilder } from "../../../Types";
-import { DiagnosticSeverity } from "../../../Types/Severity";
+import { MolangDataSetKey } from "bc-minecraft-molang";
+import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier } from '../../../Types';
 import { education_enabled } from "../../Definitions";
 import { diagnose_molang_implementation } from "../../Molang/diagnostics";
-import { EntityAnimationMolangCarrier } from "../../../Types";
-import { MolangDataSetKey } from "bc-minecraft-molang";
 
 /**
  *

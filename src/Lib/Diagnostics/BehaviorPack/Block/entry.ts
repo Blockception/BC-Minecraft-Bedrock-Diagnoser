@@ -1,11 +1,11 @@
-import { behaviorpack_diagnose_block_components } from "./components/diagnose";
-import { diagnose_molang } from "../../Molang/diagnostics";
-import { DocumentDiagnosticsBuilder, DiagnosticSeverity } from "../../../Types";
 import { Internal } from "bc-minecraft-bedrock-project";
 import { getUsedComponents } from "bc-minecraft-bedrock-types/lib/minecraft/components";
-import { Json } from "../../Json";
+import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../Types";
 import { Context } from "../../../utility/components";
+import { Json } from "../../Json";
+import { diagnose_molang } from "../../Molang/diagnostics";
 import { behaviorpack_block_components_dependencies } from "./components/dependencies";
+import { behaviorpack_diagnose_block_components } from "./components/diagnose";
 
 /**Diagnoses the given document as an bp block
  * @param doc The text document to diagnose

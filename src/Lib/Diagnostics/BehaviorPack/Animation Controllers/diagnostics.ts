@@ -1,8 +1,6 @@
-import { DiagnosticsBuilder } from "../../../Types";
-import { DiagnosticSeverity } from "../../../Types/Severity";
-import { EntityAnimationMolangCarrier, EventCarrier } from "../../../Types/Interfaces";
-import { general_animation_controllers_implementation } from "../../Minecraft/Animation Controllers";
 import { MolangDataSetKey } from "bc-minecraft-molang";
+import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier, EventCarrier } from "../../../Types";
+import { general_animation_controllers_implementation } from "../../Minecraft/Animation Controllers";
 
 /**
  *

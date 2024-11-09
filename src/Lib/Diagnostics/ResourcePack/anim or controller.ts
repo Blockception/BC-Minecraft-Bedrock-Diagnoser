@@ -1,13 +1,11 @@
-import { MolangDataSetKey } from "bc-minecraft-molang";
+import { Types } from "bc-minecraft-bedrock-types";
+import { Definition } from "bc-minecraft-bedrock-types/lib/types/definition";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
-import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
-import { DiagnosticSeverity } from "../../Types/Severity";
+import { MolangDataSetKey } from "bc-minecraft-molang";
+import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier } from '../../Types';
 import { education_enabled } from "../Definitions";
 import { animation_controller_diagnose_implementation } from "./Animation Controllers/diagnostics";
 import { animation_diagnose_implementation } from "./Animation/diagnostics";
-import { Types } from "bc-minecraft-bedrock-types";
-import { Definition } from "bc-minecraft-bedrock-types/lib/types/definition";
-import { EntityAnimationMolangCarrier } from "../../Types";
 
 export function animation_or_controller_diagnose_implementation(
   id: string,

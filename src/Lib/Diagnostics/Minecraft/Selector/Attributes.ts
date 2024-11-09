@@ -1,21 +1,20 @@
 import { CompactJson } from "bc-minecraft-bedrock-types/lib/minecraft/json";
 import { Selector } from "bc-minecraft-bedrock-types/lib/minecraft/selector";
-import { DiagnosticSeverity } from "../../../Types";
-import { DiagnosticsBuilder } from "../../../Types/DiagnosticsBuilder";
+import { DiagnosticSeverity, DiagnosticsBuilder } from "../../../Types";
+import { behaviorpack_entityid_diagnose } from "../../BehaviorPack/Entity";
 import { general_float_diagnose, general_integer_diagnose, general_positive_float_diagnose } from "../../General";
+import { mode_gamemode_diagnose } from "../../Mode";
+import { minecraft_family_diagnose } from "../Family";
+import { minecraft_name_diagnose } from "../Name";
+import { minecraft_tag_diagnose } from "../Tag";
+import { selectorattributes_no_duplicate as no_duplicate } from "./Checks";
+import { selectorattribute_coordinate as coordinate } from "./Coordinate";
 import {
   selectorattribute_duplicate_check as duplicate_check,
   selectorattribute_one_positive_all_negatives as one_positive_all_negatives,
 } from "./General";
-import { selectorattribute_coordinate as coordinate } from "./Coordinate";
-import { selectorattributes_no_duplicate as no_duplicate } from "./Checks";
-import { mode_gamemode_diagnose } from "../../Mode";
-import { minecraft_family_diagnose } from "../Family";
-import { minecraft_tag_diagnose } from "../Tag";
-import { behaviorpack_entityid_diagnose } from "../../BehaviorPack/Entity";
-import { minecraft_name_diagnose } from "../Name";
-import { selector_scores_diagnose } from "./Scores";
 import { minecraft_selector_hasitem_diagnose } from "./HasItem";
+import { selector_scores_diagnose } from "./Scores";
 import { all, diagnoseAttributes, forEach, must_offset_word } from "./Util";
 import { minecraft_selector_has_property_diagnose } from './has_property';
 

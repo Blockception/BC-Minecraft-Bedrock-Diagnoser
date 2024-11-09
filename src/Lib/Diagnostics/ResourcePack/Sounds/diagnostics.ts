@@ -1,7 +1,6 @@
 import { Types } from "bc-minecraft-bedrock-types";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
-import { DiagnosticsBuilder } from "../../../Types";
-import { DiagnosticSeverity } from "../../../Types/Severity";
+import { DiagnosticsBuilder, DiagnosticSeverity } from '../../../Types';
 import { education_enabled } from "../../Definitions";
 
 export function diagnose_resourcepack_sounds(data: Types.Definition | undefined, diagnoser: DiagnosticsBuilder): void {

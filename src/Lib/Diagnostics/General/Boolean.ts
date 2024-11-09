@@ -1,7 +1,5 @@
-import { General } from "bc-minecraft-bedrock-types";
-import { DiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
-import { DiagnosticSeverity } from "../../Types/Severity";
-import { Types } from "bc-minecraft-bedrock-types";
+import { General, Types } from "bc-minecraft-bedrock-types";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../Types";
 
 export function general_boolean_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
   if (General.Boolean.is(value.text)) return;

@@ -54,11 +54,11 @@ export class TestDiagnoser<T extends TextDocument = TextDocument> implements Man
    *
    */
   expectEmpty(): void {
-    expect(this.items.length).toBeLessThanOrEqual(0);
+    expect(this.items).toHaveLength(0);
   }
 
   expectAny(): void {
-    expect(this.items.length).toBeGreaterThan(0);
+    expect(this.items).not.toHaveLength(0);
   }
 
   /**

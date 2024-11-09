@@ -1,6 +1,5 @@
 import { jsonc } from "jsonc";
-import { DiagnosticsBuilder, DocumentDiagnosticsBuilder } from "../../Types/DiagnosticsBuilder";
-import { DiagnosticSeverity } from "../../Types/Severity";
+import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from '../../Types';
 import { Handle_Json_Error } from "./Errors";
 
 export namespace Json {

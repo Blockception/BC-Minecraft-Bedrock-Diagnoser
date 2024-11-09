@@ -1,5 +1,4 @@
-import { DocumentDiagnosticsBuilder } from "../../../../Types";
-import { DiagnosticSeverity } from "../../../../Types/Severity";
+import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from '../../../../Types';
 import { Json } from "../../../Json/Json";
 
 /**Diagnoses the given document as an tick.json

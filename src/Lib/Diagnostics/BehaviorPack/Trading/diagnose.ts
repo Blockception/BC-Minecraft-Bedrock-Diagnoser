@@ -1,7 +1,7 @@
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types";
 import { Types } from "bc-minecraft-bedrock-types";
-import { check_definition_value, education_enabled } from "../../Definitions";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types";
+import { check_definition_value, education_enabled } from "../../Definitions";
 
 export function behaviorpack_trading_diagnose(
   value: Types.OffsetWord | string,

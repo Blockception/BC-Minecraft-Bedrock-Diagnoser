@@ -1,7 +1,6 @@
 import { Internal, SMap } from "bc-minecraft-bedrock-project";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
-import { DiagnosticSeverity } from "../../../../main";
-import { DiagnosticsBuilder, DocumentDiagnosticsBuilder } from "../../../Types";
+import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../Types";
 import { education_enabled } from "../../Definitions";
 import { Json } from "../../Json/Json";
 
@@ -50,7 +49,7 @@ export function sound_files_diagnose(
     }
   }
 
-  if (MinecraftData.ResourcePack.hasSound(file, education_enabled(diagnoser))) return;
+  if (MinecraftData.ResourcePack.getSoundFile(file, education_enabled(diagnoser)) !== undefined) return;
 
   diagnoser.add(
     `${owner}/${file}`,
