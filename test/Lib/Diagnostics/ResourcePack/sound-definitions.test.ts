@@ -1,6 +1,7 @@
 import { TextDocument } from "bc-minecraft-bedrock-project";
-import { TestDiagnoser } from "../../../diagnoser";
+import path from 'path';
 import { ResourcePack } from "../../../../src/Lib/Diagnostics/ResourcePack/ResourcePack";
+import { TestDiagnoser } from "../../../diagnoser";
 
 const example_data = {
   format_version: "1.20.20",
@@ -223,7 +224,7 @@ const example_data = {
 
 describe("sound definitions", () => {
   const doc: TextDocument = {
-    uri: "resource_pack\\sounds\\sound_definitions.json",
+    uri: path.join("resource_pack", "sounds", "sound_definitions.json"),
     getText: () => JSON.stringify(example_data, undefined, 2),
   };
 

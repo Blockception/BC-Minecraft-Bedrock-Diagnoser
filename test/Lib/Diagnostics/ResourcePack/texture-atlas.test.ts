@@ -1,4 +1,5 @@
 import { TextDocument } from "bc-minecraft-bedrock-project/lib/src/types";
+import path from 'path';
 import { ResourcePack } from "../../../../src/Lib/Diagnostics/ResourcePack/ResourcePack";
 import { TestDiagnoser } from "../../../diagnoser";
 
@@ -37,7 +38,7 @@ describe("ResourcePack", () => {
   describe("TextureAtlas", () => {
     it("no errors", () => {
       const doc: TextDocument = {
-        uri: "resource_pack\\textures\\terrain_texture.json",
+        uri: path.join("resource_pack", "textures", "terrain_texture.json"),
         getText: () => JSON.stringify(example_data, undefined, 2),
       };
 

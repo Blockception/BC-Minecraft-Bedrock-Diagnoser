@@ -1,4 +1,5 @@
 import { TextDocument } from "bc-minecraft-bedrock-project";
+import path from 'path';
 import { mcfunction_commandsCheck } from "../../../../../../src/Lib/Diagnostics/BehaviorPack/Mcfunction";
 import { TestDiagnoser } from "../../../../../diagnoser";
 
@@ -22,7 +23,7 @@ describe("BehaviorPack", () => {
 
         it(`correct ${command}`, () => {
           const doc: TextDocument = {
-            uri: "behavior_pack\\functions\\test.mcfunction",
+            uri: path.join("behavior_pack", "functions", "test.mcfunction"),
             getText() {
               return command;
             },
@@ -40,7 +41,7 @@ describe("BehaviorPack", () => {
 
         it(`incorrect ${command}`, () => {
           const doc: TextDocument = {
-            uri: "behavior_pack\\functions\\test.mcfunction",
+            uri: path.join("behavior_pack", "functions", "test.mcfunction"),
             getText() {
               return command;
             },

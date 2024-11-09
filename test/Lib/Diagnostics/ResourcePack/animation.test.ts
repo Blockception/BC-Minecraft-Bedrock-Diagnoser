@@ -1,4 +1,5 @@
 import { TextDocument } from 'bc-minecraft-bedrock-project/lib/src/types';
+import path from 'path';
 import { ResourcePack } from "../../../../src/Lib/Diagnostics/ResourcePack/ResourcePack";
 import { TestDiagnoser } from "../../../diagnoser";
 
@@ -9,7 +10,7 @@ describe("ResourcePack", () => {
       // One time is inside of the animation_length
 
       const doc: TextDocument = {
-        uri: "resource_pack\\animations\\test.animation.json",
+        uri: path.join("resource_pack", "animations", "test.animation.json"),
         getText: () => `{
           "format_version": "1.8.0",
           "animations": {
