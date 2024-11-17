@@ -48,20 +48,26 @@ const component_test: Record<string, ComponentCheck> = {
   "minecraft:entity_placer": (name, component, context, diagnoser) => {
     if (Array.isArray(component.dispense_on))
       component.dispense_on.forEach((block: string) => {
-        behaviorpack_check_blockid(block, diagnoser);
+        if (typeof block == 'object' && 'name' in block) behaviorpack_check_blockid((block as { name: string }).name, diagnoser)
+          else if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
       });
     if (Array.isArray(component.use_on))
       component.use_on.forEach((block: string) => {
-        behaviorpack_check_blockid(block, diagnoser);
+        if (typeof block == 'object' && 'name' in block) behaviorpack_check_blockid((block as { name: string }).name, diagnoser)
+          else if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
       });
     if (component.entity) behaviorpack_entityid_diagnose(component.entity, diagnoser);
   },
   "minecraft:block_placer": (name, component, context, diagnoser) => {
     if (Array.isArray(component.use_on))
       component.use_on.forEach((block: string) => {
-        behaviorpack_check_blockid(block, diagnoser);
+        if (typeof block == 'object' && 'name' in block) behaviorpack_check_blockid((block as { name: string }).name, diagnoser)
+          else if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
       });
-    if (component.block) behaviorpack_check_blockid(component.block, diagnoser);
+    if (component.block) {
+      if (typeof component.block == 'object' && 'name' in component.block) behaviorpack_check_blockid((component.block as { name: string }).name, diagnoser)
+        else if (typeof component.block == 'string') behaviorpack_check_blockid(component.block, diagnoser);
+    }
   },
   "minecraft:projectile": (name, component, context, diagnoser) => {
     if (component.projectile_entity) behaviorpack_entityid_diagnose(component.projectile_entity, diagnoser);

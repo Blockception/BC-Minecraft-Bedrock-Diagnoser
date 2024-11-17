@@ -54,21 +54,22 @@ const component_test: Record<string, ComponentCheck> = {
     const destroyTime = component.seconds_to_destroy;
     if (!destroyTime) return;
     component.item_specific_speeds?.forEach((specific_speed: any) => {
-        if (specific_speed.destroy_speed && specific_speed.destroy_speed > destroyTime) {
-          diagnoser.add(
-            specific_speed.destroy_speed,
-            `Item specific destroy speed ${specific_speed.destroy_speed} cannot be higher than block's destroy time ${destroyTime}`,
-            DiagnosticSeverity.error,
-            "behaviorpack.block.components.fast_break_speed"
-          );
-          return false;
-        }
+      if (specific_speed.destroy_speed && specific_speed.destroy_speed > destroyTime) {
+        diagnoser.add(
+          specific_speed.destroy_speed,
+          `Item specific destroy speed ${specific_speed.destroy_speed} cannot be higher than block's destroy time ${destroyTime}`,
+          DiagnosticSeverity.error,
+          "behaviorpack.block.components.fast_break_speed"
+        );
+        return false;
+      }
     });
   },
   "minecraft:placement_filter": (name, component, context, diagnoser) => {
     for (const condition of component.conditions) {
-      condition.block_filter?.forEach((block: string) => {
-        behaviorpack_check_blockid(block, diagnoser);
+      condition.block_filter?.forEach((block: string | object) => {
+        if (typeof block == 'object' && 'name' in block) behaviorpack_check_blockid((block as { name: string }).name, diagnoser)
+        else if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
       });
     }
   },
