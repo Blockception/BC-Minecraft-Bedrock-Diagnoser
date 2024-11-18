@@ -67,8 +67,8 @@ const component_test: Record<string, ComponentCheck> = {
   },
   "minecraft:placement_filter": (name, component, context, diagnoser) => {
     for (const condition of component.conditions) {
-      condition.block_filter?.forEach((block: string | object) => {
-        if (typeof block == 'object' && 'name' in block) behaviorpack_check_blockid((block as { name: string }).name, diagnoser)
+      condition.block_filter?.forEach((block: string | { name: string }) => {
+        if (typeof block == 'object' && 'name' in block) behaviorpack_check_blockid(block.name, diagnoser)
         else if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
       });
     }
