@@ -47,21 +47,21 @@ const component_test: Record<string, ComponentCheck> = {
   saddle: deprecated_component(),
   "minecraft:entity_placer": (name, component, context, diagnoser) => {
     if (Array.isArray(component.dispense_on))
-      component.dispense_on.forEach((block: string) => {
-        if (typeof block == 'object' && 'name' in block) behaviorpack_check_blockid((block as { name: string }).name, diagnoser)
+      component.dispense_on.forEach((block: string | { name: string }) => {
+        if (typeof block == 'object' && 'name' in block) behaviorpack_check_blockid(block.name, diagnoser)
           else if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
       });
     if (Array.isArray(component.use_on))
-      component.use_on.forEach((block: string) => {
-        if (typeof block == 'object' && 'name' in block) behaviorpack_check_blockid((block as { name: string }).name, diagnoser)
+      component.use_on.forEach((block: string | { name: string }) => {
+        if (typeof block == 'object' && 'name' in block) behaviorpack_check_blockid(block.name, diagnoser)
           else if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
       });
     if (component.entity) behaviorpack_entityid_diagnose(component.entity, diagnoser);
   },
   "minecraft:block_placer": (name, component, context, diagnoser) => {
     if (Array.isArray(component.use_on))
-      component.use_on.forEach((block: string) => {
-        if (typeof block == 'object' && 'name' in block) behaviorpack_check_blockid((block as { name: string }).name, diagnoser)
+      component.use_on.forEach((block: string | { name: string }) => {
+        if (typeof block == 'object' && 'name' in block) behaviorpack_check_blockid(block.name, diagnoser)
           else if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
       });
     if (component.block) {
