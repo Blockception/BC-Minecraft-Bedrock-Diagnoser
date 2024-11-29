@@ -1,5 +1,5 @@
 import { ComponentBehavior } from "bc-minecraft-bedrock-types/lib/minecraft/components";
-import { DocumentDiagnosticsBuilder } from "../../../../Types";
+import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../../Types";
 import { Context } from "../../../../utility/components";
 import { component_error, ComponentCheck, components_check } from "../../../../utility/components/checks";
 import { behaviorpack_check_blockid } from "../../Block";
@@ -49,12 +49,12 @@ const component_test: Record<string, ComponentCheck> = {
     if (Array.isArray(component.dispense_on))
       component.dispense_on.forEach((block: string | { name: string }) => {
         if (typeof block == 'object' && 'name' in block) behaviorpack_check_blockid(block.name, diagnoser)
-          else if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
+        else if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
       });
     if (Array.isArray(component.use_on))
       component.use_on.forEach((block: string | { name: string }) => {
         if (typeof block == 'object' && 'name' in block) behaviorpack_check_blockid(block.name, diagnoser)
-          else if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
+        else if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
       });
     if (component.entity) behaviorpack_entityid_diagnose(component.entity, diagnoser);
   },
@@ -62,11 +62,11 @@ const component_test: Record<string, ComponentCheck> = {
     if (Array.isArray(component.use_on))
       component.use_on.forEach((block: string | { name: string }) => {
         if (typeof block == 'object' && 'name' in block) behaviorpack_check_blockid(block.name, diagnoser)
-          else if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
+        else if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
       });
     if (component.block) {
       if (typeof component.block == 'object' && 'name' in component.block) behaviorpack_check_blockid((component.block as { name: string }).name, diagnoser)
-        else if (typeof component.block == 'string') behaviorpack_check_blockid(component.block, diagnoser);
+      else if (typeof component.block == 'string') behaviorpack_check_blockid(component.block, diagnoser);
     }
   },
   "minecraft:projectile": (name, component, context, diagnoser) => {
@@ -81,7 +81,25 @@ const component_test: Record<string, ComponentCheck> = {
           });
       });
   },
-  // TODO: Check if icon points to valid item_texture
+  "minecraft:icon": (name, component, context, diagnoser) => {
+    if (typeof component == 'string') {
+      const textureId = component
+      if (!diagnoser.context.getCache().resourcePacks.textures.find(val => val.id == textureId && val.location.uri.includes('item_texture')))
+        diagnoser.add(textureId,
+          `Texture reference "${textureId}" was not defined in item_texture.json`,
+          DiagnosticSeverity.error,
+          'behaviorpack.item.components.texture_not_found')
+    } else {
+      Object.keys(component.textures)?.forEach(value => {
+        const textureId = component.textures[value];
+        if (!diagnoser.context.getCache().resourcePacks.textures.find(val => val.id == textureId && val.location.uri.includes('item_texture')))
+          diagnoser.add(textureId,
+            `Texture reference "${textureId}" was not defined in item_texture.json`,
+            DiagnosticSeverity.error,
+            'behaviorpack.item.components.texture_not_found')
+      })
+    }
+  }
 };
 
 function deprecated_component(replacement?: string) {
