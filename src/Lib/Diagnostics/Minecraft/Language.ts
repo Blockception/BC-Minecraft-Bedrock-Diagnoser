@@ -100,13 +100,6 @@ export function minecraft_language_line_diagnose(
 
     const offset = line.offset + assignIndex + 1;
     let index;
-    if ((index = value.indexOf("\\n")) > -1)
-      diagnoser.add(
-        index + offset,
-        "Illegal text, minecraft doesn't accept this unfortunately",
-        DiagnosticSeverity.error,
-        "minecraft.language.illegal"
-      );
     if ((index = value.indexOf("\\r")) > -1)
       diagnoser.add(
         index + offset,
