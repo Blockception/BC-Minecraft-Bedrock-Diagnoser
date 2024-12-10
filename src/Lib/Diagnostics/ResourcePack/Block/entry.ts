@@ -39,7 +39,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
 }
 
 function hasDefinition(block: string, value: string, rp: ResourcePackCollection, diagnoser: DiagnosticsBuilder): void {
-  if (rp.textures.has(value)) return;
+  if (rp.terrainTextures.has(value)) return;
 
   diagnoser.add(
     `${block}/${value}`,
