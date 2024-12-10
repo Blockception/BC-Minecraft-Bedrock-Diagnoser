@@ -89,7 +89,7 @@ const component_test: Record<string, ComponentCheck> = {
   "minecraft:material_instances": (name, component, context, diagnoser) => {
     Object.keys(component).forEach(value => {
       const textureId = component[value].texture;
-      if (!diagnoser.context.getCache().resourcePacks.textures.find(val => val.id == textureId && val.location.uri.includes('terrain_texture')))
+      if (!diagnoser.context.getCache().resourcePacks.terrainTextures.find(val => val.id == textureId))
         diagnoser.add(textureId,
           `Texture reference "${textureId}" was not defined in terrain_texture.json`,
           DiagnosticSeverity.error,

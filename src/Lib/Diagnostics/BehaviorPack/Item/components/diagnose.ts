@@ -84,7 +84,7 @@ const component_test: Record<string, ComponentCheck> = {
   "minecraft:icon": (name, component, context, diagnoser) => {
     if (typeof component == 'string') {
       const textureId = component
-      if (!diagnoser.context.getCache().resourcePacks.textures.find(val => val.id == textureId && val.location.uri.includes('item_texture')))
+      if (!diagnoser.context.getCache().resourcePacks.itemTextures.find(val => val.id == textureId))
         diagnoser.add(textureId,
           `Texture reference "${textureId}" was not defined in item_texture.json`,
           DiagnosticSeverity.error,
@@ -92,7 +92,7 @@ const component_test: Record<string, ComponentCheck> = {
     } else {
       Object.keys(component.textures)?.forEach(value => {
         const textureId = component.textures[value];
-        if (!diagnoser.context.getCache().resourcePacks.textures.find(val => val.id == textureId && val.location.uri.includes('item_texture')))
+        if (!diagnoser.context.getCache().resourcePacks.itemTextures.find(val => val.id == textureId))
           diagnoser.add(textureId,
             `Texture reference "${textureId}" was not defined in item_texture.json`,
             DiagnosticSeverity.error,
