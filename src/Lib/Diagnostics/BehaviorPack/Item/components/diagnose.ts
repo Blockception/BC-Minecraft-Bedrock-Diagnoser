@@ -77,7 +77,7 @@ const component_test: Record<string, ComponentCheck> = {
       component.repair_items.forEach((repairEntry: any) => {
         if (Array.isArray(repairEntry.items))
           repairEntry.items.forEach((item: string) => {
-            behaviorpack_item_diagnose(minecraft_get_item(item, diagnoser.document), diagnoser);
+            if (typeof item == 'string') behaviorpack_item_diagnose(minecraft_get_item(item, diagnoser.document), diagnoser);
           });
       });
   },
