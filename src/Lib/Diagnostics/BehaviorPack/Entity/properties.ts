@@ -101,7 +101,7 @@ function diagnose_entity_int_property_definition(property: EntityIntProperty, di
     }
   }
 
-  if ((typeof def === "number" && Number.isInteger(def)) || typeof def === "string") return;
+  if ((typeof def === "number" && Number.isInteger(def)) || typeof def === "string" || Number.isNaN(def)) return;
 
   diagnoser.add(
     `properties/${name}/${def}`,
