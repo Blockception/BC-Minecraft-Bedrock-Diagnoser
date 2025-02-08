@@ -6,7 +6,7 @@ import { behaviorpack_diagnose_entity_components } from "./components/diagnose";
 
 export function behaviorpack_entity_components_check(
   entity: Internal.BehaviorPack.Entity,
-  context: Context,
+  context: Context<Internal.BehaviorPack.Entity>,
   diagnoser: DocumentDiagnosticsBuilder
 ) {
   const desc = entity["minecraft:entity"];
@@ -25,7 +25,7 @@ export function behaviorpack_entity_components_check(
 
 function behaviorpack_entity_componentscontainer_check(
   container: ComponentContainer | undefined | null,
-  context: Context,
+  context: Context<Internal.BehaviorPack.Entity>,
   diagnoser: DocumentDiagnosticsBuilder
 ) {
   if (container === null || typeof container !== "object") return;

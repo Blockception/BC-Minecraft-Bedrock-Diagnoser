@@ -6,7 +6,8 @@ export type DependedMap = Record<string, Depended[]>;
 /**
  *
  */
-export interface Context {
+export interface Context<T> {
+  source: T;
   /**
    *
    */
@@ -17,9 +18,9 @@ export interface Context {
  * @param entity The entity to check
  * @param entity The needed context
  * @param diagnoser The diagnoser to report to*/
-export function components_dependencies(
+export function components_dependencies<T>(
   owner: string,
-  context: Context,
+  context: Context<T>,
   diagnoser: DiagnosticsBuilder,
   component_dependents_all: DependedMap,
   component_dependents_any: DependedMap

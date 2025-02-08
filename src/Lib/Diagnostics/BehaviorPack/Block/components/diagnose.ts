@@ -1,4 +1,4 @@
-import { ComponentBehavior } from 'bc-minecraft-bedrock-types/lib/minecraft/components';
+import { ComponentBehavior } from "bc-minecraft-bedrock-types/lib/minecraft/components";
 import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../../Types";
 import { Context } from "../../../../utility/components";
 import { component_error, ComponentCheck, components_check } from "../../../../utility/components/checks";
@@ -6,6 +6,7 @@ import { check_geo_and_rules } from "../../../ResourcePack/BlockCulling";
 import { resourcepack_has_model } from "../../../ResourcePack/Model/diagnose";
 import { behaviorpack_loot_table_diagnose } from "../../Loot Table";
 import { behaviorpack_check_blockid } from "../diagnose";
+import { Internal } from "bc-minecraft-bedrock-project";
 
 /**
  *
@@ -15,13 +16,13 @@ import { behaviorpack_check_blockid } from "../diagnose";
  */
 export function behaviorpack_diagnose_block_components(
   container: ComponentBehavior,
-  context: Context,
+  context: Context<Internal.BehaviorPack.Block>,
   diagnoser: DocumentDiagnosticsBuilder
 ): void {
   components_check(container, context, diagnoser, component_test);
 }
 
-const component_test: Record<string, ComponentCheck> = {
+const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>> = {
   "minecraft:destroy_time": deprecated_component("minecraft:destructible_by_mining"),
   "minecraft:block_light_emission": deprecated_component("minecraft:light_emission"),
   "minecraft:block_light_absorption": deprecated_component("minecraft:light_dampening"),
@@ -68,8 +69,8 @@ const component_test: Record<string, ComponentCheck> = {
   "minecraft:placement_filter": (name, component, context, diagnoser) => {
     for (const condition of component.conditions) {
       condition.block_filter?.forEach((block: string | { name: string }) => {
-        if (typeof block == 'object' && 'name' in block) behaviorpack_check_blockid(block.name, diagnoser)
-        else if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
+        if (typeof block == "object" && "name" in block) behaviorpack_check_blockid(block.name, diagnoser);
+        else if (typeof block == "string") behaviorpack_check_blockid(block, diagnoser);
       });
     }
   },
@@ -87,15 +88,17 @@ const component_test: Record<string, ComponentCheck> = {
     if (typeof component === "string") behaviorpack_loot_table_diagnose(component, diagnoser);
   },
   "minecraft:material_instances": (name, component, context, diagnoser) => {
-    Object.keys(component).forEach(value => {
+    Object.keys(component).forEach((value) => {
       const textureId = component[value].texture;
-      if (!diagnoser.context.getCache().resourcePacks.terrainTextures.find(val => val.id == textureId))
-        diagnoser.add(textureId,
+      if (!diagnoser.context.getCache().resourcePacks.terrainTextures.find((val) => val.id == textureId))
+        diagnoser.add(
+          textureId,
           `Texture reference "${textureId}" was not defined in terrain_texture.json`,
           DiagnosticSeverity.error,
-          'behaviorpack.block.components.texture_not_found')
-    })
-  }
+          "behaviorpack.block.components.texture_not_found"
+        );
+    });
+  },
 };
 
 function deprecated_component(replacement?: string) {

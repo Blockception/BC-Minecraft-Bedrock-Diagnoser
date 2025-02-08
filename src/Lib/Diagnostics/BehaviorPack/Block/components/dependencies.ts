@@ -16,7 +16,7 @@ const component_dependents_any: DependedMap = {
  * @param diagnoser The diagnoser to report to*/
  export function behaviorpack_block_components_dependencies(
   block: Internal.BehaviorPack.Block,
-  context: Context,
+  context: Context<Internal.BehaviorPack.Block>,
   diagnoser: DiagnosticsBuilder
 ): void {
   components_dependencies("block", context, diagnoser, component_dependents_all, component_dependents_any);

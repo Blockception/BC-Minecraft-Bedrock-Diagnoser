@@ -1,11 +1,12 @@
+import { Internal } from "bc-minecraft-bedrock-project";
 import { ComponentBehavior } from "bc-minecraft-bedrock-types/lib/minecraft/components";
 import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../../Types";
 import { Context } from "../../../../utility/components";
 import { component_error, ComponentCheck, components_check } from "../../../../utility/components/checks";
+import { minecraft_get_item } from "../../../Minecraft/Items";
 import { behaviorpack_check_blockid } from "../../Block";
 import { behaviorpack_entityid_diagnose } from "../../Entity";
 import { behaviorpack_item_diagnose } from "../diagnose";
-import { minecraft_get_item } from "../../../Minecraft/Items";
 
 /**
  *
@@ -15,13 +16,13 @@ import { minecraft_get_item } from "../../../Minecraft/Items";
  */
 export function behaviorpack_diagnose_item_components(
   container: ComponentBehavior,
-  context: Context,
+  context: Context<Internal.BehaviorPack.Item>,
   diagnoser: DocumentDiagnosticsBuilder
 ): void {
   components_check(container, context, diagnoser, component_test);
 }
 
-const component_test: Record<string, ComponentCheck> = {
+const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Item>> = {
   "minecraft:armor": deprecated_component("minecraft:wearable"),
   "minecraft:chargeable": deprecated_component("minecraft:custom_components"),
   "minecraft:creative_category": deprecated_component("description.menu_category"),

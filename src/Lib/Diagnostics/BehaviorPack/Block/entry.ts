@@ -18,7 +18,8 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   if (!Internal.BehaviorPack.Block.is(block)) return;
 
   //check components
-  const context: Context = {
+  const context: Context<Internal.BehaviorPack.Block> = {
+    source: block,
     components: getUsedComponents(block["minecraft:block"]),
   };
   block["minecraft:block"]?.permutations?.forEach((p) => {
@@ -33,11 +34,11 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
 
   behaviorpack_block_components_dependencies(block, context, diagnoser);
 
-  if (block["minecraft:block"]["events"]) diagnoser.add(
-    `events`,
-    `Block events have been deprecated in favour of \`minecraft:custom_components\`.`,
-    DiagnosticSeverity.error,
-    "behaviorpack.block.deprecated"
-  );
-
+  if (block["minecraft:block"]["events"])
+    diagnoser.add(
+      `events`,
+      `Block events have been deprecated in favour of \`minecraft:custom_components\`.`,
+      DiagnosticSeverity.error,
+      "behaviorpack.block.deprecated"
+    );
 }
