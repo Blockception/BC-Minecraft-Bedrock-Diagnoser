@@ -14,7 +14,8 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   if (!Internal.BehaviorPack.Item.is(item)) return;
 
   //Check components
-  const context: Context = {
+  const context: Context<Internal.BehaviorPack.Item> = {
+    source: item,
     components: getUsedComponents(item["minecraft:item"]),
   };
 

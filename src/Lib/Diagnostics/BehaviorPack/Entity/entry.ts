@@ -30,7 +30,8 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   //No resource-pack check, entities can exist without their rp side
 
   //check components
-  const context: Context = {
+  const context: Context<Internal.BehaviorPack.Entity> = {
+    source: entity,
     components: getUsedComponents(entity["minecraft:entity"]),
   };
 
