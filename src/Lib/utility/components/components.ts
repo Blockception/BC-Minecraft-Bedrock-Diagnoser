@@ -7,10 +7,9 @@ export type DependedMap = Record<string, Depended[]>;
  *
  */
 export interface Context<T> {
-  source: T;
-  /**
-   *
-   */
+  /** The object / item that defined or carries the components */
+  source: Readonly<T>;
+  /** The components used by the source collected from multiple sources */
   components: string[];
 }
 
