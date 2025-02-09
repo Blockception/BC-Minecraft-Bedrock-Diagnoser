@@ -113,6 +113,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Item>>
       `To use custom components, a minimum format version of 1.21.10 is required`,
       DiagnosticSeverity.error,
       'behaviorpack.item.components.custom_components_min_version')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {
     // Leaving this empty as the base diagnoser should already flag an invalid format version
   }
