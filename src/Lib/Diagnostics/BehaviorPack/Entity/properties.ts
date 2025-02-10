@@ -179,6 +179,17 @@ export function diagnose_entity_property_usage(
   parent: "events" | "filter",
   diagnoser: DiagnosticsBuilder
 ): void {
+  const names = definitions.map(def => def.name)
+
+  if (!names.includes(name)) {
+    diagnoser.add(
+      `${parent}/${name}`,
+      `Entity property definition for "${name}" not found`,
+      DiagnosticSeverity.error,
+      "behaviorpack.entity.property.unknown_property"
+    )
+  }
+
   for (const def of definitions) {
     if (def.name === name) {
       check_entity_property_usage(def, name, value, parent, diagnoser);
