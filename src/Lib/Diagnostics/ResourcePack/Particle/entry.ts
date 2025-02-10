@@ -15,6 +15,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   const particle = Json.LoadReport<Internal.ResourcePack.Particle>(diagnoser);
   if (!Internal.ResourcePack.Particle.is(particle)) return;
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   const texture = particle.particle_effect?.description?.['basic_render_parameters']?.['texture'];
 
