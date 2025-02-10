@@ -1,5 +1,5 @@
 import { Internal, ResourcePack } from "bc-minecraft-bedrock-project";
-import { DocumentDiagnosticsBuilder } from "../../../Types";
+import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../Types";
 import { Json } from "../../Json/Json";
 import { animation_controller_diagnose_implementation } from "../Animation Controllers/diagnostics";
 import { animation_or_controller_diagnose_implementation } from "../anim or controller";
