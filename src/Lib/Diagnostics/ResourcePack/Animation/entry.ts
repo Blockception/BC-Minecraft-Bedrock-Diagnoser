@@ -15,6 +15,15 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   const anims = Json.LoadReport<Internal.ResourcePack.Animations>(diagnoser);
   if (!Internal.ResourcePack.Animations.is(anims)) return;
 
+  Object.keys(anims.animations).forEach(anim_id => {
+    if (!anim_id.startsWith('animation.')) diagnoser.add(
+      anim_id,
+      `Animation name must begin with "animation."`,
+      DiagnosticSeverity.error,
+      "resourcepack.animation.name"
+    );
+  })
+
   const bones: BoneUsage[] = [];
 
   SMap.forEach(anims.animations, (anim, anim_id) => {
