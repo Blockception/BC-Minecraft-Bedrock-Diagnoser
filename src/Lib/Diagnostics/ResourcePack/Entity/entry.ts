@@ -1,5 +1,5 @@
 import { Internal, ResourcePack } from "bc-minecraft-bedrock-project";
-import { DocumentDiagnosticsBuilder } from "../../../Types";
+import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../Types";
 import { Json } from "../../Json/Json";
 import { animation_controller_diagnose_implementation } from "../Animation Controllers/diagnostics";
 import { animation_or_controller_diagnose_implementation } from "../anim or controller";
@@ -95,6 +95,16 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   Types.Definition.forEach(description.particle_effects, (ref, part_id) =>
     resourcepack_particle_diagnose(part_id, diagnoser)
   );
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-ignore
+  const textureId = description['spawn_egg']?.['texture']
+
+  if (typeof textureId == 'string' && !diagnoser.context.getCache().resourcePacks.itemTextures.find(val => val.id == textureId))
+    diagnoser.add(`description/spawn_egg/${textureId}`,
+      `Texture reference "${textureId}" was not defined in item_texture.json`,
+      DiagnosticSeverity.error,
+      'behaviorpack.item.components.texture_not_found')
 
   //Get pack
   const pack = diagnoser.context.getCache().resourcePacks.get(diagnoser.document.uri);
