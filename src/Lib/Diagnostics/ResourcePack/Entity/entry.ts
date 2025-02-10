@@ -96,6 +96,16 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
     resourcepack_particle_diagnose(part_id, diagnoser)
   );
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-ignore
+  const textureId = description['spawn_egg']?.['texture']
+
+  if (typeof textureId == 'string' && !diagnoser.context.getCache().resourcePacks.itemTextures.find(val => val.id == textureId))
+    diagnoser.add(`description/spawn_egg/${textureId}`,
+      `Texture reference "${textureId}" was not defined in item_texture.json`,
+      DiagnosticSeverity.error,
+      'behaviorpack.item.components.texture_not_found')
+
   //Get pack
   const pack = diagnoser.context.getCache().resourcePacks.get(diagnoser.document.uri);
   if (pack === undefined) return;
