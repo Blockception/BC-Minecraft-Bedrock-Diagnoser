@@ -57,11 +57,26 @@ export function general_animation_controller(
     }
   }
 
+  const states = Object.keys(controller.states);
+  const transitionedStates = new Set()
+
   //Check states
   SMap.forEach(controller.states, (state) => {
     //Check transitions
-    if (state.transitions) CheckTransition(controller_id, state.transitions, controller.states, diagnoser);
+    if (state.transitions) {
+      CheckTransition(controller_id, state.transitions, controller.states, diagnoser).forEach(transition => transitionedStates.add(transition))
+    }
   });
+
+  states.forEach(state => {
+    if (!transitionedStates.has(state) && controller.initial_state != state) diagnoser.add(
+      `${controller_id}/${state}`,
+      `"${state}" state is never reached.`,
+      DiagnosticSeverity.info,
+      "minecraft.animation_controller.state.never_reached"
+    );
+  })  
+
 }
 
 /**
@@ -76,7 +91,8 @@ function CheckTransition(
   Transitions: Types.Conditional[],
   States: SMap<State>,
   diagnoser: DiagnosticsBuilder
-): void {
+): string[] {
+  const transitionedStates: string[] = []
   //Loop over the transitions
   for (let I = 0; I < Transitions.length; I++) {
     const trans = Transitions[I];
@@ -91,8 +107,9 @@ function CheckTransition(
         DiagnosticSeverity.error,
         "minecraft.animation_controller.state.missing"
       );
-    }
+    } else transitionedStates.push(state)
   }
+  return transitionedStates
 }
 
 export type Controller =
