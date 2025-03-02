@@ -64,6 +64,16 @@ export function behaviorpack_entity_check_event(
     );
   }
 
+  //@ts-ignore
+  if (event["set_home_position"] && !diagnoser.document.getText().includes('minecraft:home')) {
+    diagnoser.add(
+      `events/${event_id}`,
+      `To use set_home_position, \`minecraft:home\` is required.`,
+      DiagnosticSeverity.error,
+      "behaviorpack.entity.event.set_home_position"
+    );
+  }
+
   if (event.queue_command) {
     const c = event.queue_command.command;
     const command = typeof c === "string" ? [c] : c;
