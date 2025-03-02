@@ -36,8 +36,8 @@ export function behaviorpack_entity_check_event(
   properties: EntityProperty[],
   component_groups?: ComponentGroups
 ): void {
-  has_groups(diagnoser, event_id, event.add?.component_groups, component_groups);
-  has_groups(diagnoser, event_id, event.remove?.component_groups, component_groups);
+  has_groups(diagnoser, event_id, typeof event.add?.component_groups == 'string' ? [event.add?.component_groups] : event.add?.component_groups, component_groups);
+  has_groups(diagnoser, event_id, typeof event.remove?.component_groups == 'string' ? [event.remove?.component_groups] : event.remove?.component_groups, component_groups);
 
   event.randomize?.forEach((item) => {
     behaviorpack_entity_check_event(item, event_id, diagnoser, properties, component_groups);
@@ -61,6 +61,15 @@ export function behaviorpack_entity_check_event(
       `Event is using the deprecated run_command property, use queue_command instead`,
       DiagnosticSeverity.warning,
       "behaviorpack.entity.event.run_command"
+    );
+  }
+
+  if ((event as any)["set_home_position"] && !diagnoser.document.getText().includes('minecraft:home')) {
+    diagnoser.add(
+      `events/${event_id}`,
+      `To use set_home_position, \`minecraft:home\` is required.`,
+      DiagnosticSeverity.error,
+      "behaviorpack.entity.event.set_home_position"
     );
   }
 

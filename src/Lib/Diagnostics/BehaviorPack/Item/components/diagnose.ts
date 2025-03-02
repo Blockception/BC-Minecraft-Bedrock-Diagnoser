@@ -8,6 +8,7 @@ import { behaviorpack_check_blockid } from "../../Block";
 import { behaviorpack_entityid_diagnose } from "../../Entity";
 import { behaviorpack_item_diagnose } from "../diagnose";
 import { FormatVersion } from 'bc-minecraft-bedrock-types/lib/minecraft';
+import { resourcepack_particle_diagnose } from '../../../ResourcePack/Particle';
 
 /**
  *
@@ -69,7 +70,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Item>>
     if (component.replace_block_item && context.source['minecraft:item'].description.identifier != component.block) diagnoser.add(`minecraft:block_placer/block/${component.block}`,
       `${component.replace_block_item} and ${context.source['minecraft:item'].description.identifier} need to match when trying to replace the block item`,
       DiagnosticSeverity.error,
-      'behaviorpack.item.components.replace_block_ids_dont_match') 
+      'behaviorpack.item.components.replace_block_ids_dont_match')
     if (component.block) {
       if (typeof component.block == 'object' && 'name' in component.block) behaviorpack_check_blockid((component.block as { name: string }).name, diagnoser)
       else if (typeof component.block == 'string') behaviorpack_check_blockid(component.block, diagnoser);
@@ -107,16 +108,20 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Item>>
     }
   },
   "minecraft:custom_components": (name, component, context, diagnoser) => {
-  try {
-    const version = FormatVersion.parse(context.source.format_version);
-    if (version[0] < 1 || version[1] < 21 || (version[2] < 10 && version[1] <= 21)) diagnoser.add(context.source.format_version,
-      `To use custom components, a minimum format version of 1.21.10 is required`,
-      DiagnosticSeverity.error,
-      'behaviorpack.item.components.custom_components_min_version')
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (err) {
-    // Leaving this empty as the base diagnoser should already flag an invalid format version
-  }
+    try {
+      const version = FormatVersion.parse(context.source.format_version);
+      if (version[0] < 1 || version[1] < 21 || (version[2] < 10 && version[1] <= 21)) diagnoser.add(context.source.format_version,
+        `To use custom components, a minimum format version of 1.21.10 is required`,
+        DiagnosticSeverity.error,
+        'behaviorpack.item.components.custom_components_min_version')
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err) {
+      // Leaving this empty as the base diagnoser should already flag an invalid format version
+    }
+  },
+  "minecraft:durability_sensor": (name, component, context, diagnoser) => {
+    if (!component.particle_type || !(typeof component.particle_type == 'string')) return;
+    resourcepack_particle_diagnose(component.particle_type, diagnoser)
   }
 };
 

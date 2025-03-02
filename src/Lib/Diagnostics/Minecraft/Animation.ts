@@ -10,6 +10,9 @@ const whitelist = [
   "controller.animation.player.hudplayer",
   "animation.player.look_at_target.inverted",
   "controller.animation.persona.blink",
+  "animation.humanoid.fishing_rod",
+  "animation.player.first_person.attack_rotation_item",
+  "animation.player.first_person.crossbow_hold"
 ];
 
 export interface AnimationUsage {
