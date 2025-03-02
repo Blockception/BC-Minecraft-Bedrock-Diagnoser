@@ -6,6 +6,7 @@ import { behaviorpack_entity_components_filters } from './filters';
 import { check_loot_table } from "./loot";
 import { check_trade_table } from "./trade";
 import { Internal } from 'bc-minecraft-bedrock-project';
+import { FormatVersion } from 'bc-minecraft-bedrock-types/lib/minecraft';
 
 /**
  *
@@ -35,5 +36,17 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
       DiagnosticSeverity.error,
       `behaviorpack.entity.component.requires_beta_features`
     )
+  },
+  "minecraft:fall_damage": (name, component, context, diagnoser) => {
+    try {
+    const version = FormatVersion.parse(context.source.format_version);
+    if (version[0] > 1 || (version[0] === 1 && version[1] > 10) || (version[0] === 1 && version[1] === 10 && version[2] > 0)) diagnoser.add(name,
+      `To use "minecraft:fall_damage", you need a "format_version" of 1.10.0 or lesser`,
+      DiagnosticSeverity.error,
+      'behaviorpack.item.component.fall_damage')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err) {
+      // Leaving this empty as the base diagnoser should already flag an invalid format version
+    }
   }
 };
