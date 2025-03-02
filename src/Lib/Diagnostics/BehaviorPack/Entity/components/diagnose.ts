@@ -30,8 +30,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   "minecraft:loot": check_loot_table,
   "minecraft:trade_table": check_trade_table,
   "minecraft:input_air_controlled": (name, component, context, diagnoser) => {
-    //@ts-ignore
-    if (!context.source.use_beta_features) diagnoser.add(name, 
+    if (!(context.source as any).use_beta_features) diagnoser.add(name, 
       `This component requires "use_beta_features" to be set to true`,
       DiagnosticSeverity.error,
       `behaviorpack.entity.component.requires_beta_features`
@@ -43,7 +42,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     if (version[0] > 1 || (version[0] === 1 && version[1] > 10) || (version[0] === 1 && version[1] === 10 && version[2] > 0)) diagnoser.add(name,
       `To use "minecraft:fall_damage", you need a "format_version" of 1.10.0 or lesser`,
       DiagnosticSeverity.error,
-      'behaviorpack.item.component.fall_damage')
+      'behaviorpack.entity.component.fall_damage')
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       // Leaving this empty as the base diagnoser should already flag an invalid format version
