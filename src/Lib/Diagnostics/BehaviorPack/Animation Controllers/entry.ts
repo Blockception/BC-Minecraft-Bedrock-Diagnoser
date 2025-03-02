@@ -1,5 +1,5 @@
 import { Internal, SMap } from "bc-minecraft-bedrock-project";
-import { DocumentDiagnosticsBuilder } from "../../../Types";
+import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../Types";
 import { Json } from "../../Json/Json";
 import { general_animation_controllers } from "../../Minecraft/Animation Controllers";
 import { diagnose_molang } from "../../Molang/diagnostics";
@@ -20,7 +20,17 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   general_animation_controllers(controllers, diagnoser);
 
   //foreach animation,
-  SMap.forEach(controllers.animation_controllers, (controller) => {
+  SMap.forEach(controllers.animation_controllers, (controller, id) => {
+
+    diagnoser.context.getCache().behaviorPacks.animation_controllers.forEach(animation_controller => {
+    if (animation_controller.id === id && animation_controller.location.uri !== diagnoser.document.uri) diagnoser.add(
+      id,
+      `Duplicate identifier "${id}" found.`,
+      DiagnosticSeverity.warning,
+      "behaviorpack.animation_controller.duplicate_id"
+      );
+    })
+
     SMap.forEach(controller.states, (state) => {
       state.on_entry?.forEach((item) => json_commandsCheck(item, diagnoser));
       state.on_exit?.forEach((item) => json_commandsCheck(item, diagnoser));

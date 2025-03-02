@@ -7,6 +7,10 @@ import { education_enabled } from "../Definitions";
 import { animation_controller_diagnose_implementation } from "./Animation Controllers/diagnostics";
 import { animation_diagnose_implementation } from "./Animation/diagnostics";
 
+const whiteList = [
+  'animation.humanoid.fishing_rod'
+]
+
 export function animation_or_controller_diagnose_implementation(
   id: string,
   user: EntityAnimationMolangCarrier,
@@ -23,6 +27,7 @@ export function animation_or_controller_diagnose_implementation(
       return animation_controller_diagnose_implementation(id, user, ownerType, diagnoser, { particles, sounds });
 
     case anim_or_contr.neither:
+      if (whiteList.includes(id)) return;
       diagnoser.add(
         id,
         `Cannot find animation / animation controller: ${id}`,

@@ -28,6 +28,16 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   if (!Internal.BehaviorPack.Entity.is(entity)) return;
 
   //No resource-pack check, entities can exist without their rp side
+  
+  const identifier = entity['minecraft:entity'].description.identifier
+  diagnoser.context.getCache().behaviorPacks.entities.forEach(entity => {
+    if (entity.id === identifier && entity.location.uri !== diagnoser.document.uri) diagnoser.add(
+      `minecraft:entity/description/identifier`,
+      `Duplicate identifier "${identifier}" found.`,
+      DiagnosticSeverity.warning,
+      "behaviorpack.entity.duplicate_id"
+    );
+  })
 
   //check components
   const context: Context<Internal.BehaviorPack.Entity> = {
@@ -40,10 +50,9 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
 
   const container = entity["minecraft:entity"];
   const MolangData = Molang.MolangFullSet.harvest(container);
-  const id = container.description.identifier;
 
   const owner = {
-    id: id,
+    id: identifier,
     molang: MolangData,
     animations: DefinedUsing.create<string>(),
   };

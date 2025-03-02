@@ -30,6 +30,7 @@ export function components_check<T>(
   if (data === undefined) return;
 
   compContainerCheck(data.components, context, diagnoser, component_test);
+  compContainerCheck(data, context, diagnoser, component_test);
 
   if (data.component_groups) {
     Object.entries(data.component_groups).forEach(([, group]) => {

@@ -19,6 +19,15 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   SMap.forEach(anims.animations, (anim, id) => {
     const length = anim.animation_length;
 
+    diagnoser.context.getCache().behaviorPacks.animations.forEach(animation => {
+    if (animation.id === id && animation.location.uri !== diagnoser.document.uri) diagnoser.add(
+      id,
+      `Duplicate identifier "${id}" found.`,
+      DiagnosticSeverity.warning,
+      "behaviorpack.animation.duplicate_id"
+      );
+    })
+
     //foreach time
     SMap.forEach(anim.timeline, (data, time) => {
       json_commandsCheck(data, diagnoser);

@@ -13,6 +13,16 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   const item = Json.LoadReport<Internal.BehaviorPack.Item>(diagnoser);
   if (!Internal.BehaviorPack.Item.is(item)) return;
 
+  const identifier = item['minecraft:item'].description.identifier
+  diagnoser.context.getCache().behaviorPacks.items.forEach(item => {
+    if (item.id === identifier && item.location.uri !== diagnoser.document.uri) diagnoser.add(
+      `minecraft:item/description/identifier`,
+      `Duplicate identifier "${identifier}" found.`,
+      DiagnosticSeverity.warning,
+      "behaviorpack.item.duplicate_id"
+    );
+  })
+
   //Check components
   const context: Context<Internal.BehaviorPack.Item> = {
     source: item,
