@@ -64,8 +64,7 @@ export function behaviorpack_entity_check_event(
     );
   }
 
-  //@ts-ignore
-  if (event["set_home_position"] && !diagnoser.document.getText().includes('minecraft:home')) {
+  if ((event as any)["set_home_position"] && !diagnoser.document.getText().includes('minecraft:home')) {
     diagnoser.add(
       `events/${event_id}`,
       `To use set_home_position, \`minecraft:home\` is required.`,
