@@ -1,5 +1,5 @@
 import { ComponentBehavior } from "bc-minecraft-bedrock-types/lib/minecraft/components";
-import { DocumentDiagnosticsBuilder } from "../../../../Types";
+import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../../Types";
 import { Context } from "../../../../utility/components";
 import { ComponentCheck, components_check } from "../../../../utility/components/checks";
 import { behaviorpack_entity_components_filters } from './filters';
@@ -28,4 +28,12 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   "minecraft:equipment": check_loot_table,
   "minecraft:loot": check_loot_table,
   "minecraft:trade_table": check_trade_table,
+  "minecraft:input_air_controlled": (name, component, context, diagnoser) => {
+    //@ts-ignore
+    if (!context.source.use_beta_features) diagnoser.add(name, 
+      `This component requires "use_beta_features" to be set to true`,
+      DiagnosticSeverity.error,
+      `behaviorpack.entity.component.requires_beta_features`
+    )
+  }
 };
