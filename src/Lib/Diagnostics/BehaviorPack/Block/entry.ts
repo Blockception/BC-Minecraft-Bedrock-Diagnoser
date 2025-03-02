@@ -6,6 +6,7 @@ import { Json } from "../../Json";
 import { diagnose_molang } from "../../Molang/diagnostics";
 import { behaviorpack_block_components_dependencies } from "./components/dependencies";
 import { behaviorpack_diagnose_block_components } from "./components/diagnose";
+import { no_other_duplicates } from "../../packs/duplicate-check";
 
 /**Diagnoses the given document as an bp block
  * @param doc The text document to diagnose
@@ -17,15 +18,9 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   const block = Json.LoadReport<Internal.BehaviorPack.Block>(diagnoser);
   if (!Internal.BehaviorPack.Block.is(block)) return;
 
-  const identifier = block['minecraft:block'].description.identifier
-  diagnoser.context.getCache().behaviorPacks.blocks.forEach(block => {
-    if (block.id === identifier && block.location.uri !== diagnoser.document.uri) diagnoser.add(
-      `minecraft:block/description/identifier`,
-      `Duplicate identifier "${identifier}" found.`,
-      DiagnosticSeverity.warning,
-      "behaviorpack.block.duplicate_id"
-    );
-  })
+  const identifier = block["minecraft:block"].description.identifier;
+  // check that no other exists with this id
+  no_other_duplicates("behaviorpack.block", diagnoser.context.getCache().behaviorPacks.blocks, identifier, diagnoser);
 
   //check components
   const context: Context<Internal.BehaviorPack.Block> = {

@@ -16,6 +16,7 @@ import { behaviorpack_entity_components_check } from "./components";
 import { behaviorpack_entity_components_dependencies } from "./components/dependencies";
 import { behaviorpack_entity_check_events } from "./events";
 import { diagnose_entity_properties_definition } from "./properties";
+import { no_other_duplicates } from "../../packs/duplicate-check";
 
 /**Diagnoses the given document as an bp entity
  * @param doc The text document to diagnose
@@ -28,16 +29,15 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   if (!Internal.BehaviorPack.Entity.is(entity)) return;
 
   //No resource-pack check, entities can exist without their rp side
-  
-  const identifier = entity['minecraft:entity'].description.identifier
-  diagnoser.context.getCache().behaviorPacks.entities.forEach(entity => {
-    if (entity.id === identifier && entity.location.uri !== diagnoser.document.uri) diagnoser.add(
-      `minecraft:entity/description/identifier`,
-      `Duplicate identifier "${identifier}" found.`,
-      DiagnosticSeverity.warning,
-      "behaviorpack.entity.duplicate_id"
-    );
-  })
+
+  const identifier = entity["minecraft:entity"].description.identifier;
+  // check that no other exists with this id
+  no_other_duplicates(
+    "behaviorpack.entity",
+    diagnoser.context.getCache().behaviorPacks.entities,
+    identifier,
+    diagnoser
+  );
 
   //check components
   const context: Context<Internal.BehaviorPack.Entity> = {
