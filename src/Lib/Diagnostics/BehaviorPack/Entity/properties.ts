@@ -159,6 +159,14 @@ function diagnose_entity_enum_property_definition(
             "behaviorpack.entity.property.enum.values.length"
           );
         }
+        if (/[^a-zA-Z0-9_]/.test(value)) {
+          diagnoser.add(
+            `properties/${name}/${value}`,
+            `Entity property value "${value}" can only contain alphanumeric characters and underscores.`,
+            DiagnosticSeverity.error,
+            "behaviorpack.entity.property.enum.values.special_character"
+          );
+        }
       }
     }
   }
