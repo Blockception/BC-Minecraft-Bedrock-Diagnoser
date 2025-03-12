@@ -89,8 +89,10 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Item>>
       });
   },
   "minecraft:icon": (name, component, context, diagnoser) => {
-    if (typeof component == 'string') {
-      const textureId = component
+    let textureId: string | undefined = undefined;
+    if (typeof component == 'string') textureId = component
+    else if (typeof component.texture == 'string') textureId = component.texture
+    if (textureId !== undefined) {
       if (!diagnoser.context.getCache().resourcePacks.itemTextures.find(val => val.id == textureId))
         diagnoser.add(textureId,
           `Texture reference "${textureId}" was not defined in item_texture.json`,
@@ -106,6 +108,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Item>>
             'behaviorpack.item.components.texture_not_found')
       })
     }
+
   },
   "minecraft:custom_components": (name, component, context, diagnoser) => {
     try {
