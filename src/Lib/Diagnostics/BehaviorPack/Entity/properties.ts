@@ -120,7 +120,7 @@ function diagnose_entity_enum_property_definition(
 
   // default needs to be in the list
   if (def !== undefined) {
-    if (property.values?.indexOf(def) === -1) {
+    if (property.values?.indexOf(def) === -1 && !(def.includes('q.') || def.includes('query.'))) {
       diagnoser.add(
         `properties/${name}/${def}`,
         `Default value is not in the list of values: ${def}`,
@@ -157,6 +157,14 @@ function diagnose_entity_enum_property_definition(
             `Value is not a string of length 1 to 32: ${value}`,
             DiagnosticSeverity.error,
             "behaviorpack.entity.property.enum.values.length"
+          );
+        }
+        if (/[^a-zA-Z0-9_]/.test(value)) {
+          diagnoser.add(
+            `properties/${name}/${value}`,
+            `Entity property value "${value}" can only contain alphanumeric characters and underscores.`,
+            DiagnosticSeverity.error,
+            "behaviorpack.entity.property.enum.values.special_character"
           );
         }
       }

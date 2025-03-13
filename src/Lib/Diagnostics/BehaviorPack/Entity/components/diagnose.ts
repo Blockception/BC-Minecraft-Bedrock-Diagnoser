@@ -30,7 +30,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   "minecraft:loot": check_loot_table,
   "minecraft:trade_table": check_trade_table,
   "minecraft:input_air_controlled": (name, component, context, diagnoser) => {
-    if (!(context.source as any).use_beta_features) diagnoser.add(name, 
+    if (!(context.source as any).use_beta_features) diagnoser.add(name,
       `This component requires "use_beta_features" to be set to true`,
       DiagnosticSeverity.error,
       `behaviorpack.entity.component.requires_beta_features`
@@ -38,12 +38,25 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   },
   "minecraft:fall_damage": (name, component, context, diagnoser) => {
     try {
-    const version = FormatVersion.parse(context.source.format_version);
-    if (version[0] > 1 || (version[0] === 1 && version[1] > 10) || (version[0] === 1 && version[1] === 10 && version[2] > 0)) diagnoser.add(name,
-      `To use "minecraft:fall_damage", you need a "format_version" of 1.10.0 or lesser`,
-      DiagnosticSeverity.error,
-      'behaviorpack.entity.component.fall_damage')
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const version = FormatVersion.parse(context.source.format_version);
+      if (version[0] > 1 || (version[0] === 1 && version[1] > 10) || (version[0] === 1 && version[1] === 10 && version[2] > 0)) diagnoser.add(name,
+        `To use "minecraft:fall_damage", you need a "format_version" of 1.10.0 or lesser`,
+        DiagnosticSeverity.error,
+        'behaviorpack.entity.component.fall_damage')
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err) {
+      // Leaving this empty as the base diagnoser should already flag an invalid format version
+    }
+  },
+  "minecraft:entity_sensor": (name, component, context, diagnoser) => {
+    if (component.subsensors === undefined) return;
+    try {
+      const version = FormatVersion.parse(context.source.format_version);
+      if (version[0] < 1 || (version[0] === 1 && version[1] < 21) || (version[0] === 1 && version[1] === 21 && version[2] < 0)) diagnoser.add(name,
+        `To use "minecraft:entity_sensor/subsensors", you need a "format_version" of 1.21.0 or higher`,
+        DiagnosticSeverity.error,
+        'behaviorpack.entity.component.entity_sensor')
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       // Leaving this empty as the base diagnoser should already flag an invalid format version
     }
