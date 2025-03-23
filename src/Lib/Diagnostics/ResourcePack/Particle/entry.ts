@@ -1,5 +1,5 @@
 import { Internal } from 'bc-minecraft-bedrock-project';
-import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../Types";
+import { DocumentDiagnosticsBuilder } from "../../../Types";
 import { Json } from '../../Json';
 import { diagnose_molang } from '../../Molang/diagnostics';
 import { MinecraftData } from 'bc-minecraft-bedrock-vanilla-data';
