@@ -6,6 +6,7 @@ import { Json } from "../../Json";
 import { behaviorpack_item_components_dependencies } from "./components/dependencies";
 import { behaviorpack_diagnose_item_components } from "./components/diagnose";
 import { no_other_duplicates } from "../../packs/duplicate-check";
+import { FormatVersion } from 'bc-minecraft-bedrock-types/lib/minecraft';
 
 /**Diagnoses the given document as an item
  * @param diagnoser The diagnoser builder to receive the errors*/
@@ -34,4 +35,24 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
       DiagnosticSeverity.error,
       "behaviorpack.item.deprecated"
     );
+
+  const group = (item['minecraft:item'].description as any).menu_category?.group
+  if (typeof group != 'string') return;
+
+  try {
+    const version = FormatVersion.parse(context.source.format_version);
+    const greaterThan12150 = version[0] > 1 || (version[0] === 1 && version[1] > 21) || (version[0] === 1 && version[1] === 21 && version[2] > 50)
+    if (greaterThan12150 && group.startsWith('itemGroup')) diagnoser.add(group,
+      `Item groups must be namespaced in versions > 1.21.50`,
+      DiagnosticSeverity.error,
+      'behaviorpack.item.namespace_group')
+    if (!greaterThan12150 && group.includes(':')) diagnoser.add(group,
+        `Item groups cannot be namespaced in versions <= 1.21.50`,
+        DiagnosticSeverity.error,
+        'behaviorpack.item.namespace_group')
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (err) {
+    // Leaving this empty as the base diagnoser should already flag an invalid format version
+  }
+
 }
