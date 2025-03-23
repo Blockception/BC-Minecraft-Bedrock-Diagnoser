@@ -21,3 +21,21 @@ export function diagnose_resourcepack_sounds(data: Types.Definition | undefined,
     );
   });
 }
+
+export function diagnose_resourcepack_sound(id: string, diagnoser: DiagnosticsBuilder): void {
+  if (id === undefined) return;
+
+  const pdata = diagnoser.context.getCache();
+  const edu = education_enabled(diagnoser);
+
+  if (pdata.resourcePacks.sounds.has(id)) return;
+  if (MinecraftData.ResourcePack.hasSound(id, edu)) return;
+
+  diagnoser.add(
+    id,
+    `Cannot find sound definition: ${id}`,
+    DiagnosticSeverity.error,
+    "resourcepack.sound.missing"
+  );
+
+}

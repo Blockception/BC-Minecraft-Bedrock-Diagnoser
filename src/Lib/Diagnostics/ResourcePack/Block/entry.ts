@@ -22,6 +22,8 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
     if (typeof block === "object") {
       const texture = block.textures;
 
+      if (!texture) return;
+
       if (typeof texture === "string") {
         hasDefinition(key, texture, rp, diagnoser);
       } else if (texture) {
@@ -34,6 +36,17 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
         if (texture.west) hasDefinition(key, texture.west, rp, diagnoser);
         if (texture.east) hasDefinition(key, texture.east, rp, diagnoser);
       }
+
+      const blockFile = diagnoser.context.getCache().behaviorPacks.blocks.get(key)?.location.uri
+      if (!blockFile) return;
+
+      if (diagnoser.context.getDocument(blockFile)?.getText().includes('minecraft:material_instances')) diagnoser.add(
+        `${key}`,
+        "Only one \"blocks.json\" or \"minecraft:material_instances\" may be used",
+        DiagnosticSeverity.error,
+        "behaviorpack.block.components.material_instance_clash"
+      )
+
     }
   }
 }

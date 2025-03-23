@@ -6,9 +6,9 @@ import {
 } from "bc-minecraft-bedrock-project/lib/src/project/behavior-pack/entity";
 import { DiagnosticSeverity, DiagnosticsBuilder } from "../../../Types";
 
-export function diagnose_entity_properties_definition(property: EntityProperty[], diagnoser: DiagnosticsBuilder) {
+export function diagnose_entity_properties_definition(property: EntityProperty[], diagnoser: DiagnosticsBuilder, text: string) {
   for (const prop of property) {
-    diagnose_entity_property_definition(prop, diagnoser);
+    diagnose_entity_property_definition(prop, diagnoser, text);
   }
 
   // https://learn.microsoft.com/en-us/minecraft/creator/documents/introductiontoentityproperties#number-of-entity-properties-per-entity-type
@@ -22,13 +22,13 @@ export function diagnose_entity_properties_definition(property: EntityProperty[]
   }
 }
 
-function diagnose_entity_property_definition(property: EntityProperty, diagnoser: DiagnosticsBuilder) {
+function diagnose_entity_property_definition(property: EntityProperty, diagnoser: DiagnosticsBuilder, text: string) {
   const { name, type } = property;
   switch (type) {
     case "bool":
       return diagnose_entity_bool_property_definition(property, diagnoser);
     case "float":
-      return diagnose_entity_float_property_definition(property, diagnoser);
+      return diagnose_entity_float_property_definition(property, diagnoser, text);
     case "int":
       return diagnose_entity_int_property_definition(property, diagnoser);
     case "enum":
@@ -56,7 +56,7 @@ function diagnose_entity_bool_property_definition(property: EntityProperty, diag
   );
 }
 
-function diagnose_entity_float_property_definition(property: EntityFloatProperty, diagnoser: DiagnosticsBuilder) {
+function diagnose_entity_float_property_definition(property: EntityFloatProperty, diagnoser: DiagnosticsBuilder, text: string) {
   const { name, default: def } = property;
 
   // Default value needs to be a number and within the range
@@ -74,6 +74,10 @@ function diagnose_entity_float_property_definition(property: EntityFloatProperty
   }
 
   if ((typeof def === "number" && !Number.isInteger(def)) || typeof def === "string") return;
+
+  const regexMatch = text.match(new RegExp(`"${name}"\\s*:\\s*\\{[^{}]*\\}`, 'gm'))?.[0]
+  
+  if (regexMatch && regexMatch.match(new RegExp(`"default"\\s*:\\s*${def}\\.[0-9]`))) return;
 
   diagnoser.add(
     `properties/${name}/${def}`,

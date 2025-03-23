@@ -7,6 +7,8 @@ import { check_loot_table } from "./loot";
 import { check_trade_table } from "./trade";
 import { Internal } from 'bc-minecraft-bedrock-project';
 import { FormatVersion } from 'bc-minecraft-bedrock-types/lib/minecraft';
+import { diagnose_resourcepack_sound } from '../../../ResourcePack/Sounds';
+import { behaviorpack_entityid_diagnose } from '../diagnose';
 
 /**
  *
@@ -60,5 +62,10 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     } catch (err) {
       // Leaving this empty as the base diagnoser should already flag an invalid format version
     }
+  },
+  "minecraft:transformation": (name, component, context, diagnoser) => {
+    diagnose_resourcepack_sound(component.begin_transform_sound, diagnoser)
+    diagnose_resourcepack_sound(component.transformation_sound, diagnoser)
+    if (component.into) behaviorpack_entityid_diagnose(component.into, diagnoser)
   }
 };

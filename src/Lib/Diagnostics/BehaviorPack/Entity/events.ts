@@ -17,8 +17,9 @@ export function behaviorpack_entity_check_events(
   if (Array.isArray(events)) {
     events.forEach((event) => behaviorpack_entity_check_event(event, "", diagnoser, properties, component_groups));
   } else {
+    const eventIds = Object.keys(events)
     SMap.forEach(events, (event, key) =>
-      behaviorpack_entity_check_event(event, key, diagnoser, properties, component_groups)
+      behaviorpack_entity_check_event(event, key, diagnoser, properties, component_groups, eventIds)
     );
   }
 }
@@ -34,7 +35,8 @@ export function behaviorpack_entity_check_event(
   event_id: string,
   diagnoser: DocumentDiagnosticsBuilder,
   properties: EntityProperty[],
-  component_groups?: ComponentGroups
+  component_groups?: ComponentGroups,
+  eventIds?: string[]
 ): void {
   has_groups(diagnoser, event_id, typeof event.add?.component_groups == 'string' ? [event.add?.component_groups] : event.add?.component_groups, component_groups);
   has_groups(diagnoser, event_id, typeof event.remove?.component_groups == 'string' ? [event.remove?.component_groups] : event.remove?.component_groups, component_groups);
@@ -72,6 +74,13 @@ export function behaviorpack_entity_check_event(
       "behaviorpack.entity.event.set_home_position"
     );
   }
+
+  if (event.trigger && !eventIds?.includes(event.trigger)) diagnoser.add(
+    `events/${event_id}/trigger`,
+    `Event "${event.trigger}" being triggered not found`,
+    DiagnosticSeverity.warning,
+    "behaviorpack.entity.event.trigger"
+  );
 
   if (event.queue_command) {
     const c = event.queue_command.command;
