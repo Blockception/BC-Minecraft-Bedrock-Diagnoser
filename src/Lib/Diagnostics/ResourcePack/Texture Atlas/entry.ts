@@ -3,6 +3,7 @@ import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from '../../../Types';
 import { education_enabled } from "../../Definitions";
 import { Json } from "../../Json/Json";
+import path from 'path';
 
 /**Diagnoses the given document as a texture atlas
  * @param doc The text document to diagnose
@@ -64,8 +65,10 @@ export function texture_files_diagnose(
   files: string[],
   diagnoser: DiagnosticsBuilder
 ): void {
+  files = files.map(location => location.slice(0,-path.extname(location).length))
+  file = file.slice(0,-path.extname(file).length)
   for (let I = 0; I < files.length; I++) {
-    if (files[I].includes(file)) {
+    if (files[I].endsWith(file)) {
       //Found then return
       return;
     }
