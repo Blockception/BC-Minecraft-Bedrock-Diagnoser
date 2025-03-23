@@ -100,7 +100,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
 
   behaviorpack_animation_used(anim_data, diagnoser);
 
-  diagnose_entity_properties_definition(properties, diagnoser);
+  diagnose_entity_properties_definition(properties, diagnoser, diagnoser.document.getText());
 
   //Check events
   if (container.events)
