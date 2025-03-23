@@ -4,6 +4,7 @@ import { Json } from '../../Json';
 import { diagnose_molang } from '../../Molang/diagnostics';
 import { MinecraftData } from 'bc-minecraft-bedrock-vanilla-data';
 import { education_enabled } from '../../Definitions';
+import { texture_files_diagnose } from '../Texture Atlas';
 
 /**Diagnoses the given document as a particle
  * @param doc The text document to diagnose
@@ -30,11 +31,6 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
     .getFiles(pack.folder, ["**/textures/**/*.{tga,png,jpg,jpeg}"], pack.context.ignores)
     .map((item) => item.replace(/\\/gi, "/"));
 
-  if (!rp_files.some(path => path.includes(texture))) diagnoser.add(
-    `${texture}`,
-    `Cannot find file: ${texture}`,
-    DiagnosticSeverity.error,
-    "resourcepack.texture.missing"
-  );
+  texture_files_diagnose('texture', texture, rp_files, diagnoser)
   
 }
