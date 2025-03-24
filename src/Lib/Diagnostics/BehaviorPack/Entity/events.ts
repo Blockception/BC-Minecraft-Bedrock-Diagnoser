@@ -42,11 +42,11 @@ export function behaviorpack_entity_check_event(
   has_groups(diagnoser, event_id, typeof event.remove?.component_groups == 'string' ? [event.remove?.component_groups] : event.remove?.component_groups, component_groups);
 
   event.randomize?.forEach((item) => {
-    behaviorpack_entity_check_event(item, event_id, diagnoser, properties, component_groups);
+    behaviorpack_entity_check_event(item, event_id, diagnoser, properties, component_groups, eventIds);
   });
 
   event.sequence?.forEach((item) => {
-    behaviorpack_entity_check_event(item, event_id, diagnoser, properties, component_groups);
+    behaviorpack_entity_check_event(item, event_id, diagnoser, properties, component_groups, eventIds);
   });
 
   behaviorpack_entity_components_filters(event, diagnoser);
