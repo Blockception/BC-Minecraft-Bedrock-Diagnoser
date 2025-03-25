@@ -75,28 +75,28 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   "minecraft:behavior.dig": (name, component, context, diagnoser) => { //TODO: Check if requires warden runtime
     minecraft_diagnose_filters(component.on_start?.filters, diagnoser)
   },
-  "minecraft:behavior.dragonchargeplayer": (name, component, context, diagnoser) => {
+  "minecraft:behavior.dragonchargeplayer": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, 'minecraft:ender_dragon')
   },
-  "minecraft:behavior.dragondeath": (name, component, context, diagnoser) => {
+  "minecraft:behavior.dragondeath": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, 'minecraft:ender_dragon')
   },
-  "minecraft:behavior.dragonflaming": (name, component, context, diagnoser) => {
+  "minecraft:behavior.dragonflaming": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, 'minecraft:ender_dragon')
   },
-  "minecraft:behavior.dragonholdingpattern": (name, component, context, diagnoser) => {
+  "minecraft:behavior.dragonholdingpattern": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, 'minecraft:ender_dragon')
   },
-  "minecraft:behavior.dragonlanding": (name, component, context, diagnoser) => {
+  "minecraft:behavior.dragonlanding": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, 'minecraft:ender_dragon')
   },
-  "minecraft:behavior.dragonscanning": (name, component, context, diagnoser) => {
+  "minecraft:behavior.dragonscanning": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, 'minecraft:ender_dragon')
   },
-  "minecraft:behavior.dragonstrafeplayer": (name, component, context, diagnoser) => {
+  "minecraft:behavior.dragonstrafeplayer": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, 'minecraft:ender_dragon')
   },
-  "minecraft:behavior.dragontakeoff": (name, component, context, diagnoser) => {
+  "minecraft:behavior.dragontakeoff": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, 'minecraft:ender_dragon')
   },
   "minecraft:behavior.drink_milk": (name, component, context, diagnoser) => {
@@ -124,10 +124,10 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   "minecraft:behavior.emerge": (name, component, context, diagnoser) => {
     minecraft_diagnose_filters(component.on_done?.filters, diagnoser)
   },
-  "minecraft:behavior.enderman_leave_block": (name, component, context, diagnoser) => {
+  "minecraft:behavior.enderman_leave_block": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, 'minecraft:enderman')
   },
-  "minecraft:behavior.enderman_take_block": (name, component, context, diagnoser) => {
+  "minecraft:behavior.enderman_take_block": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, 'minecraft:enderman')
   },
   "minecraft:behavior.fire_at_target": (name, component, context, diagnoser) => {
@@ -144,7 +144,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     minecraft_diagnose_filters(component.on_failed?.filters, diagnoser)
     minecraft_diagnose_filters(component.on_home?.filters, diagnoser)
   },
-  "minecraft:behavior.guardian_attack": (name, component, context, diagnoser) => {
+  "minecraft:behavior.guardian_attack": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, ['minecraft:elder_guardian', 'minecraft:guardian'])
   },
   "minecraft:behavior.jump_around_target": (name, component, context, diagnoser) => {
@@ -173,7 +173,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   "minecraft:behavior.look_at_entity": (name, component, context, diagnoser) => {
     minecraft_diagnose_filters(component.filters, diagnoser)
   },
-  "minecraft:behavior.make_love": (name, component, context, diagnoser) => {
+  "minecraft:behavior.make_love": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, ['minecraft:villager', 'minecraft:villager_v2'])
   },
   "minecraft:behavior.melee_attack": (name, component, context, diagnoser) => {
@@ -231,19 +231,19 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
       if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
     });
   },
-  "minecraft:behavior.receive_love": (name, component, context, diagnoser) => {
+  "minecraft:behavior.receive_love": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, ['minecraft:villager', 'minecraft:villager_v2'])
   },
-  "minecraft:behavior.silverfish_merge_with_stone": (name, component, context, diagnoser) => {
+  "minecraft:behavior.silverfish_merge_with_stone": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, 'minecraft:silverfish')
   },
-  "minecraft:behavior.silverfish_wake_up_friends": (name, component, context, diagnoser) => {
+  "minecraft:behavior.silverfish_wake_up_friends": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, 'minecraft:silverfish')
   },
-  "minecraft:behavior.skeleton_horse_trap": (name, component, context, diagnoser) => {
+  "minecraft:behavior.skeleton_horse_trap": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, ['minecraft:horse', 'minecraft:donkey', 'minecraft:mule', 'minecraft:skeleton_horse'])
   },
-  "minecraft:behavior.slime_float": (name, component, context, diagnoser) => {
+  "minecraft:behavior.slime_float": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, ['minecraft:magma_cube', 'minecraft:slime'])
   },
   "minecraft:behavior.snacking": (name, component, context, diagnoser) => {
@@ -254,25 +254,25 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   "minecraft:behavior.sneeze": (name, component, context, diagnoser) => {
     if (typeof component.loot_table === 'string') behaviorpack_loot_table_diagnose(component.loot_table, diagnoser)
   },
-  "minecraft:behavior.squid_dive": (name, component, context, diagnoser) => {
+  "minecraft:behavior.squid_dive": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, ['minecraft:squid', 'minecraft:glow_squid'])
   },
-  "minecraft:behavior.squid_flee": (name, component, context, diagnoser) => {
+  "minecraft:behavior.squid_flee": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, ['minecraft:squid', 'minecraft:glow_squid'])
   },
-  "minecraft:behavior.squid_idle": (name, component, context, diagnoser) => {
+  "minecraft:behavior.squid_idle": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, ['minecraft:squid', 'minecraft:glow_squid'])
   },
-  "minecraft:behavior.squid_move_away_from_ground": (name, component, context, diagnoser) => {
+  "minecraft:behavior.squid_move_away_from_ground": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, ['minecraft:squid', 'minecraft:glow_squid'])
   },
-  "minecraft:behavior.squid_out_of_water": (name, component, context, diagnoser) => {
+  "minecraft:behavior.squid_out_of_water": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, ['minecraft:squid', 'minecraft:glow_squid'])
   },
   "minecraft:behavior.stomp_attack": (name, component, context, diagnoser) => {
     minecraft_diagnose_filters(component.on_attack?.filters, diagnoser)
   },
-  "minecraft:behavior.summon_entity": (name, component, context, diagnoser) => {
+  "minecraft:behavior.summon_entity": () => {
     //TODO: Complete
   },
   "minecraft:behavior.swoop_attack": (name, component, context, diagnoser) => {
@@ -305,7 +305,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     minecraft_diagnose_filters(component.on_start?.filters, diagnoser)
     minecraft_diagnose_filters(component.on_end?.filters, diagnoser)
   },
-  "minecraft:behavior.wither_random_attack_pos_goal": (name, component, context, diagnoser) => {
+  "minecraft:behavior.wither_random_attack_pos_goal": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, 'minecraft:wither')
   },
   "minecraft:behavior.work": (name, component, context, diagnoser) => {
@@ -341,7 +341,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     minecraft_diagnose_filters(component.entity_filter, diagnoser)
   },
   "minecraft:barter": (name, component, context, diagnoser) => {
-    if (typeof component.barter_table) behaviorpack_loot_table_diagnose(component.barter_table, diagnoser)
+    if (typeof component.barter_table == 'string') behaviorpack_loot_table_diagnose(component.barter_table, diagnoser)
   },
   "minecraft:block_sensor": (name, component, context, diagnoser) => {
     component.on_break?.forEach((entry: any) => {
