@@ -5,14 +5,31 @@ import { Internal } from "bc-minecraft-bedrock-project";
 //Map of components that are depended on all other specified components
 const component_dependents_all: DependedMap = {
   "minecraft:addrider": ["minecraft:rideable"],
+  "minecraft:boostable": ["minecraft:rideable"],
   "minecraft:behavior.admire_item": ["minecraft:admire_item"],
   "minecraft:behavior.barter": ["minecraft:barter"],
-  "minecraft:behavior.controlled_by_player": ["minecraft:movement", "minecraft:rideable"],
+  "minecraft:behavior.controlled_by_player": ["minecraft:movement", "minecraft:rideable", "minecraft:item_controllable"],
   "minecraft:behavior.drop_item_for": [/^minecraft:navigation.*/gim],
   "minecraft:behavior.leap_at_target": [/^minecraft:behavior.*target.*/gim],
   "minecraft:behavior.slime_attack": ["minecraft:attack"],
   "minecraft:behavior.stalk_and_pounce_on_target": ["minecraft:attack"],
-  "minecraft:breedable": ["minecraft:behavior.breed"],
+  "minecraft:breedable": ["minecraft:behavior.breed", "minecraft:type_family"],
+  "minecraft:behavior.equip_item": ["minecraft:equip_item"],
+  "minecraft:equip_item": ["minecraft:behavior.equip_item"],
+  "minecraft:behavior.explore_outskirts": [/^minecraft:navigation.*/gim, "minecraft:dweller"],
+  "minecraft:behavior.fertilize_farm_block": ["minecraft:inventory"],
+  "minecraft:behavior.harvest_farm_block": [/^minecraft:navigation.*/gim, "minecraft:inventory"],
+  "minecraft:behavior.melee_attack": [/^minecraft:navigation.*/gim],
+  "minecraft:behavior.melee_box_attack": [/^minecraft:navigation.*/gim],
+  "minecraft:behavior.delayed_attack": [/^minecraft:navigation.*/gim],
+  "minecraft:behavior.move_towards_dwelling_restriction": ["minecraft:dweller"],
+  "minecraft:behavior.move_towards_home_restriction": ["minecraft:home"],
+  "minecraft:behavior.ocelotattack": ["minecraft:attack_damage"],
+  "minecraft:behavior.attack_damage": ["minecraft:ocelotattack"],
+  "minecraft:behavior.ranged_attack": ["minecraft:shooter"],
+  "minecraft:behavior.roar": ["minecraft:anger_level"],
+  "minecraft:behavior.sniff": ['minecraft:suspect_tracking'],
+  "minecraft:behavior.swim_up_for_breath": ['minecraft:breathable']
 };
 
 //Map of components that are depended on one of the other specified components
@@ -27,6 +44,10 @@ const component_dependents_any: DependedMap = {
     "minecraft:behavior.hurt_by_target",
   ],
   "minecraft:giveable": ["minecraft:inventory"],
+  "minecraft:behavior.pickup_items": [
+    "minecraft:inventory",
+    "minecraft:behavior.equip_item"
+  ]
 };
 
 /**Checks if components dependencies are present, a component might need others to be present
@@ -53,7 +74,7 @@ export function checkMovements(diagnoser: DiagnosticsBuilder, components: string
 
   // Check for dolphin runtime
   if (runtimeId === 'minecraft:dolphin' || id === 'minecraft:dolphin') {
-     if (movementComps.length >= 1) diagnoser.add(
+    if (movementComps.length >= 1) diagnoser.add(
       "runtime_identifier",
       `Entity runtime 'minecraft:dolphin' is not compatible with ${movementComps[0]}`,
       DiagnosticSeverity.error,
