@@ -68,7 +68,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Item>>
         else if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
       });
     if (component.replace_block_item && context.source['minecraft:item'].description.identifier != component.block) diagnoser.add(`minecraft:block_placer/block/${component.block}`,
-      `${component.replace_block_item} and ${context.source['minecraft:item'].description.identifier} need to match when trying to replace the block item`,
+      `${component.block} and ${context.source['minecraft:item'].description.identifier} need to match when trying to replace the block item`,
       DiagnosticSeverity.error,
       'behaviorpack.item.components.replace_block_ids_dont_match')
     if (component.block) {
