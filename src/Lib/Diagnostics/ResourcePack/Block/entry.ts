@@ -1,6 +1,7 @@
 import { ResourcePackCollection } from "bc-minecraft-bedrock-project/lib/src/project/resource-pack";
 import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from '../../../Types';
 import { Json } from "../../Json/Json";
+import { behaviorpack_check_blockid } from '../../BehaviorPack/Block';
 
 /**Diagnoses the given document as a block.json
  * @param doc The text document to diagnose
@@ -36,6 +37,8 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
         if (texture.west) hasDefinition(key, texture.west, rp, diagnoser);
         if (texture.east) hasDefinition(key, texture.east, rp, diagnoser);
       }
+
+      behaviorpack_check_blockid(key, diagnoser) 
 
       const blockFile = diagnoser.context.getCache().behaviorPacks.blocks.get(key)?.location.uri
       if (!blockFile) return;
