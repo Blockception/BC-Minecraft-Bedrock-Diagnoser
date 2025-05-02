@@ -340,6 +340,12 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   "minecraft:area_attack": (name, component, context, diagnoser) => {
     minecraft_diagnose_filters(component.entity_filter, diagnoser)
   },
+  "minecraft:annotation.break_door": (name, component, context, diagnoser) => {
+    const navigatorId = context.components.find(id => id.startsWith('minecraft:navigation.'))
+    if (!navigatorId) return;
+    const navigationComponent = findValue(context.source['minecraft:entity'], navigatorId)
+    if (navigationComponent.can_break_doors !== true) diagnoser.add(name, "Requires the entity's navigation component to have the parameter 'can_break_doors' set to 'true'.", DiagnosticSeverity.warning, "behaviorpack.entity.component.annotation_break_door");
+  },
   "minecraft:barter": (name, component, context, diagnoser) => {
     if (typeof component.barter_table == 'string') behaviorpack_loot_table_diagnose(component.barter_table, diagnoser)
   },
@@ -686,4 +692,15 @@ function diagnose_event_trigger(componentName: string, component: any, entityId:
 function processEntries<T>(data: T | T[], callback: (entry: T) => void) {
   if (Array.isArray(data)) data.forEach(callback);
   else if (data) callback(data);
+}
+
+function findValue(obj: any, targetKey: string): any {
+  for (const key in obj) {
+      if (key === targetKey) return obj[key];
+      if (typeof obj[key] === 'object' && obj[key] !== null) {
+          const result = findValue(obj[key], targetKey);
+          if (result !== undefined) return result;
+      }
+  }
+  return undefined;
 }
