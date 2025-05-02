@@ -24,6 +24,11 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
     components: getUsedComponents(item["minecraft:item"]),
   };
 
+  if (!item["minecraft:item"]["components"]?.["minecraft:icon"] && !item["minecraft:item"]["components"]?.["minecraft:block_placer"]?.replace_block_item) diagnoser.add("components",
+    "`minecraft:icon` or `minecraft:block_placer > replace_block_item > true` is required.",
+    DiagnosticSeverity.error,
+    "behaviorpack.item.components.icon");
+
   behaviorpack_diagnose_item_components(item["minecraft:item"], context, diagnoser);
 
   behaviorpack_item_components_dependencies(item, context, diagnoser);
@@ -46,10 +51,10 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
       DiagnosticSeverity.error,
       'behaviorpack.block.namespace_group')
     if (!greaterThan && group.includes(':')) diagnoser.add(group,
-        `Item groups cannot be namespaced in versions <= 1.21.50`,
-        DiagnosticSeverity.warning,
-        'behaviorpack.block.namespace_group')
+      `Item groups cannot be namespaced in versions <= 1.21.50`,
+      DiagnosticSeverity.warning,
+      'behaviorpack.block.namespace_group')
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (err) {}
+  } catch (err) { }
 
 }
