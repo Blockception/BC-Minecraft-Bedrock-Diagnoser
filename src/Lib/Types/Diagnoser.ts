@@ -56,7 +56,7 @@ export class Diagnoser<T extends TextDocument = TextDocument> {
 
       //Language file?
       if (doc.uri.endsWith(".lang")) {
-        minecraft_language_diagnose(diagnoser);
+        minecraft_language_diagnose(diagnoser, pack.type);
       } else {
         //Check per pack
         switch (pack.type) {
