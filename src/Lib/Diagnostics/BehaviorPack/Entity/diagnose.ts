@@ -15,7 +15,16 @@ export function behaviorpack_entityid_diagnose(
   diagnoser: DiagnosticsBuilder
 ): boolean {
   let id = typeof value === "string" ? value : value.text;
-  id = id.split("<")[0];
+
+  let event = "";
+  if (id.includes("<")) {
+    event = id.replace(id.split("<")[0], '').slice(1, -1);
+    id = id.split("<")[0];
+  }
+
+  //No namespace?
+  if (!id.includes(":")) id = "minecraft:" + id;
+
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.entity, id, diagnoser)) {
     return true;
@@ -24,33 +33,15 @@ export function behaviorpack_entityid_diagnose(
   //Project has entity
   const data = diagnoser.context.getCache();
   if (data.hasEntity(id)) {
+    if (event) behaviorpack_entity_event_diagnose(event, id, data.behaviorPacks.entities.get(id)?.events, diagnoser);
     return true;
   }
 
   //Vanilla has entity
   const edu = education_enabled(diagnoser);
   if (MinecraftData.BehaviorPack.hasEntity(id, edu)) {
-    return true;
-  }
-
-  //No namespace?
-  if (!id.includes(":")) {
-    id = "minecraft:" + id;
-
-    //Defined in McProject
-    if (check_definition_value(diagnoser.project.definitions.entity, id, diagnoser)) {
-      return true;
-    }
-
-    //Project has entity
-    const data = diagnoser.context.getCache();
-    if (data.hasEntity(id)) {
-      return true;
-    }
-  }
-
-  //Vanilla has entity
-  if (MinecraftData.BehaviorPack.hasEntity(id, edu)) {
+    if (event)
+      behaviorpack_entity_event_diagnose(event, id, MinecraftData.BehaviorPack.getEntity(id, edu)?.events, diagnoser);
     return true;
   }
 
@@ -70,12 +61,28 @@ export function behaviorpack_entity_spawnegg_diagnose(value: Types.OffsetWord, d
   behaviorpack_entityid_diagnose({ offset: value.offset, text: id }, diagnoser);
 }
 
+export function behaviorpack_entity_event_diagnose(
+  id: string,
+  entity: string,
+  events: string[] | undefined,
+  diagnoser: DiagnosticsBuilder
+) {
+  if (!events) return;
+  if (events.includes(id)) return;
+  diagnoser.add(
+    entity + "<" + id + ">",
+    `Entity: ${entity} has no event ${id}`,
+    DiagnosticSeverity.warning,
+    "behaviorpack.entity.event.missing"
+  );
+}
+
 /**Checks if the event is defined on the correct entities
  * @param data
  * @param builder
  * @param Com
  */
-export function behaviorpack_entity_event_diagnose(
+export function command_entity_event_diagnose(
   data: Types.OffsetWord,
   diagnoser: DiagnosticsBuilder,
   Com: Command

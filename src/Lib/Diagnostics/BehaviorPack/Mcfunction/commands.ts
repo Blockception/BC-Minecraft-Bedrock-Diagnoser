@@ -52,7 +52,7 @@ import { resourcepack_sound_diagnose } from "../../ResourcePack/Sounds Definitio
 import { behaviorpack_check_blockdescriptor } from "../Block/diagnose";
 import { behaviorpack_check_command_blockstates } from "../BlockState/diagnose";
 import {
-  behaviorpack_entity_event_diagnose,
+  command_entity_event_diagnose,
   behaviorpack_entity_spawnegg_diagnose,
   behaviorpack_entityid_diagnose,
 } from "../Entity/diagnose";
@@ -193,7 +193,7 @@ function mcfunction_commandcheck(command: Command, diagnoser: DocumentDiagnostic
       );
     } else {
       let { message } = obsolete;
-      const { code, format_version } = obsolete
+      const { code, format_version } = obsolete;
 
       if (format_version) {
         message += `\nThis command is obsolete since format version: ${format_version}`;
@@ -324,7 +324,7 @@ function mcfunction_diagnoseparameter(
     case ParameterType.command:
       return minecraft_check_command(data, diagnoser, edu);
     case ParameterType.event:
-      return behaviorpack_entity_event_diagnose(data, diagnoser, Com);
+      return command_entity_event_diagnose(data, diagnoser, Com);
     case ParameterType.keyword:
       return general_keyword_diagnose(pattern.text, data, diagnoser);
     case ParameterType.message:
