@@ -7,6 +7,7 @@ import { resourcepack_has_model } from "../../../ResourcePack/Model/diagnose";
 import { behaviorpack_loot_table_diagnose } from "../../Loot Table";
 import { behaviorpack_check_blockid } from "../diagnose";
 import { Internal } from "bc-minecraft-bedrock-project";
+import { FormatVersion } from 'bc-minecraft-bedrock-types/lib/minecraft';
 
 /**
  *
@@ -75,6 +76,15 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
     }
   },
   "minecraft:geometry": (name, component, context, diagnoser) => {
+
+    const formatVersion = FormatVersion.parse(context.source.format_version);
+    if (!context.components.includes('minecraft:material_instances') && (FormatVersion.isGreaterThan(formatVersion, [1,21,80]) || FormatVersion.isEqual(formatVersion, [1,21,80]))) diagnoser.add(
+      name,
+      `"minecraft:geometry" requires "minecraft:material_instances" in format versions >= 1.21.80`,
+      DiagnosticSeverity.error,
+      "behaviorpack.block.components.material_instances_x_geometry"
+    )
+
     if (typeof component === "string") {
       resourcepack_has_model(component, diagnoser);
     } else if (typeof component === "object") {
@@ -88,6 +98,15 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
     if (typeof component === "string") behaviorpack_loot_table_diagnose(component, diagnoser);
   },
   "minecraft:material_instances": (name, component, context, diagnoser) => {
+
+    const formatVersion = FormatVersion.parse(context.source.format_version);
+    if (!context.components.includes('minecraft:geometry') && (FormatVersion.isGreaterThan(formatVersion, [1,21,80]) || FormatVersion.isEqual(formatVersion, [1,21,80]))) diagnoser.add(
+      name,
+      `"minecraft:material_instances" requires "minecraft:geometry" in format versions >= 1.21.80`,
+      DiagnosticSeverity.error,
+      "behaviorpack.block.components.material_instances_x_geometry"
+    )
+
     Object.keys(component).forEach((value) => {
       const textureId = component[value].texture;
       if (!diagnoser.context.getCache().resourcePacks.terrainTextures.find((val) => val.id == textureId))
