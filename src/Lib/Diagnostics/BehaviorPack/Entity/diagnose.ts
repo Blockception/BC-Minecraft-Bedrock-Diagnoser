@@ -33,7 +33,7 @@ export function behaviorpack_entityid_diagnose(
   //Project has entity
   const data = diagnoser.context.getCache();
   if (data.hasEntity(id)) {
-    if (event) behaviorpack_entity_event_diagnose(event, id, data.behaviorPacks.entities.get(id)?.events, diagnoser);
+    if (event) behaviorpack_entity_event_diagnose(event, `${id}<${event}>`, data.behaviorPacks.entities.get(id)?.events, diagnoser);
     return true;
   }
 
@@ -41,7 +41,7 @@ export function behaviorpack_entityid_diagnose(
   const edu = education_enabled(diagnoser);
   if (MinecraftData.BehaviorPack.hasEntity(id, edu)) {
     if (event)
-      behaviorpack_entity_event_diagnose(event, id, MinecraftData.BehaviorPack.getEntity(id, edu)?.events, diagnoser);
+      behaviorpack_entity_event_diagnose(event, `${id}<${event}>`, MinecraftData.BehaviorPack.getEntity(id, edu)?.events, diagnoser);
     return true;
   }
 
@@ -63,15 +63,15 @@ export function behaviorpack_entity_spawnegg_diagnose(value: Types.OffsetWord, d
 
 export function behaviorpack_entity_event_diagnose(
   id: string,
-  entity: string,
+  path: string,
   events: string[] | undefined,
   diagnoser: DiagnosticsBuilder
 ) {
   if (!events) return;
   if (events.includes(id)) return;
   diagnoser.add(
-    entity + "<" + id + ">",
-    `Entity: ${entity} has no event ${id}`,
+    path,
+    `Entity has no event ${id}`,
     DiagnosticSeverity.warning,
     "behaviorpack.entity.event.missing"
   );
