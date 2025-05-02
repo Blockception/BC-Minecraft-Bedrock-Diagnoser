@@ -17,51 +17,66 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
 
   const path = diagnoser.document.uri.split('/')
   if (!identifier.endsWith(path.slice(path.findIndex(v => v == 'features') + 1).join('/').replace('.json', ''))) diagnoser.add(identifier, `Feature identifier must match the relative path to the feature up to and including the file name`, DiagnosticSeverity.error, "behaviorpack.feature.identifier");
-  
+
   // check that no other exists with this id
   no_other_duplicates("behaviorpack.feature", diagnoser.context.getCache().behaviorPacks.features, identifier, diagnoser);
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   if (feature['minecraft:aggregate_feature']) feature['minecraft:aggregate_feature'].features?.forEach(id => {
     behaviorpack_feature_diagnose(id, diagnoser)
   });
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   if (feature['minecraft:cave_carver_feature']) diagnose_block_reference(feature['minecraft:cave_carver_feature'].fill_with, diagnoser)
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   if (feature['minecraft:fossil_feature']) diagnose_block_reference(feature['minecraft:fossil_feature'].ore_block, diagnoser)
 
   if (feature['minecraft:geode_feature']) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     diagnose_block_reference(feature['minecraft:geode_feature'].filler, diagnoser)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     diagnose_block_reference(feature['minecraft:geode_feature'].inner_layer, diagnoser)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     diagnose_block_reference(feature['minecraft:geode_feature'].alternate_inner_layer, diagnoser)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     diagnose_block_reference(feature['minecraft:geode_feature'].middle_layer, diagnoser)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     feature['minecraft:geode_feature'].inner_placements?.forEach(id => {
       diagnose_block_reference(id, diagnoser)
     });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     diagnose_block_reference(feature['minecraft:geode_feature'].alternate_inner_layer, diagnoser)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     diagnose_block_reference(feature['minecraft:geode_feature'].alternate_inner_layer, diagnoser)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     diagnose_block_reference(feature['minecraft:geode_feature'].alternate_inner_layer, diagnoser)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     diagnose_block_reference(feature['minecraft:geode_feature'].alternate_inner_layer, diagnoser)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     diagnose_block_reference(feature['minecraft:geode_feature'].alternate_inner_layer, diagnoser)
   }
 
   if (feature['minecraft:growing_plant_feature']) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     feature['minecraft:growing_plant_feature'].body_blocks?.forEach(id => {
       diagnose_block_reference(id, diagnoser)
     });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     feature['minecraft:growing_plant_feature'].head_blocks?.forEach(id => {
       diagnose_block_reference(id, diagnoser)
@@ -69,15 +84,19 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   }
 
   if (feature['minecraft:multiface_feature']) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     diagnose_block_reference(feature['minecraft:multiface_feature'].places_block, diagnoser)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     diagnose_block_reference(feature['minecraft:multiface_feature'].can_place_on, diagnoser)
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   if (feature['minecraft:nether_cave_carver_feature']) diagnose_block_reference(feature['minecraft:nether_cave_carver_feature'].fill_with, diagnoser)
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   if (feature['minecraft:ore_feature']) feature['minecraft:ore_feature'].replace_rules?.forEach(entry => {
     diagnose_block_reference(entry.places_block, diagnoser)
@@ -86,69 +105,86 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
     });
   });
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   if (feature['minecraft:partially_exposed_blob_feature']) diagnose_block_reference(feature['minecraft:partially_exposed_blob_feature'].places_block, diagnoser)
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   if (feature['minecraft:scatter_feature']) behaviorpack_feature_diagnose(feature['minecraft:scatter_feature'].places_feature, diagnoser)
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   if (feature['minecraft:search_feature']) behaviorpack_feature_diagnose(feature['minecraft:search_feature'].places_feature, diagnoser)
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   if (feature['minecraft:search_feature']) feature['minecraft:search_feature'].features?.forEach(id => {
     behaviorpack_feature_diagnose(id, diagnoser)
   });
 
   if (feature['minecraft:single_block_feature']) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     if (Array.isArray(feature['minecraft:single_block_feature'].places_block)) feature['minecraft:single_block_feature'].places_block?.forEach(entry => {
       diagnose_block_reference(entry, diagnoser)
     });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     else diagnose_block_reference(feature['minecraft:single_block_feature'].places_block, diagnoser)
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   if (feature['minecraft:snap_to_surface_feature']) behaviorpack_feature_diagnose(feature['minecraft:snap_to_surface_feature'].feature_to_snap, diagnoser)
 
   if (feature['minecraft:structure_template_feature']) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     if (typeof feature['minecraft:structure_template_feature'].structure_name == 'string') behaviorpack_structure_diagnose('"' + feature['minecraft:structure_template_feature'].structure_name + '"', diagnoser)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     feature['minecraft:structure_template_feature'].constraints?.block_intersection?.block_allowlist?.forEach(id => {
       diagnose_block_reference(id, diagnoser)
     });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     feature['minecraft:structure_template_feature'].constraints?.block_intersection?.block_whitelist?.forEach(id => {
       diagnose_block_reference(id, diagnoser)
     });
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   if (feature['minecraft:surface_relative_threshold_feature']) behaviorpack_feature_diagnose(feature['minecraft:surface_relative_threshold_feature'].feature_to_place, diagnoser)
 
   //TODO Tree feature
 
   if (feature['minecraft:underwater_cave_carver_feature']) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     diagnose_block_reference(feature['minecraft:underwater_cave_carver_feature'].fill_with, diagnoser)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     diagnose_block_reference(feature['minecraft:underwater_cave_carver_feature'].replace_air_with, diagnoser)
   }
 
   if (feature['minecraft:vegetation_patch_feature']) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     feature['minecraft:vegetation_patch_feature'].replaceable_blocks?.forEach(id => {
       diagnose_block_reference(id, diagnoser)
     });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     diagnose_block_reference(feature['minecraft:vegetation_patch_feature'].ground_block, diagnoser)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     behaviorpack_feature_diagnose(feature['minecraft:vegetation_patch_feature'].vegetation_feature, diagnoser)
   }
 
   if (feature['minecraft:weighted_random_feature']) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     feature['minecraft:weighted_random_feature'].features?.forEach(entry => {
       behaviorpack_feature_diagnose(entry[0], diagnoser)

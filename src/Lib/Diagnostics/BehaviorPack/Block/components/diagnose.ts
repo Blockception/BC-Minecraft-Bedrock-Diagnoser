@@ -1,5 +1,5 @@
 import { ComponentBehavior } from "bc-minecraft-bedrock-types/lib/minecraft/components";
-import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../../Types";
+import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../../Types";
 import { Context } from "../../../../utility/components";
 import { component_error, ComponentCheck, components_check } from "../../../../utility/components/checks";
 import { check_geo_and_rules } from "../../../ResourcePack/BlockCulling";
