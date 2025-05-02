@@ -75,7 +75,8 @@ export function behaviorpack_entity_check_event(
     );
   }
 
-  if (event.trigger && !eventIds?.includes(event.trigger)) diagnoser.add(
+  //@ts-ignore
+  if (event.trigger && !eventIds?.includes(typeof event.trigger == 'string' ? event.trigger : event.trigger.event)) diagnoser.add(
     `events/${event_id}/trigger`,
     `Event "${event.trigger}" being triggered not found`,
     DiagnosticSeverity.warning,
