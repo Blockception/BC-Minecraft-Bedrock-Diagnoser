@@ -75,6 +75,7 @@ export function behaviorpack_entity_check_event(
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   if (event.trigger && !eventIds?.includes(typeof event.trigger == 'string' ? event.trigger : event.trigger.event)) diagnoser.add(
     `events/${event_id}/trigger`,
