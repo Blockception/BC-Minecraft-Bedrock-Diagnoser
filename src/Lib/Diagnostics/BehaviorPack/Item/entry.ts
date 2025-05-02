@@ -40,19 +40,16 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   if (typeof group != 'string') return;
 
   try {
-    const version = FormatVersion.parse(context.source.format_version);
-    const greaterThan12150 = version[0] > 1 || (version[0] === 1 && version[1] > 21) || (version[0] === 1 && version[1] === 21 && version[2] > 50)
-    if (greaterThan12150 && group.startsWith('itemGroup')) diagnoser.add(group,
+    const greaterThan = FormatVersion.isGreaterThan(FormatVersion.parse(context.source.format_version), [1, 21, 50])
+    if (greaterThan && group.startsWith('itemGroup')) diagnoser.add(group,
       `Item groups must be namespaced in versions > 1.21.50`,
       DiagnosticSeverity.error,
-      'behaviorpack.item.namespace_group')
-    if (!greaterThan12150 && group.includes(':')) diagnoser.add(group,
+      'behaviorpack.block.namespace_group')
+    if (!greaterThan && group.includes(':')) diagnoser.add(group,
         `Item groups cannot be namespaced in versions <= 1.21.50`,
-        DiagnosticSeverity.error,
-        'behaviorpack.item.namespace_group')
+        DiagnosticSeverity.warning,
+        'behaviorpack.block.namespace_group')
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (err) {
-    // Leaving this empty as the base diagnoser should already flag an invalid format version
-  }
+  } catch (err) {}
 
 }

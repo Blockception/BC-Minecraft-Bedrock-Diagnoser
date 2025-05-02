@@ -112,15 +112,12 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Item>>
   },
   "minecraft:custom_components": (name, component, context, diagnoser) => {
     try {
-      const version = FormatVersion.parse(context.source.format_version);
-      if (version[0] < 1 || version[1] < 21 || (version[2] < 10 && version[1] <= 21)) diagnoser.add(context.source.format_version,
+      if (FormatVersion.isLessThan(FormatVersion.parse(context.source.format_version), [1,21,10])) diagnoser.add(context.source.format_version,
         `To use custom components, a minimum format version of 1.21.10 is required`,
         DiagnosticSeverity.error,
         'behaviorpack.item.components.custom_components_min_version')
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err) {
-      // Leaving this empty as the base diagnoser should already flag an invalid format version
-    }
+    } catch (err) {}
   },
   "minecraft:durability_sensor": (name, component, context, diagnoser) => {
     if (!component.particle_type || !(typeof component.particle_type == 'string')) return;

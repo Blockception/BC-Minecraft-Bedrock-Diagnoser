@@ -416,16 +416,13 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   "minecraft:entity_sensor": (name, component, context, diagnoser) => {
     if (component.subsensors === undefined) return;
     try {
-      const version = FormatVersion.parse(context.source.format_version);
-      if (version[0] < 1 || (version[0] === 1 && version[1] < 21) || (version[0] === 1 && version[1] === 21 && version[2] < 0)) diagnoser.add(name,
+      if (FormatVersion.isLessThan(FormatVersion.parse(context.source.format_version), [1,21,0])) diagnoser.add(name,
         `To use "minecraft:entity_sensor/subsensors", you need a "format_version" of 1.21.0 or higher`,
         DiagnosticSeverity.error,
         'behaviorpack.entity.component.entity_sensor')
       minecraft_diagnose_filters(component.subsensors.event_filters, diagnoser)
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err) {
-      // Leaving this empty as the base diagnoser should already flag an invalid format version
-    }
+    } catch (err) {}
   },
   "minecraft:environment_sensor": (name, component, context, diagnoser) => {
     processEntries(component.triggers, entry => {
@@ -662,15 +659,12 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   },
   "minecraft:fall_damage": (name, component, context, diagnoser) => {
     try {
-      const version = FormatVersion.parse(context.source.format_version);
-      if (version[0] > 1 || (version[0] === 1 && version[1] > 10) || (version[0] === 1 && version[1] === 10 && version[2] > 0)) diagnoser.add(name,
+      if (FormatVersion.isGreaterThan(FormatVersion.parse(context.source.format_version), [1, 10, 0])) diagnoser.add(name,
         `To use "minecraft:fall_damage", you need a "format_version" of 1.10.0 or lesser`,
         DiagnosticSeverity.error,
         'behaviorpack.entity.component.fall_damage')
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err) {
-      // Leaving this empty as the base diagnoser should already flag an invalid format version
-    }
+    } catch (err) {}
   }
 };
 
