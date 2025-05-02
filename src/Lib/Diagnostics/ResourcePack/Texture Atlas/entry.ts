@@ -65,8 +65,10 @@ export function texture_files_diagnose(
   files: string[],
   diagnoser: DiagnosticsBuilder
 ): void {
+  console.log('<<<<]', file)
   files = files.map(location => location.slice(0,-path.extname(location).length))
-  file = file.slice(0,-path.extname(file).length)
+  if (file.includes('.')) file = file.slice(0,-path.extname(file).length)
+  console.log('[', file)
   for (let I = 0; I < files.length; I++) {
     if (files[I].endsWith(file)) {
       //Found then return
