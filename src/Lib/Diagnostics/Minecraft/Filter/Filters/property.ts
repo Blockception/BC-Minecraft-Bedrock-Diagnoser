@@ -3,7 +3,7 @@ import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../../Types";
 import { diagnose_entity_property_usage } from "../../../BehaviorPack/Entity/properties";
 
 export function diagnose_filter_property(filter: Minecraft.Filter.Filter, diagnoser: DiagnosticsBuilder) {
-  const { domain, value } = filter;
+  const { domain, value, test } = filter;
 
   if (!domain) return;
 
@@ -15,6 +15,7 @@ export function diagnose_filter_property(filter: Minecraft.Filter.Filter, diagno
     if (entity.properties) {
       const property = entity.properties.find((property) => property.name === domain);
       if (property) {
+        if (test.replace('_property', '') != property.type) diagnoser.add('filters/'+ property.name, `Property type ${property.type} does not match filter ${filter.test}`, DiagnosticSeverity.warning, "behaviorpack.entity.property.filter_mismatch");
         diagnose_entity_property_usage([property], domain, value as string | number | boolean, "filter", diagnoser);
         diagnosed = true;
       }
