@@ -125,15 +125,12 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Item>>
   },
   "minecraft:rarity": (name, component, context, diagnoser) => {
     try {
-      const version = FormatVersion.parse(context.source.format_version);
-      if (version[0] < 1 || version[1] < 21 || (version[2] < 30 && version[1] <= 21)) diagnoser.add(context.source.format_version,
+      if (FormatVersion.isLessThan(FormatVersion.parse(context.source.format_version), [1,21,30])) diagnoser.add(context.source.format_version,
         `To use "minecraft:rarity", a minimum format version of 1.21.30 is required`,
         DiagnosticSeverity.warning,
         'behaviorpack.item.components.rarity')
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err) {
-      // Leaving this empty as the base diagnoser should already flag an invalid format version
-    }
+    } catch (err) {}
   },
 };
 
