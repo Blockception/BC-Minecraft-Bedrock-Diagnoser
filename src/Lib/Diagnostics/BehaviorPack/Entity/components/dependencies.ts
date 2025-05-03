@@ -29,7 +29,9 @@ const component_dependents_all: DependedMap = {
   "minecraft:behavior.ranged_attack": ["minecraft:shooter"],
   "minecraft:behavior.roar": ["minecraft:anger_level"],
   "minecraft:behavior.sniff": ['minecraft:suspect_tracking'],
-  "minecraft:behavior.swim_up_for_breath": ['minecraft:breathable']
+  "minecraft:behavior.swim_up_for_breath": ['minecraft:breathable'],
+  "minecraft:behavior.float_tempt": ["minecraft:navigation.float"],
+  "minecraft:annotation.break_door": [/^minecraft:navigation.*/gim]
 };
 
 //Map of components that are depended on one of the other specified components

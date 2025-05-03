@@ -14,6 +14,7 @@ import * as Script from "./Script/entry";
 import * as SpawnRule from "./Spawn Rule/entry";
 import * as Structure from "./Structure/entry";
 import * as Trading from "./Trading/entry";
+import * as Feature from "./Feature/entry";
 
 export namespace BehaviorPack {
   /**Processes and diagnoses the given textdocument
@@ -77,6 +78,10 @@ export namespace BehaviorPack {
 
       case FileType.trading:
         Trading.Diagnose(diagnoser);
+        break;
+
+      case FileType.feature:
+        Feature.Diagnose(diagnoser);
         break;
 
       default:

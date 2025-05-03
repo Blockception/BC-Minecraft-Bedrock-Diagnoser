@@ -15,9 +15,15 @@ export function animation_controller_diagnose_implementation(
   diagnoser: DiagnosticsBuilder
 ): void {
   if (has_animation_controller(controllerId, diagnoser)) {
-    const controller = diagnoser.context.getCache().behaviorPacks.animation_controllers.get(controllerId);
+    const data = diagnoser.context.getCache().behaviorPacks
+    const controller = data.animation_controllers.get(controllerId);
 
     if (!controller) return;
+
+    const entityEvents = data.entities.get(user.id)?.events
+    controller.events.forEach(id => {
+      if (!entityEvents?.includes(id)) diagnoser.add(`${user.id}/${controller.id}`, `Entity does not have event ${id}`, DiagnosticSeverity.warning, "behaviorpack.entity.event.missing")
+    })
 
     general_animation_controllers_implementation(controller, user, ownerType, diagnoser);
   }

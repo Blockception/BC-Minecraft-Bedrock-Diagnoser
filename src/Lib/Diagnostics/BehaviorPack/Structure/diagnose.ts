@@ -2,8 +2,8 @@ import { Types } from "bc-minecraft-bedrock-types";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../Types";
 import { check_definition_value } from "../../Definitions";
 
-export function behaviorpack_structure_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  const id = value.text;
+export function behaviorpack_structure_diagnose(value: Types.OffsetWord | string, diagnoser: DiagnosticsBuilder): boolean {
+  const id = typeof value == 'string' ? value : value.text;
 
   //If it has a slash it needs ""
   if (id.includes("/")) {

@@ -7,6 +7,7 @@ import { resourcepack_has_model } from "../../../ResourcePack/Model/diagnose";
 import { behaviorpack_loot_table_diagnose } from "../../Loot Table";
 import { behaviorpack_check_blockid } from "../diagnose";
 import { Internal } from "bc-minecraft-bedrock-project";
+import { FormatVersion } from 'bc-minecraft-bedrock-types/lib/minecraft';
 
 /**
  *
@@ -75,6 +76,20 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
     }
   },
   "minecraft:geometry": (name, component, context, diagnoser) => {
+
+    try {
+      const formatVersion = FormatVersion.parse(context.source.format_version);
+      if (!context.components.includes('minecraft:material_instances') && (FormatVersion.isGreaterThan(formatVersion, [1, 21, 80]) || FormatVersion.isEqual(formatVersion, [1, 21, 80]))) diagnoser.add(
+        name,
+        `"minecraft:geometry" requires "minecraft:material_instances" in format versions >= 1.21.80`,
+        DiagnosticSeverity.error,
+        "behaviorpack.block.components.material_instances_x_geometry"
+      )
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err) {
+      // Leaving empty as the base diagnoser should flag an invalid format version
+    }
+
     if (typeof component === "string") {
       resourcepack_has_model(component, diagnoser);
     } else if (typeof component === "object") {
@@ -88,6 +103,20 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
     if (typeof component === "string") behaviorpack_loot_table_diagnose(component, diagnoser);
   },
   "minecraft:material_instances": (name, component, context, diagnoser) => {
+
+    try {
+      const formatVersion = FormatVersion.parse(context.source.format_version);
+      if (!context.components.includes('minecraft:geometry') && (FormatVersion.isGreaterThan(formatVersion, [1, 21, 80]) || FormatVersion.isEqual(formatVersion, [1, 21, 80]))) diagnoser.add(
+        name,
+        `"minecraft:material_instances" requires "minecraft:geometry" in format versions >= 1.21.80`,
+        DiagnosticSeverity.error,
+        "behaviorpack.block.components.material_instances_x_geometry"
+      )
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err) {
+      // Leaving empty as the base diagnoser should flag an invalid format version
+    }
+
     Object.keys(component).forEach((value) => {
       const textureId = component[value].texture;
       if (!diagnoser.context.getCache().resourcePacks.terrainTextures.find((val) => val.id == textureId))
@@ -99,7 +128,35 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
         );
     });
   },
+  "minecraft:item_visual": (name, component, context, diagnoser) => {
+    minimumVersionRequired(context.source, name, [1, 21, 50], diagnoser)
+  },
+  "minecraft:liquid_detection": (name, component, context, diagnoser) => {
+    minimumVersionRequired(context.source, name, [1, 21, 50], diagnoser)
+  },
+  "minecraft:redstone_conductivity": (name, component, context, diagnoser) => {
+    minimumVersionRequired(context.source, name, [1, 21, 30], diagnoser)
+  },
+  "minecraft:replaceable": (name, component, context, diagnoser) => {
+    minimumVersionRequired(context.source, name, [1, 21, 60], diagnoser)
+  },
 };
+
+function minimumVersionRequired(block: Internal.BehaviorPack.Block, name: string, version: [number, number, number], diagnoser: DocumentDiagnosticsBuilder) {
+  try {
+    if (FormatVersion.isLessThan(FormatVersion.parse(block.format_version), version)) {
+      diagnoser.add(
+        name,
+        `${name} requires a format version of ${version.join('.')} or greater to use.`,
+        DiagnosticSeverity.error,
+        "behaviorpack.block.components." + name.split(':')[1]
+      )
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (err) {
+    // Leaving empty as the base diagnoser should flag an invalid format version
+  }
+}
 
 function deprecated_component(replacement?: string) {
   const str = replacement ? ", replace with " + replacement : "";

@@ -124,7 +124,7 @@ function diagnose_entity_enum_property_definition(
 
   // default needs to be in the list
   if (def !== undefined) {
-    if (property.values?.indexOf(def) === -1 && !(def.includes('q.') || def.includes('query.'))) {
+    if (property.values?.indexOf(def) === -1 && !(def.includes('q.') || def.includes('query.') || def.includes('math.') || def.includes('v.') || def.includes('variable.') || def.includes('c.') || def.includes('context.'))) {
       diagnoser.add(
         `properties/${name}/${def}`,
         `Default value is not in the list of values: ${def}`,

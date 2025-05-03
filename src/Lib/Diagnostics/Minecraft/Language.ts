@@ -1,7 +1,8 @@
+import { PackType } from 'bc-minecraft-bedrock-project';
 import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../Types";
 import { Types } from "bc-minecraft-bedrock-types";
 
-export function minecraft_language_diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+export function minecraft_language_diagnose(diagnoser: DocumentDiagnosticsBuilder, packType: PackType): void {
   const keys = new Map<string, number>();
   let lastOffset = 0;
   const text = diagnoser.document.getText();
@@ -11,7 +12,7 @@ export function minecraft_language_diagnose(diagnoser: DocumentDiagnosticsBuilde
     const line = lines[I].trim();
     const offset = text.indexOf(line, lastOffset);
 
-    minecraft_language_line_diagnose(Types.OffsetWord.create(line, offset), keys, diagnoser);
+    minecraft_language_line_diagnose(Types.OffsetWord.create(line, offset), keys, diagnoser, packType);
 
     lastOffset = offset + 1;
   }
@@ -28,7 +29,8 @@ export function minecraft_language_diagnose(diagnoser: DocumentDiagnosticsBuilde
 export function minecraft_language_line_diagnose(
   line: Types.OffsetWord,
   keys: Map<string, number>,
-  diagnoser: DiagnosticsBuilder
+  diagnoser: DiagnosticsBuilder,
+  packType: PackType
 ): void {
   //Find comment on line
   let text = line.text;
@@ -94,6 +96,12 @@ export function minecraft_language_line_diagnose(
       diagnoser.add(existingKey, "Duplicate key found", DiagnosticSeverity.error, "minecraft.language.duplicate");
     } else {
       keys.set(key, line.offset);
+      if (packType == PackType.behavior_pack && key != 'pack.name' && key != 'pack.description') diagnoser.add(
+        key,
+        `"key" does not function in the BP and is therefore unnecessary.`,
+        DiagnosticSeverity.info,
+        "minecraft.language.unnecessary"
+      );
     }
 
     const value = text.substring(assignIndex + 1);

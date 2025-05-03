@@ -8,7 +8,7 @@ import { check_trade_table } from "./trade";
 import { Internal } from 'bc-minecraft-bedrock-project';
 import { FormatVersion } from 'bc-minecraft-bedrock-types/lib/minecraft';
 import { diagnose_resourcepack_sound } from '../../../ResourcePack/Sounds';
-import { behaviorpack_entityid_diagnose } from '../diagnose';
+import { behaviorpack_entity_event_diagnose, behaviorpack_entityid_diagnose } from '../diagnose';
 import { minecraft_diagnose_filters } from '../../../Minecraft/Filter';
 import { behaviorpack_check_blockid } from '../../Block';
 import { behaviorpack_item_diagnose } from '../../Item';
@@ -35,17 +35,17 @@ export function behaviorpack_diagnose_entity_components(
 
 const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity>> = {
   "minecraft:behavior.admire_item": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_admire_item_start?.filters, diagnoser)
-    minecraft_diagnose_filters(component.on_admire_item_stop?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_admire_item_start, context.source['minecraft:entity'].description.identifier, diagnoser)
+    diagnose_event_trigger(name, component.on_admire_item_stop, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.avoid_block": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_escape?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_escape, context.source['minecraft:entity'].description.identifier, diagnoser)
     component.target_blocks?.forEach((block: string) => {
       behaviorpack_check_blockid(block, diagnoser);
     });
   },
   "minecraft:behavior.avoid_mob_type": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_escape_event?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_escape_event, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.beg": (name, component, context, diagnoser) => {
     component.items?.forEach((item: string) => {
@@ -53,10 +53,10 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     });
   },
   "minecraft:behavior.celebrate": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_celebration_end_event?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_celebration_end_event, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.celebrate_survive": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_celebration_end_event?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_celebration_end_event, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.charge_held_item": (name, component, context, diagnoser) => {
     component.items?.forEach((item: string) => {
@@ -67,13 +67,13 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     minecraft_diagnose_filters(component.filters, diagnoser)
   },
   "minecraft:behavior.defend_trusted_target": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_defend_start?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_defend_start, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.delayed_attack": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_attack?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_attack, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.dig": (name, component, context, diagnoser) => { //TODO: Check if requires warden runtime
-    minecraft_diagnose_filters(component.on_start?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_start, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.dragonchargeplayer": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, 'minecraft:ender_dragon')
@@ -109,20 +109,20 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   },
   "minecraft:behavior.drop_item_for": (name, component, context, diagnoser) => {
     if (typeof component.loot_table === 'string') behaviorpack_loot_table_diagnose(component.loot_table, diagnoser)
-    minecraft_diagnose_filters(component.on_drop_attempt?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_drop_attempt, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.eat_block": (name, component, context, diagnoser) => {
     component.eat_and_replace_block_pairs?.forEach((obj: any) => {
       if (obj.eat_block) behaviorpack_check_blockid(obj.eat_block, diagnoser);
       if (obj.replace_block) behaviorpack_check_blockid(obj.replace_block, diagnoser);
     });
-    minecraft_diagnose_filters(component.on_eat?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_eat, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.eat_mob": (name, component, context, diagnoser) => {
     if (typeof component.loot_table === 'string') behaviorpack_loot_table_diagnose(component.loot_table, diagnoser)
   },
   "minecraft:behavior.emerge": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_done?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_done, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.enderman_leave_block": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, 'minecraft:enderman')
@@ -135,14 +135,14 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     if (typeof component.projectile_def === 'string') behaviorpack_entityid_diagnose(component.projectile_def, diagnoser)
   },
   "minecraft:behavior.go_and_give_items_to_noteblock": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_item_throw?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_item_throw, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.go_and_give_items_to_owner": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_item_throw?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_item_throw, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.go_home": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_failed?.filters, diagnoser)
-    minecraft_diagnose_filters(component.on_home?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_failed, context.source['minecraft:entity'].description.identifier, diagnoser)
+    diagnose_event_trigger(name, component.on_home, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.guardian_attack": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, ['minecraft:elder_guardian', 'minecraft:guardian'])
@@ -161,11 +161,11 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   "minecraft:behavior.knockback_roar": (name, component, context, diagnoser) => {
     minecraft_diagnose_filters(component.damage_filters, diagnoser)
     minecraft_diagnose_filters(component.knockback_filters, diagnoser)
-    minecraft_diagnose_filters(component.on_roar_end?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_roar_end, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.lay_egg": (name, component, context, diagnoser) => {
     if (typeof component.egg_type == 'string') behaviorpack_check_blockid(component.egg_type, diagnoser);
-    minecraft_diagnose_filters(component.on_lay?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_lay, context.source['minecraft:entity'].description.identifier, diagnoser)
     component.target_blocks?.forEach((block: string) => {
       if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
     });
@@ -177,12 +177,12 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     canOnlyBeUsedBySpecificMob(context.source, ['minecraft:villager', 'minecraft:villager_v2'])
   },
   "minecraft:behavior.melee_attack": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_attack?.filters, diagnoser)
-    minecraft_diagnose_filters(component.on_kill?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_attack, context.source['minecraft:entity'].description.identifier, diagnoser)
+    diagnose_event_trigger(name, component.on_kill, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.melee_box_attack": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_attack?.filters, diagnoser)
-    minecraft_diagnose_filters(component.on_kill?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_attack, context.source['minecraft:entity'].description.identifier, diagnoser)
+    diagnose_event_trigger(name, component.on_kill, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.mingle": (name, component, context, diagnoser) => {
     if (typeof component.mingle_partner_type == 'string') behaviorpack_entityid_diagnose(component.mingle_partner_type, diagnoser)
@@ -194,8 +194,8 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     minecraft_diagnose_filters(component.filters, diagnoser)
   },
   "minecraft:behavior.move_to_block": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_reach?.filters, diagnoser)
-    minecraft_diagnose_filters(component.on_stay_completed?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_reach, context.source['minecraft:entity'].description.identifier, diagnoser)
+    diagnose_event_trigger(name, component.on_stay_completed, context.source['minecraft:entity'].description.identifier, diagnoser)
     component.target_blocks?.forEach((block: string) => {
       if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
     });
@@ -217,15 +217,15 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     });
   },
   "minecraft:behavior.ram_attack": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_start?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_start, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.random_search_and_dig": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_digging_start?.filters, diagnoser)
-    minecraft_diagnose_filters(component.on_fail_during_digging?.filters, diagnoser)
-    minecraft_diagnose_filters(component.on_fail_during_searching?.filters, diagnoser)
-    minecraft_diagnose_filters(component.on_item_found?.filters, diagnoser)
-    minecraft_diagnose_filters(component.on_searching_start?.filters, diagnoser)
-    minecraft_diagnose_filters(component.on_success?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_digging_start, context.source['minecraft:entity'].description.identifier, diagnoser)
+    diagnose_event_trigger(name, component.on_fail_during_digging, context.source['minecraft:entity'].description.identifier, diagnoser)
+    diagnose_event_trigger(name, component.on_fail_during_searching, context.source['minecraft:entity'].description.identifier, diagnoser)
+    diagnose_event_trigger(name, component.on_item_found, context.source['minecraft:entity'].description.identifier, diagnoser)
+    diagnose_event_trigger(name, component.on_searching_start, context.source['minecraft:entity'].description.identifier, diagnoser)
+    diagnose_event_trigger(name, component.on_success, context.source['minecraft:entity'].description.identifier, diagnoser)
     if (typeof component.item_table === 'string') behaviorpack_loot_table_diagnose(component.item_table, diagnoser)
     component.target_blocks?.forEach((block: string) => {
       if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
@@ -270,7 +270,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     canOnlyBeUsedBySpecificMob(context.source, ['minecraft:squid', 'minecraft:glow_squid'])
   },
   "minecraft:behavior.stomp_attack": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_attack?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_attack, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.summon_entity": () => {
     //TODO: Complete
@@ -294,25 +294,25 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     });
   },
   "minecraft:behavior.timer_flag_1": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_start?.filters, diagnoser)
-    minecraft_diagnose_filters(component.on_end?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_start, context.source['minecraft:entity'].description.identifier, diagnoser)
+    diagnose_event_trigger(name, component.on_end, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.timer_flag_2": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_start?.filters, diagnoser)
-    minecraft_diagnose_filters(component.on_end?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_start, context.source['minecraft:entity'].description.identifier, diagnoser)
+    diagnose_event_trigger(name, component.on_end, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.timer_flag_3": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_start?.filters, diagnoser)
-    minecraft_diagnose_filters(component.on_end?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_start, context.source['minecraft:entity'].description.identifier, diagnoser)
+    diagnose_event_trigger(name, component.on_end, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.wither_random_attack_pos_goal": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, 'minecraft:wither')
   },
   "minecraft:behavior.work": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_arrival?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_arrival, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.work_composter": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_arrival?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_arrival, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:addrider": (name, component, context, diagnoser) => {
     if (typeof component.entity_type === 'string') behaviorpack_entityid_diagnose(component.entity_type, diagnoser)
@@ -321,13 +321,13 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     component.drop_items?.forEach((item: string) => {
       behaviorpack_item_diagnose(minecraft_get_item(item, diagnoser.document), diagnoser);
     });
-    
+
     if (Array.isArray(component.feed_items)) component.feed_items?.forEach((item: string | any) => {
       if (typeof item == 'string') behaviorpack_item_diagnose(minecraft_get_item(item, diagnoser.document), diagnoser);
       else if (typeof item.feed_items == 'string') behaviorpack_item_diagnose(minecraft_get_item(item.item, diagnoser.document), diagnoser);
     });
     else if (typeof component.feed_items == 'string') behaviorpack_item_diagnose(minecraft_get_item(component.feed_items, diagnoser.document), diagnoser);
-    minecraft_diagnose_filters(component.grow_up?.filters, diagnoser)
+    diagnose_event_trigger(name, component.grow_up, context.source['minecraft:entity'].description.identifier, diagnoser)
     minecraft_diagnose_filters(component.interact_filters, diagnoser)
     if (typeof component.transform_to_item === 'string') behaviorpack_item_diagnose(minecraft_get_item(component.transform_to_item, diagnoser.document), diagnoser);
   },
@@ -339,6 +339,12 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   },
   "minecraft:area_attack": (name, component, context, diagnoser) => {
     minecraft_diagnose_filters(component.entity_filter, diagnoser)
+  },
+  "minecraft:annotation.break_door": (name, component, context, diagnoser) => {
+    const navigatorId = context.components.find(id => id.startsWith('minecraft:navigation.'))
+    if (!navigatorId) return;
+    const navigationComponent = findValue(context.source['minecraft:entity'], navigatorId)
+    if (navigationComponent.can_break_doors !== true) diagnoser.add(name, "Requires the entity's navigation component to have the parameter 'can_break_doors' set to 'true'.", DiagnosticSeverity.warning, "behaviorpack.entity.component.annotation_break_door");
   },
   "minecraft:barter": (name, component, context, diagnoser) => {
     if (typeof component.barter_table == 'string') behaviorpack_loot_table_diagnose(component.barter_table, diagnoser)
@@ -408,23 +414,22 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     minecraft_diagnose_filters(component.filters, diagnoser)
   },
   "minecraft:drying_out_timer": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.dried_out_event?.filters, diagnoser)
-    minecraft_diagnose_filters(component.recover_after_dried_out_event?.filters, diagnoser)
-    minecraft_diagnose_filters(component.stopped_drying_out_event?.filters, diagnoser)
+    diagnose_event_trigger(name, component.dried_out_event, context.source['minecraft:entity'].description.identifier, diagnoser)
+    diagnose_event_trigger(name, component.recover_after_dried_out_event, context.source['minecraft:entity'].description.identifier, diagnoser)
+    diagnose_event_trigger(name, component.stopped_drying_out_event, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:economy_trade_table": check_trade_table,
   "minecraft:entity_sensor": (name, component, context, diagnoser) => {
     if (component.subsensors === undefined) return;
     try {
-      const version = FormatVersion.parse(context.source.format_version);
-      if (version[0] < 1 || (version[0] === 1 && version[1] < 21) || (version[0] === 1 && version[1] === 21 && version[2] < 0)) diagnoser.add(name,
+      if (FormatVersion.isLessThan(FormatVersion.parse(context.source.format_version), [1, 21, 0])) diagnoser.add(name,
         `To use "minecraft:entity_sensor/subsensors", you need a "format_version" of 1.21.0 or higher`,
         DiagnosticSeverity.error,
         'behaviorpack.entity.component.entity_sensor')
       minecraft_diagnose_filters(component.subsensors.event_filters, diagnoser)
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err) {
-      // Leaving this empty as the base diagnoser should already flag an invalid format version
+    } catch (err) { 
+      // Leaving empty as the base diagnoser should flag an invalid format version
     }
   },
   "minecraft:environment_sensor": (name, component, context, diagnoser) => {
@@ -450,7 +455,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     component.items?.forEach((item: string) => {
       behaviorpack_item_diagnose(minecraft_get_item(item, diagnoser.document), diagnoser);
     });
-    minecraft_diagnose_filters(component.on_give?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_give, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:healable": (name, component, context, diagnoser) => {
     minecraft_diagnose_filters(component.filters, diagnoser)
@@ -472,7 +477,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   },
   "minecraft:interact": (name, component, context, diagnoser) => {
     component.interactions.forEach((entry: any) => {
-      minecraft_diagnose_filters(component.on_interact?.filters, diagnoser)
+      diagnose_event_trigger(name, component.on_interact, context.source['minecraft:entity'].description.identifier, diagnoser)
       if (typeof entry.add_items?.table == 'string') behaviorpack_loot_table_diagnose(entry.add_items.table, diagnoser)
       if (typeof entry.spawn_items?.table == 'string') behaviorpack_loot_table_diagnose(entry.spawn_items.table, diagnoser)
       if (typeof entry.spawn_entities == 'string') behaviorpack_entityid_diagnose(entry.spawn_entities, diagnoser)
@@ -483,27 +488,27 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     });
   },
   "minecraft:leashable": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_leash?.filters, diagnoser)
-    minecraft_diagnose_filters(component.on_unleash?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_leash, context.source['minecraft:entity'].description.identifier, diagnoser)
+    diagnose_event_trigger(name, component.on_unleash, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:looked_at": (name, component, context, diagnoser) => {
     minecraft_diagnose_filters(component.filters, diagnoser)
-    minecraft_diagnose_filters(component.looked_at_event?.filters, diagnoser)
-    minecraft_diagnose_filters(component.not_looked_at_event?.filters, diagnoser)
+    diagnose_event_trigger(name, component.looked_at_event, context.source['minecraft:entity'].description.identifier, diagnoser)
+    diagnose_event_trigger(name, component.not_looked_at_event, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:mob_effect": (name, component, context, diagnoser) => {
     minecraft_diagnose_filters(component.entity_filter, diagnoser)
   },
   "minecraft:nameable": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.default_trigger?.filters, diagnoser)
+    diagnose_event_trigger(name, component.default_trigger, context.source['minecraft:entity'].description.identifier, diagnoser)
     component.name_actions?.forEach((entry: any) => {
       minecraft_diagnose_filters(entry.on_named?.filters, diagnoser)
     });
   },
   "minecraft:peek": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_close?.filters, diagnoser)
-    minecraft_diagnose_filters(component.on_open?.filters, diagnoser)
-    minecraft_diagnose_filters(component.on_target_open?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_close, context.source['minecraft:entity'].description.identifier, diagnoser)
+    diagnose_event_trigger(name, component.on_open, context.source['minecraft:entity'].description.identifier, diagnoser)
+    diagnose_event_trigger(name, component.on_target_open, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:preferred_path": (name, component, context, diagnoser) => {
     component.preferred_path_blocks?.forEach((entry: any) => {
@@ -515,10 +520,10 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   "minecraft:projectile": (name, component, context, diagnoser) => {
     minecraft_diagnose_filters(component.on_hit?.definition_event?.event_trigger?.filters, diagnoser)
     if (typeof component.on_hit?.spawn_chance?.spawn_definition == 'string') behaviorpack_entityid_diagnose(component.on_hit.spawn_chance.spawn_definition, diagnoser)
-   },
+  },
   "minecraft:rail_sensor": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_activate?.filters, diagnoser)
-    minecraft_diagnose_filters(component.on_deactivate?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_activate, context.source['minecraft:entity'].description.identifier, diagnoser)
+    diagnose_event_trigger(name, component.on_deactivate, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:ravager_blocked": (name, component, context, diagnoser) => {
     component.reaction_choices?.forEach((entry: any) => {
@@ -550,8 +555,8 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     });
   },
   "minecraft:sittable": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.sit_event?.filters, diagnoser)
-    minecraft_diagnose_filters(component.stand_event?.filters, diagnoser)
+    diagnose_event_trigger(name, component.sit_event, context.source['minecraft:entity'].description.identifier, diagnoser)
+    diagnose_event_trigger(name, component.stand_event, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:spawn_entity": (name, component, context, diagnoser) => {
     processEntries(component.entities, (entry) => {
@@ -571,7 +576,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     component.tame_items?.forEach((item: string) => {
       behaviorpack_item_diagnose(minecraft_get_item(item, diagnoser.document), diagnoser);
     });
-    minecraft_diagnose_filters(component.tame_event?.filters, diagnoser)
+    diagnose_event_trigger(name, component.tame_event, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:tamemount": (name, component, context, diagnoser) => {
     component.auto_reject_items?.forEach((entry: any) => {
@@ -580,15 +585,15 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     component.feed_items?.forEach((entry: any) => {
       behaviorpack_item_diagnose(minecraft_get_item(entry.item, diagnoser.document), diagnoser);
     });
-    minecraft_diagnose_filters(component.tame_event?.filters, diagnoser)
+    diagnose_event_trigger(name, component.tame_event, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:target_nearby_sensor": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_inside_range?.filters, diagnoser)
-    minecraft_diagnose_filters(component.on_outside_range?.filters, diagnoser)
-    minecraft_diagnose_filters(component.on_vision_lost_inside_range?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_inside_range, context.source['minecraft:entity'].description.identifier, diagnoser)
+    diagnose_event_trigger(name, component.on_outside_range, context.source['minecraft:entity'].description.identifier, diagnoser)
+    diagnose_event_trigger(name, component.on_vision_lost_inside_range, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:timer": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.time_down_event?.filters, diagnoser)
+    diagnose_event_trigger(name, component.time_down_event, context.source['minecraft:entity'].description.identifier, diagnoser)
     if (component.time && component.random_time_choices) diagnoser.add(name,
       `"time" & "random_time_choices" are incompatible with each other`,
       DiagnosticSeverity.error,
@@ -609,7 +614,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     component.trust_items?.forEach((item: string) => {
       behaviorpack_item_diagnose(minecraft_get_item(item, diagnoser.document), diagnoser);
     });
-    minecraft_diagnose_filters(component.trust_event?.filters, diagnoser)
+    diagnose_event_trigger(name, component.trust_event, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:equipment": check_loot_table,
   "minecraft:ignore_cannot_be_attacked": (name, component, context, diagnoser) => {
@@ -662,14 +667,13 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   },
   "minecraft:fall_damage": (name, component, context, diagnoser) => {
     try {
-      const version = FormatVersion.parse(context.source.format_version);
-      if (version[0] > 1 || (version[0] === 1 && version[1] > 10) || (version[0] === 1 && version[1] === 10 && version[2] > 0)) diagnoser.add(name,
+      if (FormatVersion.isGreaterThan(FormatVersion.parse(context.source.format_version), [1, 10, 0])) diagnoser.add(name,
         `To use "minecraft:fall_damage", you need a "format_version" of 1.10.0 or lesser`,
         DiagnosticSeverity.error,
         'behaviorpack.entity.component.fall_damage')
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
-      // Leaving this empty as the base diagnoser should already flag an invalid format version
+      // Leaving empty as the base diagnoser should flag an invalid format version
     }
   }
 };
@@ -683,7 +687,24 @@ function canOnlyBeUsedBySpecificMob(source: any, id: string | string[]) {
   );
 }
 
+function diagnose_event_trigger(componentName: string, component: any, entityId: string, diagnoser: DocumentDiagnosticsBuilder) {
+  if (!component) return;
+  minecraft_diagnose_filters(component.filters, diagnoser)
+  if (typeof component.event == 'string') behaviorpack_entity_event_diagnose(component.event, componentName + '/' + component.event, diagnoser.context.getCache().behaviorPacks.entities.get(entityId)?.events, diagnoser)
+}
+
 function processEntries<T>(data: T | T[], callback: (entry: T) => void) {
   if (Array.isArray(data)) data.forEach(callback);
   else if (data) callback(data);
+}
+
+function findValue(obj: any, targetKey: string): any {
+  for (const key in obj) {
+      if (key === targetKey) return obj[key];
+      if (typeof obj[key] === 'object' && obj[key] !== null) {
+          const result = findValue(obj[key], targetKey);
+          if (result !== undefined) return result;
+      }
+  }
+  return undefined;
 }
