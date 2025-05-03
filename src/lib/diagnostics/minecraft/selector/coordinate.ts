@@ -1,6 +1,6 @@
 import { Types } from "bc-minecraft-bedrock-types";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../types";
-import { minecraft_coordinate_diagnose } from "../Coordinate";
+import { minecraft_coordinate_diagnose } from "../coordinate";
 
 /**
  *

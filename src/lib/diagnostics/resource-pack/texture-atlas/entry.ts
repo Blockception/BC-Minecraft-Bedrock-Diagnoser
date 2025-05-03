@@ -2,7 +2,7 @@ import { SMap } from "bc-minecraft-bedrock-project";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from '../../../types';
 import { education_enabled } from "../../definitions";
-import { Json } from "../../json/Json";
+import { Json } from "../../json/json";
 import path from 'path';
 
 /**Diagnoses the given document as a texture atlas

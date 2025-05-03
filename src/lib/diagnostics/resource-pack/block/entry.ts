@@ -1,6 +1,6 @@
 import { ResourcePackCollection } from "bc-minecraft-bedrock-project/lib/src/project/resource-pack";
 import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from '../../../types';
-import { Json } from "../../json/Json";
+import { Json } from "../../json/json";
 import { behaviorpack_check_blockid } from '../../behavior-pack/block';
 
 /**Diagnoses the given document as a block.json

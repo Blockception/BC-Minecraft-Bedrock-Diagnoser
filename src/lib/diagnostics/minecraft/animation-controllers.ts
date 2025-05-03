@@ -1,17 +1,17 @@
 import {
+  AnimationCarrier,
   BehaviorPack,
   Internal,
-  SMap,
-  ResourcePack,
   MolangCarrier,
-  AnimationCarrier,
+  ResourcePack,
+  SMap,
 } from "bc-minecraft-bedrock-project";
-import { Defined, Molang, MolangDataSetKey } from "bc-minecraft-molang";
-import { diagnose_molang_implementation } from "../molang/diagnostics";
 import { State } from "bc-minecraft-bedrock-project/lib/src/internal/behavior-pack";
 import { Types } from "bc-minecraft-bedrock-types";
-import { forEach } from "../../utility/using-defined";
+import { Defined, Molang, MolangDataSetKey } from "bc-minecraft-molang";
 import { DiagnosticsBuilder, DiagnosticSeverity } from '../../types';
+import { forEach } from "../../utility/using-defined";
+import { diagnose_molang_implementation } from "../molang/diagnostics";
 
 export type animation_controllers =
   | Internal.BehaviorPack.AnimationControllers

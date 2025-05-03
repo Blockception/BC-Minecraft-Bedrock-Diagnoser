@@ -1,7 +1,7 @@
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../types";
 import { Types } from "bc-minecraft-bedrock-types";
-import { general_integer_diagnose } from "./Integer";
-import { general_float_diagnose } from "./Float";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../types";
+import { general_float_diagnose } from "./float";
+import { general_integer_diagnose } from "./integer";
 
 /**
  * Diagnoses a range integer value

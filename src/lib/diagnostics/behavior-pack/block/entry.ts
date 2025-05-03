@@ -1,13 +1,13 @@
 import { Internal } from "bc-minecraft-bedrock-project";
+import { FormatVersion } from 'bc-minecraft-bedrock-types/lib/minecraft';
 import { getUsedComponents } from "bc-minecraft-bedrock-types/lib/minecraft/components";
 import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
 import { Context } from "../../../utility/components";
 import { Json } from "../../json";
 import { diagnose_molang } from "../../molang/diagnostics";
+import { no_other_duplicates } from "../../packs/duplicate-check";
 import { behaviorpack_block_components_dependencies } from "./components/dependencies";
 import { behaviorpack_diagnose_block_components } from "./components/diagnose";
-import { no_other_duplicates } from "../../packs/duplicate-check";
-import { FormatVersion } from 'bc-minecraft-bedrock-types/lib/minecraft';
 
 /**Diagnoses the given document as an bp block
  * @param doc The text document to diagnose

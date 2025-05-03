@@ -1,5 +1,5 @@
 import { DocumentDiagnosticsBuilder} from "../../../types";
-import { Json } from "../../json/Json";
+import { Json } from "../../json/json";
 import { behaviorpack_item_diagnose } from "../item/diagnose";
 import { behaviorpack_loot_table_diagnose } from "./diagnose";
 import { behaviorpack_loot_table_function_diagnose, LootFunction } from "./functions";

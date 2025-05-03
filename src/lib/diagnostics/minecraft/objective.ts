@@ -1,5 +1,5 @@
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../types";
 import { Types } from "bc-minecraft-bedrock-types";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../types";
 import { check_definition_value } from "../definitions";
 
 export function minecraft_objectives_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {

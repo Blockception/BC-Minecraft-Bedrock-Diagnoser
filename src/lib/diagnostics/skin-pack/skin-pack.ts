@@ -1,4 +1,4 @@
-import { DocumentDiagnosticsBuilder } from "../../types/DiagnosticsBuilder";
+import { DocumentDiagnosticsBuilder } from "../../types/diagnostics-builder";
 
 import * as Manifest from "./manifest/entry";
 

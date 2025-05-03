@@ -1,6 +1,5 @@
-import { Minecraft } from "bc-minecraft-bedrock-types";
+import { Minecraft, Types } from "bc-minecraft-bedrock-types";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../types";
-import { Types } from "bc-minecraft-bedrock-types";
 
 export function minecraft_xp_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
   if (Minecraft.XP.is(value.text)) return;

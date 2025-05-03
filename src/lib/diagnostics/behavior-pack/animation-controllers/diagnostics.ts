@@ -1,6 +1,6 @@
 import { MolangDataSetKey } from "bc-minecraft-molang";
 import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier, EventCarrier } from "../../../types";
-import { general_animation_controllers_implementation } from "../../minecraft/Animation Controllers";
+import { general_animation_controllers_implementation } from "../../minecraft/animation-controllers";
 
 /**
  *

@@ -6,17 +6,17 @@ import { getUsedComponents } from "bc-minecraft-bedrock-types/lib/minecraft/comp
 import { DefinedUsing, Molang } from "bc-minecraft-molang";
 import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
 import { Context } from "../../../utility/components";
-import { Json } from "../../json/Json";
+import { Json } from "../../json";
 import { AnimationUsage } from "../../minecraft";
-import { diagnose_script } from "../../minecraft/Script";
+import { diagnose_script } from "../../minecraft/script";
 import { diagnose_molang } from "../../molang/diagnostics";
+import { no_other_duplicates } from "../../packs/duplicate-check";
 import { animation_or_controller_diagnose_implementation } from "../anim-or-controller";
 import { behaviorpack_animation_used } from "../animation/usage";
 import { behaviorpack_entity_components_check } from "./components";
 import { behaviorpack_entity_components_dependencies } from "./components/dependencies";
 import { behaviorpack_entity_check_events } from "./events";
 import { diagnose_entity_properties_definition } from "./properties";
-import { no_other_duplicates } from "../../packs/duplicate-check";
 
 /**Diagnoses the given document as an bp entity
  * @param doc The text document to diagnose

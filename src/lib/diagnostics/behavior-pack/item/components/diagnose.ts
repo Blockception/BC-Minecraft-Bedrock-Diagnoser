@@ -1,14 +1,14 @@
 import { Internal } from "bc-minecraft-bedrock-project";
+import { FormatVersion } from 'bc-minecraft-bedrock-types/lib/minecraft';
 import { ComponentBehavior } from "bc-minecraft-bedrock-types/lib/minecraft/components";
 import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../../types";
 import { Context } from "../../../../utility/components";
 import { component_error, ComponentCheck, components_check } from "../../../../utility/components/checks";
-import { minecraft_get_item } from "../../../minecraft/Items";
+import { minecraft_get_item } from "../../../minecraft/items";
+import { resourcepack_particle_diagnose } from '../../../resource-pack/particle';
 import { behaviorpack_check_blockid } from "../../block";
 import { behaviorpack_entityid_diagnose } from "../../entity";
 import { behaviorpack_item_diagnose } from "../diagnose";
-import { FormatVersion } from 'bc-minecraft-bedrock-types/lib/minecraft';
-import { resourcepack_particle_diagnose } from '../../../resource-pack/particle';
 
 /**
  *

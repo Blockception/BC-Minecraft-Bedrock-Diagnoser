@@ -1,7 +1,7 @@
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../types";
-import { Types } from "bc-minecraft-bedrock-types";
-import { check_definition_value } from "../definitions";
 import { Text } from "bc-minecraft-bedrock-project";
+import { Types } from "bc-minecraft-bedrock-types";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../types";
+import { check_definition_value } from "../definitions";
 
 export function minecraft_tickingarea_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
   const data = diagnoser.context.getCache();

@@ -2,7 +2,7 @@ import { Internal, SMap } from "bc-minecraft-bedrock-project";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
 import { education_enabled } from "../../definitions";
-import { Json } from "../../json/Json";
+import { Json } from "../../json/json";
 
 /**Diagnoses the given document as a `sound_definitions` file
  * @param doc The text document to diagnose

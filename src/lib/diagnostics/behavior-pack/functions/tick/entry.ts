@@ -1,5 +1,5 @@
 import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from '../../../../types';
-import { Json } from "../../../json/Json";
+import { Json } from "../../../json/json";
 
 /**Diagnoses the given document as an tick.json
  * @param doc The text document to diagnose

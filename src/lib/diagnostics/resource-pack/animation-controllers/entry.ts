@@ -1,7 +1,7 @@
 import { Internal } from "bc-minecraft-bedrock-project";
 import { DocumentDiagnosticsBuilder} from "../../../types";
 import { general_animation_controllers } from "../../minecraft/Animation Controllers";
-import { Json } from "../../json/Json";
+import { Json } from "../../json/json";
 import { diagnose_molang } from "../../molang/diagnostics";
 
 /**Diagnoses the given document as an animation controller

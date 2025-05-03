@@ -1,6 +1,6 @@
 import { jsonc } from "jsonc";
 import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from '../../types';
-import { Handle_Json_Error } from "./Errors";
+import { Handle_Json_Error } from "./errors";
 
 export namespace Json {
   /**Loads the object and casts it to the specified type, if it fails then undefined is loaded and the error message is send to the diagnoser

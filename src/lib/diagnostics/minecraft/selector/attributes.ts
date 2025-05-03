@@ -13,10 +13,10 @@ import {
   selectorattribute_duplicate_check as duplicate_check,
   selectorattribute_one_positive_all_negatives as one_positive_all_negatives,
 } from "./general";
+import { minecraft_selector_has_property_diagnose } from './has_property';
 import { minecraft_selector_hasitem_diagnose } from "./hasitem";
 import { selector_scores_diagnose } from "./scores";
 import { all, diagnoseAttributes, forEach, must_offset_word } from "./util";
-import { minecraft_selector_has_property_diagnose } from './has_property';
 
 function float_diagnose(range?: { min: number; max: number }): diagnoseAttributes {
   return must_offset_word((value, diagnoser) => general_float_diagnose(value, diagnoser, range));

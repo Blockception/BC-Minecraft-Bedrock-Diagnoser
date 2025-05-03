@@ -1,19 +1,19 @@
 import { Internal, ResourcePack } from "bc-minecraft-bedrock-project";
-import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
-import { Json } from "../../json/Json";
-import { animation_controller_diagnose_implementation } from "../animation-controllers/diagnostics";
-import { animation_or_controller_diagnose_implementation } from "../anim-or-controller";
-import { Molang } from "bc-minecraft-molang";
 import { Types } from "bc-minecraft-bedrock-types";
-import { diagnose_molang } from "../../molang/diagnostics";
-import { render_controller_diagnose_implementation } from "../render-controller/diagnostics";
-import { resourcepack_has_model } from "../model/diagnose";
-import { texture_files_diagnose } from "../texture-atlas/entry";
-import { resourcepack_particle_diagnose } from "../particle/diagnose";
-import { diagnose_script } from "../../minecraft/Script";
-import { diagnose_resourcepack_sounds } from "../sounds/diagnostics";
-import { resourcepack_animation_used } from "../animation/usage";
+import { Molang } from "bc-minecraft-molang";
+import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
+import { Json } from "../../json/json";
 import { AnimationUsage } from "../../minecraft";
+import { diagnose_script } from "../../minecraft/script";
+import { diagnose_molang } from "../../molang/diagnostics";
+import { animation_or_controller_diagnose_implementation } from "../anim-or-controller";
+import { animation_controller_diagnose_implementation } from "../animation-controllers/diagnostics";
+import { resourcepack_animation_used } from "../animation/usage";
+import { resourcepack_has_model } from "../model/diagnose";
+import { resourcepack_particle_diagnose } from "../particle/diagnose";
+import { render_controller_diagnose_implementation } from "../render-controller/diagnostics";
+import { diagnose_resourcepack_sounds } from "../sounds/diagnostics";
+import { texture_files_diagnose } from "../texture-atlas/entry";
 
 /**Diagnoses the given document as an RP entity
  * @param doc The text document to diagnose

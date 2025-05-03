@@ -1,5 +1,5 @@
-import { minecraft_check_command } from "../../../../src/lib/diagnostics/minecraft/Commands";
 import { Types } from "bc-minecraft-bedrock-types";
+import { minecraft_check_command } from "../../../../src/lib/diagnostics/minecraft/commands";
 import { TestDiagnoser } from "../../../diagnoser";
 
 describe("Command", () => {

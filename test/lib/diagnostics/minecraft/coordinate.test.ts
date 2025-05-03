@@ -1,5 +1,5 @@
-import { minecraft_coordinate_diagnose } from "../../../../src/lib/diagnostics/minecraft/Coordinate";
 import { Types } from "bc-minecraft-bedrock-types";
+import { minecraft_coordinate_diagnose } from "../../../../src/lib/diagnostics/minecraft/coordinate";
 import { TestDiagnoser } from "../../../diagnoser";
 
 describe("Coordinate", () => {

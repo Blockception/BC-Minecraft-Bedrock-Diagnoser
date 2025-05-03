@@ -1,7 +1,7 @@
 import { Internal, SMap } from "bc-minecraft-bedrock-project";
 import { DocumentDiagnosticsBuilder } from "../../../types";
-import { Json } from "../../json/Json";
-import { general_animation_controllers } from "../../minecraft/Animation Controllers";
+import { Json } from "../../json";
+import { general_animation_controllers } from "../../minecraft/animation-controllers";
 import { diagnose_molang } from "../../molang/diagnostics";
 import { no_other_duplicates } from "../../packs/duplicate-check";
 import { json_commandsCheck } from "../mcfunction/commands";

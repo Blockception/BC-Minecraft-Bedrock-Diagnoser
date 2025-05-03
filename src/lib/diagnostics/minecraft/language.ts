@@ -1,6 +1,6 @@
 import { PackType } from 'bc-minecraft-bedrock-project';
-import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../types";
 import { Types } from "bc-minecraft-bedrock-types";
+import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../types";
 
 export function minecraft_language_diagnose(diagnoser: DocumentDiagnosticsBuilder, packType: PackType): void {
   const keys = new Map<string, number>();

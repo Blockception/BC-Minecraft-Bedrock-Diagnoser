@@ -1,5 +1,5 @@
 import { DocumentDiagnosticsBuilder } from "../../../types";
-import { Json } from "../../json/Json";
+import { Json } from "../../json/json";
 import { texture_files_diagnose } from "./entry";
 
 /**Diagnoses the given document as a texture flipbook file

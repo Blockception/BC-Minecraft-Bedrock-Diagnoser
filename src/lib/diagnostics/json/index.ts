@@ -1,4 +1,4 @@
 /*	Auto generated	*/
 
-export * from "./Errors";
-export * from "./Json";
+export * from "./errors";
+export * from "./json";
