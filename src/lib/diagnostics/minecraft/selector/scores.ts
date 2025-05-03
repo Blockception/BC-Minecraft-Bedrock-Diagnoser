@@ -2,8 +2,8 @@ import { Types } from "bc-minecraft-bedrock-types";
 import { Selector } from "bc-minecraft-bedrock-types/lib/minecraft/selector";
 import { CompactJson } from "bc-minecraft-bedrock-types/lib/minecraft/json";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../types";
-import { general_range_integer_diagnose } from "../../general/Range";
-import { minecraft_objectives_diagnose } from "../Objective";
+import { general_range_integer_diagnose } from "../../general/range";
+import { minecraft_objectives_diagnose } from "../objective";
 
 /**
  * Diagnoses the scores attribute from a selector

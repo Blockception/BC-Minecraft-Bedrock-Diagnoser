@@ -1,17 +1,16 @@
+import { Types } from "bc-minecraft-bedrock-types";
 import { CompactJson, CompactJsonReader } from "bc-minecraft-bedrock-types/lib/minecraft/json";
 import { Selector } from "bc-minecraft-bedrock-types/lib/minecraft/selector";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../types";
 import { behaviorpack_item_diagnose } from "../../behavior-pack/item/diagnose";
-import { general_integer_diagnose } from "../../general/Integer";
+import { general_integer_diagnose, general_range_integer_diagnose } from "../../general";
 import { mode_slotid_diagnose, mode_slottype_diagnose } from "../../mode/diagnose";
-import { diagnoseAttributes, all, must_offset_word } from "./Util";
+import { selectorattributes_no_duplicate as no_duplicate } from "./checks";
 import {
   selectorattribute_no_negatives as no_negatives,
   selectorattribute_one_positive_all_negatives as one_positive_all_negatives,
-} from "./General";
-import { selectorattributes_no_duplicate as no_duplicate } from "./Checks";
-import { Types } from "bc-minecraft-bedrock-types";
-import { general_range_integer_diagnose } from '../../general';
+} from "./general";
+import { all, diagnoseAttributes, must_offset_word } from "./util";
 
 function integer_diagnose(range?: { min: number; max: number }): diagnoseAttributes {
   return must_offset_word((value, diagnoser) => general_integer_diagnose(value, diagnoser, range));

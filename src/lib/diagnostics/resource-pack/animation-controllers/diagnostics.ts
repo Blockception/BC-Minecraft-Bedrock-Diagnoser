@@ -1,11 +1,10 @@
 import { Definition } from "bc-minecraft-bedrock-types/lib/types/definition";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { MolangDataSetKey } from "bc-minecraft-molang";
-import { forEach } from '../../../utility/using-defined';
+import { forEach } from "../../../utility/using-defined";
 import { education_enabled } from "../../definitions";
-import { general_animation_controllers_implementation } from "../../minecraft/Animation Controllers";
-import { EntityAnimationMolangCarrier, DiagnosticsBuilder, DiagnosticSeverity } from '../../../types';
-
+import { EntityAnimationMolangCarrier, DiagnosticsBuilder, DiagnosticSeverity } from "../../../types";
+import { general_animation_controllers_implementation } from "../../minecraft/animation-controllers";
 
 /**
  *

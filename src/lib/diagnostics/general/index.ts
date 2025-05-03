@@ -1,9 +1,9 @@
 /*	Auto generated	*/
 
-export * from "./Boolean";
-export * from "./Float";
-export * from "./FormatVersion";
-export * from "./Integer";
-export * from "./Keyword";
-export * from "./Range";
-export * from "./String";
+export * from "./boolean";
+export * from "./float";
+export * from "./format-version";
+export * from "./integer";
+export * from "./keyword";
+export * from "./range";
+export * from "./string";

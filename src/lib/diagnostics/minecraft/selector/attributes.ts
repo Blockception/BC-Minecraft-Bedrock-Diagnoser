@@ -4,18 +4,18 @@ import { DiagnosticSeverity, DiagnosticsBuilder } from "../../../types";
 import { behaviorpack_entityid_diagnose } from "../../behavior-pack/entity";
 import { general_float_diagnose, general_integer_diagnose, general_positive_float_diagnose } from "../../general";
 import { mode_gamemode_diagnose } from "../../mode";
-import { minecraft_family_diagnose } from "../Family";
-import { minecraft_name_diagnose } from "../Name";
-import { minecraft_tag_diagnose } from "../Tag";
-import { selectorattributes_no_duplicate as no_duplicate } from "./Checks";
-import { selectorattribute_coordinate as coordinate } from "./Coordinate";
+import { minecraft_family_diagnose } from "../family";
+import { minecraft_name_diagnose } from "../name";
+import { minecraft_tag_diagnose } from "../tag";
+import { selectorattributes_no_duplicate as no_duplicate } from "./checks";
+import { selectorattribute_coordinate as coordinate } from "./coordinate";
 import {
   selectorattribute_duplicate_check as duplicate_check,
   selectorattribute_one_positive_all_negatives as one_positive_all_negatives,
-} from "./General";
-import { minecraft_selector_hasitem_diagnose } from "./HasItem";
-import { selector_scores_diagnose } from "./Scores";
-import { all, diagnoseAttributes, forEach, must_offset_word } from "./Util";
+} from "./general";
+import { minecraft_selector_hasitem_diagnose } from "./hasitem";
+import { selector_scores_diagnose } from "./scores";
+import { all, diagnoseAttributes, forEach, must_offset_word } from "./util";
 import { minecraft_selector_has_property_diagnose } from './has_property';
 
 function float_diagnose(range?: { min: number; max: number }): diagnoseAttributes {

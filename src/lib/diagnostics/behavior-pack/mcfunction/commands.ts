@@ -2,21 +2,7 @@ import { Command, CommandData, Parameter, ParameterInfo, ParameterType } from "b
 import { Types } from "bc-minecraft-bedrock-types";
 import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
 import { education_enabled } from "../../definitions";
-import { general_boolean_diagnose } from "../../general/Boolean";
-import { general_float_diagnose } from "../../general/Float";
-import { general_integer_diagnose } from "../../general/Integer";
-import { general_keyword_diagnose } from "../../general/Keyword";
-import { general_string_diagnose } from "../../general/String";
-import { minecraft_check_command } from "../../minecraft/Commands";
-import { minecraft_coordinate_diagnose } from "../../minecraft/Coordinate";
-import { minecraft_effect_diagnose } from "../../minecraft/Effect";
-import { minecraft_jsonitem_diagnose } from "../../minecraft/JsonItem";
-import { minecraft_jsonrawtext_diagnose } from "../../minecraft/JsonRawText";
-import { minecraft_objectives_diagnose } from "../../minecraft/Objective";
-import { minecraft_selector_diagnose } from "../../minecraft/Selector";
-import { minecraft_tag_diagnose } from "../../minecraft/Tag";
-import { minecraft_tickingarea_diagnose } from "../../minecraft/Tickingarea";
-import { minecraft_xp_diagnose } from "../../minecraft/Xp";
+
 import {
   mode_camerashake_diagnose,
   mode_causetype_diagnose,
@@ -60,6 +46,25 @@ import { behaviorpack_item_diagnose } from "../item/diagnose";
 import { behaviorpack_loot_table_short_diagnose } from "../loot-table/diagnose";
 import { behaviorpack_structure_diagnose } from "../structure/diagnose";
 import { behaviorpack_functions_diagnose } from "./diagnose";
+import {
+  general_boolean_diagnose,
+  general_float_diagnose,
+  general_integer_diagnose,
+  general_string_diagnose,
+  general_keyword_diagnose,
+} from "../../general";
+import {
+  minecraft_coordinate_diagnose,
+  minecraft_effect_diagnose,
+  minecraft_objectives_diagnose,
+  minecraft_tag_diagnose,
+  minecraft_tickingarea_diagnose,
+  minecraft_xp_diagnose,
+  minecraft_check_command,
+  minecraft_selector_diagnose,
+} from "../../minecraft";
+import { minecraft_jsonitem_diagnose } from "../../minecraft/json-item";
+import { minecraft_jsonrawtext_diagnose } from "../../minecraft/json-rawtext";
 
 /**
  *
