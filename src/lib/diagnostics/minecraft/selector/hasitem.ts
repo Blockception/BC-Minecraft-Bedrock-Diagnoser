@@ -4,7 +4,7 @@ import { Selector } from "bc-minecraft-bedrock-types/lib/minecraft/selector";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../types";
 import { behaviorpack_item_diagnose } from "../../behavior-pack/item/diagnose";
 import { general_integer_diagnose, general_range_integer_diagnose } from "../../general";
-import { mode_slotid_diagnose, mode_slottype_diagnose } from "../../mode/diagnose";
+import { mode_slotid_diagnose, mode_slot_type_diagnose } from "../../mode/diagnose";
 import { selectorattributes_no_duplicate as no_duplicate } from "./checks";
 import {
   selectorattribute_no_negatives as no_negatives,
@@ -24,7 +24,7 @@ export const attribute_hasitem_diagnostics: Record<string, diagnoseAttributes> =
   //Has extra checks down below
   data: all(no_duplicate, no_negatives, integer_diagnose({ min: -1, max: 32767 })),
   quantity: all(one_positive_all_negatives, range_integer_diagnose({ min: 0, max: 32767 })),
-  location: all(no_duplicate, one_positive_all_negatives, must_offset_word(mode_slottype_diagnose)),
+  location: all(no_duplicate, one_positive_all_negatives, must_offset_word(mode_slot_type_diagnose)),
   //Has extra checks down below
   slot: all(no_duplicate, one_positive_all_negatives, integer_diagnose({ min: 0, max: 53 })),
 };

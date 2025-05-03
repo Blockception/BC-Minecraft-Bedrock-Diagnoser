@@ -4,67 +4,70 @@ import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
 import { education_enabled } from "../../definitions";
 
 import {
-  mode_camerashake_diagnose,
-  mode_causetype_diagnose,
+  general_boolean_diagnose,
+  general_float_diagnose,
+  general_integer_diagnose,
+  general_keyword_diagnose,
+  general_string_diagnose,
+} from "../../general";
+import {
+  minecraft_check_command,
+  minecraft_coordinate_diagnose,
+  minecraft_effect_diagnose,
+  minecraft_objectives_diagnose,
+  minecraft_selector_diagnose,
+  minecraft_tag_diagnose,
+  minecraft_tickingarea_diagnose,
+  minecraft_xp_diagnose,
+} from "../../minecraft";
+import { minecraft_jsonitem_diagnose } from "../../minecraft/json-item";
+import { minecraft_jsonrawtext_diagnose } from "../../minecraft/json-rawtext";
+import {
+  mode_camera_shake_diagnose,
+  mode_cause_type_diagnose,
   mode_clone_diagnose,
   mode_difficulty_diagnose,
+  mode_dimension_diagnose,
+  mode_easing_diagnose,
   mode_fill_diagnose,
   mode_gamemode_diagnose,
   mode_handtype_diagnose,
-  mode_hudelement_diagnose,
-  mode_hudvisibility_diagnose,
-  mode_locatefeature_diagnose,
+  mode_hud_element_diagnose,
+  mode_hud_visibility_diagnose,
+  mode_locate_feature_diagnose,
   mode_mask_diagnose,
   mode_mirror_diagnose,
-  mode_musicrepeat_diagnose,
-  mode_oldblock_diagnose,
+  mode_music_repeat_diagnose,
+  mode_old_block_diagnose,
   mode_operation_diagnose,
-  mode_permissionState_diagnose,
   mode_permission_diagnose,
+  mode_permission_state_diagnose,
   mode_replace_diagnose,
-  mode_ridefill_diagnose,
-  mode_riderules_diagnose,
+  mode_ride_fill_diagnose,
+  mode_ride_rules_diagnose,
   mode_rotation_diagnose,
   mode_save_diagnose,
+  mode_scan_diagnose,
+  mode_slot_type_diagnose,
   mode_slotid_diagnose,
-  mode_slottype_diagnose,
-  mode_structureanimation_diagnose,
-  mode_teleportrules_diagnose,
-  mode_time_diagnose,
+  mode_structure_animation_diagnose,
+  mode_teleport_rules_diagnose,
+  mode_time_diagnose
 } from "../../mode/diagnose";
 import { animation_reference_diagnose } from "../../resource-pack/anim-or-controller";
 import { resourcepack_particle_diagnose } from "../../resource-pack/particle/diagnose";
 import { resourcepack_sound_diagnose } from "../../resource-pack/sounds-definitions/diagnose";
-import { behaviorpack_check_blockdescriptor } from "../block/diagnose";
 import { behaviorpack_check_command_blockstates } from "../block-state/diagnose";
+import { behaviorpack_check_blockdescriptor } from "../block/diagnose";
 import {
-  command_entity_event_diagnose,
   behaviorpack_entity_spawnegg_diagnose,
   behaviorpack_entityid_diagnose,
+  command_entity_event_diagnose,
 } from "../entity/diagnose";
 import { behaviorpack_item_diagnose } from "../item/diagnose";
 import { behaviorpack_loot_table_short_diagnose } from "../loot-table/diagnose";
 import { behaviorpack_structure_diagnose } from "../structure/diagnose";
 import { behaviorpack_functions_diagnose } from "./diagnose";
-import {
-  general_boolean_diagnose,
-  general_float_diagnose,
-  general_integer_diagnose,
-  general_string_diagnose,
-  general_keyword_diagnose,
-} from "../../general";
-import {
-  minecraft_coordinate_diagnose,
-  minecraft_effect_diagnose,
-  minecraft_objectives_diagnose,
-  minecraft_tag_diagnose,
-  minecraft_tickingarea_diagnose,
-  minecraft_xp_diagnose,
-  minecraft_check_command,
-  minecraft_selector_diagnose,
-} from "../../minecraft";
-import { minecraft_jsonitem_diagnose } from "../../minecraft/json-item";
-import { minecraft_jsonrawtext_diagnose } from "../../minecraft/json-rawtext";
 
 /**
  *
@@ -216,25 +219,47 @@ function mcfunction_commandcheck(command: Command, diagnoser: DocumentDiagnostic
 type DiagnoseCommand = (value: Types.OffsetWord, diagnoser: DocumentDiagnosticsBuilder) => void | boolean;
 /**Switch data*/
 const ParameterDiagnostics: Record<number, DiagnoseCommand> = {
+  [ParameterType.cameraShakeType]: mode_camera_shake_diagnose,
+  [ParameterType.causeType]: mode_cause_type_diagnose,
+  [ParameterType.damageCause]: mode_cause_type_diagnose,
+  [ParameterType.cloneMode]: mode_clone_diagnose,
+  [ParameterType.difficulty]: mode_difficulty_diagnose,
+  [ParameterType.dimension]: mode_dimension_diagnose,
+  [ParameterType.easing]: mode_easing_diagnose,
+  [ParameterType.fillMode]: mode_fill_diagnose,
+  [ParameterType.gamemode]: mode_gamemode_diagnose,
+  [ParameterType.handType]: mode_handtype_diagnose,
+  [ParameterType.hudVisibility]: mode_hud_visibility_diagnose,
+  [ParameterType.hudElement]: mode_hud_element_diagnose,
+  [ParameterType.locateFeature]: mode_locate_feature_diagnose,
+  [ParameterType.maskMode]: mode_mask_diagnose,
+  [ParameterType.mirror]: mode_mirror_diagnose,
+  [ParameterType.musicRepeatMode]: mode_music_repeat_diagnose,
+  [ParameterType.oldBlockMode]: mode_old_block_diagnose,
+  [ParameterType.operation]: mode_operation_diagnose,
+  [ParameterType.permission]: mode_permission_diagnose,
+  [ParameterType.permissionState]: mode_permission_state_diagnose,
+  [ParameterType.replaceMode]: mode_replace_diagnose,
+  [ParameterType.ridefillMode]: mode_ride_fill_diagnose,
+  [ParameterType.rideRules]: mode_ride_rules_diagnose,
+  [ParameterType.rotation]: mode_rotation_diagnose,
+  [ParameterType.saveMode]: mode_save_diagnose,
+  [ParameterType.scanMode]: mode_scan_diagnose,
+  [ParameterType.slotType]: mode_slot_type_diagnose,
+  [ParameterType.structureAnimationMode]: mode_structure_animation_diagnose,
+  [ParameterType.teleportRules]: mode_teleport_rules_diagnose,
+  [ParameterType.time]: mode_time_diagnose,
+
   [ParameterType.animation]: animation_reference_diagnose,
   [ParameterType.block]: behaviorpack_check_blockdescriptor,
   [ParameterType.boolean]: general_boolean_diagnose,
-  [ParameterType.cameraShakeType]: mode_camerashake_diagnose,
-  [ParameterType.causeType]: mode_causetype_diagnose,
-  [ParameterType.cloneMode]: mode_clone_diagnose,
   //Custom call [ParameterType.command]:,
   [ParameterType.coordinate]: minecraft_coordinate_diagnose,
-  [ParameterType.difficulty]: mode_difficulty_diagnose,
   [ParameterType.effect]: minecraft_effect_diagnose,
   [ParameterType.entity]: behaviorpack_entityid_diagnose,
   //Custom call [ParameterType.event]:behaviorpack_entity_event_diagnose,
-  [ParameterType.fillMode]: mode_fill_diagnose,
   [ParameterType.function]: behaviorpack_functions_diagnose,
   [ParameterType.float]: general_float_diagnose,
-  [ParameterType.gamemode]: mode_gamemode_diagnose,
-  [ParameterType.handType]: mode_handtype_diagnose,
-  [ParameterType.hudElement]: mode_hudelement_diagnose,
-  [ParameterType.hudVisibility]: mode_hudvisibility_diagnose,
   [ParameterType.integer]: general_integer_diagnose,
   [ParameterType.item]: (item, diagnoser) => {
     if (item.text.endsWith("_spawn_egg")) {
@@ -246,34 +271,17 @@ const ParameterDiagnostics: Record<number, DiagnoseCommand> = {
   [ParameterType.jsonItem]: minecraft_jsonitem_diagnose,
   [ParameterType.jsonRawText]: minecraft_jsonrawtext_diagnose,
   //Custom call [ParameterType.keyword]:general_keyword_diagnose,
-  [ParameterType.locateFeature]: mode_locatefeature_diagnose,
   [ParameterType.lootTable]: behaviorpack_loot_table_short_diagnose,
   //Custom call [ParameterType.message]:,
-  [ParameterType.maskMode]: mode_mask_diagnose,
-  [ParameterType.mirror]: mode_mirror_diagnose,
-  [ParameterType.musicRepeatMode]: mode_musicrepeat_diagnose,
   [ParameterType.objective]: minecraft_objectives_diagnose,
-  [ParameterType.oldBlockMode]: mode_oldblock_diagnose,
-  [ParameterType.operation]: mode_operation_diagnose,
   [ParameterType.particle]: resourcepack_particle_diagnose,
-  [ParameterType.permission]: mode_permission_diagnose,
-  [ParameterType.permissionState]: mode_permissionState_diagnose,
-  [ParameterType.replaceMode]: mode_replace_diagnose,
-  [ParameterType.rideRules]: mode_riderules_diagnose,
-  [ParameterType.ridefillMode]: mode_ridefill_diagnose,
-  [ParameterType.rotation]: mode_rotation_diagnose,
-  [ParameterType.saveMode]: mode_save_diagnose,
   //Custom call [ParameterType.selector]:minecraft_selector_diagnose,
-  [ParameterType.slotType]: mode_slottype_diagnose,
   //Custom call [ParameterType.slotID]:,
   [ParameterType.sound]: resourcepack_sound_diagnose,
   [ParameterType.string]: general_string_diagnose,
   [ParameterType.structure]: behaviorpack_structure_diagnose,
-  [ParameterType.structureAnimationMode]: mode_structureanimation_diagnose,
   [ParameterType.tag]: minecraft_tag_diagnose,
-  [ParameterType.teleportRules]: mode_teleportrules_diagnose,
   [ParameterType.tickingarea]: minecraft_tickingarea_diagnose,
-  [ParameterType.time]: mode_time_diagnose,
   //Custom call ParameterType.unknown]:(item, diagnoser)=>diagnoser.add(item.offset, "Unknown parametype: " + item.type, DiagnosticSeverity.warning, "debugger.error"),
   [ParameterType.xp]: minecraft_xp_diagnose,
 };

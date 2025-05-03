@@ -2,210 +2,67 @@ import { Command } from "bc-minecraft-bedrock-command";
 import { Modes, Types } from "bc-minecraft-bedrock-types";
 import { ModeHandler } from "bc-minecraft-bedrock-types/lib/modes/mode-handler";
 import { SlotTypeMode } from "bc-minecraft-bedrock-types/lib/modes/slot-type";
-import { DiagnosticsBuilder, DiagnosticSeverity } from '../../types';
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../types";
 import { education_enabled } from "../definitions";
 
-/**Diagnoses the value as a value in the mode: camerashake
+export const mode_camera_shake_diagnose = mode_generic_diagnose(Modes.CameraShake);
+export const mode_cause_type_diagnose = mode_generic_diagnose(Modes.CauseType);
+export const mode_clone_diagnose = mode_generic_diagnose(Modes.Clone);
+export const mode_difficulty_diagnose = mode_generic_diagnose(Modes.Difficulty);
+export const mode_dimension_diagnose = mode_generic_diagnose(Modes.Dimension);
+export const mode_easing_diagnose = mode_generic_diagnose(Modes.Easing);
+export const mode_fill_diagnose = mode_generic_diagnose(Modes.Fill);
+export const mode_gamemode_diagnose = mode_generic_diagnose(Modes.Gamemode);
+export const mode_handtype_diagnose = mode_generic_diagnose(Modes.HandType);
+export const mode_hud_visibility_diagnose = mode_generic_diagnose(Modes.HudVisibility);
+export const mode_hud_element_diagnose = mode_generic_diagnose(Modes.HudElement);
+export const mode_locate_feature_diagnose = mode_generic_diagnose(Modes.LocateFeature);
+export const mode_mask_diagnose = mode_generic_diagnose(Modes.Mask);
+export const mode_mirror_diagnose = mode_generic_diagnose(Modes.Mirror);
+export const mode_music_repeat_diagnose = mode_generic_diagnose(Modes.MusicRepeat);
+export const mode_old_block_diagnose = mode_generic_diagnose(Modes.OldBlock);
+export const mode_operation_diagnose = mode_generic_diagnose(Modes.Operation);
+export const mode_permission_diagnose = mode_generic_diagnose(Modes.Permission);
+export const mode_permission_state_diagnose = mode_generic_diagnose(Modes.PermissionState);
+export const mode_replace_diagnose = mode_generic_diagnose(Modes.Replace);
+export const mode_ride_fill_diagnose = mode_generic_diagnose(Modes.RideFill);
+export const mode_ride_rules_diagnose = mode_generic_diagnose(Modes.RideRules);
+export const mode_rotation_diagnose = mode_generic_diagnose(Modes.Rotation);
+export const mode_save_diagnose = mode_generic_diagnose(Modes.Save);
+export const mode_scan_diagnose = mode_generic_diagnose(Modes.Scan);
+export const mode_selector_attribute_diagnose = mode_generic_diagnose(Modes.SelectorAttribute);
+export const mode_selector_type_diagnose = mode_generic_diagnose(Modes.SelectorType);
+export const mode_slot_type_diagnose = mode_generic_diagnose(Modes.SlotType);
+export const mode_structure_animation_diagnose = mode_generic_diagnose(Modes.StructureAnimation);
+export const mode_teleport_rules_diagnose = mode_generic_diagnose(Modes.TeleportRules);
+export const mode_time_diagnose = mode_generic_diagnose(Modes.Time);
+
+type ModeDiagnose = (value: Types.OffsetWord, diagnoser: DiagnosticsBuilder) => boolean;
+
+/**
+ * Diagnoses the value a generic collection of modes
  * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
-export function mode_camerashake_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.CameraShake, diagnoser);
+function mode_generic_diagnose(Mode: ModeHandler): ModeDiagnose {
+  return function (value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
+    const m = Mode.get(value.text);
+
+    //Mode returned then it is valid
+    if (m) return true;
+
+    const name = Mode.name.toLowerCase();
+    diagnoser.add(
+      value,
+      `value: '${value.text}' is not defined in mode: '${name}'`,
+      DiagnosticSeverity.error,
+      `minecraft.mode.${name}.invalid`
+    );
+    return false;
+  };
 }
 
-/**Diagnoses the value as a value in the mode: camerashake
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_causetype_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.CauseType, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: clone
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_clone_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.Clone, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: difficulty
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_difficulty_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.Difficulty, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: fill
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_fill_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.Fill, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: gamemode
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_gamemode_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.Gamemode, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: locatefeature
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_locatefeature_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.LocateFeature, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: locatefeature
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_handtype_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.HandType, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: hudelement
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_hudelement_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.HudElement, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: hudvisibility
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_hudvisibility_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.HudVisibility, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: mask
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_mask_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.Mask, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: mirror
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_mirror_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.Mirror, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: musicrepeat
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_musicrepeat_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.MusicRepeat, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: oldblock
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_oldblock_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.OldBlock, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: operation
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_operation_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.Operation, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: permission
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_permission_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.Permission, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: permissionState
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_permissionState_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.PermissionState, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: replace
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_replace_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.Replace, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: ridefill
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_ridefill_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.RideFill, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: riderules
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_riderules_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.RideRules, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: rotation
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_rotation_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.Rotation, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: save
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_save_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.Save, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: selectorattribute
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_selectorattribute_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.SelectorAttribute, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: selectortype
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_selectortype_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.SelectorType, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: slottype
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_slottype_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.SlotType, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: slotid
+/** Diagnoses the value a generic collection of modes
  * @param value The value to evaluate, needs the offset to report bugs
  * @param diagnoser The diagnoser to report to
  * @returns true or false, false is any error was found*/
@@ -252,49 +109,4 @@ export function mode_slotid_diagnose(
   }
 
   return true;
-}
-
-/**Diagnoses the value as a value in the mode: structureanimation
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_structureanimation_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.StructureAnimation, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: teleportrules
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_teleportrules_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.TeleportRules, diagnoser);
-}
-
-/**Diagnoses the value as a value in the mode: time
- * @param value The value to evaluate, needs the offset to report bugs
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-export function mode_time_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  return mode_generic_diagnose(value, Modes.Time, diagnoser);
-}
-
-/**Diagnoses the value a generic collection of modes
- * @param value The value to evaluate, needs the offset to report bugs
- * @param Mode The collection of values to check against
- * @param diagnoser The diagnoser to report to
- * @returns true or false, false is any error was found*/
-function mode_generic_diagnose(value: Types.OffsetWord, Mode: ModeHandler, diagnoser: DiagnosticsBuilder): boolean {
-  const m = Mode.get(value.text);
-
-  //Mode returned then it is valid
-  if (m) return true;
-
-  const name = Mode.name.toLowerCase();
-  diagnoser.add(
-    value,
-    `value: '${value.text}' is not defined in mode: '${name}'`,
-    DiagnosticSeverity.error,
-    `minecraft.mode.${name}.invalid`
-  );
-  return false;
 }
