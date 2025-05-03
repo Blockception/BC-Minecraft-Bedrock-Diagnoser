@@ -1,3 +1,3 @@
 /*	Auto generated	*/
-export * as Filters from "./Filters/index";
+export * as Filters from "./filters/index";
 export * from "./diagnose";

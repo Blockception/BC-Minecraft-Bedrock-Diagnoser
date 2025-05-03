@@ -1,5 +1,5 @@
 import { Molang } from "bc-minecraft-molang";
-import { diagnose_molang_implementation } from "../../../../src/Lib/Diagnostics/Molang/diagnostics";
+import { diagnose_molang_implementation } from "../../../../src/lib/diagnostics/molang/diagnostics";
 import { TestDiagnoser } from "../../../diagnoser";
 
 describe("Molang", () => {

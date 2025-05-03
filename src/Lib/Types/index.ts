@@ -1,8 +1,8 @@
 /*	Auto generated	*/
 
-export * from "./ContextCarrier";
-export * from "./Diagnoser";
-export * from "./DiagnoserContext";
-export * from "./DiagnosticsBuilder";
-export * from "./Interfaces";
-export * from "./Severity";
+export * from "./context-carrier";
+export * from "./diagnoser";
+export * from "./diagnoser-context";
+export * from "./diagnostics-builder";
+export * from "./interfaces";
+export * from "./severity";

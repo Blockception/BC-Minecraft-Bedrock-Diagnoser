@@ -1,5 +1,5 @@
 import { ComponentBehavior, ComponentContainer } from "bc-minecraft-bedrock-types/lib/minecraft/components";
-import { DocumentDiagnosticsBuilder, DiagnosticSeverity } from "../../Types";
+import { DocumentDiagnosticsBuilder, DiagnosticSeverity } from "../../types";
 import { Context } from "./components";
 
 export type ComponentCheck<T> = (

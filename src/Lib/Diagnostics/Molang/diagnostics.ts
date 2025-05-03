@@ -1,8 +1,8 @@
 import { MolangCarrier } from "bc-minecraft-bedrock-project";
 import { Types } from "bc-minecraft-bedrock-types";
 import { Defined, DefinedUsing, Molang, MolangData, MolangDataSetKey, Using } from "bc-minecraft-molang";
-import { DiagnosticsBuilder, DiagnosticSeverity } from '../../Types';
-import { Json } from '../Json';
+import { DiagnosticsBuilder, DiagnosticSeverity } from '../../types';
+import { Json } from '../json';
 import { diagnoser_molang_syntax } from './syntax';
 
 type MCarrier = Types.Identifiable & MolangCarrier<Molang.MolangSetOptional>;

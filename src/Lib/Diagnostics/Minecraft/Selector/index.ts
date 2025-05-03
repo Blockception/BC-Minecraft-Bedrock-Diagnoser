@@ -1,9 +1,9 @@
 /*	Auto generated	*/
 
-export * from "./Attributes";
-export * from "./Checks";
-export * from "./Coordinate";
-export * from "./General";
-export * from "./HasItem";
-export * from "./Scores";
-export * from "./Util";
+export * from "./attributes";
+export * from "./checks";
+export * from "./coordinate";
+export * from "./general";
+export * from "./hasitem";
+export * from "./scores";
+export * from "./util";

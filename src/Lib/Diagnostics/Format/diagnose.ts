@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Pack } from "bc-minecraft-bedrock-project";
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../Types/";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../types";
 
 /**Max relative length form pack / worldtemplate */
 const LengthFromRoot = 80;

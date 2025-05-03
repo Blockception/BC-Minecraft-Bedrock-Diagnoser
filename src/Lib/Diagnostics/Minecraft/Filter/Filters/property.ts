@@ -1,6 +1,6 @@
 import { Minecraft } from "bc-minecraft-bedrock-types";
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../../Types";
-import { diagnose_entity_property_usage } from "../../../BehaviorPack/Entity/properties";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../../types";
+import { diagnose_entity_property_usage } from "../../../behavior-pack/entity/properties";
 
 export function diagnose_filter_property(filter: Minecraft.Filter.Filter, diagnoser: DiagnosticsBuilder) {
   const { domain, value, test } = filter;

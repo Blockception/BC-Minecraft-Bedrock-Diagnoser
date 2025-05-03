@@ -1,6 +1,6 @@
 import { Minecraft } from "bc-minecraft-bedrock-types";
-import { DiagnosticsBuilder } from '../../../../Types';
-import { behaviorpack_item_diagnose } from '../../../BehaviorPack/Item';
+import { DiagnosticsBuilder } from '../../../../types';
+import { behaviorpack_item_diagnose } from '../../../behavior-pack/item';
 
 export function diagnose_filter_has_equipment(filter: Minecraft.Filter.Filter, diagnoser: DiagnosticsBuilder) {
   const item = filter.value;

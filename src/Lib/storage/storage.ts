@@ -2,8 +2,8 @@ import { DataSetConnector, Pack, ProjectData } from "bc-minecraft-bedrock-projec
 import { Types } from "bc-minecraft-bedrock-types";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { Identifiable } from "bc-minecraft-bedrock-vanilla-data/lib/src/Lib/Types";
-import { DiagnosticsBuilder } from "../Types";
-import { education_enabled } from "../Diagnostics";
+import { DiagnosticsBuilder } from "../types";
+import { education_enabled } from "../diagnostics";
 
 export type ItemBase = Identifiable & Types.Locatable;
 

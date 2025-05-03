@@ -1,6 +1,6 @@
 /*	Auto generated	*/
-export * as Filter from "./Filter/index";
-export * as Selector from "./Selector/index";
+export * as Filter from "./filter/index";
+export * as Selector from "./selector/index";
 export * from "./Animation Controllers";
 export * from "./Animation";
 export * from "./Commands";

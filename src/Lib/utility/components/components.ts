@@ -1,4 +1,4 @@
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../Types";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../types";
 
 export type Depended = string | RegExp;
 export type DependedMap = Record<string, Depended[]>;

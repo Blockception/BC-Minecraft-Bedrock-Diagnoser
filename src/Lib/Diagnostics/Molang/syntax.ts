@@ -1,6 +1,6 @@
 import { Molang } from 'bc-minecraft-molang';
 import { IsMolangType, MolangType } from 'bc-minecraft-molang/lib/src/Molang';
-import { DiagnosticSeverity, DiagnosticsBuilder } from "../../Types";
+import { DiagnosticSeverity, DiagnosticsBuilder } from "../../types";
 
 /**
  *

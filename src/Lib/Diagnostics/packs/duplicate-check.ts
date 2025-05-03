@@ -1,6 +1,6 @@
 import { IDataSet } from "bc-minecraft-bedrock-project";
 import { Types } from "bc-minecraft-bedrock-types";
-import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../Types";
+import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../types";
 import { PackStringType } from "../../constants/packs";
 
 export function no_other_duplicates<T extends Types.Identifiable & Types.Locatable>(

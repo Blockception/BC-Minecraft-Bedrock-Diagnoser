@@ -1,4 +1,4 @@
-import { diagnoser_molang_syntax } from '../../../../src/Lib/Diagnostics/Molang';
+import { diagnoser_molang_syntax } from '../../../../src/lib/diagnostics/molang';
 import { TestDiagnoser } from '../../../diagnoser';
 
 interface TestCase {
