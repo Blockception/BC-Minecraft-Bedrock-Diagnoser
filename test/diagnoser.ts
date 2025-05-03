@@ -50,6 +50,10 @@ export class TestDiagnoser<T extends TextDocument = TextDocument> implements Man
     });
   }
 
+  expectDone(): void {
+    expect(this.doneMark).toBeDefined();
+  }
+
   /**
    *
    */
@@ -180,12 +184,12 @@ export class TestDiagnoser<T extends TextDocument = TextDocument> implements Man
   }
 }
 
-export class TestDocumentDiagnoser extends TestDiagnoser implements DocumentDiagnosticsBuilder {
-  public document: TextDocument;
+export class TestDocumentDiagnoser<T extends TextDocument = TextDocument> extends TestDiagnoser<T> implements DocumentDiagnosticsBuilder<T> {
+  public document: T;
 
   constructor(
-    document: TextDocument,
-    context: DiagnosticsBuilderContent | undefined = undefined,
+    document: T,
+    context: DiagnosticsBuilderContent<T> | undefined = undefined,
     project: MCProject | undefined = undefined
   ) {
     super(context, project);
