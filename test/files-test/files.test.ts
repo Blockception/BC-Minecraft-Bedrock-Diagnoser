@@ -149,9 +149,13 @@ describe("Files test", () => {
     files.forEach((f) => diagnoser.process(f));
 
     // validate
+    let count = 0;
     for (const diag of testContext.diagnosers) {
       console.log("validating", diag.document.uri);
       diag.expectDone();
+      count += diag.items.length;
     }
+
+    expect(count).toBeGreaterThan(0);
   });
 });
