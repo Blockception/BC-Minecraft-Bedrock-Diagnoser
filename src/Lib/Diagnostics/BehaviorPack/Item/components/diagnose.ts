@@ -117,7 +117,9 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Item>>
         DiagnosticSeverity.error,
         'behaviorpack.item.components.custom_components_min_version')
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err) {}
+    } catch (err) {
+      // Leaving empty as the base diagnoser should flag an invalid format version
+    }
   },
   "minecraft:durability_sensor": (name, component, context, diagnoser) => {
     if (!component.particle_type || !(typeof component.particle_type == 'string')) return;
@@ -130,7 +132,9 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Item>>
         DiagnosticSeverity.warning,
         'behaviorpack.item.components.rarity')
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err) {}
+    } catch (err) {
+      // Leaving empty as the base diagnoser should flag an invalid format version
+    }
   },
 };
 

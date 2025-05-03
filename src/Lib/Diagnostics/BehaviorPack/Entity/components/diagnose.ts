@@ -428,7 +428,9 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
         'behaviorpack.entity.component.entity_sensor')
       minecraft_diagnose_filters(component.subsensors.event_filters, diagnoser)
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err) { }
+    } catch (err) { 
+      // Leaving empty as the base diagnoser should flag an invalid format version
+    }
   },
   "minecraft:environment_sensor": (name, component, context, diagnoser) => {
     processEntries(component.triggers, entry => {
@@ -670,7 +672,9 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
         DiagnosticSeverity.error,
         'behaviorpack.entity.component.fall_damage')
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err) { }
+    } catch (err) {
+      // Leaving empty as the base diagnoser should flag an invalid format version
+    }
   }
 };
 

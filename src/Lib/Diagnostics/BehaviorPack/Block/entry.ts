@@ -62,6 +62,8 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
         DiagnosticSeverity.warning,
         'behaviorpack.block.namespace_group')
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (err) {}
+  } catch (err) {
+    // Leaving empty as the base diagnoser should flag an invalid format version
+  }
 
 }

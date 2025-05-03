@@ -77,13 +77,17 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
   },
   "minecraft:geometry": (name, component, context, diagnoser) => {
 
-    const formatVersion = FormatVersion.parse(context.source.format_version);
-    if (!context.components.includes('minecraft:material_instances') && (FormatVersion.isGreaterThan(formatVersion, [1, 21, 80]) || FormatVersion.isEqual(formatVersion, [1, 21, 80]))) diagnoser.add(
-      name,
-      `"minecraft:geometry" requires "minecraft:material_instances" in format versions >= 1.21.80`,
-      DiagnosticSeverity.error,
-      "behaviorpack.block.components.material_instances_x_geometry"
-    )
+    try {
+      const formatVersion = FormatVersion.parse(context.source.format_version);
+      if (!context.components.includes('minecraft:material_instances') && (FormatVersion.isGreaterThan(formatVersion, [1, 21, 80]) || FormatVersion.isEqual(formatVersion, [1, 21, 80]))) diagnoser.add(
+        name,
+        `"minecraft:geometry" requires "minecraft:material_instances" in format versions >= 1.21.80`,
+        DiagnosticSeverity.error,
+        "behaviorpack.block.components.material_instances_x_geometry"
+      )
+    } catch (err) {
+      // Leaving empty as the base diagnoser should flag an invalid format version
+    }
 
     if (typeof component === "string") {
       resourcepack_has_model(component, diagnoser);
@@ -99,13 +103,17 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
   },
   "minecraft:material_instances": (name, component, context, diagnoser) => {
 
-    const formatVersion = FormatVersion.parse(context.source.format_version);
-    if (!context.components.includes('minecraft:geometry') && (FormatVersion.isGreaterThan(formatVersion, [1, 21, 80]) || FormatVersion.isEqual(formatVersion, [1, 21, 80]))) diagnoser.add(
-      name,
-      `"minecraft:material_instances" requires "minecraft:geometry" in format versions >= 1.21.80`,
-      DiagnosticSeverity.error,
-      "behaviorpack.block.components.material_instances_x_geometry"
-    )
+    try {
+      const formatVersion = FormatVersion.parse(context.source.format_version);
+      if (!context.components.includes('minecraft:geometry') && (FormatVersion.isGreaterThan(formatVersion, [1, 21, 80]) || FormatVersion.isEqual(formatVersion, [1, 21, 80]))) diagnoser.add(
+        name,
+        `"minecraft:material_instances" requires "minecraft:geometry" in format versions >= 1.21.80`,
+        DiagnosticSeverity.error,
+        "behaviorpack.block.components.material_instances_x_geometry"
+      )
+    } catch (err) {
+      // Leaving empty as the base diagnoser should flag an invalid format version
+    }
 
     Object.keys(component).forEach((value) => {
       const textureId = component[value].texture;
@@ -119,27 +127,31 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
     });
   },
   "minecraft:item_visual": (name, component, context, diagnoser) => {
-    minimumVersionRequired(context.source, name, [1,21,50], diagnoser)
+    minimumVersionRequired(context.source, name, [1, 21, 50], diagnoser)
   },
   "minecraft:liquid_detection": (name, component, context, diagnoser) => {
-    minimumVersionRequired(context.source, name, [1,21,50], diagnoser)
+    minimumVersionRequired(context.source, name, [1, 21, 50], diagnoser)
   },
   "minecraft:redstone_conductivity": (name, component, context, diagnoser) => {
-    minimumVersionRequired(context.source, name, [1,21,30], diagnoser)
+    minimumVersionRequired(context.source, name, [1, 21, 30], diagnoser)
   },
   "minecraft:replaceable": (name, component, context, diagnoser) => {
-    minimumVersionRequired(context.source, name, [1,21,60], diagnoser)
+    minimumVersionRequired(context.source, name, [1, 21, 60], diagnoser)
   },
 };
 
 function minimumVersionRequired(block: Internal.BehaviorPack.Block, name: string, version: [number, number, number], diagnoser: DocumentDiagnosticsBuilder) {
-  if (FormatVersion.isLessThan(FormatVersion.parse(block.format_version), version)) {
-    diagnoser.add(
-      name,
-      `${name} requires a format version of ${version.join('.')} or greater to use.`,
-      DiagnosticSeverity.error,
-      "behaviorpack.block.components." + name.split(':')[1]
-    )
+  try {
+    if (FormatVersion.isLessThan(FormatVersion.parse(block.format_version), version)) {
+      diagnoser.add(
+        name,
+        `${name} requires a format version of ${version.join('.')} or greater to use.`,
+        DiagnosticSeverity.error,
+        "behaviorpack.block.components." + name.split(':')[1]
+      )
+    }
+  } catch (err) {
+    // Leaving empty as the base diagnoser should flag an invalid format version
   }
 }
 
