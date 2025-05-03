@@ -136,7 +136,7 @@ describe("Files test", () => {
     const rpFiles = MinecraftFormat.getResourcePackFiles(path.join(__dirname, "test-rp"), mcproject.ignores.patterns);
     const files = [...bpFiles, ...rpFiles];
     files.forEach((f) => {
-      console.log("processing", f);
+      // console.log("processing", f);
       const t = documentManager.getDocument(f);
       expect(t).toBeDefined();
       if (!t) return;
@@ -151,7 +151,7 @@ describe("Files test", () => {
     // validate
     let count = 0;
     for (const diag of testContext.diagnosers) {
-      console.log("validating", diag.document.uri);
+      // console.log("validating", diag.document.uri);
       diag.expectDone();
       count += diag.items.length;
     }

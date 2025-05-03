@@ -1,10 +1,13 @@
-import { DiagnosticsBuilderContent, DocumentDiagnosticsBuilder } from "../src/Lib/Types/DiagnosticsBuilder";
-import { DiagnosticSeverity } from "../src/Lib/Types/Severity";
+import { TextDocument } from "bc-minecraft-bedrock-project";
 import { Types } from "bc-minecraft-bedrock-types";
 import { MCProject } from "bc-minecraft-project";
-import { ManagedDiagnosticsBuilder } from "../src/main";
+import {
+  DiagnosticsBuilderContent,
+  DiagnosticSeverity,
+  DocumentDiagnosticsBuilder,
+  ManagedDiagnosticsBuilder,
+} from "../src/lib/types";
 import { TestProjectData } from "./testprojectdata";
-import { TextDocument } from "bc-minecraft-bedrock-project";
 
 export interface Error {
   position: Types.DocumentLocation;
@@ -184,7 +187,10 @@ export class TestDiagnoser<T extends TextDocument = TextDocument> implements Man
   }
 }
 
-export class TestDocumentDiagnoser<T extends TextDocument = TextDocument> extends TestDiagnoser<T> implements DocumentDiagnosticsBuilder<T> {
+export class TestDocumentDiagnoser<T extends TextDocument = TextDocument>
+  extends TestDiagnoser<T>
+  implements DocumentDiagnosticsBuilder<T>
+{
   public document: T;
 
   constructor(
