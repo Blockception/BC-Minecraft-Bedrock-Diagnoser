@@ -1,10 +1,10 @@
-import { DocumentDiagnosticsBuilder} from "../../../types";
+import { DocumentDiagnosticsBuilder } from "../../../types";
 import { Json } from "../../json/json";
+import { minecraft_get_item } from "../../minecraft/items";
 import { behaviorpack_item_diagnose } from "../item/diagnose";
+import { LootCondition } from "./conditions";
 import { behaviorpack_loot_table_diagnose } from "./diagnose";
 import { behaviorpack_loot_table_function_diagnose, LootFunction } from "./functions";
-import { LootCondition } from "./conditions";
-import { minecraft_get_item } from "../../minecraft/Items";
 
 /**Diagnoses the given document as an loot table
  * @param doc The text document to diagnose

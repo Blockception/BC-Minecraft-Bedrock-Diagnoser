@@ -1,6 +1,6 @@
 import { Internal } from "bc-minecraft-bedrock-project";
 import { DocumentDiagnosticsBuilder} from "../../../types";
-import { general_animation_controllers } from "../../minecraft/Animation Controllers";
+import { general_animation_controllers } from "../../minecraft/animation-controllers";
 import { Json } from "../../json/json";
 import { diagnose_molang } from "../../molang/diagnostics";
 
