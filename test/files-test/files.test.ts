@@ -27,7 +27,7 @@ class TestContext implements DiagnosticsBuilderContent<TextDocument>, DiagnoserC
     return this.documentManager.getDocument(uri);
   }
   getFiles(folder: string, patterns: string[], ignores: MCIgnore): string[] {
-    return this.getFiles(folder, patterns, ignores);
+    return this.documentManager.getFiles(folder, patterns, ignores);
   }
   getCache(): ProjectData {
     return this.projectData;
@@ -117,45 +117,40 @@ function identifyDocument(uri: string) {
   return "bc-minecraft-other";
 }
 
-describe("Files test", () => {
-  it("should be able to process and diagnose", async () => {
-    const documentManager = new DocumentManager();
-    const projectData = new ProjectData(documentManager);
-    const mcproject = MCProject.createEmpty();
-    const testContext = new TestContext(documentManager, projectData);
-    const diagnoser = new Diagnoser(testContext);
+describe.only("Files test", () => {
+  const documentManager = new DocumentManager();
+  const projectData = new ProjectData(documentManager);
+  const mcproject = MCProject.createEmpty();
+  const testContext = new TestContext(documentManager, projectData);
+  const diagnoser = new Diagnoser(testContext);
 
-    // Process
-    const manifests = MinecraftFormat.getManifests(__dirname, mcproject.ignores.patterns);
+  const manifests = MinecraftFormat.getManifests(__dirname, mcproject.ignores.patterns);
+  const bpFiles = MinecraftFormat.getBehaviorPackFiles(path.join(__dirname, "test-bp"), mcproject.ignores.patterns);
+  const rpFiles = MinecraftFormat.getResourcePackFiles(path.join(__dirname, "test-rp"), mcproject.ignores.patterns);
+  const files = [...bpFiles, ...rpFiles, ...manifests];
+  manifests.forEach((m) => projectData.addPack(m, mcproject));
+  files.forEach((f) => {
+    // console.log("processing", f);
+    const t = documentManager.getDocument(f);
+    expect(t).toBeDefined();
+    if (!t) return;
+
+    projectData.process(t);
+  });
+  files.forEach((f) => diagnoser.process(f));
+
+  it("should contain two manifests", () => {
     expect(manifests).toHaveLength(2);
+  });
 
-    // process packs
-    manifests.forEach((m) => projectData.addPack(m, mcproject));
-
-    const bpFiles = MinecraftFormat.getBehaviorPackFiles(path.join(__dirname, "test-bp"), mcproject.ignores.patterns);
-    const rpFiles = MinecraftFormat.getResourcePackFiles(path.join(__dirname, "test-rp"), mcproject.ignores.patterns);
-    const files = [...bpFiles, ...rpFiles];
-    files.forEach((f) => {
-      // console.log("processing", f);
-      const t = documentManager.getDocument(f);
-      expect(t).toBeDefined();
-      if (!t) return;
-
-      projectData.process(t);
+  describe.each(testContext.diagnosers)("testing file: {$document._uri}", (diag) => {
+    test("expect specific errors", () => {
+      expect(diag.items).toMatchSnapshot();
     });
 
-    // diagnose projects
-    files.push(...manifests);
-    files.forEach((f) => diagnoser.process(f));
-
-    // validate
-    let count = 0;
-    for (const diag of testContext.diagnosers) {
-      // console.log("validating", diag.document.uri);
-      diag.expectDone();
-      count += diag.items.length;
-    }
-
-    expect(count).toBeGreaterThan(0);
+    test("none of the errors are internal errors", () => {
+      const items = diag.items.filter((item) => item.code === "debugger.internal.exception");
+      expect(items).toHaveLength(0);
+    })
   });
 });
