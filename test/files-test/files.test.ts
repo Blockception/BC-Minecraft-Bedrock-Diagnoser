@@ -124,9 +124,10 @@ describe.only("Files test", () => {
   const testContext = new TestContext(documentManager, projectData);
   const diagnoser = new Diagnoser(testContext);
 
-  const manifests = MinecraftFormat.getManifests(__dirname, mcproject.ignores.patterns);
-  const bpFiles = MinecraftFormat.getBehaviorPackFiles(path.join(__dirname, "test-bp"), mcproject.ignores.patterns);
-  const rpFiles = MinecraftFormat.getResourcePackFiles(path.join(__dirname, "test-rp"), mcproject.ignores.patterns);
+  const folder = __dirname;
+  const manifests = MinecraftFormat.getManifests(folder, mcproject.ignores.patterns);
+  const bpFiles = MinecraftFormat.getBehaviorPackFiles(path.join(folder, "test-bp"), mcproject.ignores.patterns);
+  const rpFiles = MinecraftFormat.getResourcePackFiles(path.join(folder, "test-rp"), mcproject.ignores.patterns);
   const files = [...bpFiles, ...rpFiles, ...manifests];
   manifests.forEach((m) => projectData.addPack(m, mcproject));
   files.forEach((f) => {
@@ -143,7 +144,12 @@ describe.only("Files test", () => {
     expect(manifests).toHaveLength(2);
   });
 
-  describe.each(testContext.diagnosers)("testing file: {$document._uri}", (diag) => {
+  const diags = testContext.diagnosers.map((diag) => {
+    (diag as any).uri = diag.document.uri.slice(folder.length);
+    return diag;
+  });
+
+  describe.each(diags)("testing file: {$uri}", (diag) => {
     test("expect specific errors", () => {
       expect(diag.items).toMatchSnapshot();
     });
@@ -151,6 +157,6 @@ describe.only("Files test", () => {
     test("none of the errors are internal errors", () => {
       const items = diag.items.filter((item) => item.code === "debugger.internal.exception");
       expect(items).toHaveLength(0);
-    })
+    });
   });
 });

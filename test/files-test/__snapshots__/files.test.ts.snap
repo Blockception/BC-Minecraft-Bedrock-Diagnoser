@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Files test testing file: {F:/Projects/Blockception/Software/bc-dev/BC-Minecraft-Bedrock-Diagnoser/test/files-test/test-bp/animation_controllers/controller.npc.json} expect specific errors 1`] = `[]`;
+exports[`Files test testing file: {/test-bp/animation_controllers/controller.npc.json} expect specific errors 1`] = `[]`;
 
-exports[`Files test testing file: {F:/Projects/Blockception/Software/bc-dev/BC-Minecraft-Bedrock-Diagnoser/test/files-test/test-bp/animations/animation.item.json} expect specific errors 1`] = `[]`;
+exports[`Files test testing file: {/test-bp/animations/animation.item.json} expect specific errors 1`] = `[]`;
 
-exports[`Files test testing file: {F:/Projects/Blockception/Software/bc-dev/BC-Minecraft-Bedrock-Diagnoser/test/files-test/test-bp/entities/sample.json} expect specific errors 1`] = `
+exports[`Files test testing file: {/test-bp/entities/sample.json} expect specific errors 1`] = `
 [
   {
     "code": "behaviorpack.entity.component_group.missing",
@@ -15,9 +15,9 @@ exports[`Files test testing file: {F:/Projects/Blockception/Software/bc-dev/BC-M
 ]
 `;
 
-exports[`Files test testing file: {F:/Projects/Blockception/Software/bc-dev/BC-Minecraft-Bedrock-Diagnoser/test/files-test/test-bp/functions/test.mcfunction} expect specific errors 1`] = `[]`;
+exports[`Files test testing file: {/test-bp/functions/test.mcfunction} expect specific errors 1`] = `[]`;
 
-exports[`Files test testing file: {F:/Projects/Blockception/Software/bc-dev/BC-Minecraft-Bedrock-Diagnoser/test/files-test/test-bp/items/apple.json} expect specific errors 1`] = `
+exports[`Files test testing file: {/test-bp/items/apple.json} expect specific errors 1`] = `
 [
   {
     "code": "behaviorpack.item.components.texture_not_found",
@@ -28,7 +28,7 @@ exports[`Files test testing file: {F:/Projects/Blockception/Software/bc-dev/BC-M
 ]
 `;
 
-exports[`Files test testing file: {F:/Projects/Blockception/Software/bc-dev/BC-Minecraft-Bedrock-Diagnoser/test/files-test/test-bp/manifest.json} expect specific errors 1`] = `
+exports[`Files test testing file: {/test-bp/manifest.json} expect specific errors 1`] = `
 [
   {
     "code": "minecraft.manifest.version.minimum",
@@ -45,7 +45,7 @@ exports[`Files test testing file: {F:/Projects/Blockception/Software/bc-dev/BC-M
 ]
 `;
 
-exports[`Files test testing file: {F:/Projects/Blockception/Software/bc-dev/BC-Minecraft-Bedrock-Diagnoser/test/files-test/test-bp/manifest.json} expect specific errors 2`] = `
+exports[`Files test testing file: {/test-bp/manifest.json} expect specific errors 2`] = `
 [
   {
     "code": "minecraft.manifest.version.minimum",
@@ -62,7 +62,7 @@ exports[`Files test testing file: {F:/Projects/Blockception/Software/bc-dev/BC-M
 ]
 `;
 
-exports[`Files test testing file: {F:/Projects/Blockception/Software/bc-dev/BC-Minecraft-Bedrock-Diagnoser/test/files-test/test-rp/entity/sample.entity.json} expect specific errors 1`] = `
+exports[`Files test testing file: {/test-rp/entity/sample.entity.json} expect specific errors 1`] = `
 [
   {
     "code": "resourcepack.model.missing",
@@ -85,7 +85,7 @@ exports[`Files test testing file: {F:/Projects/Blockception/Software/bc-dev/BC-M
 ]
 `;
 
-exports[`Files test testing file: {F:/Projects/Blockception/Software/bc-dev/BC-Minecraft-Bedrock-Diagnoser/test/files-test/test-rp/manifest.json} expect specific errors 1`] = `
+exports[`Files test testing file: {/test-rp/manifest.json} expect specific errors 1`] = `
 [
   {
     "code": "minecraft.manifest.version.minimum",
@@ -102,7 +102,7 @@ exports[`Files test testing file: {F:/Projects/Blockception/Software/bc-dev/BC-M
 ]
 `;
 
-exports[`Files test testing file: {F:/Projects/Blockception/Software/bc-dev/BC-Minecraft-Bedrock-Diagnoser/test/files-test/test-rp/manifest.json} expect specific errors 2`] = `
+exports[`Files test testing file: {/test-rp/manifest.json} expect specific errors 2`] = `
 [
   {
     "code": "minecraft.manifest.version.minimum",
@@ -119,4 +119,4 @@ exports[`Files test testing file: {F:/Projects/Blockception/Software/bc-dev/BC-M
 ]
 `;
 
-exports[`Files test testing file: {F:/Projects/Blockception/Software/bc-dev/BC-Minecraft-Bedrock-Diagnoser/test/files-test/test-rp/render_controllers/sample.render_controllers.json} expect specific errors 1`] = `[]`;
+exports[`Files test testing file: {/test-rp/render_controllers/sample.render_controllers.json} expect specific errors 1`] = `[]`;
