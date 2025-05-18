@@ -33,10 +33,13 @@ export function minecraft_animation_used(
   const refsUsed: Record<string, boolean> = {};
   const { animation_controllers, animations, script } = data;
 
+  const controllersUsed = Object.values(animation_controllers).concat(Object.values(animations)).filter(id => id.startsWith('controller.'))
+
   // Check against vanilla controllers
-  Vanilla.ResourcePack.AnimationControllers.forEach((controller) =>
+  Vanilla.ResourcePack.AnimationControllers.forEach((controller) => {
+    if (!controllersUsed.includes(controller.id)) return;
     controller.animations.forEach((anim) => (refsUsed[anim] = true))
-  );
+  });
 
   // Animations field is to be used by script and animations controllers
   Types.Definition.forEach(animations, (ref, id) => {
