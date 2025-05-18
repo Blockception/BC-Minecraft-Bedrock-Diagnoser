@@ -71,7 +71,7 @@ export function behaviorpack_entity_event_diagnose(
   if (events.includes(id)) return;
   diagnoser.add(
     path,
-    `Entity has no event ${id}`,
+    `Entity has no event "${id}"`,
     DiagnosticSeverity.warning,
     "behaviorpack.entity.event.missing"
   );
