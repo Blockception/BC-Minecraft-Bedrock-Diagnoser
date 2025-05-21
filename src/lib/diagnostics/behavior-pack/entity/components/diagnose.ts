@@ -376,7 +376,8 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     });
     else if (typeof component.breed_items == 'string') behaviorpack_item_diagnose(minecraft_get_item(component.breed_items, diagnoser.document), diagnoser);
     if (typeof component.transform_to_item === 'string') behaviorpack_item_diagnose(minecraft_get_item(component.transform_to_item, diagnoser.document), diagnoser);
-    if (component.require_tame && !diagnoser.document.getText().includes('minecraft:tameable')) diagnoser.add(name + '/require_tame',
+    const text = diagnoser.document.getText();
+    if (component.require_tame && !text.includes('minecraft:tameable') && !text.includes('minecraft:tamemount')) diagnoser.add(name + '/require_tame',
       "This entity cannot be tamed despite being tamed set as a requirement for breeding",
       DiagnosticSeverity.info,
       "behaviorpack.entity.components.breedable"
