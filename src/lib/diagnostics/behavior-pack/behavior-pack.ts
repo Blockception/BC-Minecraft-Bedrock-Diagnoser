@@ -15,6 +15,7 @@ import * as SpawnRule from "./spawn-rule/entry";
 import * as Structure from "./structure/entry";
 import * as Trading from "./trading/entry";
 import * as Feature from "./feature/entry";
+import * as FeatureRule from "./feature-rule/entry";
 
 export namespace BehaviorPack {
   /**Processes and diagnoses the given textdocument
@@ -82,6 +83,10 @@ export namespace BehaviorPack {
 
       case FileType.feature:
         Feature.Diagnose(diagnoser);
+        break;
+
+      case FileType.feature_rule:
+        FeatureRule.Diagnose(diagnoser);
         break;
 
       default:
