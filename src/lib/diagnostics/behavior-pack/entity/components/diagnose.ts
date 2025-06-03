@@ -535,6 +535,8 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     component.family_types?.forEach((family: string) => {
       minecraft_family_diagnose(family, diagnoser)
     });
+    if (typeof component.on_rider_enter_event == 'string') behaviorpack_entity_event_diagnose(component.on_rider_enter_event, component + '/' + component.event, Object.keys(context.source['minecraft:entity'].events || {}), diagnoser)
+    if (typeof component.on_rider_exit_event == 'string') behaviorpack_entity_event_diagnose(component.on_rider_exit_event, component + '/' + component.event, Object.keys(context.source['minecraft:entity'].events || {}), diagnoser)
   },
   "minecraft:scheduler": (name, component, context, diagnoser) => {
     component.scheduled_events?.forEach((entry: any) => {
