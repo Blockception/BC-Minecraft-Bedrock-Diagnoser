@@ -14,6 +14,7 @@ import { resourcepack_particle_diagnose } from "../particle/diagnose";
 import { render_controller_diagnose_implementation } from "../render-controller/diagnostics";
 import { diagnose_resourcepack_sounds } from "../sounds/diagnostics";
 import { texture_files_diagnose } from "../texture-atlas/entry";
+import { behaviorpack_entityid_diagnose } from '../../behavior-pack/entity';
 
 /**Diagnoses the given document as an RP entity
  * @param doc The text document to diagnose
@@ -30,6 +31,8 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
 
   const description = entity["minecraft:client_entity"].description;
   const entityGathered = ResourcePack.Entity.Process(diagnoser.document);
+
+  behaviorpack_entityid_diagnose(description.identifier, diagnoser); 
 
   if (!entityGathered) return;
   if (!entityGathered.molang) entityGathered.molang = Molang.MolangFullSet.harvest(diagnoser.document.getText());
