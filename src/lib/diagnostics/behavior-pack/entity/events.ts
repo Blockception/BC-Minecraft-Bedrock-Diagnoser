@@ -45,9 +45,13 @@ export function behaviorpack_entity_check_event(
     behaviorpack_entity_check_event(item, event_id, diagnoser, properties, component_groups, eventIds);
   });
 
+  if (event.randomize?.length == 1) diagnoser.add(event_id, "Randomize only has one entry and can therefore be removed.", DiagnosticSeverity.info, "behaviorpack.entity.event.randomize.length")
+
   event.sequence?.forEach((item) => {
     behaviorpack_entity_check_event(item, event_id, diagnoser, properties, component_groups, eventIds);
   });
+
+  if (event.sequence?.length == 1) diagnoser.add(event_id, "Sequence only has one entry and can therefore be removed.", DiagnosticSeverity.info, "behaviorpack.entity.event.sequence.length")
 
   behaviorpack_entity_components_filters(event, diagnoser);
 
