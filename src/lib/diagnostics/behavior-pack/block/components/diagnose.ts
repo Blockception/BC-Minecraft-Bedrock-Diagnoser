@@ -128,6 +128,22 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
         );
     });
   },
+  "minecraft:custom_components": (name, component, context, diagnoser) => {
+    try {
+      if (FormatVersion.isLessThan(FormatVersion.parse(context.source.format_version), [1,21,10])) diagnoser.add(context.source.format_version,
+        `To use custom components, a minimum format version of 1.21.10 is required`,
+        DiagnosticSeverity.error,
+        'behaviorpack.block.components.custom_components_min_version')
+      
+      if (FormatVersion.isGreaterThan(FormatVersion.parse(context.source.format_version), [1,21,90])) diagnoser.add(context.source.format_version,
+        `'minecraft:custom_components' is deprecated in versions after 1.21.80`,
+        DiagnosticSeverity.warning,
+        'behaviorpack.block.components.custom_components_deprecation')
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err) {
+      // Leaving empty as the base diagnoser should flag an invalid format version
+    }
+  },
   "minecraft:item_visual": (name, component, context, diagnoser) => {
     minimumVersionRequired(context.source, name, [1, 21, 50], diagnoser)
   },
