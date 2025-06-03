@@ -535,6 +535,8 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     component.family_types?.forEach((family: string) => {
       minecraft_family_diagnose(family, diagnoser)
     });
+    if (typeof component.on_rider_enter_event == 'string') behaviorpack_entity_event_diagnose(component.on_rider_enter_event, component + '/' + component.event, Object.keys(context.source['minecraft:entity'].events || {}), diagnoser)
+    if (typeof component.on_rider_exit_event == 'string') behaviorpack_entity_event_diagnose(component.on_rider_exit_event, component + '/' + component.event, Object.keys(context.source['minecraft:entity'].events || {}), diagnoser)
   },
   "minecraft:scheduler": (name, component, context, diagnoser) => {
     component.scheduled_events?.forEach((entry: any) => {
@@ -660,11 +662,6 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     minecraft_diagnose_filters(component.filters, diagnoser)
   },
   "minecraft:input_air_controlled": (name, component, context, diagnoser) => {
-    if (!(context.source as any).use_beta_features) diagnoser.add(name,
-      `This component requires "use_beta_features" to be set to true`,
-      DiagnosticSeverity.error,
-      `behaviorpack.entity.component.requires_beta_features`
-    )
   },
   "minecraft:fall_damage": (name, component, context, diagnoser) => {
     try {
