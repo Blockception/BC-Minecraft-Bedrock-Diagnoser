@@ -3,6 +3,7 @@ import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../../type
 import { Context } from "../../../../utility/components";
 import { ComponentCheck, components_check } from "../../../../utility/components/checks";
 import { Internal } from "bc-minecraft-bedrock-project";
+import { behaviorpack_check_blockid } from '../../../behavior-pack/block';
 
 /**
  *
@@ -27,5 +28,23 @@ const component_test: Record<string, ComponentCheck<Internal.ResourcePack.Partic
       "Required property 'max_frame' is missing",
       DiagnosticSeverity.error,
       "resourcepack.particle.component.particle_appearance_billboard.max_frame");
+  },
+  "minecraft:particle_expire_if_in_blocks": (name, component, context, diagnoser) => {
+    component.forEach((block: string) => {
+      if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
+    });
+  },
+  "minecraft:particle_expire_if_not_in_blocks": (name, component, context, diagnoser) => {
+    component.forEach((block: string) => {
+      if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
+    });
+  },
+  "minecraft:particle_motion_collision": (name, component, context, diagnoser) => {
+    if (component.radius === undefined) diagnoser.add(
+      name,
+      "Required property 'radius' is missing",
+      DiagnosticSeverity.error,
+      "resourcepack.particle.component.particle_motion_collision.radius"
+    )
   }
 };
