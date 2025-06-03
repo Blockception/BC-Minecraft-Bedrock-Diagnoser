@@ -13,6 +13,7 @@ import { resourcepack_particle_diagnose } from "../particle/diagnose";
 import { render_controller_diagnose_implementation } from "../render-controller/diagnostics";
 import { diagnose_resourcepack_sounds } from "../sounds/diagnostics";
 import { texture_files_diagnose } from "../texture-atlas/entry";
+import { behaviorpack_item_diagnose } from '../../behavior-pack/item';
 
 /**Diagnoses the given document as an attachable
  * @param doc The text document to diagnose
@@ -27,6 +28,8 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
 
   const description = attacble["minecraft:attachable"].description;
   const attachableGathered = ResourcePack.Attachable.Process(diagnoser.document);
+
+  behaviorpack_item_diagnose(description.identifier, diagnoser)
 
   if (!attachableGathered) return;
   if (!attachableGathered.molang)
