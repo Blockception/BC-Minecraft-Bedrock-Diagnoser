@@ -427,11 +427,14 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
         `To use "minecraft:entity_sensor/subsensors", you need a "format_version" of 1.21.0 or higher`,
         DiagnosticSeverity.error,
         'behaviorpack.entity.component.entity_sensor')
-      minecraft_diagnose_filters(component.subsensors.event_filters, diagnoser)
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err) { 
-      // Leaving empty as the base diagnoser should flag an invalid format version
-    }
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (err) { 
+        // Leaving empty as the base diagnoser should flag an invalid format version
+      }
+      component.subsensors.forEach((sensor: any) => {
+        minecraft_diagnose_filters(sensor.event_filters, diagnoser)
+        if (typeof sensor.event == 'string') behaviorpack_entity_event_diagnose(sensor.event, component + '/' + sensor.event, Object.keys(context.source['minecraft:entity'].events || {}), diagnoser)
+      })
   },
   "minecraft:environment_sensor": (name, component, context, diagnoser) => {
     processEntries(component.triggers, entry => {
@@ -439,8 +442,8 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     })
   },
   "minecraft:equip_item": (name, component, context, diagnoser) => {
-    component.excluded_items?.forEach((item: string) => {
-      behaviorpack_item_diagnose(minecraft_get_item(item, diagnoser.document), diagnoser);
+    component.excluded_items?.forEach((item: string | { item: string }) => {
+      behaviorpack_item_diagnose(minecraft_get_item(typeof item == 'string' ? item : item.item, diagnoser.document), diagnoser);
     });
   },
   "minecraft:equippable": (name, component, context, diagnoser) => {
