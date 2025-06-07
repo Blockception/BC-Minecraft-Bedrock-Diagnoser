@@ -10,7 +10,7 @@ import { FormatVersion } from 'bc-minecraft-bedrock-types/lib/minecraft';
 
 /**Diagnoses the given document as an item
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnose_item_document(diagnoser: DocumentDiagnosticsBuilder): void {
   const item = Json.LoadReport<Internal.BehaviorPack.Item>(diagnoser);
   if (!Internal.BehaviorPack.Item.is(item)) return;
 

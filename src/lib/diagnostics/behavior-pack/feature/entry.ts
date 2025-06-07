@@ -4,11 +4,12 @@ import { Json } from "../../json";
 import { no_other_duplicates } from "../../packs/duplicate-check";
 import { behaviorpack_feature_diagnose } from "./diagnose";
 import { is_block_defined } from "../block";
-import { behaviorpack_structure_diagnose } from "../structure";
+import { diagnose_structure_implementation } from "../structure";
 
-/**Diagnoses the given document as an item
+/**
+ * Diagnoses the given document as an item
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnose_feature_document(diagnoser: DocumentDiagnosticsBuilder): void {
   const feature = Json.LoadReport<Internal.BehaviorPack.Feature>(diagnoser);
   if (!Internal.BehaviorPack.Feature.is(feature)) return;
 
@@ -39,7 +40,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
     diagnoser
   );
 
-  let components: any = feature;
+  let components = feature as Record<keyof Internal.BehaviorPack.Feature, any>;
 
   if (components["minecraft:aggregate_feature"])
     components["minecraft:aggregate_feature"].features?.forEach((id: string) => {
@@ -122,7 +123,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
 
   if (components["minecraft:structure_template_feature"]) {
     if (typeof components["minecraft:structure_template_feature"].structure_name == "string")
-      behaviorpack_structure_diagnose(
+      diagnose_structure_implementation(
         '"' + components["minecraft:structure_template_feature"].structure_name + '"',
         diagnoser
       );

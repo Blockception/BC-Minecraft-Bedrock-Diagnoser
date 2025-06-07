@@ -2,7 +2,7 @@ import { PackType } from 'bc-minecraft-bedrock-project';
 import { Types } from "bc-minecraft-bedrock-types";
 import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../types";
 
-export function minecraft_language_diagnose(diagnoser: DocumentDiagnosticsBuilder, packType: PackType): void {
+export function diagnose_language_document(diagnoser: DocumentDiagnosticsBuilder, packType: PackType): void {
   const keys = new Map<string, number>();
   let lastOffset = 0;
   const text = diagnoser.document.getText();

@@ -10,13 +10,13 @@ import { ProjectItem } from "bc-minecraft-bedrock-project";
  * @param data
  * @param diagnoser
  */
-export function animation_controller_diagnose_implementation(
+export function diagnose_animation_controller_implementation(
   id: string,
   user: EntityAnimationMolangCarrier & EventCarrier,
   ownerType: MolangDataSetKey,
   diagnoser: DiagnosticsBuilder
 ): void {
-  //Project has animation
+  //Project has animation controller
   const anim = diagnoser.context.getProjectData().behaviors.animation_controllers.get(id, diagnoser.project);
   if (anim === undefined) {
     return Errors.missing("behaviors", "animation_controllers", id, diagnoser);

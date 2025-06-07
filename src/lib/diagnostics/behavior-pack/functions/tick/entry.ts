@@ -4,7 +4,7 @@ import { Json } from "../../../json/json";
 /**Diagnoses the given document as an tick.json
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnose_tick_document(diagnoser: DocumentDiagnosticsBuilder): void {
   const data = Json.LoadReport<Tick>(diagnoser);
   if (!data || !data.values) return;
 

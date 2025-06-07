@@ -3,51 +3,47 @@ import { Types } from "bc-minecraft-bedrock-types";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../types";
 import { check_definition_value, education_enabled } from "../../definitions";
+import { Errors } from "../..";
+import { DefinitionItem } from "bc-minecraft-bedrock-project";
 
 /**
  * Checks if the entities exists in the project or in vanilla, if not then a bug is reported
- * @param value The entity to check
+ * @param id The entity to check
  * @param diagnoser The diagnoser
  * @returns True if the entity exists
  */
-export function behaviorpack_entityid_diagnose(
-  value: Types.OffsetWord | string,
-  diagnoser: DiagnosticsBuilder
-): boolean {
-  let id = typeof value === "string" ? value : value.text;
-
+export function behaviorpack_entityid_diagnose(id: Types.OffsetWord | string, diagnoser: DiagnosticsBuilder): boolean {
+  let strId = typeof id === "string" ? id : id.text;
   let event = "";
-  if (id.includes("<")) {
-    event = id.replace(id.split("<")[0], '').slice(1, -1);
-    id = id.split("<")[0];
+  if (strId.includes("<")) {
+    event = strId.replace(strId.split("<")[0], "").slice(1, -1);
+    strId = strId.split("<")[0];
   }
 
   //No namespace?
-  if (!id.includes(":")) id = "minecraft:" + id;
+  if (!strId.includes(":")) strId = "minecraft:" + strId;
 
   //Defined in McProject
-  if (check_definition_value(diagnoser.project.definitions.entity, id, diagnoser)) {
+  if (check_definition_value(diagnoser.project.definitions.entity, strId, diagnoser)) {
     return true;
   }
+
+  const entityItem = diagnoser.context.getProjectData().behaviors.entities.get(strId, diagnoser.project);
+  if (entityItem === undefined) {
+    Errors.missing("behaviors", "entities", id, diagnoser);
+    return false;
+  }
+  if (DefinitionItem.is(entityItem)) {
+    return true;
+  }
+  const entity = entityItem.item;
 
   //Project has entity
-  const data = diagnoser.context.getProjectData().projectData;
-  if (data.hasEntity(id)) {
-    if (event) behaviorpack_entity_event_diagnose(event, `${id}<${event}>`, data.behaviorPacks.entities.get(id)?.events, diagnoser);
-    return true;
+  if (event) {
+    behaviorpack_entity_event_diagnose(event, `${strId}<${event}>`, entity.events, diagnoser);
   }
 
-  //Vanilla has entity
-  const edu = education_enabled(diagnoser);
-  if (MinecraftData.BehaviorPack.hasEntity(id, edu)) {
-    if (event)
-      behaviorpack_entity_event_diagnose(event, `${id}<${event}>`, MinecraftData.BehaviorPack.getEntity(id, edu)?.events, diagnoser);
-    return true;
-  }
-
-  //Nothing then report error
-  diagnoser.add(value, `Cannot find entity definition: ${id}`, DiagnosticSeverity.error, "behaviorpack.entity.missing");
-  return false;
+  return true;
 }
 
 /**Checks if the entities exists in the project or in vanilla, if not then a bug is reported
@@ -69,12 +65,7 @@ export function behaviorpack_entity_event_diagnose(
 ) {
   if (!events) return;
   if (events.includes(id)) return;
-  diagnoser.add(
-    path,
-    `Entity has no event "${id}"`,
-    DiagnosticSeverity.warning,
-    "behaviorpack.entity.event.missing"
-  );
+  diagnoser.add(path, `Entity has no event "${id}"`, DiagnosticSeverity.warning, "behaviorpack.entity.event.missing");
 }
 
 /**Checks if the event is defined on the correct entities

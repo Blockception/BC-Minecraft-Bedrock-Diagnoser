@@ -31,7 +31,7 @@ export function behaviorpack_check_blockid_from_descriptor(
  * @returns
  */
 export function is_block_defined(id: string, diagnoser: DiagnosticsBuilder): boolean {
-  //Project has animation
+  //Project has block
   const anim = diagnoser.context.getProjectData().behaviors.blocks.get(id, diagnoser.project);
   if (anim === undefined) {
     Errors.missing("behaviors", "blocks", id, diagnoser);

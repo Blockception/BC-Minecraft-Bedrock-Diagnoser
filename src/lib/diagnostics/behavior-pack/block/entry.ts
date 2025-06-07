@@ -12,7 +12,7 @@ import { behaviorpack_diagnose_block_components } from "./components/diagnose";
 /**Diagnoses the given document as an bp block
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnose_block_document(diagnoser: DocumentDiagnosticsBuilder): void {
   //Check molang
   diagnose_molang(diagnoser.document.getText(), "Blocks", diagnoser);
 

@@ -66,15 +66,15 @@ import {
 } from "../entity/diagnose";
 import { behaviorpack_item_diagnose } from "../item/diagnose";
 import { behaviorpack_loot_table_short_diagnose } from "../loot-table/diagnose";
-import { behaviorpack_structure_diagnose } from "../structure/diagnose";
-import { behaviorpack_functions_diagnose } from "./diagnose";
+import { diagnose_structure_implementation } from "../structure/diagnose";
+import { mcfunction_is_defined } from "./diagnose";
 
 /**
  *
  * @param doc
  * @param diagnoser
  */
-export function mcfunction_commandsCheck(diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnose_mcfunction_commands_document(diagnoser: DocumentDiagnosticsBuilder): void {
   const edu = education_enabled(diagnoser);
   const text = diagnoser.document.getText();
   const lines = text.split("\n");
@@ -92,7 +92,7 @@ export function mcfunction_commandsCheck(diagnoser: DocumentDiagnosticsBuilder):
     if (comm.isEmpty()) continue;
 
     while (comm) {
-      mcfunction_commandcheck(comm, diagnoser, edu);
+      diagnose_mcfunction_commands(comm, diagnoser, edu);
 
       comm = comm.getSubCommand();
     }
@@ -133,7 +133,7 @@ export function commandsCheck(commandText: string, diagnoser: DocumentDiagnostic
   if (comm.isEmpty()) return;
 
   while (comm) {
-    mcfunction_commandcheck(comm, diagnoser, edu);
+    diagnose_mcfunction_commands(comm, diagnoser, edu);
 
     comm = comm.getSubCommand();
   }
@@ -146,7 +146,7 @@ export function commandsCheck(commandText: string, diagnoser: DocumentDiagnostic
  * @param edu
  * @returns
  */
-function mcfunction_commandcheck(command: Command, diagnoser: DocumentDiagnosticsBuilder, edu: boolean): void {
+function diagnose_mcfunction_commands(command: Command, diagnoser: DocumentDiagnosticsBuilder, edu: boolean): void {
   const info = command.getBestMatch(edu);
 
   if (info.length === 0) {
@@ -258,7 +258,7 @@ const ParameterDiagnostics: Record<number, DiagnoseCommand> = {
   [ParameterType.effect]: minecraft_effect_diagnose,
   [ParameterType.entity]: behaviorpack_entityid_diagnose,
   //Custom call [ParameterType.event]:behaviorpack_entity_event_diagnose,
-  [ParameterType.function]: behaviorpack_functions_diagnose,
+  [ParameterType.function]: mcfunction_is_defined,
   [ParameterType.float]: general_float_diagnose,
   [ParameterType.integer]: general_integer_diagnose,
   [ParameterType.item]: (item, diagnoser) => {
@@ -279,7 +279,7 @@ const ParameterDiagnostics: Record<number, DiagnoseCommand> = {
   //Custom call [ParameterType.slotID]:,
   [ParameterType.sound]: resourcepack_sound_definitions_diagnose,
   [ParameterType.string]: general_string_diagnose,
-  [ParameterType.structure]: behaviorpack_structure_diagnose,
+  [ParameterType.structure]: diagnose_structure_implementation,
   [ParameterType.tag]: minecraft_tag_diagnose,
   [ParameterType.tickingarea]: minecraft_tickingarea_diagnose,
   //Custom call ParameterType.unknown]:(item, diagnoser)=>diagnoser.add(item.offset, "Unknown parametype: " + item.type, DiagnosticSeverity.warning, "debugger.error"),

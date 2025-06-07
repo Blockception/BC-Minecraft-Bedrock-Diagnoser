@@ -37,7 +37,7 @@ export function missing<T extends PackType>(
 
   diagnoser.add(
     id,
-    `Cannot find ${p} ${String(subtype)}: ${id}`,
+    `Cannot find ${p} ${String(subtype)} definition: ${id}`,
     DiagnosticSeverity.error,
     `${p}.${String(subtype)}.missing`
   );

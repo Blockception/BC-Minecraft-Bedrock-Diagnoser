@@ -3,7 +3,7 @@ import { DiagnoserContext, ManagedDiagnosticsBuilder } from "./diagnoser-context
 import { DiagnosticSeverity } from "./severity";
 import { format_diagnose_path } from "../diagnostics/format";
 import { MCIgnore } from "bc-minecraft-project";
-import { minecraft_language_diagnose } from "../diagnostics/minecraft";
+import { diagnose_language_document } from "../diagnostics/minecraft";
 import { BehaviorPack } from "../diagnostics/behavior-pack";
 import { ResourcePack } from "../diagnostics/resource-pack";
 import { SkinPack } from "../diagnostics/skin-pack/skin-pack";
@@ -56,7 +56,7 @@ export class Diagnoser<T extends TextDocument = TextDocument> {
 
       //Language file?
       if (doc.uri.endsWith(".lang")) {
-        minecraft_language_diagnose(diagnoser, pack.type);
+        diagnose_language_document(diagnoser, pack.type);
       } else {
         //Check per pack
         switch (pack.type) {
@@ -69,11 +69,11 @@ export class Diagnoser<T extends TextDocument = TextDocument> {
             break;
 
           case PackType.skin_pack:
-            out = SkinPack.Process(diagnoser);
+            out = SkinPack.diagnose_document(diagnoser);
             break;
 
           case PackType.world:
-            out = WorldPack.Process(diagnoser);
+            out = WorldPack.diagnose_document(diagnoser);
             break;
         }
       }

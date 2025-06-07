@@ -2,6 +2,7 @@ import { check_definition_value, education_enabled } from "../../definitions";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../types";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { Types } from "bc-minecraft-bedrock-types";
+import { Errors } from "../..";
 
 export function behaviorpack_loot_table_diagnose(
   value: Types.OffsetWord | string,
@@ -12,14 +13,6 @@ export function behaviorpack_loot_table_diagnose(
   if (has_loot_table(id, diagnoser)) {
     return true;
   }
-
-  //Nothing then report error
-  diagnoser.add(
-    value,
-    `Cannot find behaviorpack loot_table definition: ${id}`,
-    DiagnosticSeverity.error,
-    "behaviorpack.loot_table.missing"
-  );
   return false;
 }
 
@@ -57,16 +50,12 @@ export function behaviorpack_loot_table_short_diagnose(
 }
 
 function has_loot_table(id: string, diagnoser: DiagnosticsBuilder): boolean {
-  //Defined in McProject
-  if (check_definition_value(diagnoser.project.definitions.loot_table, id, diagnoser)) return true;
-  const data = diagnoser.context.getProjectData().projectData;
-
-  //Project has loot_table
-  if (data.behaviorPacks.loot_tables.has(id)) return true;
-  const edu = education_enabled(diagnoser);
-
-  //Vanilla has loot_table
-  if (MinecraftData.BehaviorPack.hasLootTable(id, edu)) return true;
+  //Project has loot table
+  const table = diagnoser.context.getProjectData().behaviors.loot_tables.get(id, diagnoser.project);
+  if (table === undefined) {
+    Errors.missing("behaviors", "loot_tables", id, diagnoser);
+    return false;
+  }
 
   return false;
 }

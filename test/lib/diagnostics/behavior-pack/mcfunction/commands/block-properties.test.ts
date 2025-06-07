@@ -1,6 +1,6 @@
 import { TextDocument } from "bc-minecraft-bedrock-project";
 import path from 'path';
-import { mcfunction_commandsCheck } from "../../../../../../src/lib/diagnostics/behavior-pack/mcfunction";
+import { diagnose_mcfunction_commands_document } from "../../../../../../src/lib/diagnostics/behavior-pack/mcfunction";
 import { TestDiagnoser } from "../../../../../diagnoser";
 
 describe("BehaviorPack", () => {
@@ -31,7 +31,7 @@ describe("BehaviorPack", () => {
 
           const diagnoser = TestDiagnoser.createDocument(undefined, doc);
 
-          mcfunction_commandsCheck(diagnoser);
+          diagnose_mcfunction_commands_document(diagnoser);
           diagnoser.expectEmpty();
         });
       }
@@ -48,7 +48,7 @@ describe("BehaviorPack", () => {
           };
           const diagnoser = TestDiagnoser.createDocument(undefined, doc);
 
-          mcfunction_commandsCheck(diagnoser);
+          diagnose_mcfunction_commands_document(diagnoser);
           diagnoser.expectAny();
         });
       }

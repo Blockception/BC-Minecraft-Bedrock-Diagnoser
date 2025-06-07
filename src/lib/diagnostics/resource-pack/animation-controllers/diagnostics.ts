@@ -22,7 +22,7 @@ export function diagnose_animation_controller_implementation(
     sounds?: Definition;
   }
 ): void {
-  //Project has animation
+  //Project has animation controllers
   const anim = diagnoser.context.getProjectData().resources.animation_controllers.get(id, diagnoser.project);
   if (anim === undefined) {
     return Errors.missing("resources", "animation_controllers", id, diagnoser);

@@ -11,7 +11,7 @@ import { AnimationUsage } from "../../minecraft";
 import { diagnose_script } from "../../minecraft/script";
 import { diagnose_molang } from "../../molang/diagnostics";
 import { no_other_duplicates } from "../../packs/duplicate-check";
-import { animation_or_controller_diagnose_implementation } from "../anim-or-controller";
+import { diagnose_animation_or_controller_implementation } from "../anim-or-controller";
 import { behaviorpack_animation_used } from "../animation/usage";
 import { behaviorpack_entity_components_check } from "./components";
 import { behaviorpack_entity_components_dependencies } from "./components/dependencies";
@@ -21,7 +21,7 @@ import { diagnose_entity_properties_definition } from "./properties";
 /**Diagnoses the given document as an bp entity
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnose_entity_document(diagnoser: DocumentDiagnosticsBuilder): void {
   //Check molang
   diagnose_molang(diagnoser.document.getText(), "Entities", diagnoser);
 
@@ -68,7 +68,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
 
   //Check animations / animation controllers implements
   owner.animations.using.forEach((anim_id) =>
-    animation_or_controller_diagnose_implementation(anim_id, owner, "Entities", diagnoser)
+    diagnose_animation_or_controller_implementation(anim_id, owner, "Entities", diagnoser)
   );
 
   if ("permutations" in container)

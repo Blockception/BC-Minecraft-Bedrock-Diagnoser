@@ -12,7 +12,7 @@ type User = EntityAnimationMolangCarrier & EventCarrier;
  * @param data
  * @param diagnoser
  */
-export function animation_diagnose_implementation(
+export function diagnose_animation_implementation(
   anim_id: string,
   user: User,
   ownerType: MolangDataSetKey,
