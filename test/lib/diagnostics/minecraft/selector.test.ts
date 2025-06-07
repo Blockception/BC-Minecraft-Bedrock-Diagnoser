@@ -9,7 +9,7 @@ import { TestProjectData } from "../../../testprojectdata";
 describe("Selector", () => {
   const context = TestProjectData.createContext();
   const pi: ParameterInfo = { required: false, text: "", type: ParameterType.selector };
-  const cache = context.getCache();
+  const cache = context.getProjectData().projectData;
   cache.general.objectives.set(GeneralInfo.create("data", Location.create("test"), "test objective"));
   cache.general.tags.set(GeneralInfo.create("foo", Location.create("test"), "test tag"));
 

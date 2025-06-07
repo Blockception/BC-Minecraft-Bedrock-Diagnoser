@@ -12,7 +12,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   if (!Json.TypeCheck(blocks, diagnoser, "blocks.json", "resourcepack.blocks.invalid", is)) return;
 
   const keys = Object.keys(blocks);
-  const rp = diagnoser.context.getCache().resourcePacks;
+  const rp = diagnoser.context.getProjectData().projectData.resourcePacks;
 
   for (let I = 0; I < keys.length; I++) {
     const key = keys[I];
@@ -40,7 +40,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
 
       behaviorpack_check_blockid(key, diagnoser) 
 
-      const blockFile = diagnoser.context.getCache().behaviorPacks.blocks.get(key)?.location.uri
+      const blockFile = diagnoser.context.getProjectData().projectData.behaviorPacks.blocks.get(key)?.location.uri
       if (!blockFile) return;
 
       if (diagnoser.context.getDocument(blockFile)?.getText().includes('minecraft:material_instances')) diagnoser.add(

@@ -4,7 +4,7 @@ import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../types";
 import { check_definition_value } from "../../definitions";
 
 export function behaviorpack_functions_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  const data = diagnoser.context.getCache();
+  const data = diagnoser.context.getProjectData().projectData;
   const id = Text.UnQuote(value.text);
 
   //Check project

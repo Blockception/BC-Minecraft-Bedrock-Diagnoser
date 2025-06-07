@@ -9,7 +9,7 @@ export function resourcepack_particle_diagnose(id: string | Types.OffsetWord, di
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.particle, particle_id, diagnoser)) return;
 
-  const data = diagnoser.context.getCache();
+  const data = diagnoser.context.getProjectData().projectData;
 
   //Project has entity
   if (data.resourcePacks.particles.has(particle_id)) return;

@@ -571,7 +571,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
       if (entry.spawn_item) behaviorpack_item_diagnose(minecraft_get_item(entry.spawn_item, diagnoser.document), diagnoser);
       if (!entry.spawn_entity) return;
       behaviorpack_entityid_diagnose(entry.spawn_entity, diagnoser)
-      if (entry.spawn_event && !diagnoser.context.getCache().behaviorPacks.entities.get(entry.spawn_entity)?.events.includes(entry.spawn_event)) diagnoser.add(name,
+      if (entry.spawn_event && !diagnoser.context.getProjectData().projectData.behaviorPacks.entities.get(entry.spawn_entity)?.events.includes(entry.spawn_event)) diagnoser.add(name,
         `Trying to call event "${entry.spawn_event}" that does not exist on "${entry.spawn_entity}"`,
         DiagnosticSeverity.warning,
         `behaviorpack.entity.component.spawn_entity`
@@ -691,7 +691,7 @@ function canOnlyBeUsedBySpecificMob(source: any, id: string | string[]) {
 function diagnose_event_trigger(componentName: string, component: any, entityId: string, diagnoser: DocumentDiagnosticsBuilder) {
   if (!component) return;
   minecraft_diagnose_filters(component.filters, diagnoser)
-  if (typeof component.event == 'string') behaviorpack_entity_event_diagnose(component.event, componentName + '/' + component.event, diagnoser.context.getCache().behaviorPacks.entities.get(entityId)?.events, diagnoser)
+  if (typeof component.event == 'string') behaviorpack_entity_event_diagnose(component.event, componentName + '/' + component.event, diagnoser.context.getProjectData().projectData.behaviorPacks.entities.get(entityId)?.events, diagnoser)
 }
 
 function processEntries<T>(data: T | T[], callback: (entry: T) => void) {

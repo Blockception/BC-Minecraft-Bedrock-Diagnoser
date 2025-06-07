@@ -12,7 +12,7 @@ export namespace TestProjectData {
     files: Map<string, string> | undefined = undefined
   ): DiagnosticsBuilderContent<T> {
     const context = new InternalTest<T>(undefined, files);
-    const data = context.getCache();
+    const data = context.getProjectData().projectData;
 
     data.behaviorPacks.add("behavior_pack", MCProject.createEmpty(), {} as Manifest);
     data.resourcePacks.add("resource_pack", MCProject.createEmpty(), {} as Manifest);

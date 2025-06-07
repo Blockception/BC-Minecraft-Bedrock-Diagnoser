@@ -46,7 +46,7 @@ export function minecraft_selector_diagnose(
     return;
   }
 
-  const data = diagnoser.context.getCache();
+  const data = diagnoser.context.getProjectData().projectData;
 
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.name, name, diagnoser)) return;

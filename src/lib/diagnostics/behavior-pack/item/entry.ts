@@ -16,7 +16,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
 
   const identifier = item["minecraft:item"].description.identifier;
   // check that no other exists with this id
-  no_other_duplicates("behaviorpack.block", diagnoser.context.getCache().behaviorPacks.items, identifier, diagnoser);
+  no_other_duplicates("behaviorpack.block", diagnoser.context.getProjectData().projectData.behaviorPacks.items, identifier, diagnoser);
 
   //Check components
   const context: Context<Internal.BehaviorPack.Item> = {

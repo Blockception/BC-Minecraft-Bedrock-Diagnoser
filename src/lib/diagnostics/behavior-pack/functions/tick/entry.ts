@@ -8,7 +8,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   const data = Json.LoadReport<Tick>(diagnoser);
   if (!data || !data.values) return;
 
-  const pack = diagnoser.context.getCache().behaviorPacks.get(diagnoser.document.uri);
+  const pack = diagnoser.context.getProjectData().projectData.behaviorPacks.get(diagnoser.document.uri);
   if (!pack) return;
 
   //Specific lookup in the pack

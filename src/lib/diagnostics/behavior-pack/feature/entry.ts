@@ -34,7 +34,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   // check that no other exists with this id
   no_other_duplicates(
     "behaviorpack.components",
-    diagnoser.context.getCache().behaviorPacks.features,
+    diagnoser.context.getProjectData().projectData.behaviorPacks.features,
     identifier,
     diagnoser
   );

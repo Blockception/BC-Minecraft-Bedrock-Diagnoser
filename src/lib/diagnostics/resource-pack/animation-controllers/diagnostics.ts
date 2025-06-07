@@ -24,7 +24,7 @@ export function animation_controller_diagnose_implementation(
 ): void {
   if (!has_animation_controller(controllerid, diagnoser)) return;
 
-  const controller = diagnoser.context.getCache().resourcePacks.animation_controllers.get(controllerid);
+  const controller = diagnoser.context.getProjectData().projectData.resourcePacks.animation_controllers.get(controllerid);
   if (!controller) return;
 
   general_animation_controllers_implementation(controller, user, ownerType, diagnoser);
@@ -63,7 +63,7 @@ export function animation_controller_diagnose_implementation(
  * @returns
  */
 export function has_animation_controller(id: string, diagnoser: DiagnosticsBuilder): boolean {
-  const cache = diagnoser.context.getCache();
+  const cache = diagnoser.context.getProjectData().projectData;
 
   //Project has animation controller
   if (cache.resourcePacks.animation_controllers.has(id)) return true;

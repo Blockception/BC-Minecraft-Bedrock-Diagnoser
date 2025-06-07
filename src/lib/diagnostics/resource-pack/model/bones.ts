@@ -6,7 +6,7 @@ export interface BoneUsage {
 }
 
 export function checkBonesExists(bones: BoneUsage[], diagnoser: DiagnosticsBuilder) {
-  const projectData = diagnoser.context.getCache();
+  const projectData = diagnoser.context.getProjectData().projectData;
 
   for (let I = 0; I < bones.length; I++) {
     const bone = bones[I];

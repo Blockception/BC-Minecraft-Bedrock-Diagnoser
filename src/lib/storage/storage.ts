@@ -84,7 +84,7 @@ export class Storage {
   }
 
   static from(diagnoser: DiagnosticsBuilder): Storage {
-    return new Storage(diagnoser.context.getCache(), education_enabled(diagnoser));
+    return new Storage(diagnoser.context.getProjectData().projectData, education_enabled(diagnoser));
   }
 }
 

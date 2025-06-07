@@ -119,7 +119,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
 
     Object.keys(component).forEach((value) => {
       const textureId = component[value].texture;
-      if (!diagnoser.context.getCache().resourcePacks.terrainTextures.find((val) => val.id == textureId))
+      if (!diagnoser.context.getProjectData().projectData.resourcePacks.terrainTextures.find((val) => val.id == textureId))
         diagnoser.add(
           textureId,
           `Texture reference "${textureId}" was not defined in terrain_texture.json`,

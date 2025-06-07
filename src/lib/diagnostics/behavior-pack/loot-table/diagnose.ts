@@ -59,7 +59,7 @@ export function behaviorpack_loot_table_short_diagnose(
 function has_loot_table(id: string, diagnoser: DiagnosticsBuilder): boolean {
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.loot_table, id, diagnoser)) return true;
-  const data = diagnoser.context.getCache();
+  const data = diagnoser.context.getProjectData().projectData;
 
   //Project has loot_table
   if (data.behaviorPacks.loot_tables.has(id)) return true;

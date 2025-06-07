@@ -31,7 +31,7 @@ export function behaviorpack_entityid_diagnose(
   }
 
   //Project has entity
-  const data = diagnoser.context.getCache();
+  const data = diagnoser.context.getProjectData().projectData;
   if (data.hasEntity(id)) {
     if (event) behaviorpack_entity_event_diagnose(event, `${id}<${event}>`, data.behaviorPacks.entities.get(id)?.events, diagnoser);
     return true;
@@ -103,7 +103,7 @@ export function command_entity_event_diagnose(
 
   if (entityid) {
     //Get entity
-    const entity = diagnoser.context.getCache().behaviorPacks.entities.get(entityid);
+    const entity = diagnoser.context.getProjectData().projectData.behaviorPacks.entities.get(entityid);
 
     //Entity found
     if (entity) {

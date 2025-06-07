@@ -46,7 +46,7 @@ export function behaviorpack_item_diagnose(value: Item|string, diagnoser: Diagno
 }
 
 function hasAny(id: string, diagnoser: DiagnosticsBuilder): boolean {
-  const data = diagnoser.context.getCache();
+  const data = diagnoser.context.getProjectData().projectData;
 
   if (check_definition_value(diagnoser.project.definitions.item, id, diagnoser)) return true;
   if (check_definition_value(diagnoser.project.definitions.block, id, diagnoser)) return true;

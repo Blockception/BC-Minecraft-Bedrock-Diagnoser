@@ -17,7 +17,7 @@ export function render_controller_diagnose_implementation(
   diagnoser: DiagnosticsBuilder
 ): void {
   if (has_render_controller(controllerId, diagnoser)) {
-    const cache = diagnoser.context.getCache();
+    const cache = diagnoser.context.getProjectData().projectData;
 
     //Project has render controller
     const rp = cache.resourcePacks.render_controllers.get(controllerId);
@@ -35,7 +35,7 @@ export function render_controller_diagnose_implementation(
  * @returns
  */
 export function has_render_controller(id: string, diagnoser: DiagnosticsBuilder): boolean {
-  const cache = diagnoser.context.getCache();
+  const cache = diagnoser.context.getProjectData().projectData;
 
   //Project has render controller
   if (cache.resourcePacks.render_controllers.has(id)) return true;

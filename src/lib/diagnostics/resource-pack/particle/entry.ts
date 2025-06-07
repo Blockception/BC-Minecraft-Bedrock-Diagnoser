@@ -32,7 +32,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
 
   if (typeof texture != 'string') return;
 
-  const pack = diagnoser.context.getCache().resourcePacks.get(diagnoser.document.uri);
+  const pack = diagnoser.context.getProjectData().projectData.resourcePacks.get(diagnoser.document.uri);
   if (pack === undefined) return;
 
   if (MinecraftData.ResourcePack.hasTexture(texture, education_enabled(diagnoser))) return;

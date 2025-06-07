@@ -8,7 +8,7 @@ describe("Objective", () => {
   it("diagnose no errors", () => {
     const B = new TestDiagnoser();
 
-    const objectivesData = B.context.getCache().general.objectives;
+    const objectivesData = B.context.getProjectData().projectData.general.objectives;
 
     const objectives: string[] = ["test", "test.example", "Test_Example", "Test-Example"];
 
@@ -21,7 +21,7 @@ describe("Objective", () => {
   it("diagnose with errors", () => {
     const B = new TestDiagnoser();
 
-    const objectivesData = B.context.getCache().general.objectives;
+    const objectivesData = B.context.getProjectData().projectData.general.objectives;
 
     const objectives: string[] = ["te/st", "test!example", "Test@Example", "Test#Example"];
 

@@ -3,7 +3,7 @@ import { DiagnosticsBuilder, DiagnosticSeverity } from '../../../types';
 import { education_enabled } from "../../definitions";
 
 export function resourcepack_has_model(modelId: string, diagnoser: DiagnosticsBuilder): boolean {
-  const data = diagnoser.context.getCache();
+  const data = diagnoser.context.getProjectData().projectData;
 
   //Has project data
   if (data.resourcePacks.models.has(modelId)) return true;

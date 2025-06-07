@@ -21,7 +21,7 @@ export function behaviorpack_structure_diagnose(value: Types.OffsetWord | string
 
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.structure, id, diagnoser)) return true;
-  const data = diagnoser.context.getCache();
+  const data = diagnoser.context.getProjectData().projectData;
 
   //Project has structure
   if (data.behaviorPacks.structures.has(id)) return true;

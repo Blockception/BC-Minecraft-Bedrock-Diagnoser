@@ -21,7 +21,7 @@ export function animation_diagnose_implementation(
 ): void {
   if (!has_animation(anim_id, diagnoser)) return;
   //Project has animation
-  const anim = diagnoser.context.getCache().resourcePacks.animations.get(anim_id);
+  const anim = diagnoser.context.getProjectData().projectData.resourcePacks.animations.get(anim_id);
 
   if (!anim) return;
 
@@ -59,7 +59,7 @@ export function animation_diagnose_implementation(
  * @returns
  */
 export function has_animation(id: string, diagnoser: DiagnosticsBuilder): boolean {
-  const cache = diagnoser.context.getCache();
+  const cache = diagnoser.context.getProjectData().projectData;
 
   //Project has render controller
   if (cache.resourcePacks.animations.has(id)) return true;

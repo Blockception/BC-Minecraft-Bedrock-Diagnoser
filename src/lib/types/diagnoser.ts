@@ -34,7 +34,7 @@ export class Diagnoser<T extends TextDocument = TextDocument> {
       doc = temp;
     }
 
-    const pack = this.context.getCache().get(doc);
+    const pack = this.context.getProjectData().projectData.get(doc);
     if (!pack) return false;
 
     //Check if diagnostics was disabled

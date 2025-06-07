@@ -11,7 +11,7 @@ export function behaviorpack_trading_diagnose(
 
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.trading, id, diagnoser)) return true;
-  const data = diagnoser.context.getCache();
+  const data = diagnoser.context.getProjectData().projectData;
 
   //Project has loot_table
   if (data.behaviorPacks.trading.has(id)) return true;

@@ -48,7 +48,7 @@ export enum anim_or_contr {
  * @param diagnoser The diagnostics builder to add the errors to
  * @returns True if animation, false if controller*/
 export function is_animation_or_controller(id: string, diagnoser: DiagnosticsBuilder): anim_or_contr {
-  const cache = diagnoser.context.getCache();
+  const cache = diagnoser.context.getProjectData().projectData;
 
   if (cache.behaviorPacks.animations.has(id)) return anim_or_contr.animation;
   if (cache.behaviorPacks.animation_controllers.has(id)) return anim_or_contr.controller;

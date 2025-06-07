@@ -6,7 +6,7 @@ export function resourcepack_check_entityid(id: string, diagnoser: DiagnosticsBu
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.entity, id, diagnoser)) return;
 
-  const data = diagnoser.context.getCache();
+  const data = diagnoser.context.getProjectData().projectData;
 
   //Project has entity
   if (data.hasEntity(id)) return;

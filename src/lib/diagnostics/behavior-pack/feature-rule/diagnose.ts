@@ -12,7 +12,7 @@ export function behaviorpack_featurerule_diagnose(id: string, diagnoser: Diagnos
   if (!id.includes(":")) id = "minecraft:" + id;
 
   //Project has
-  const data = diagnoser.context.getCache();
+  const data = diagnoser.context.getProjectData().projectData;
   if (data.behaviorPacks.features_rules.has(id)) return true;
 
   //Vanilla has entity

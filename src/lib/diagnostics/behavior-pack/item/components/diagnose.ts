@@ -93,7 +93,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Item>>
     if (typeof component == 'string') textureId = component
     else if (typeof component.texture == 'string') textureId = component.texture
     if (textureId !== undefined) {
-      if (!diagnoser.context.getCache().resourcePacks.itemTextures.find(val => val.id == textureId))
+      if (!diagnoser.context.getProjectData().projectData.resourcePacks.itemTextures.find(val => val.id == textureId))
         diagnoser.add(textureId,
           `Texture reference "${textureId}" was not defined in item_texture.json`,
           DiagnosticSeverity.error,
@@ -101,7 +101,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Item>>
     } else {
       Object.keys(component.textures)?.forEach(value => {
         const textureId = component.textures[value];
-        if (!diagnoser.context.getCache().resourcePacks.itemTextures.find(val => val.id == textureId))
+        if (!diagnoser.context.getProjectData().projectData.resourcePacks.itemTextures.find(val => val.id == textureId))
           diagnoser.add(textureId,
             `Texture reference "${textureId}" was not defined in item_texture.json`,
             DiagnosticSeverity.error,

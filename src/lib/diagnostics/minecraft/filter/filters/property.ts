@@ -7,7 +7,7 @@ export function diagnose_filter_property(filter: Minecraft.Filter.Filter, diagno
 
   if (!domain) return;
 
-  const entities = diagnoser.context.getCache().behaviorPacks.entities;
+  const entities = diagnoser.context.getProjectData().projectData.behaviorPacks.entities;
 
   let diagnosed = false;
   

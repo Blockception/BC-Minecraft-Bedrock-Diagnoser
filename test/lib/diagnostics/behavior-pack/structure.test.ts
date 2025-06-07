@@ -9,7 +9,7 @@ describe("BehaviorPack", () => {
 
     beforeEach(() => {
       diagnoser = TestDiagnoser.create();
-      data = diagnoser.context.getCache();
+      data = diagnoser.context.getProjectData().projectData;
     });
 
     it("quotes", () => {

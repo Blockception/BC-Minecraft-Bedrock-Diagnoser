@@ -2,7 +2,7 @@ import { DiagnosticSeverity, DiagnosticsBuilder } from '../../../types';
 
 
 export function check_geo_and_rules(geoId: string, culling: string, diagnoser: DiagnosticsBuilder) {
-  const projectData = diagnoser.context.getCache();
+  const projectData = diagnoser.context.getProjectData().projectData;
   const model = projectData.resourcePacks.models.get(geoId);
   if (!model) return;
 

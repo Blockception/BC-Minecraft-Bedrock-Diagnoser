@@ -30,7 +30,7 @@ export function behaviorpack_check_blockid(id: string, diagnoser: DiagnosticsBui
 
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.block, id, diagnoser)) return true;
-  const data = diagnoser.context.getCache();
+  const data = diagnoser.context.getProjectData().projectData;
 
   //Project has block
   if (data.hasBlock(id)) return true;

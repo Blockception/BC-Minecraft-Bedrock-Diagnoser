@@ -23,7 +23,7 @@ function check_min_engine_version(
   version: number[] | string | Types.Version | undefined,
   diagnoser: DocumentDiagnosticsBuilder
 ): void {
-  const pack = diagnoser.context.getCache().behaviorPacks.get(diagnoser.document);
+  const pack = diagnoser.context.getProjectData().projectData.behaviorPacks.get(diagnoser.document);
 
   /**No pack then skip */
   if (pack === undefined) return;

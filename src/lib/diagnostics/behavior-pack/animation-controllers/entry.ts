@@ -25,7 +25,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
     // check that no other exists with this id
     no_other_duplicates(
       "behaviorpack.animation_controllers",
-      diagnoser.context.getCache().behaviorPacks.animation_controllers,
+      diagnoser.context.getProjectData().projectData.behaviorPacks.animation_controllers,
       id,
       diagnoser
     );

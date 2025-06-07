@@ -55,7 +55,7 @@ export function animation_or_controller_diagnose(id: Types.OffsetWord, diagnoser
 }
 
 export function animation_reference_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
-  const data = diagnoser.context.getCache();
+  const data = diagnoser.context.getProjectData().projectData;
   const id = value.text;
 
   //Project in entity
@@ -101,7 +101,7 @@ export enum anim_or_contr {
  * @returns True if animation, false if controller
  */
 export function is_animation_or_controller(id: string, diagnoser: DiagnosticsBuilder): anim_or_contr {
-  const cache = diagnoser.context.getCache();
+  const cache = diagnoser.context.getProjectData().projectData;
 
   if (cache.resourcePacks.animations.has(id)) return anim_or_contr.animation;
   if (cache.resourcePacks.animation_controllers.has(id)) return anim_or_contr.controller;
