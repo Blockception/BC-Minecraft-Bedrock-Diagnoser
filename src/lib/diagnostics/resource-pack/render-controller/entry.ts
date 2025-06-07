@@ -3,7 +3,7 @@ import { DocumentDiagnosticsBuilder} from "../../../types";
 import { diagnose_molang } from '../../molang/diagnostics';
 import { Internal } from "bc-minecraft-bedrock-project";
 import { Json } from '../../json';
-import { BoneUsage, checkBonesExists } from '../model';
+import { BoneUsage, model_bones_must_exist } from '../model';
 
 /**Diagnoses the given document as a render controller
  * @param doc The text document to diagnose
@@ -27,5 +27,5 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
     })
   })
 
-  checkBonesExists(bones, diagnoser);
+  model_bones_must_exist(bones, diagnoser);
 }

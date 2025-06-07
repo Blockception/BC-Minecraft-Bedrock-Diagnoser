@@ -2,8 +2,8 @@ import { ComponentBehavior } from "bc-minecraft-bedrock-types/lib/minecraft/comp
 import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../../types";
 import { Context } from "../../../../utility/components";
 import { component_error, ComponentCheck, components_check } from "../../../../utility/components/checks";
-import { check_geo_and_rules } from "../../../resource-pack/block-culling";
-import { resourcepack_has_model } from "../../../resource-pack/model/diagnose";
+import { diagnose_block_culling_geo_and_rules } from "../../../resource-pack/block-culling";
+import { model_is_defined } from "../../../resource-pack/model/diagnose";
 import { behaviorpack_loot_table_diagnose } from "../../loot-table";
 import { is_block_defined } from "../diagnose";
 import { Internal } from "bc-minecraft-bedrock-project";
@@ -91,12 +91,12 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
     }
 
     if (typeof component === "string") {
-      resourcepack_has_model(component, diagnoser);
+      model_is_defined(component, diagnoser);
     } else if (typeof component === "object") {
-      if (component.value) resourcepack_has_model(component.value, diagnoser);
-      if (component.identifier) resourcepack_has_model(component.identifier, diagnoser);
+      if (component.value) model_is_defined(component.value, diagnoser);
+      if (component.identifier) model_is_defined(component.identifier, diagnoser);
       if (component.culling && component.identifier)
-        check_geo_and_rules(component.identifier, component.culling, diagnoser);
+        diagnose_block_culling_geo_and_rules(component.identifier, component.culling, diagnoser);
     }
   },
   "minecraft:loot": (name, component, context, diagnoser) => {

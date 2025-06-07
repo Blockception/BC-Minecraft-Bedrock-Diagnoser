@@ -1,12 +1,12 @@
 import { ResourcePackCollection } from "bc-minecraft-bedrock-project/lib/src/project/resource-pack";
 import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from '../../../types';
-import { Json } from "../../json/json";
 import { is_block_defined } from '../../behavior-pack/block';
+import { Json } from "../../json/json";
 
 /**Diagnoses the given document as a block.json
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnose_block_document(diagnoser: DocumentDiagnosticsBuilder): void {
   const blocks = Json.LoadReport<Blocks>(diagnoser);
 
   if (!Json.TypeCheck(blocks, diagnoser, "blocks.json", "resourcepack.blocks.invalid", is)) return;

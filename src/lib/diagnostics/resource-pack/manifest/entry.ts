@@ -6,7 +6,7 @@ import { minecraft_manifest_diagnose, minecraft_manifest_required_module } from 
 /**Diagnoses the given document as a manifest
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnose_manifest_document(diagnoser: DocumentDiagnosticsBuilder): void {
   const manifest = Json.LoadReport<Manifest>(diagnoser);
 
   if (!Json.TypeCheck(manifest, diagnoser, "manifest", "minecraft.manifest.invalid", Manifest.is)) return;

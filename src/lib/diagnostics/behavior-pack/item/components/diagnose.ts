@@ -5,7 +5,7 @@ import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../../type
 import { Context } from "../../../../utility/components";
 import { component_error, ComponentCheck, components_check } from "../../../../utility/components/checks";
 import { minecraft_get_item } from "../../../minecraft/items";
-import { resourcepack_particle_diagnose } from '../../../resource-pack/particle';
+import { particle_is_defined } from '../../../resource-pack/particle';
 import { is_block_defined } from "../../block";
 import { behaviorpack_entityid_diagnose } from "../../entity";
 import { behaviorpack_item_diagnose } from "../diagnose";
@@ -128,7 +128,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Item>>
   },
   "minecraft:durability_sensor": (name, component, context, diagnoser) => {
     if (!component.particle_type || !(typeof component.particle_type == 'string')) return;
-    resourcepack_particle_diagnose(component.particle_type, diagnoser)
+    particle_is_defined(component.particle_type, diagnoser)
   },
   "minecraft:rarity": (name, component, context, diagnoser) => {
     try {

@@ -55,8 +55,8 @@ import {
   mode_time_diagnose
 } from "../../mode/diagnose";
 import { animation_reference_diagnose } from "../../resource-pack/anim-or-controller";
-import { resourcepack_particle_diagnose } from "../../resource-pack/particle/diagnose";
-import { resourcepack_sound_diagnose } from "../../resource-pack/sounds-definitions/diagnose";
+import { particle_is_defined } from "../../resource-pack/particle/diagnose";
+import { resourcepack_sound_definitions_diagnose } from "../../resource-pack/sounds-definitions/diagnose";
 import { behaviorpack_check_command_blockstates } from "../block-state/diagnose";
 import { behaviorpack_check_blockdescriptor } from "../block/diagnose";
 import {
@@ -274,10 +274,10 @@ const ParameterDiagnostics: Record<number, DiagnoseCommand> = {
   [ParameterType.lootTable]: behaviorpack_loot_table_short_diagnose,
   //Custom call [ParameterType.message]:,
   [ParameterType.objective]: minecraft_objectives_diagnose,
-  [ParameterType.particle]: resourcepack_particle_diagnose,
+  [ParameterType.particle]: particle_is_defined,
   //Custom call [ParameterType.selector]:minecraft_selector_diagnose,
   //Custom call [ParameterType.slotID]:,
-  [ParameterType.sound]: resourcepack_sound_diagnose,
+  [ParameterType.sound]: resourcepack_sound_definitions_diagnose,
   [ParameterType.string]: general_string_diagnose,
   [ParameterType.structure]: behaviorpack_structure_diagnose,
   [ParameterType.tag]: minecraft_tag_diagnose,

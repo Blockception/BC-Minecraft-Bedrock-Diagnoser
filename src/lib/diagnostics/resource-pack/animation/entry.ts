@@ -3,12 +3,12 @@ import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
 import { diagnose_molang } from "../../molang/diagnostics";
 import { Json } from "../../json/json";
 import { BoneAnimation } from "bc-minecraft-bedrock-project/lib/src/internal/resource-pack";
-import { BoneUsage, checkBonesExists } from "../model";
+import { BoneUsage, model_bones_must_exist } from "../model";
 
 /**Diagnoses the given document as an animation
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnose_animation_document(diagnoser: DocumentDiagnosticsBuilder): void {
   //Check molang
   diagnose_molang(diagnoser.document.getText(), "Animations", diagnoser);
 
@@ -38,7 +38,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
     });
   });
 
-  checkBonesExists(bones, diagnoser);
+  model_bones_must_exist(bones, diagnoser);
 }
 
 function check_bone_time(parentid: string, bone: BoneAnimation, animation_length: number, diagnoser: DocumentDiagnosticsBuilder) {

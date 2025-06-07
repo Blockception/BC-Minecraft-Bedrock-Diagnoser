@@ -4,10 +4,11 @@ import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } fr
 import { education_enabled } from "../../definitions";
 import { Json } from "../../json/json";
 
-/**Diagnoses the given document as a `sound_definitions` file
+/**
+ * Diagnoses the given document as a `sound_definitions` file
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnose_sound_definitions_document(diagnoser: DocumentDiagnosticsBuilder): void {
   const definitions = Json.LoadReport<Internal.ResourcePack.SoundDefinitions>(diagnoser);
   if (!Internal.ResourcePack.SoundDefinitions.is(definitions)) return;
 

@@ -8,7 +8,7 @@ import path from 'path';
 /**Diagnoses the given document as a texture atlas
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function DiagnoseAtlas(diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnose_atlas_document(diagnoser: DocumentDiagnosticsBuilder): void {
   const definitions = Json.LoadReport<TextureAtlas>(diagnoser);
   if (!TextureAtlas.is(definitions)) return;
 

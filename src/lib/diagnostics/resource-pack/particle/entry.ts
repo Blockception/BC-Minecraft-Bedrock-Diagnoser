@@ -12,7 +12,7 @@ import { getUsedComponents } from 'bc-minecraft-bedrock-types/lib/minecraft/comp
 /**Diagnoses the given document as a particle
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnose_particle_document(diagnoser: DocumentDiagnosticsBuilder): void {
   //Check molang
   diagnose_molang(diagnoser.document.getText(), "Particles", diagnoser);
 
