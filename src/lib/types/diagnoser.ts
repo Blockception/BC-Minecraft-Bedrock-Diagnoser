@@ -61,7 +61,7 @@ export class Diagnoser<T extends TextDocument = TextDocument> {
         //Check per pack
         switch (pack.type) {
           case PackType.behavior_pack:
-            out = BehaviorPack.Process(diagnoser);
+            out = BehaviorPack.diagnose_document(diagnoser);
             break;
 
           case PackType.resource_pack:
