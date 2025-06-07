@@ -1,6 +1,7 @@
 import { Types } from "bc-minecraft-bedrock-types";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../types";
 import { check_definition_value } from "../../definitions";
+import { Errors } from "../..";
 
 export function diagnose_structure_implementation(
   id: Types.OffsetWord | string,
@@ -21,9 +22,9 @@ export function diagnose_structure_implementation(
       );
     }
 
-    //Project has trading
-    const trade = diagnoser.context.getProjectData().behaviors.trading.get(strId, diagnoser.project);
-    if (trade !== undefined) {
+    //Project has structures
+    const struc = diagnoser.context.getProjectData().behaviors.structures.get(strId, diagnoser.project);
+    if (struc !== undefined) {
       return true;
     }
   }
@@ -41,11 +42,6 @@ export function diagnose_structure_implementation(
   }
 
   //Nothing then report error
-  diagnoser.add(
-    id,
-    `Cannot find behaviorpack mcstructure: ${strId}`,
-    DiagnosticSeverity.error,
-    "behaviorpack.mcstructure.missing"
-  );
+  Errors.missing("behaviors", "structures", id, diagnoser);
   return false;
 }
