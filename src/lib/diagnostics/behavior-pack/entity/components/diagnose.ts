@@ -10,7 +10,7 @@ import { FormatVersion } from 'bc-minecraft-bedrock-types/lib/minecraft';
 import { diagnose_resourcepack_sound } from '../../../resource-pack/sounds';
 import { behaviorpack_entity_event_diagnose, behaviorpack_entityid_diagnose } from '../diagnose';
 import { minecraft_diagnose_filters } from '../../../minecraft/filter';
-import { behaviorpack_check_blockid } from '../../block';
+import { is_block_defined } from '../../block';
 import { behaviorpack_item_diagnose } from '../../item';
 import { minecraft_family_diagnose, minecraft_get_item } from '../../../minecraft';
 import { behaviorpack_loot_table_diagnose } from '../../loot-table';
@@ -41,7 +41,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   "minecraft:behavior.avoid_block": (name, component, context, diagnoser) => {
     diagnose_event_trigger(name, component.on_escape, context.source['minecraft:entity'].description.identifier, diagnoser)
     component.target_blocks?.forEach((block: string) => {
-      behaviorpack_check_blockid(block, diagnoser);
+      is_block_defined(block, diagnoser);
     });
   },
   "minecraft:behavior.avoid_mob_type": (name, component, context, diagnoser) => {
@@ -113,8 +113,8 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   },
   "minecraft:behavior.eat_block": (name, component, context, diagnoser) => {
     component.eat_and_replace_block_pairs?.forEach((obj: any) => {
-      if (obj.eat_block) behaviorpack_check_blockid(obj.eat_block, diagnoser);
-      if (obj.replace_block) behaviorpack_check_blockid(obj.replace_block, diagnoser);
+      if (obj.eat_block) is_block_defined(obj.eat_block, diagnoser);
+      if (obj.replace_block) is_block_defined(obj.replace_block, diagnoser);
     });
     diagnose_event_trigger(name, component.on_eat, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
@@ -152,10 +152,10 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   },
   "minecraft:behavior.jump_to_block": (name, component, context, diagnoser) => {
     component.forbidden_blocks?.forEach((block: string) => {
-      if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
+      if (typeof block == 'string') is_block_defined(block, diagnoser);
     });
     component.preferred_blocks?.forEach((block: string) => {
-      if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
+      if (typeof block == 'string') is_block_defined(block, diagnoser);
     });
   },
   "minecraft:behavior.knockback_roar": (name, component, context, diagnoser) => {
@@ -164,10 +164,10 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     diagnose_event_trigger(name, component.on_roar_end, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.lay_egg": (name, component, context, diagnoser) => {
-    if (typeof component.egg_type == 'string') behaviorpack_check_blockid(component.egg_type, diagnoser);
+    if (typeof component.egg_type == 'string') is_block_defined(component.egg_type, diagnoser);
     diagnose_event_trigger(name, component.on_lay, context.source['minecraft:entity'].description.identifier, diagnoser)
     component.target_blocks?.forEach((block: string) => {
-      if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
+      if (typeof block == 'string') is_block_defined(block, diagnoser);
     });
   },
   "minecraft:behavior.look_at_entity": (name, component, context, diagnoser) => {
@@ -197,7 +197,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     diagnose_event_trigger(name, component.on_reach, context.source['minecraft:entity'].description.identifier, diagnoser)
     diagnose_event_trigger(name, component.on_stay_completed, context.source['minecraft:entity'].description.identifier, diagnoser)
     component.target_blocks?.forEach((block: string) => {
-      if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
+      if (typeof block == 'string') is_block_defined(block, diagnoser);
     });
   },
   "minecraft:behavior.offer_flower": (name, component, context, diagnoser) => {
@@ -213,7 +213,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   },
   "minecraft:behavior.raid_garden": (name, component, context, diagnoser) => {
     component.blocks?.forEach((block: string) => {
-      if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
+      if (typeof block == 'string') is_block_defined(block, diagnoser);
     });
   },
   "minecraft:behavior.ram_attack": (name, component, context, diagnoser) => {
@@ -228,7 +228,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     diagnose_event_trigger(name, component.on_success, context.source['minecraft:entity'].description.identifier, diagnoser)
     if (typeof component.item_table === 'string') behaviorpack_loot_table_diagnose(component.item_table, diagnoser)
     component.target_blocks?.forEach((block: string) => {
-      if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
+      if (typeof block == 'string') is_block_defined(block, diagnoser);
     });
   },
   "minecraft:behavior.receive_love": (name, component, context) => {
@@ -352,7 +352,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   "minecraft:block_sensor": (name, component, context, diagnoser) => {
     component.on_break?.forEach((entry: any) => {
       entry.block_list?.forEach((block: string) => {
-        if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
+        if (typeof block == 'string') is_block_defined(block, diagnoser);
       });
     });
     component.sources?.forEach((entry: any) => {
@@ -367,7 +367,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   },
   "minecraft:break_blocks": (name, component, context, diagnoser) => {
     component.block_list?.forEach((block: string) => {
-      if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
+      if (typeof block == 'string') is_block_defined(block, diagnoser);
     });
   },
   "minecraft:breedable": (name, component, context, diagnoser) => {
@@ -384,7 +384,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     )
     minecraft_diagnose_filters(component.love_filters, diagnoser)
     processEntries(component.environment_requirements, (entry: any) => {
-      if (typeof entry.blocks === 'string') behaviorpack_check_blockid(entry.blocks, diagnoser);
+      if (typeof entry.blocks === 'string') is_block_defined(entry.blocks, diagnoser);
     });
     processEntries(component.breeds_with, (entry: any) => {
       if (typeof entry.baby_type === 'string') behaviorpack_entityid_diagnose(entry.baby_type, diagnoser);
@@ -400,7 +400,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   },
   "minecraft:buoyant": (name, component, context, diagnoser) => {
     component.liquid_blocks?.forEach((block: string) => {
-      if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
+      if (typeof block == 'string') is_block_defined(block, diagnoser);
     });
   },
   "minecraft:celebrate_hunt": (name, component, context, diagnoser) => {
@@ -470,13 +470,13 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   },
   "minecraft:home": (name, component, context, diagnoser) => {
     component.home_block_list?.forEach((block: string) => {
-      behaviorpack_check_blockid(block, diagnoser);
+      is_block_defined(block, diagnoser);
     });
   },
   "minecraft:inside_block_notifier": (name, component, context, diagnoser) => {
     component.block_list?.forEach((entry: any) => {
-      if (typeof entry.block == 'string') behaviorpack_check_blockid(entry.block, diagnoser);
-      else if (typeof entry.block.name == 'string') behaviorpack_check_blockid(entry.block.name, diagnoser);
+      if (typeof entry.block == 'string') is_block_defined(entry.block, diagnoser);
+      else if (typeof entry.block.name == 'string') is_block_defined(entry.block.name, diagnoser);
     });
   },
   "minecraft:interact": (name, component, context, diagnoser) => {
@@ -517,7 +517,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   "minecraft:preferred_path": (name, component, context, diagnoser) => {
     component.preferred_path_blocks?.forEach((entry: any) => {
       entry.blocks.forEach((id: string) => {
-        if (typeof id == 'string') behaviorpack_check_blockid(id, diagnoser);
+        if (typeof id == 'string') is_block_defined(id, diagnoser);
       });
     });
   },
@@ -608,7 +608,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   },
   "minecraft:trade_table": check_trade_table,
   "minecraft:trail": (name, component, context, diagnoser) => {
-    if (component.block_type) behaviorpack_check_blockid(component.block_type, diagnoser);
+    if (component.block_type) is_block_defined(component.block_type, diagnoser);
     minecraft_diagnose_filters(component.spawn_filter, diagnoser)
   },
   "minecraft:transformation": (name, component, context, diagnoser) => {

@@ -21,7 +21,7 @@ export function animation_diagnose_implementation(
   //Project has animation
   const anim = diagnoser.context.getProjectData().behaviors.animations.get(anim_id, diagnoser.project);
   if (anim === undefined) {
-    return Errors.missing("behavior_pack", "animations", anim_id, diagnoser);
+    return Errors.missing("behaviors", "animations", anim_id, diagnoser);
   }
   if (!ProjectItem.is(anim)) {
     return; // Skip anything but a project defined item

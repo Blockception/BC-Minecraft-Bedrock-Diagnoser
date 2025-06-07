@@ -6,7 +6,7 @@ import { Context } from "../../../../utility/components";
 import { component_error, ComponentCheck, components_check } from "../../../../utility/components/checks";
 import { minecraft_get_item } from "../../../minecraft/items";
 import { resourcepack_particle_diagnose } from '../../../resource-pack/particle';
-import { behaviorpack_check_blockid } from "../../block";
+import { is_block_defined } from "../../block";
 import { behaviorpack_entityid_diagnose } from "../../entity";
 import { behaviorpack_item_diagnose } from "../diagnose";
 
@@ -51,29 +51,29 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Item>>
   "minecraft:entity_placer": (name, component, context, diagnoser) => {
     if (Array.isArray(component.dispense_on))
       component.dispense_on.forEach((block: string | { name: string }) => {
-        if (typeof block == 'object' && 'name' in block) behaviorpack_check_blockid(block.name, diagnoser)
-        else if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
+        if (typeof block == 'object' && 'name' in block) is_block_defined(block.name, diagnoser)
+        else if (typeof block == 'string') is_block_defined(block, diagnoser);
       });
     if (Array.isArray(component.use_on))
       component.use_on.forEach((block: string | { name: string }) => {
-        if (typeof block == 'object' && 'name' in block) behaviorpack_check_blockid(block.name, diagnoser)
-        else if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
+        if (typeof block == 'object' && 'name' in block) is_block_defined(block.name, diagnoser)
+        else if (typeof block == 'string') is_block_defined(block, diagnoser);
       });
     if (component.entity) behaviorpack_entityid_diagnose(component.entity, diagnoser);
   },
   "minecraft:block_placer": (name, component, context, diagnoser) => {
     if (Array.isArray(component.use_on))
       component.use_on.forEach((block: string | { name: string }) => {
-        if (typeof block == 'object' && 'name' in block) behaviorpack_check_blockid(block.name, diagnoser)
-        else if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
+        if (typeof block == 'object' && 'name' in block) is_block_defined(block.name, diagnoser)
+        else if (typeof block == 'string') is_block_defined(block, diagnoser);
       });
     if (component.replace_block_item && context.source['minecraft:item'].description.identifier != component.block) diagnoser.add(`minecraft:block_placer/block/${component.block}`,
       `${component.block} and ${context.source['minecraft:item'].description.identifier} need to match when trying to replace the block item`,
       DiagnosticSeverity.error,
       'behaviorpack.item.components.replace_block_ids_dont_match')
     if (component.block) {
-      if (typeof component.block == 'object' && 'name' in component.block) behaviorpack_check_blockid((component.block as { name: string }).name, diagnoser)
-      else if (typeof component.block == 'string') behaviorpack_check_blockid(component.block, diagnoser);
+      if (typeof component.block == 'object' && 'name' in component.block) is_block_defined((component.block as { name: string }).name, diagnoser)
+      else if (typeof component.block == 'string') is_block_defined(component.block, diagnoser);
     }
   },
   "minecraft:projectile": (name, component, context, diagnoser) => {

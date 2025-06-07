@@ -3,7 +3,7 @@ import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
 import { Json } from "../../json";
 import { no_other_duplicates } from "../../packs/duplicate-check";
 import { behaviorpack_feature_diagnose } from "./diagnose";
-import { behaviorpack_check_blockid } from "../block";
+import { is_block_defined } from "../block";
 import { behaviorpack_structure_diagnose } from "../structure";
 
 /**Diagnoses the given document as an item
@@ -177,6 +177,6 @@ function findFeatureIdentifier(source: Internal.BehaviorPack.Feature): string | 
 }
 
 function diagnose_block_reference(reference: string | any, diagnoser: DocumentDiagnosticsBuilder) {
-  if (typeof reference == "string") behaviorpack_check_blockid(reference, diagnoser);
-  else if (typeof reference.name == "string") behaviorpack_check_blockid(reference.name, diagnoser);
+  if (typeof reference == "string") is_block_defined(reference, diagnoser);
+  else if (typeof reference.name == "string") is_block_defined(reference.name, diagnoser);
 }

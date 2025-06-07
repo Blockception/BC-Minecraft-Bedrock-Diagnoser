@@ -5,7 +5,7 @@ import { component_error, ComponentCheck, components_check } from "../../../../u
 import { check_geo_and_rules } from "../../../resource-pack/block-culling";
 import { resourcepack_has_model } from "../../../resource-pack/model/diagnose";
 import { behaviorpack_loot_table_diagnose } from "../../loot-table";
-import { behaviorpack_check_blockid } from "../diagnose";
+import { is_block_defined } from "../diagnose";
 import { Internal } from "bc-minecraft-bedrock-project";
 import { FormatVersion } from 'bc-minecraft-bedrock-types/lib/minecraft';
 
@@ -70,8 +70,8 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
   "minecraft:placement_filter": (name, component, context, diagnoser) => {
     for (const condition of component.conditions) {
       condition.block_filter?.forEach((block: string | { name: string }) => {
-        if (typeof block == "object" && "name" in block) behaviorpack_check_blockid(block.name, diagnoser);
-        else if (typeof block == "string") behaviorpack_check_blockid(block, diagnoser);
+        if (typeof block == "object" && "name" in block) is_block_defined(block.name, diagnoser);
+        else if (typeof block == "string") is_block_defined(block, diagnoser);
       });
     }
   },

@@ -1,4 +1,4 @@
-import { Documents, ProjectData } from "bc-minecraft-bedrock-project";
+import { Documents, MinecraftData, ProjectData } from "bc-minecraft-bedrock-project";
 import { MCAttributes, MCDefinition, MCIgnore, MCProject } from "bc-minecraft-project";
 import FastGlob from "fast-glob";
 import { readFileSync } from "fs";
@@ -29,8 +29,8 @@ class TestContext implements DiagnosticsBuilderContent<TextDocument>, DiagnoserC
   getFiles(folder: string, patterns: string[], ignores: MCIgnore): string[] {
     return this.documentManager.getFiles(folder, patterns, ignores);
   }
-  getCache(): ProjectData {
-    return this.projectData;
+  getProjectData(): MinecraftData {
+    return new MinecraftData(this.projectData);
   }
   getDiagnoser(doc: TextDocument, project: MCProject): ManagedDiagnosticsBuilder<TextDocument> | undefined {
     const diagnoser = new TestDocumentDiagnoser(doc, this, project);

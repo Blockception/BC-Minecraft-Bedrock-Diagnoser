@@ -19,7 +19,7 @@ export function animation_controller_diagnose_implementation(
   //Project has animation
   const anim = diagnoser.context.getProjectData().behaviors.animation_controllers.get(id, diagnoser.project);
   if (anim === undefined) {
-    return Errors.missing("behavior_pack", "animation_controllers", id, diagnoser);
+    return Errors.missing("behaviors", "animation_controllers", id, diagnoser);
   }
   if (!ProjectItem.is(anim)) {
     return; // Skip anything but a project defined item

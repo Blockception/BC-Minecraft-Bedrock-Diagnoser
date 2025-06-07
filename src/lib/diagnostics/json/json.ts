@@ -1,9 +1,9 @@
 import { jsonc } from "jsonc";
 import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from '../../types';
-import { Handle_Json_Error } from "./errors";
+import { handle_json_error } from "./errors";
 
 export namespace Json {
-  /**Loads the object and casts it to the specified type, if it fails then undefined is loaded and the error message is send to the diagnoser
+  /**Loads the object and casts it to the specified thandle_json_errorype, if it fails then undefined is loaded and the error message is send to the diagnoser
    * @param doc The text document to load from
    * @param diagnoser The diagnoser to load from
    * @returns Either the object cast to the specific type, or undefined if failed*/
@@ -22,7 +22,7 @@ export namespace Json {
 
       //cast object
     } catch (err: any) {
-      Handle_Json_Error(err, diagnoser);
+      handle_json_error(err, diagnoser);
     }
 
     return undefined;

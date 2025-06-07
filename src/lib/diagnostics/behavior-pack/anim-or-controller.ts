@@ -28,7 +28,7 @@ export function animation_or_controller_diagnose_implementation(
         id,
         `Cannot find animation / animation controller: ${id}`,
         DiagnosticSeverity.error,
-        "behaviorpack.anim_or_controller.missing"
+        "behaviorpack.animation_or_controller.missing"
       );
   }
 }
@@ -48,10 +48,9 @@ export enum anim_or_contr {
  * @param diagnoser The diagnostics builder to add the errors to
  * @returns True if animation, false if controller*/
 export function is_animation_or_controller(id: string, diagnoser: DiagnosticsBuilder): anim_or_contr {
-  const cache = diagnoser.context.getProjectData().projectData;
-
-  if (cache.behaviorPacks.animations.has(id)) return anim_or_contr.animation;
-  if (cache.behaviorPacks.animation_controllers.has(id)) return anim_or_contr.controller;
+  const bp = diagnoser.context.getProjectData().behaviors;
+  if (bp.animations.has(id, diagnoser.project)) return anim_or_contr.animation;
+  if (bp.animation_controllers.has(id, diagnoser.project)) return anim_or_contr.controller;
 
   return anim_or_contr.neither;
 }
