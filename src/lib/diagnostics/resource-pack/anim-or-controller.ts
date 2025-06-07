@@ -4,7 +4,7 @@ import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { MolangDataSetKey } from "bc-minecraft-molang";
 import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier } from '../../types';
 import { education_enabled } from "../definitions";
-import { animation_controller_diagnose_implementation } from "./animation-controllers/diagnostics";
+import { diagnose_animation_controller_implementation } from "./animation-controllers/diagnostics";
 import { diagnose_animation_implementation } from "./animation/diagnostics";
 
 const whiteList = [
@@ -24,7 +24,7 @@ export function animation_or_controller_diagnose_implementation(
       return diagnose_animation_implementation(id, user, ownerType, diagnoser, particles, sounds);
 
     case anim_or_contr.controller:
-      return animation_controller_diagnose_implementation(id, user, ownerType, diagnoser, { particles, sounds });
+      return diagnose_animation_controller_implementation(id, user, ownerType, diagnoser, { particles, sounds });
 
     case anim_or_contr.neither:
       if (whiteList.includes(id)) return;

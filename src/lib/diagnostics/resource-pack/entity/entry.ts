@@ -7,7 +7,7 @@ import { AnimationUsage } from "../../minecraft";
 import { diagnose_script } from "../../minecraft/script";
 import { diagnose_molang } from "../../molang/diagnostics";
 import { animation_or_controller_diagnose_implementation } from "../anim-or-controller";
-import { animation_controller_diagnose_implementation } from "../animation-controllers/diagnostics";
+import { diagnose_animation_controller_implementation } from "../animation-controllers/diagnostics";
 import { resourcepack_animation_used } from "../animation/usage";
 import { resourcepack_has_model } from "../model/diagnose";
 import { resourcepack_particle_diagnose } from "../particle/diagnose";
@@ -82,7 +82,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   //Check animation controllers
   description.animation_controllers?.forEach((controller) => {
     const temp = flatten(controller);
-    if (temp) animation_controller_diagnose_implementation(temp, entityGathered, "Entities", diagnoser, {});
+    if (temp) diagnose_animation_controller_implementation(temp, entityGathered, "Entities", diagnoser, {});
   });
 
   //Check render controllers

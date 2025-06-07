@@ -12,7 +12,7 @@ import { general_animation_controllers_implementation } from "../../minecraft/an
  * @param data
  * @param diagnoser
  */
-export function animation_controller_diagnose_implementation(
+export function diagnose_animation_controller_implementation(
   controllerid: string,
   user: EntityAnimationMolangCarrier,
   ownerType: MolangDataSetKey,
