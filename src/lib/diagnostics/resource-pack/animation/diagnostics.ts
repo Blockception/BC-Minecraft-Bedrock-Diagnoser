@@ -15,7 +15,7 @@ import { diagnose_molang_implementation } from "../../molang";
  * @param sounds
  * @returns
  */
-export function animation_diagnose_implementation(
+export function diagnose_animation_implementation(
   id: string,
   user: EntityAnimationMolangCarrier,
   ownerType: MolangDataSetKey,

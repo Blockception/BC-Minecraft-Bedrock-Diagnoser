@@ -5,7 +5,7 @@ import { MolangDataSetKey } from "bc-minecraft-molang";
 import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier } from '../../types';
 import { education_enabled } from "../definitions";
 import { animation_controller_diagnose_implementation } from "./animation-controllers/diagnostics";
-import { animation_diagnose_implementation } from "./animation/diagnostics";
+import { diagnose_animation_implementation } from "./animation/diagnostics";
 
 const whiteList = [
   'animation.humanoid.fishing_rod'
@@ -21,7 +21,7 @@ export function animation_or_controller_diagnose_implementation(
 ): void {
   switch (is_animation_or_controller(id, diagnoser)) {
     case anim_or_contr.animation:
-      return animation_diagnose_implementation(id, user, ownerType, diagnoser, particles, sounds);
+      return diagnose_animation_implementation(id, user, ownerType, diagnoser, particles, sounds);
 
     case anim_or_contr.controller:
       return animation_controller_diagnose_implementation(id, user, ownerType, diagnoser, { particles, sounds });
