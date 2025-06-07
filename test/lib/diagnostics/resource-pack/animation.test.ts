@@ -31,7 +31,7 @@ describe("ResourcePack", () => {
 
       const diagnoser = TestDiagnoser.createDocument(undefined, doc);
 
-      ResourcePack.Process(diagnoser);
+      ResourcePack.diagnose_document(diagnoser);
 
       diagnoser.expectAmount(2);
       const item = diagnoser.getSeverity(3);

@@ -25,11 +25,12 @@ import * as Flipbook from "./texture-atlas/flipbook";
 
 /** The namespace that deals with resourcepack diagnostics */
 export namespace ResourcePack {
-  /** Processes and diagnoses the given textdocument
+  /**
+   * Processes and diagnoses the given textdocument
    * @param doc The document to process / diagnose
    * @param diagnoser The diagnoser to report to
    * @returns `true` or `false` whenever or not it was succesfull */
-  export function Process(diagnoser: DocumentDiagnosticsBuilder): boolean {
+  export function diagnose_document(diagnoser: DocumentDiagnosticsBuilder): boolean {
     const uri = diagnoser.document.uri;
     const type = FileType.detect(uri);
 

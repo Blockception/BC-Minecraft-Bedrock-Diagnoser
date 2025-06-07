@@ -65,7 +65,7 @@ export class Diagnoser<T extends TextDocument = TextDocument> {
             break;
 
           case PackType.resource_pack:
-            out = ResourcePack.Process(diagnoser);
+            out = ResourcePack.diagnose_document(diagnoser);
             break;
 
           case PackType.skin_pack:
