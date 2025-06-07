@@ -1,29 +1,37 @@
+import { ProjectItem } from "bc-minecraft-bedrock-project";
 import { Definition } from "bc-minecraft-bedrock-types/lib/types/definition";
-import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { MolangDataSetKey } from "bc-minecraft-molang";
-import { DiagnosticsBuilder, EntityAnimationMolangCarrier, DiagnosticSeverity } from "../../../types";
-import { education_enabled } from "../../definitions";
+import { Errors } from "../..";
+import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier } from "../../../types";
 import { diagnose_molang_implementation } from "../../molang";
 
 /**
  *
  * @param id
- * @param data
+ * @param user
+ * @param ownerType
  * @param diagnoser
+ * @param particles
+ * @param sounds
+ * @returns
  */
-export function animation_diagnose_implementation(
-  anim_id: string,
+export function diagnose_animation_implementation(
+  id: string,
   user: EntityAnimationMolangCarrier,
   ownerType: MolangDataSetKey,
   diagnoser: DiagnosticsBuilder,
   particles?: Definition,
   sounds?: Definition
 ): void {
-  if (!has_animation(anim_id, diagnoser)) return;
   //Project has animation
-  const anim = diagnoser.context.getCache().resourcePacks.animations.get(anim_id);
-
-  if (!anim) return;
+  const anim_item = diagnoser.context.getProjectData().resources.animations.get(id, diagnoser.project);
+  if (anim_item === undefined) {
+    return Errors.missing("behaviors", "animations", id, diagnoser);
+  }
+  if (!ProjectItem.is(anim_item)) {
+    return; // Skip anything but a project defined item
+  }
+  const anim = anim_item.item;
 
   diagnose_molang_implementation(anim, user, ownerType, diagnoser);
 
@@ -32,8 +40,8 @@ export function animation_diagnose_implementation(
     if (particles && particles[particle] !== undefined) return;
 
     diagnoser.add(
-      `animations/${anim_id}`,
-      `Animation: ${anim_id} uses particle: '${particle}', but no definition has been found`,
+      `animations/${id}`,
+      `Animation: ${id} uses particle: '${particle}', but no definition has been found`,
       DiagnosticSeverity.warning,
       "resourcepack.particle.missing"
     );
@@ -44,37 +52,10 @@ export function animation_diagnose_implementation(
     if (sounds && sounds[sound] !== undefined) return;
 
     diagnoser.add(
-      `animations/${anim_id}`,
-      `Animation: ${anim_id} uses sound: '${sound}', but no definition has been found`,
+      `animations/${id}`,
+      `Animation: ${id} uses sound: '${sound}', but no definition has been found`,
       DiagnosticSeverity.warning,
       "resourcepack.sound.missing"
     );
   });
-}
-
-/**
- *
- * @param id
- * @param diagnoser
- * @returns
- */
-export function has_animation(id: string, diagnoser: DiagnosticsBuilder): boolean {
-  const cache = diagnoser.context.getCache();
-
-  //Project has render controller
-  if (cache.resourcePacks.animations.has(id)) return true;
-
-  const edu = education_enabled(diagnoser);
-
-  //Vanilla has render controller
-  if (MinecraftData.ResourcePack.hasAnimation(id, edu)) return true;
-
-  //Nothing then report error
-  diagnoser.add(
-    `"${id}"`,
-    `Cannot find resourcepack animation: ${id}`,
-    DiagnosticSeverity.error,
-    "resourcepack.animation.missing"
-  );
-  return false;
 }

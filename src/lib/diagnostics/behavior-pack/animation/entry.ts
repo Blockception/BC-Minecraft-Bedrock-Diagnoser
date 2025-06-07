@@ -8,7 +8,7 @@ import { no_other_duplicates } from "../../packs/duplicate-check";
 /**Diagnoses the given document as an animation
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnose_animation_document(diagnoser: DocumentDiagnosticsBuilder): void {
   //Check molang
   const text = diagnoser.document.getText();
   diagnose_molang(text, "Animations", diagnoser);
@@ -21,7 +21,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
     const length = anim.animation_length;
 
     // check that no other exists with this id
-    no_other_duplicates("behaviorpack.animation", diagnoser.context.getCache().behaviorPacks.animations, id, diagnoser);
+    no_other_duplicates("behaviorpack.animation", diagnoser.context.getProjectData().projectData.behaviorPacks.animations, id, diagnoser);
 
     //foreach time
     SMap.forEach(anim.timeline, (data, time) => {

@@ -7,7 +7,7 @@ import { TestDiagnoser } from "../../../diagnoser";
 describe("Tag", () => {
   it("diagnose no errors", () => {
     const B = TestDiagnoser.create();
-    const data = B.context.getCache();
+    const data = B.context.getProjectData().projectData;
 
     data.general.tags.set([
       GeneralInfo.create("init", Location.create(""), "main tickingarea"),
@@ -38,7 +38,7 @@ describe("Tag", () => {
   it("diagnose with errors", () => {
     const B = new TestDiagnoser();
 
-    const objectivesData = B.context.getCache().general.tags;
+    const objectivesData = B.context.getProjectData().projectData.general.tags;
     const tags: string[] = ["te/st", "test!example", "Test@Example", "Test#Example"];
     
     tags.forEach((t) => objectivesData.set(GeneralInfo.create(t, Location.create(""))));

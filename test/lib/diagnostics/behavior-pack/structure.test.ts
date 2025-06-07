@@ -1,5 +1,5 @@
 import { ProjectData, TextDocument } from "bc-minecraft-bedrock-project";
-import { behaviorpack_structure_diagnose } from '../../../../src/lib/diagnostics/behavior-pack/structure';
+import { diagnose_structure_implementation } from '../../../../src/lib/diagnostics/behavior-pack/structure';
 import { TestDiagnoser } from "../../../diagnoser";
 
 describe("BehaviorPack", () => {
@@ -9,7 +9,7 @@ describe("BehaviorPack", () => {
 
     beforeEach(() => {
       diagnoser = TestDiagnoser.create();
-      data = diagnoser.context.getCache();
+      data = diagnoser.context.getProjectData().projectData;
     });
 
     it("quotes", () => {
@@ -19,8 +19,8 @@ describe("BehaviorPack", () => {
         location: { position: 0, uri: "" },
       });
 
-      behaviorpack_structure_diagnose({ offset: 0, text: "test/example" }, diagnoser);
-      behaviorpack_structure_diagnose({ offset: 0, text: "test:example" }, diagnoser);
+      diagnose_structure_implementation({ offset: 0, text: "test/example" }, diagnoser);
+      diagnose_structure_implementation({ offset: 0, text: "test:example" }, diagnoser);
 
       diagnoser.expectAmount(1);
     });
@@ -32,8 +32,8 @@ describe("BehaviorPack", () => {
         location: { position: 0, uri: "" },
       });
 
-      behaviorpack_structure_diagnose({ offset: 0, text: '"test/example"' }, diagnoser);
-      behaviorpack_structure_diagnose({ offset: 0, text: '"test:example"' }, diagnoser);
+      diagnose_structure_implementation({ offset: 0, text: '"test/example"' }, diagnoser);
+      diagnose_structure_implementation({ offset: 0, text: '"test:example"' }, diagnoser);
 
       diagnoser.expectEmpty();
     });
@@ -45,8 +45,8 @@ describe("BehaviorPack", () => {
         location: { position: 0, uri: "" },
       });
 
-      behaviorpack_structure_diagnose({ offset: 0, text: '"t/example"' }, diagnoser);
-      behaviorpack_structure_diagnose({ offset: 0, text: '"t:example"' }, diagnoser);
+      diagnose_structure_implementation({ offset: 0, text: '"t/example"' }, diagnoser);
+      diagnose_structure_implementation({ offset: 0, text: '"t:example"' }, diagnoser);
 
       diagnoser.expectAmount(2);
     });

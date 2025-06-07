@@ -3,7 +3,7 @@ import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../../type
 import { Context } from "../../../../utility/components";
 import { ComponentCheck, components_check } from "../../../../utility/components/checks";
 import { Internal } from "bc-minecraft-bedrock-project";
-import { behaviorpack_check_blockid } from '../../../behavior-pack/block';
+import { is_block_defined } from '../../../behavior-pack/block';
 
 /**
  *
@@ -31,12 +31,12 @@ const component_test: Record<string, ComponentCheck<Internal.ResourcePack.Partic
   },
   "minecraft:particle_expire_if_in_blocks": (name, component, context, diagnoser) => {
     component.forEach((block: string) => {
-      if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
+      if (typeof block == 'string') is_block_defined(block, diagnoser);
     });
   },
   "minecraft:particle_expire_if_not_in_blocks": (name, component, context, diagnoser) => {
     component.forEach((block: string) => {
-      if (typeof block == 'string') behaviorpack_check_blockid(block, diagnoser);
+      if (typeof block == 'string') is_block_defined(block, diagnoser);
     });
   },
   "minecraft:particle_motion_collision": (name, component, context, diagnoser) => {

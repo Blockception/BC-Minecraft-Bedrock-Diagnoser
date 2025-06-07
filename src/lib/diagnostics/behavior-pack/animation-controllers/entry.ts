@@ -9,7 +9,7 @@ import { json_commandsCheck } from "../mcfunction/commands";
 /**Diagnoses the given document as an animation controller
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnose_animation_controller_document(diagnoser: DocumentDiagnosticsBuilder): void {
   //Check molang
   const text = diagnoser.document.getText();
   diagnose_molang(text, "AnimationsControllers", diagnoser);
@@ -25,7 +25,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
     // check that no other exists with this id
     no_other_duplicates(
       "behaviorpack.animation_controllers",
-      diagnoser.context.getCache().behaviorPacks.animation_controllers,
+      diagnoser.context.getProjectData().projectData.behaviorPacks.animation_controllers,
       id,
       diagnoser
     );

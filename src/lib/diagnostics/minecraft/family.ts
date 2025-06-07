@@ -12,7 +12,7 @@ export function minecraft_family_diagnose(value: Types.OffsetWord | string, diag
 
   let out = false;
 
-  const data = diagnoser.context.getCache();
+  const data = diagnoser.context.getProjectData().projectData;
   //Project has defined
   data.behaviorPacks.entities.forEach((entity) => {
     if (entity.families.includes(id)) out = true;

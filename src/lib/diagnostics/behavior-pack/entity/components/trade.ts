@@ -1,5 +1,5 @@
 import { DiagnosticsBuilder } from "../../../../types";
-import { behaviorpack_trading_diagnose } from "../../trading/diagnose";
+import { diagnose_trading_implementation } from "../../trading/diagnose";
 import { Context } from '../../../../utility/components';
 
 export function check_trade_table<T>(_name: string, component: any, _context: Context<T>, diagnoser: DiagnosticsBuilder): void {
@@ -7,5 +7,5 @@ export function check_trade_table<T>(_name: string, component: any, _context: Co
   if (typeof component.table !== "string") return;
   const table = component.table;
 
-  behaviorpack_trading_diagnose(table, diagnoser);
+  diagnose_trading_implementation(table, diagnoser);
 }

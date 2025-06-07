@@ -1,7 +1,7 @@
 import { MolangDataSetKey } from "bc-minecraft-molang";
 import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier, EventCarrier } from "../../types";
-import { animation_diagnose_implementation } from "./animation";
-import { animation_controller_diagnose_implementation } from "./animation-controllers/diagnostics";
+import { diagnose_animation_implementation } from "./animation";
+import { diagnose_animation_controller_implementation } from "./animation-controllers/diagnostics";
 
 /**
  * @param id
@@ -10,7 +10,7 @@ import { animation_controller_diagnose_implementation } from "./animation-contro
  * @param diagnoser
  * @returns
  */
-export function animation_or_controller_diagnose_implementation(
+export function diagnose_animation_or_controller_implementation(
   id: string,
   user: EntityAnimationMolangCarrier & EventCarrier,
   ownerType: MolangDataSetKey,
@@ -18,17 +18,17 @@ export function animation_or_controller_diagnose_implementation(
 ): void {
   switch (is_animation_or_controller(id, diagnoser)) {
     case anim_or_contr.animation:
-      return animation_diagnose_implementation(id, user, ownerType, diagnoser);
+      return diagnose_animation_implementation(id, user, ownerType, diagnoser);
 
     case anim_or_contr.controller:
-      return animation_controller_diagnose_implementation(id, user, ownerType, diagnoser);
+      return diagnose_animation_controller_implementation(id, user, ownerType, diagnoser);
 
     case anim_or_contr.neither:
       diagnoser.add(
         id,
         `Cannot find animation / animation controller: ${id}`,
         DiagnosticSeverity.error,
-        "behaviorpack.anim_or_controller.missing"
+        "behaviorpack.animation_or_controller.missing"
       );
   }
 }
@@ -48,10 +48,9 @@ export enum anim_or_contr {
  * @param diagnoser The diagnostics builder to add the errors to
  * @returns True if animation, false if controller*/
 export function is_animation_or_controller(id: string, diagnoser: DiagnosticsBuilder): anim_or_contr {
-  const cache = diagnoser.context.getCache();
-
-  if (cache.behaviorPacks.animations.has(id)) return anim_or_contr.animation;
-  if (cache.behaviorPacks.animation_controllers.has(id)) return anim_or_contr.controller;
+  const bp = diagnoser.context.getProjectData().behaviors;
+  if (bp.animations.has(id, diagnoser.project)) return anim_or_contr.animation;
+  if (bp.animation_controllers.has(id, diagnoser.project)) return anim_or_contr.controller;
 
   return anim_or_contr.neither;
 }

@@ -5,6 +5,8 @@ import * as AnimationController from "./animation-controllers/entry";
 import * as Animation from "./animation/entry";
 import * as Block from "./block/entry";
 import * as Entity from "./entity/entry";
+import * as FeatureRule from "./feature-rule/entry";
+import * as Feature from "./feature/entry";
 import * as Tick from "./functions/tick/entry";
 import * as Item from "./item/entry";
 import * as LootTable from "./loot-table/entry";
@@ -14,79 +16,77 @@ import * as Script from "./script/entry";
 import * as SpawnRule from "./spawn-rule/entry";
 import * as Structure from "./structure/entry";
 import * as Trading from "./trading/entry";
-import * as Feature from "./feature/entry";
-import * as FeatureRule from "./feature-rule/entry";
 
 export namespace BehaviorPack {
-  /**Processes and diagnoses the given textdocument
+  /**
+   * Processes and diagnoses the given textdocument
    * @param doc The document to process / diagnose
    * @param diagnoser The diagnoser to report to
    * @returns `true` or `false` whenever or not it was successful*/
-  export function Process(diagnoser: DocumentDiagnosticsBuilder): boolean {
-    const uri = diagnoser.document.uri;
-
+  export function diagnose_document(diagnoser: DocumentDiagnosticsBuilder): boolean {
     //retrieve filter doc type
+    const uri = diagnoser.document.uri;
     const type = FileType.detect(uri);
 
     switch (type) {
       case FileType.animation:
-        Animation.Diagnose(diagnoser);
+        Animation.diagnose_animation_document(diagnoser);
         break;
 
       case FileType.animation_controller:
-        AnimationController.Diagnose(diagnoser);
+        AnimationController.diagnose_animation_controller_document(diagnoser);
         break;
 
       case FileType.block:
-        Block.Diagnose(diagnoser);
+        Block.diagnose_block_document(diagnoser);
         break;
 
       case FileType.entity:
-        Entity.Diagnose(diagnoser);
+        Entity.diagnose_entity_document(diagnoser);
         break;
 
       case FileType.function:
         if (uri.endsWith("tick.json")) {
-          Tick.Diagnose(diagnoser);
+          Tick.diagnose_tick_document(diagnoser);
         } else {
-          Mcfunction.Diagnose(diagnoser);
+          Mcfunction.diagnose_mcfunction_document(diagnoser);
         }
         break;
 
       case FileType.item:
-        Item.Diagnose(diagnoser);
+        Item.diagnose_item_document(diagnoser);
         break;
 
       case FileType.loot_table:
-        LootTable.Diagnose(diagnoser);
+        LootTable.diagnose_loot_table_document(diagnoser);
         break;
 
       case FileType.manifest:
-        Manifest.Diagnose(diagnoser);
+        Manifest.diagnose_manifest(diagnoser);
         break;
 
       case FileType.script:
-        Script.Diagnose(diagnoser);
+        Script.diagnose_script_document(diagnoser);
         break;
 
       case FileType.spawn_rule:
-        SpawnRule.Diagnose(diagnoser);
+        SpawnRule.diagnose_spawn_rule_document(diagnoser);
         break;
 
       case FileType.structure:
-        Structure.Diagnose(diagnoser);
+        Structure.diagnose_structure_document(diagnoser);
         break;
 
       case FileType.trading:
-        Trading.Diagnose(diagnoser);
+        Trading.diagnose_trading_document(diagnoser);
         break;
 
       case FileType.feature:
-        Feature.Diagnose(diagnoser);
+        Feature.diagnose_feature_document(diagnoser);
         break;
 
       case FileType.feature_rule:
-        FeatureRule.Diagnose(diagnoser);
+        FeatureRule.diagnose_feature_rules_document(diagnoser);
         break;
 
       default:

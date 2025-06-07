@@ -3,12 +3,13 @@ import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
 import { Json } from "../../json";
 import { no_other_duplicates } from "../../packs/duplicate-check";
 import { behaviorpack_feature_diagnose } from "./diagnose";
-import { behaviorpack_check_blockid } from "../block";
-import { behaviorpack_structure_diagnose } from "../structure";
+import { is_block_defined } from "../block";
+import { diagnose_structure_implementation } from "../structure";
 
-/**Diagnoses the given document as an item
+/**
+ * Diagnoses the given document as an item
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnose_feature_document(diagnoser: DocumentDiagnosticsBuilder): void {
   const feature = Json.LoadReport<Internal.BehaviorPack.Feature>(diagnoser);
   if (!Internal.BehaviorPack.Feature.is(feature)) return;
 
@@ -34,12 +35,12 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   // check that no other exists with this id
   no_other_duplicates(
     "behaviorpack.components",
-    diagnoser.context.getCache().behaviorPacks.features,
+    diagnoser.context.getProjectData().projectData.behaviorPacks.features,
     identifier,
     diagnoser
   );
 
-  let components: any = feature;
+  let components = feature as Record<keyof Internal.BehaviorPack.Feature, any>;
 
   if (components["minecraft:aggregate_feature"])
     components["minecraft:aggregate_feature"].features?.forEach((id: string) => {
@@ -122,7 +123,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
 
   if (components["minecraft:structure_template_feature"]) {
     if (typeof components["minecraft:structure_template_feature"].structure_name == "string")
-      behaviorpack_structure_diagnose(
+      diagnose_structure_implementation(
         '"' + components["minecraft:structure_template_feature"].structure_name + '"',
         diagnoser
       );
@@ -177,6 +178,6 @@ function findFeatureIdentifier(source: Internal.BehaviorPack.Feature): string | 
 }
 
 function diagnose_block_reference(reference: string | any, diagnoser: DocumentDiagnosticsBuilder) {
-  if (typeof reference == "string") behaviorpack_check_blockid(reference, diagnoser);
-  else if (typeof reference.name == "string") behaviorpack_check_blockid(reference.name, diagnoser);
+  if (typeof reference == "string") is_block_defined(reference, diagnoser);
+  else if (typeof reference.name == "string") is_block_defined(reference.name, diagnoser);
 }

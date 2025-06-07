@@ -6,7 +6,7 @@ import { behaviorpack_feature_diagnose } from '../feature/diagnose';
 
 /**Diagnoses the given document as an item
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnose_feature_rules_document(diagnoser: DocumentDiagnosticsBuilder): void {
   const featureRule = Json.LoadReport<Internal.BehaviorPack.FeatureRule>(diagnoser);
   if (!Internal.BehaviorPack.FeatureRule.is(featureRule)) return;
 
@@ -31,7 +31,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   // check that no other exists with this id
   no_other_duplicates(
     "behaviorpack.components",
-    diagnoser.context.getCache().behaviorPacks.features_rules,
+    diagnoser.context.getProjectData().projectData.behaviorPacks.features_rules,
     identifier,
     diagnoser
   );

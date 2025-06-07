@@ -65,9 +65,9 @@ exports[`Files test testing file: {/test-bp/manifest.json} expect specific error
 exports[`Files test testing file: {/test-rp/entity/sample.entity.json} expect specific errors 1`] = `
 [
   {
-    "code": "resourcepack.model.missing",
-    "message": "Cannot find model definition: geometry.sample",
-    "position": "geometry.sample",
+    "code": "resourcepack.models.missing",
+    "message": "Cannot find resourcepack models definition: "geometry.sample"",
+    "position": ""geometry.sample"",
     "severity": 3,
   },
   {

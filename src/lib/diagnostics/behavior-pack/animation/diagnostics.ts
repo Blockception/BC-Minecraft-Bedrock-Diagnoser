@@ -1,5 +1,7 @@
+import { ProjectItem } from "bc-minecraft-bedrock-project";
 import { MolangDataSetKey } from "bc-minecraft-molang";
-import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier, EventCarrier } from '../../../types';
+import { Errors } from "../..";
+import { DiagnosticsBuilder, EntityAnimationMolangCarrier, EventCarrier } from "../../../types";
 import { diagnose_molang_implementation } from "../../molang/diagnostics";
 
 type User = EntityAnimationMolangCarrier & EventCarrier;
@@ -10,40 +12,20 @@ type User = EntityAnimationMolangCarrier & EventCarrier;
  * @param data
  * @param diagnoser
  */
-export function animation_diagnose_implementation(
+export function diagnose_animation_implementation(
   anim_id: string,
   user: User,
   ownerType: MolangDataSetKey,
   diagnoser: DiagnosticsBuilder
 ): void {
-  if (!has_animation(anim_id, diagnoser)) return;
-
   //Project has animation
-  const anim = diagnoser.context.getCache().behaviorPacks.animations.get(anim_id);
+  const anim = diagnoser.context.getProjectData().behaviors.animations.get(anim_id, diagnoser.project);
+  if (anim === undefined) {
+    return Errors.missing("behaviors", "animations", anim_id, diagnoser);
+  }
+  if (!ProjectItem.is(anim)) {
+    return; // Skip anything but a project defined item
+  }
 
-  if (!anim) return;
-
-  diagnose_molang_implementation(anim, user, ownerType, diagnoser);
-}
-
-/**
- *
- * @param id
- * @param diagnoser
- * @returns
- */
-export function has_animation(id: string, diagnoser: DiagnosticsBuilder): boolean {
-  const cache = diagnoser.context.getCache();
-
-  //Project has render controller
-  if (cache.behaviorPacks.animations.has(id)) return true;
-
-  //Nothing then report error
-  diagnoser.add(
-    `"${id}"`,
-    `Cannot find behaviorpack animation: ${id}`,
-    DiagnosticSeverity.error,
-    "behaviorpack.animation.missing"
-  );
-  return false;
+  diagnose_molang_implementation(anim.item, user, ownerType, diagnoser);
 }

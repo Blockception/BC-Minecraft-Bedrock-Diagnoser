@@ -7,19 +7,19 @@ import { AnimationUsage } from "../../minecraft";
 import { diagnose_script } from "../../minecraft/script";
 import { diagnose_molang } from "../../molang/diagnostics";
 import { animation_or_controller_diagnose_implementation } from "../anim-or-controller";
-import { animation_controller_diagnose_implementation } from "../animation-controllers/diagnostics";
+import { diagnose_animation_controller_implementation } from "../animation-controllers/diagnostics";
 import { resourcepack_animation_used } from "../animation/usage";
-import { resourcepack_has_model } from "../model/diagnose";
-import { resourcepack_particle_diagnose } from "../particle/diagnose";
+import { model_is_defined } from "../model/diagnose";
+import { particle_is_defined } from "../particle/diagnose";
 import { render_controller_diagnose_implementation } from "../render-controller/diagnostics";
 import { diagnose_resourcepack_sounds } from "../sounds/diagnostics";
 import { texture_files_diagnose } from "../texture-atlas/entry";
-import { behaviorpack_entityid_diagnose } from '../../behavior-pack/entity';
+import { behaviorpack_entityid_diagnose } from "../../behavior-pack/entity";
 
 /**Diagnoses the given document as an RP entity
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnose_entity_document(diagnoser: DocumentDiagnosticsBuilder): void {
   //No behaviorpack check, entities can exist without their bp side (for servers)
 
   //Check molang math functions
@@ -32,7 +32,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   const description = entity["minecraft:client_entity"].description;
   const entityGathered = ResourcePack.Entity.Process(diagnoser.document);
 
-  behaviorpack_entityid_diagnose(description.identifier, diagnoser); 
+  behaviorpack_entityid_diagnose(description.identifier, diagnoser);
 
   if (!entityGathered) return;
   if (!entityGathered.molang) entityGathered.molang = Molang.MolangFullSet.harvest(diagnoser.document.getText());
@@ -49,7 +49,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
       return;
     }
 
-    Types.Definition.forEach(controller, (ref, anim_id) => anim_data.animation_controllers[ref] = anim_id);
+    Types.Definition.forEach(controller, (ref, anim_id) => (anim_data.animation_controllers[ref] = anim_id));
   });
 
   //#region animations
@@ -82,7 +82,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   //Check animation controllers
   description.animation_controllers?.forEach((controller) => {
     const temp = flatten(controller);
-    if (temp) animation_controller_diagnose_implementation(temp, entityGathered, "Entities", diagnoser, {});
+    if (temp) diagnose_animation_controller_implementation(temp, entityGathered, "Entities", diagnoser, {});
   });
 
   //Check render controllers
@@ -92,25 +92,30 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   });
 
   //Check models
-  Types.Definition.forEach(description.geometry, (ref, modelId) => resourcepack_has_model(modelId, diagnoser));
+  Types.Definition.forEach(description.geometry, (ref, modelId) => model_is_defined(modelId, diagnoser));
 
   //check particles
   Types.Definition.forEach(description.particle_effects, (ref, part_id) =>
-    resourcepack_particle_diagnose(part_id, diagnoser)
+    particle_is_defined(part_id, diagnoser)
   );
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
-  const textureId = description['spawn_egg']?.['texture']
+  const textureId = description["spawn_egg"]?.["texture"];
 
-  if (typeof textureId == 'string' && !diagnoser.context.getCache().resourcePacks.itemTextures.find(val => val.id == textureId))
-    diagnoser.add(`description/spawn_egg/${textureId}`,
+  if (
+    typeof textureId == "string" &&
+    !diagnoser.context.getProjectData().projectData.resourcePacks.itemTextures.find((val) => val.id == textureId)
+  )
+    diagnoser.add(
+      `description/spawn_egg/${textureId}`,
       `Texture reference "${textureId}" was not defined in item_texture.json`,
       DiagnosticSeverity.error,
-      'behaviorpack.item.components.texture_not_found')
+      "behaviorpack.item.components.texture_not_found"
+    );
 
   //Get pack
-  const pack = diagnoser.context.getCache().resourcePacks.get(diagnoser.document.uri);
+  const pack = diagnoser.context.getProjectData().projectData.resourcePacks.get(diagnoser.document.uri);
   if (pack === undefined) return;
 
   const rp_files = diagnoser.context

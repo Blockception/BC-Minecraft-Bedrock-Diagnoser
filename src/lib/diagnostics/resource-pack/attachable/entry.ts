@@ -2,34 +2,35 @@ import { Internal, ResourcePack } from "bc-minecraft-bedrock-project";
 import { Types } from "bc-minecraft-bedrock-types";
 import { Molang } from "bc-minecraft-molang";
 import { DocumentDiagnosticsBuilder } from "../../../types";
+import { behaviorpack_item_diagnose } from "../../behavior-pack/item";
 import { Json } from "../../json/json";
 import { AnimationUsage } from "../../minecraft";
 import { diagnose_script } from "../../minecraft/script";
 import { diagnose_molang } from "../../molang/diagnostics";
 import { animation_or_controller_diagnose_implementation } from "../anim-or-controller";
 import { resourcepack_animation_used } from "../animation/usage";
-import { resourcepack_has_model } from "../model/diagnose";
-import { resourcepack_particle_diagnose } from "../particle/diagnose";
+import { model_is_defined } from "../model/diagnose";
+import { particle_is_defined } from "../particle/diagnose";
 import { render_controller_diagnose_implementation } from "../render-controller/diagnostics";
 import { diagnose_resourcepack_sounds } from "../sounds/diagnostics";
 import { texture_files_diagnose } from "../texture-atlas/entry";
-import { behaviorpack_item_diagnose } from '../../behavior-pack/item';
 
-/**Diagnoses the given document as an attachable
+/**
+ * Diagnoses the given document as an attachable
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnose_attachable_document(diagnoser: DocumentDiagnosticsBuilder): void {
   //Check molang
   diagnose_molang(diagnoser.document.getText(), "Items", diagnoser);
 
   //Load attacble
-  const attacble = Json.LoadReport<Internal.ResourcePack.Attachable>(diagnoser);
-  if (!Internal.ResourcePack.Attachable.is(attacble)) return;
+  const attachable = Json.LoadReport<Internal.ResourcePack.Attachable>(diagnoser);
+  if (!Internal.ResourcePack.Attachable.is(attachable)) return;
 
-  const description = attacble["minecraft:attachable"].description;
+  const description = attachable["minecraft:attachable"].description;
   const attachableGathered = ResourcePack.Attachable.Process(diagnoser.document);
 
-  behaviorpack_item_diagnose(description.identifier, diagnoser)
+  behaviorpack_item_diagnose(description.identifier, diagnoser);
 
   if (!attachableGathered) return;
   if (!attachableGathered.molang)
@@ -82,15 +83,15 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
   });
 
   //Check models
-  Types.Definition.forEach(description.geometry, (ref, modelId) => resourcepack_has_model(modelId, diagnoser));
+  Types.Definition.forEach(description.geometry, (ref, modelId) => model_is_defined(modelId, diagnoser));
 
   //check particles
   Types.Definition.forEach(description.particle_effects, (ref, part_id) =>
-    resourcepack_particle_diagnose(part_id, diagnoser)
+    particle_is_defined(part_id, diagnoser)
   );
 
   //Get pack
-  const pack = diagnoser.context.getCache().resourcePacks.get(diagnoser.document.uri);
+  const pack = diagnoser.context.getProjectData().projectData.resourcePacks.get(diagnoser.document.uri);
   if (pack === undefined) return;
 
   const rp_files = diagnoser.context

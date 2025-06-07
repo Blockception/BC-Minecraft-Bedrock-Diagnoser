@@ -2,14 +2,11 @@ import { Types } from "bc-minecraft-bedrock-types";
 import { Definition } from "bc-minecraft-bedrock-types/lib/types/definition";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { MolangDataSetKey } from "bc-minecraft-molang";
-import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier } from '../../types';
-import { education_enabled } from "../definitions";
-import { animation_controller_diagnose_implementation } from "./animation-controllers/diagnostics";
-import { animation_diagnose_implementation } from "./animation/diagnostics";
+import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier } from "../../types";
+import { diagnose_animation_controller_implementation } from "./animation-controllers/diagnostics";
+import { diagnose_animation_implementation } from "./animation/diagnostics";
 
-const whiteList = [
-  'animation.humanoid.fishing_rod'
-]
+const whiteList = ["animation.humanoid.fishing_rod"];
 
 export function animation_or_controller_diagnose_implementation(
   id: string,
@@ -21,10 +18,10 @@ export function animation_or_controller_diagnose_implementation(
 ): void {
   switch (is_animation_or_controller(id, diagnoser)) {
     case anim_or_contr.animation:
-      return animation_diagnose_implementation(id, user, ownerType, diagnoser, particles, sounds);
+      return diagnose_animation_implementation(id, user, ownerType, diagnoser, particles, sounds);
 
     case anim_or_contr.controller:
-      return animation_controller_diagnose_implementation(id, user, ownerType, diagnoser, { particles, sounds });
+      return diagnose_animation_controller_implementation(id, user, ownerType, diagnoser, { particles, sounds });
 
     case anim_or_contr.neither:
       if (whiteList.includes(id)) return;
@@ -55,7 +52,7 @@ export function animation_or_controller_diagnose(id: Types.OffsetWord, diagnoser
 }
 
 export function animation_reference_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
-  const data = diagnoser.context.getCache();
+  const data = diagnoser.context.getProjectData().projectData;
   const id = value.text;
 
   //Project in entity
@@ -101,16 +98,9 @@ export enum anim_or_contr {
  * @returns True if animation, false if controller
  */
 export function is_animation_or_controller(id: string, diagnoser: DiagnosticsBuilder): anim_or_contr {
-  const cache = diagnoser.context.getCache();
-
-  if (cache.resourcePacks.animations.has(id)) return anim_or_contr.animation;
-  if (cache.resourcePacks.animation_controllers.has(id)) return anim_or_contr.controller;
-
-  const edu = education_enabled(diagnoser);
-
-  //Vanilla has render controller
-  if (MinecraftData.ResourcePack.hasAnimation(id, edu)) return anim_or_contr.animation;
-  if (MinecraftData.ResourcePack.hasAnimationController(id, edu)) return anim_or_contr.controller;
+  const rp = diagnoser.context.getProjectData().resources;
+  if (rp.animations.has(id, diagnoser.project)) return anim_or_contr.animation;
+  if (rp.animation_controllers.has(id, diagnoser.project)) return anim_or_contr.controller;
 
   return anim_or_contr.neither;
 }

@@ -232,7 +232,7 @@ describe("sound definitions", () => {
     const diagnoser = TestDiagnoser.createDocument(undefined, doc);
     diagnoser.context.getFiles = () => ["sounds/foo/bar"];
 
-    expect(ResourcePack.Process(diagnoser)).toBeTruthy();
+    expect(ResourcePack.diagnose_document(diagnoser)).toBeTruthy();
     diagnoser.expectEmpty();
   });
 
@@ -240,7 +240,7 @@ describe("sound definitions", () => {
     const diagnoser = TestDiagnoser.createDocument(undefined, doc);
     diagnoser.context.getFiles = () => [];
 
-    expect(ResourcePack.Process(diagnoser)).toBeTruthy();
+    expect(ResourcePack.diagnose_document(diagnoser)).toBeTruthy();
     diagnoser.expectAmount(1);
   });
 });

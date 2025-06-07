@@ -25,50 +25,51 @@ import * as Flipbook from "./texture-atlas/flipbook";
 
 /** The namespace that deals with resourcepack diagnostics */
 export namespace ResourcePack {
-  /** Processes and diagnoses the given textdocument
+  /**
+   * Processes and diagnoses the given textdocument
    * @param doc The document to process / diagnose
    * @param diagnoser The diagnoser to report to
    * @returns `true` or `false` whenever or not it was succesfull */
-  export function Process(diagnoser: DocumentDiagnosticsBuilder): boolean {
+  export function diagnose_document(diagnoser: DocumentDiagnosticsBuilder): boolean {
     const uri = diagnoser.document.uri;
     const type = FileType.detect(uri);
 
     switch (type) {
       case FileType.animation:
-        Animation.Diagnose(diagnoser);
+        Animation.diagnose_animation_document(diagnoser);
         break;
 
       case FileType.animation_controller:
-        AnimationController.Diagnose(diagnoser);
+        AnimationController.diagnose_animation_controller_document(diagnoser);
         break;
 
       case FileType.attachable:
-        Attachable.Diagnose(diagnoser);
+        Attachable.diagnose_attachable_document(diagnoser);
         break;
 
       case FileType.block_culling_rules:
-        BlockCulling.Diagnose(diagnoser);
+        BlockCulling.diagnose_block_culling_document(diagnoser);
         break;
 
       case FileType.biomes_client:
-        BiomesClient.Diagnose(diagnoser);
+        BiomesClient.diagnose_biomes_client_document(diagnoser);
         break;
 
       case FileType.block:
         if (uri.endsWith("blocks.json")) {
-          Blocks.Diagnose(diagnoser);
+          Blocks.diagnose_block_document(diagnoser);
         } else {
-          Block.Diagnose(diagnoser);
+          Block.diagnose_block_document(diagnoser);
         }
 
         break;
 
       case FileType.entity:
-        Entity.Diagnose(diagnoser);
+        Entity.diagnose_entity_document(diagnoser);
         break;
 
       case FileType.fog:
-        Fog.Diagnose(diagnoser);
+        Fog.diagnose_fog_document(diagnoser);
         break;
 
       case FileType.item:
@@ -76,23 +77,23 @@ export namespace ResourcePack {
         break;
 
       case FileType.manifest:
-        Manifest.Diagnose(diagnoser);
+        Manifest.diagnose_manifest_document(diagnoser);
         break;
 
       case FileType.material:
-        Material.Diagnose(diagnoser);
+        Material.diagnose_material_document(diagnoser);
         break;
 
       case FileType.model:
-        Model.Diagnose(diagnoser);
+        Model.diagnose_model_document(diagnoser);
         break;
 
       case FileType.music_definitions:
-        MusicDefinitions.Diagnose(diagnoser);
+        MusicDefinitions.diagnose_music_definitions_document(diagnoser);
         break;
 
       case FileType.particle:
-        Particle.Diagnose(diagnoser);
+        Particle.diagnose_particle_document(diagnoser);
         break;
 
       case FileType.render_controller:
@@ -100,15 +101,15 @@ export namespace ResourcePack {
         break;
 
       case FileType.sounds:
-        Sounds.Diagnose(diagnoser);
+        Sounds.diagnose_sounds_document(diagnoser);
         break;
 
       case FileType.sounds_definitions:
-        SoundsDefinitions.Diagnose(diagnoser);
+        SoundsDefinitions.diagnose_sound_definitions_document(diagnoser);
         break;
 
       case FileType.texture:
-        Texture.Diagnose(diagnoser);
+        Texture.diagnose_texture_document(diagnoser);
         break;
 
       case FileType.texture_flipbook_atlas:
@@ -117,7 +118,7 @@ export namespace ResourcePack {
 
       case FileType.texture_item_atlas:
       case FileType.texture_terrain_atlas:
-        TextureAtlas.DiagnoseAtlas(diagnoser);
+        TextureAtlas.diagnose_atlas_document(diagnoser);
         break;
 
       default:

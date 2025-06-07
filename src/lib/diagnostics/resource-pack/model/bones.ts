@@ -5,8 +5,8 @@ export interface BoneUsage {
   parent_id: string;
 }
 
-export function checkBonesExists(bones: BoneUsage[], diagnoser: DiagnosticsBuilder) {
-  const projectData = diagnoser.context.getCache();
+export function model_bones_must_exist(bones: BoneUsage[], diagnoser: DiagnosticsBuilder) {
+  const projectData = diagnoser.context.getProjectData().projectData;
 
   for (let I = 0; I < bones.length; I++) {
     const bone = bones[I];

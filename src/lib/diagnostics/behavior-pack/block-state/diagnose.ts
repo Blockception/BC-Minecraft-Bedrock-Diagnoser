@@ -1,10 +1,10 @@
-import { BehaviorPack } from 'bc-minecraft-bedrock-project';
-import { Minecraft, Types } from 'bc-minecraft-bedrock-types';
-import { DocumentLocation, Location } from 'bc-minecraft-bedrock-types/lib/types';
-import { MinecraftData } from 'bc-minecraft-bedrock-vanilla-data';
-import { MolangSet } from 'bc-minecraft-molang/lib/src/Molang';
-import { DiagnosticsBuilder, DiagnosticSeverity } from '../../../types';
-import { education_enabled } from '../../definitions';
+import { BehaviorPack, DefinitionItem, ProjectItem } from "bc-minecraft-bedrock-project";
+import { Minecraft, Types } from "bc-minecraft-bedrock-types";
+import { DocumentLocation, Location } from "bc-minecraft-bedrock-types/lib/types";
+import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
+import { MolangSet } from "bc-minecraft-molang/lib/src/Molang";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../types";
+import { education_enabled } from "../../definitions";
 
 /** Checks if the blocks exists in the project or in vanilla, if not then a bug is reported
  * @param id
@@ -19,35 +19,40 @@ export function behaviorpack_check_blockstates(blockDescriptor: Types.OffsetWord
   const blockData = Minecraft.Block.fromBlockDescriptor(blockDescriptor.text);
 
   // ^ Returns ['"state"'] instead of ['state']; this fixes that
-  blockData.states.forEach(state => {
-    if (state.property.startsWith('"') && state.property.endsWith('"')) state.property = state.property.substring(1, state.property.length - 1)
-  })
+  blockData.states.forEach((state) => {
+    if (state.property.startsWith('"') && state.property.endsWith('"'))
+      state.property = state.property.substring(1, state.property.length - 1);
+  });
 
   check_block_definition(blockData, blockDescriptor, diagnoser);
 }
 
 /**
- * 
- * @param blockId 
- * @param states 
- * @param diagnoser 
+ *
+ * @param blockId
+ * @param states
+ * @param diagnoser
  */
-export function behaviorpack_check_command_blockstates(blockId: Types.OffsetWord, states: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
+export function behaviorpack_check_command_blockstates(
+  blockId: Types.OffsetWord,
+  states: Types.OffsetWord,
+  diagnoser: DiagnosticsBuilder
+): void {
   const blockData: Minecraft.Block = {
     id: blockId.text,
     location: Location.empty(),
     states: [],
-  }
+  };
 
   // Is state properly formatted?
-  if (states.text.startsWith('[') && states.text.endsWith(']')) {
+  if (states.text.startsWith("[") && states.text.endsWith("]")) {
     const value = states.text.substring(1, states.text.length - 1);
-    const split = value.split(',');
+    const split = value.split(",");
 
     // For each state
     for (let I = 0; I < split.length; I++) {
       const item = split[I];
-      const state = split[I].split('=').map(part => part.trim());
+      const state = split[I].split("=").map((part) => part.trim());
 
       // Is state properly defined
       if (state.length == 2) {
@@ -57,8 +62,7 @@ export function behaviorpack_check_command_blockstates(blockId: Types.OffsetWord
         // property is a string literal?
         if (property.startsWith('"') && property.endsWith('"')) {
           property = property.substring(1, property.length - 1);
-          blockData.states.push({value, property});
-
+          blockData.states.push({ value, property });
         } else {
           diagnoser.add(
             blockId,
@@ -67,8 +71,7 @@ export function behaviorpack_check_command_blockstates(blockId: Types.OffsetWord
             "behaviorpack.block.states.invalid"
           );
         }
-      }
-      else if (state[0] !== "") {
+      } else if (state[0] !== "") {
         diagnoser.add(
           states,
           `Invalid state: '${item}' in the block command, needs to be in the format ["state"=value] :`,
@@ -77,7 +80,6 @@ export function behaviorpack_check_command_blockstates(blockId: Types.OffsetWord
         );
       }
     }
-
   } else {
     diagnoser.add(
       states,
@@ -90,12 +92,15 @@ export function behaviorpack_check_command_blockstates(blockId: Types.OffsetWord
   check_block_definition(blockData, states, diagnoser);
 }
 
-function check_block_definition(blockDefinition: Minecraft.Block, location: DocumentLocation, diagnoser: DiagnosticsBuilder) {
-  const data = diagnoser.context.getCache();
-  const block = data.behaviorPacks.blocks.get(blockDefinition.id) ?? vanilla_block(diagnoser, blockDefinition.id);
-
-  //No block found, expecting behaviorpack_check_blockId has been run
-  if (!block) return;
+function check_block_definition(
+  blockDefinition: Minecraft.Block,
+  location: DocumentLocation,
+  diagnoser: DiagnosticsBuilder
+) {
+  const blockItem = diagnoser.context.getProjectData().behaviors.blocks.get(blockDefinition.id, diagnoser.project);
+  if (!blockItem) return;
+  if (!ProjectItem.is(blockItem)) return;
+  const block = blockItem.item;
 
   if (block.states.length == 0 && blockDefinition.states.length > 0) {
     //Block has not defined states, but states are being used
@@ -110,10 +115,9 @@ function check_block_definition(blockDefinition: Minecraft.Block, location: Docu
     return;
   }
 
-  for (let I = 0; I < blockDefinition.states.length; I++) {
-    const state = blockDefinition.states[I];
+  blockDefinition.states.forEach((state) => {
     check_state(state, block, location, diagnoser);
-  }
+  });
 }
 
 /**
@@ -144,9 +148,7 @@ function check_state(
         } else {
           diagnoser.add(
             location,
-            `Invalid state value: '${state.value}' for state: '${state.property}' in the block definition: '${
-              data.id
-            }', needs to be a string literal with ""`,
+            `Invalid state value: '${state.value}' for state: '${state.property}' in the block definition: '${data.id}', needs to be a string literal with ""`,
             DiagnosticSeverity.error,
             "behaviorpack.block.states.invalid"
           );
@@ -158,7 +160,8 @@ function check_state(
       //Check if the state value is valid
       for (const expect of values) {
         // Compare int/bool/string values
-        if (String(expect) == actual) { // String() because "true" != true unlike "2" == 2
+        if (String(expect) == actual) {
+          // String() because "true" != true unlike "2" == 2
           return;
         }
       }

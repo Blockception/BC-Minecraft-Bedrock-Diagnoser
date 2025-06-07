@@ -1,6 +1,8 @@
 import { MolangDataSetKey } from "bc-minecraft-molang";
 import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier, EventCarrier } from "../../../types";
 import { general_animation_controllers_implementation } from "../../minecraft/animation-controllers";
+import { Errors } from "../..";
+import { ProjectItem } from "bc-minecraft-bedrock-project";
 
 /**
  *
@@ -8,45 +10,20 @@ import { general_animation_controllers_implementation } from "../../minecraft/an
  * @param data
  * @param diagnoser
  */
-export function animation_controller_diagnose_implementation(
-  controllerId: string,
+export function diagnose_animation_controller_implementation(
+  id: string,
   user: EntityAnimationMolangCarrier & EventCarrier,
   ownerType: MolangDataSetKey,
   diagnoser: DiagnosticsBuilder
 ): void {
-  if (has_animation_controller(controllerId, diagnoser)) {
-    const data = diagnoser.context.getCache().behaviorPacks
-    const controller = data.animation_controllers.get(controllerId);
-
-    if (!controller) return;
-
-    const entityEvents = data.entities.get(user.id)?.events
-    controller.events.forEach(id => {
-      if (!entityEvents?.includes(id)) diagnoser.add(`${user.id}/${controller.id}`, `Entity does not have event ${id}`, DiagnosticSeverity.warning, "behaviorpack.entity.event.missing")
-    })
-
-    general_animation_controllers_implementation(controller, user, ownerType, diagnoser);
-  }
-}
-
-/**
- *
- * @param id
- * @param diagnoser
- * @returns
- */
-export function has_animation_controller(id: string, diagnoser: DiagnosticsBuilder): boolean {
-  const cache = diagnoser.context.getCache();
-
   //Project has animation controller
-  if (cache.behaviorPacks.animation_controllers.has(id)) return true;
+  const anim = diagnoser.context.getProjectData().behaviors.animation_controllers.get(id, diagnoser.project);
+  if (anim === undefined) {
+    return Errors.missing("behaviors", "animation_controllers", id, diagnoser);
+  }
+  if (!ProjectItem.is(anim)) {
+    return; // Skip anything but a project defined item
+  }
 
-  //Nothing then report error
-  diagnoser.add(
-    `"${id}"`,
-    `Cannot find behaviorpack animation_controller: ${id}`,
-    DiagnosticSeverity.error,
-    "behaviorpack.animation_controller.missing"
-  );
-  return false;
+  general_animation_controllers_implementation(anim.item, user, ownerType, diagnoser);
 }

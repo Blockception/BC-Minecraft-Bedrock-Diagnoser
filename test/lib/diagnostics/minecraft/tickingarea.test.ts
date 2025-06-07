@@ -7,7 +7,7 @@ import { TestDiagnoser } from "../../../diagnoser";
 describe("Tickingarea", () => {
   it("diagnose no errors", () => {
     const B = TestDiagnoser.create();
-    const data = B.context.getCache();
+    const data = B.context.getProjectData().projectData;
 
     data.general.tickingAreas.set([
       GeneralInfo.create("main", Location.create(""), "main tickingarea"),

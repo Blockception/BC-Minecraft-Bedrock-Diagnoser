@@ -8,7 +8,7 @@ export namespace WorldPack {
    * @param doc The document to process / diagnose
    * @param diagnoser The diagnoser to report to
    * @returns `true` or `false` whenever or not it was succesfull*/
-  export function Process(diagnoser: DocumentDiagnosticsBuilder): boolean {
+  export function diagnose_document(diagnoser: DocumentDiagnosticsBuilder): boolean {
     //retrieve filter doc type
     if (diagnoser.document.uri.endsWith("manifest.json")) {
       Manifest.Diagnose(diagnoser);

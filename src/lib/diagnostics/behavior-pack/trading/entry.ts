@@ -7,7 +7,7 @@ import { behaviorpack_loot_table_function_diagnose, LootFunction } from "../loot
 /**Diagnoses the given document as an trading table
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnose_trading_document(diagnoser: DocumentDiagnosticsBuilder): void {
   const table = Json.LoadReport<TradeTable>(diagnoser);
   if (typeof table !== "object") return;
 

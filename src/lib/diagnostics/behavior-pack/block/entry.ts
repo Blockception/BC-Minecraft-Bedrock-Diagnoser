@@ -12,7 +12,7 @@ import { behaviorpack_diagnose_block_components } from "./components/diagnose";
 /**Diagnoses the given document as an bp block
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnose_block_document(diagnoser: DocumentDiagnosticsBuilder): void {
   //Check molang
   diagnose_molang(diagnoser.document.getText(), "Blocks", diagnoser);
 
@@ -21,7 +21,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
 
   const identifier = block["minecraft:block"].description.identifier;
   // check that no other exists with this id
-  no_other_duplicates("behaviorpack.block", diagnoser.context.getCache().behaviorPacks.blocks, identifier, diagnoser);
+  no_other_duplicates("behaviorpack.block", diagnoser.context.getProjectData().projectData.behaviorPacks.blocks, identifier, diagnoser);
 
   //check components
   const context: Context<Internal.BehaviorPack.Block> = {

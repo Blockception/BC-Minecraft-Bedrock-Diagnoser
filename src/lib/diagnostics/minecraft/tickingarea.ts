@@ -4,7 +4,7 @@ import { DiagnosticsBuilder, DiagnosticSeverity } from "../../types";
 import { check_definition_value } from "../definitions";
 
 export function minecraft_tickingarea_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {
-  const data = diagnoser.context.getCache();
+  const data = diagnoser.context.getProjectData().projectData;
   const id = Text.UnQuote(value.text);
 
   //Defined in McProject

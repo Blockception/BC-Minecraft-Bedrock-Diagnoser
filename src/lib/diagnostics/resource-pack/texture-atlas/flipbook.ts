@@ -11,7 +11,7 @@ export function DiagnoseFlipbook(diagnoser: DocumentDiagnosticsBuilder): void {
   if (flipbooks === undefined) return;
   if (!Array.isArray(flipbooks)) return;
 
-  const pack = diagnoser.context.getCache().resourcePacks.get(diagnoser.document.uri);
+  const pack = diagnoser.context.getProjectData().projectData.resourcePacks.get(diagnoser.document.uri);
   if (pack === undefined) return;
 
   const texture_files = diagnoser.context

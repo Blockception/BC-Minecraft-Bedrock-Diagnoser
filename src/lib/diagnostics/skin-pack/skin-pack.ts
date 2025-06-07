@@ -8,7 +8,7 @@ export namespace SkinPack {
    * @param doc The document to process / diagnose
    * @param diagnoser The diagnoser to report to
    * @returns `true` or `false` whenever or not it was successful*/
-  export function Process(diagnoser: DocumentDiagnosticsBuilder): boolean {
+  export function diagnose_document(diagnoser: DocumentDiagnosticsBuilder): boolean {
     //retrieve filter doc type
     if (diagnoser.document.uri.endsWith("manifest.json")) {
       Manifest.Diagnose(diagnoser);

@@ -1,23 +1,17 @@
-import { Text } from "bc-minecraft-bedrock-project";
+import { ProjectItem, Text } from "bc-minecraft-bedrock-project";
 import { Types } from "bc-minecraft-bedrock-types";
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../types";
-import { check_definition_value } from "../../definitions";
+import { Errors } from '../..';
+import { DiagnosticsBuilder } from "../../../types";
 
-export function behaviorpack_functions_diagnose(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
-  const data = diagnoser.context.getCache();
+export function mcfunction_is_defined(value: Types.OffsetWord, diagnoser: DiagnosticsBuilder): boolean {
   const id = Text.UnQuote(value.text);
 
-  //Check project
-  if (check_definition_value(diagnoser.project.definitions.function, id, diagnoser)) return true;
+  //Project has mcfunction
+  const fn = diagnoser.context.getProjectData().behaviors.functions.get(id, diagnoser.project);
+  if (fn === undefined) {
+    Errors.missing("behaviors", "trading", id, diagnoser);
+    return false;
+  }
 
-  //If project has function then ignore
-  if (data.behaviorPacks.functions.has(id)) return true;
-
-  diagnoser.add(
-    value.offset,
-    `Cannot find mcfunction: ${id}`,
-    DiagnosticSeverity.error,
-    "behaviorpack.mcfunction.missing"
-  );
-  return false;
+  return true;
 }

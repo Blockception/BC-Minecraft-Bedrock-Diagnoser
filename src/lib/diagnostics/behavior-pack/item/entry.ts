@@ -10,13 +10,13 @@ import { FormatVersion } from 'bc-minecraft-bedrock-types/lib/minecraft';
 
 /**Diagnoses the given document as an item
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnose_item_document(diagnoser: DocumentDiagnosticsBuilder): void {
   const item = Json.LoadReport<Internal.BehaviorPack.Item>(diagnoser);
   if (!Internal.BehaviorPack.Item.is(item)) return;
 
   const identifier = item["minecraft:item"].description.identifier;
   // check that no other exists with this id
-  no_other_duplicates("behaviorpack.block", diagnoser.context.getCache().behaviorPacks.items, identifier, diagnoser);
+  no_other_duplicates("behaviorpack.block", diagnoser.context.getProjectData().projectData.behaviorPacks.items, identifier, diagnoser);
 
   //Check components
   const context: Context<Internal.BehaviorPack.Item> = {

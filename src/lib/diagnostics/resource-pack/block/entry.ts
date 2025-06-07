@@ -1,18 +1,18 @@
 import { ResourcePackCollection } from "bc-minecraft-bedrock-project/lib/src/project/resource-pack";
 import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from '../../../types';
+import { is_block_defined } from '../../behavior-pack/block';
 import { Json } from "../../json/json";
-import { behaviorpack_check_blockid } from '../../behavior-pack/block';
 
 /**Diagnoses the given document as a block.json
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnose_block_document(diagnoser: DocumentDiagnosticsBuilder): void {
   const blocks = Json.LoadReport<Blocks>(diagnoser);
 
   if (!Json.TypeCheck(blocks, diagnoser, "blocks.json", "resourcepack.blocks.invalid", is)) return;
 
   const keys = Object.keys(blocks);
-  const rp = diagnoser.context.getCache().resourcePacks;
+  const rp = diagnoser.context.getProjectData().projectData.resourcePacks;
 
   for (let I = 0; I < keys.length; I++) {
     const key = keys[I];
@@ -38,9 +38,9 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
         if (texture.east) hasDefinition(key, texture.east, rp, diagnoser);
       }
 
-      behaviorpack_check_blockid(key, diagnoser) 
+      is_block_defined(key, diagnoser) 
 
-      const blockFile = diagnoser.context.getCache().behaviorPacks.blocks.get(key)?.location.uri
+      const blockFile = diagnoser.context.getProjectData().projectData.behaviorPacks.blocks.get(key)?.location.uri
       if (!blockFile) return;
 
       if (diagnoser.context.getDocument(blockFile)?.getText().includes('minecraft:material_instances')) diagnoser.add(

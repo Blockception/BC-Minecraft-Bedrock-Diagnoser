@@ -1,5 +1,5 @@
 import { DiagnosticSeverity } from "./severity";
-import { TextDocument, ProjectData, Documents } from "bc-minecraft-bedrock-project";
+import { TextDocument, MinecraftData, Documents } from "bc-minecraft-bedrock-project";
 import { MCIgnore, MCProject } from "bc-minecraft-project";
 import { Types } from "bc-minecraft-bedrock-types";
 
@@ -16,7 +16,7 @@ export interface DiagnosticsBuilderContent<T extends TextDocument = TextDocument
   getFiles(folder: string, patterns: string[], ignores: MCIgnore): string[];
 
   /**The project cache data*/
-  getCache(): ProjectData;
+  getProjectData(): MinecraftData;
 }
 
 /**The interface of a diagnostics builder*/

@@ -3,6 +3,7 @@ import { check_definition_value, education_enabled } from "../../definitions";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../types";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { Types } from "bc-minecraft-bedrock-types";
+import { Errors } from '../..';
 
 interface Item extends Types.OffsetWord {
   data?: number;
@@ -36,17 +37,12 @@ export function behaviorpack_item_diagnose(value: Item|string, diagnoser: Diagno
   }
 
   //Nothing then report error
-  diagnoser.add(
-    value,
-    `Cannot find behaviorpack item definition: ${id}`,
-    DiagnosticSeverity.error,
-    "behaviorpack.item.missing"
-  );
+  Errors.missing("behaviors", "items", id, diagnoser);
   return false;
 }
 
 function hasAny(id: string, diagnoser: DiagnosticsBuilder): boolean {
-  const data = diagnoser.context.getCache();
+  const data = diagnoser.context.getProjectData().projectData;
 
   if (check_definition_value(diagnoser.project.definitions.item, id, diagnoser)) return true;
   if (check_definition_value(diagnoser.project.definitions.block, id, diagnoser)) return true;

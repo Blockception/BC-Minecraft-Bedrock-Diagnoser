@@ -3,6 +3,7 @@ import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../types";
 import { check_definition_value, education_enabled } from "../../definitions";
 import { behaviorpack_check_blockstates } from "../block-state/diagnose";
+import { Errors } from '../..';
 
 /**
  *
@@ -17,8 +18,11 @@ export function behaviorpack_check_blockdescriptor(
   behaviorpack_check_blockstates(blockDescriptor, diagnoser);
 }
 
-export function behaviorpack_check_blockid_from_descriptor(blockDescriptor: Types.OffsetWord, diagnoser: DiagnosticsBuilder) :boolean {
-  return behaviorpack_check_blockid(Minecraft.Block.getId(blockDescriptor.text), diagnoser)
+export function behaviorpack_check_blockid_from_descriptor(
+  blockDescriptor: Types.OffsetWord,
+  diagnoser: DiagnosticsBuilder
+): boolean {
+  return is_block_defined(Minecraft.Block.getId(blockDescriptor.text), diagnoser);
 }
 
 /**Checks if the blocks exists in the project or in vanilla, if not then a bug is reported
@@ -26,36 +30,12 @@ export function behaviorpack_check_blockid_from_descriptor(blockDescriptor: Type
  * @param diagnoser
  * @returns
  */
-export function behaviorpack_check_blockid(id: string, diagnoser: DiagnosticsBuilder): boolean {
-
-  //Defined in McProject
-  if (check_definition_value(diagnoser.project.definitions.block, id, diagnoser)) return true;
-  const data = diagnoser.context.getCache();
-
+export function is_block_defined(id: string, diagnoser: DiagnosticsBuilder): boolean {
   //Project has block
-  if (data.hasBlock(id)) return true;
-
-  const edu = education_enabled(diagnoser);
-
-  //Vanilla has block
-  if (MinecraftData.BehaviorPack.hasBlock(id, edu)) return true;
-
-  //Missing namespace?
-  if (!id.includes(":")) {
-    //retry
-    id = "minecraft:" + id;
-
-    //Defined in McProject
-    if (check_definition_value(diagnoser.project.definitions.block, id, diagnoser)) return true;
-
-    //Project has block
-    if (data.hasBlock(id)) return true;
+  const anim = diagnoser.context.getProjectData().behaviors.blocks.get(id, diagnoser.project);
+  if (anim === undefined) {
+    Errors.missing("behaviors", "blocks", id, diagnoser);
+    return false;
   }
-
-  //Vanilla has block
-  if (MinecraftData.BehaviorPack.hasBlock(id, edu)) return true;
-
-  //Nothing then report error
-  diagnoser.add(id, `Cannot find block definition: ${id}`, DiagnosticSeverity.error, "behaviorpack.block.missing");
-  return false;
+  return true;
 }

@@ -4,11 +4,11 @@ import { Json } from "../../../json/json";
 /**Diagnoses the given document as an tick.json
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
+export function diagnose_tick_document(diagnoser: DocumentDiagnosticsBuilder): void {
   const data = Json.LoadReport<Tick>(diagnoser);
   if (!data || !data.values) return;
 
-  const pack = diagnoser.context.getCache().behaviorPacks.get(diagnoser.document.uri);
+  const pack = diagnoser.context.getProjectData().projectData.behaviorPacks.get(diagnoser.document.uri);
   if (!pack) return;
 
   //Specific lookup in the pack

@@ -1,24 +1,12 @@
-import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
-import { DiagnosticsBuilder, DiagnosticSeverity } from '../../../types';
-import { education_enabled } from "../../definitions";
+import { Errors } from '../..';
+import { DiagnosticsBuilder } from '../../../types';
 
-export function resourcepack_has_model(modelId: string, diagnoser: DiagnosticsBuilder): boolean {
-  const data = diagnoser.context.getCache();
-
-  //Has project data
-  if (data.resourcePacks.models.has(modelId)) return true;
-
-  const edu = education_enabled(diagnoser);
-
-  //Check vanilla data
-  if (MinecraftData.ResourcePack.hasModel(modelId, edu)) return true;
-
-  diagnoser.add(
-    modelId,
-    `Cannot find model definition: ${modelId}`,
-    DiagnosticSeverity.error,
-    "resourcepack.model.missing"
-  );
-
-  return false;
+export function model_is_defined(modelId: string, diagnoser: DiagnosticsBuilder): boolean {
+  //Project has model
+  const model = diagnoser.context.getProjectData().resources.models.get(modelId, diagnoser.project);
+  if (model === undefined) {
+    Errors.missing("resources", "models", modelId, diagnoser);
+    return false;
+  }
+  return true;
 }

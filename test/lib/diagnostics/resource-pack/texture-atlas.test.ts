@@ -51,7 +51,7 @@ describe("ResourcePack", () => {
         "textures/air/anvil_base",
       ];
 
-      expect(ResourcePack.Process(diagnoser)).toBeTruthy();
+      expect(ResourcePack.diagnose_document(diagnoser)).toBeTruthy();
       diagnoser.expectEmpty();
     });
   });

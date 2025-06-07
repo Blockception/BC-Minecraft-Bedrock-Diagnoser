@@ -1,23 +1,25 @@
-import { DiagnosticSeverity, DiagnosticsBuilder } from '../../../types';
+import { DefinitionItem } from "bc-minecraft-bedrock-project";
+import { DiagnosticSeverity, DiagnosticsBuilder } from "../../../types";
 
+export function diagnose_block_culling_geo_and_rules(geoId: string, cullingId: string, diagnoser: DiagnosticsBuilder) {
+  const resources = diagnoser.context.getProjectData().resources;
+  const modelItem = resources.models.get(geoId, diagnoser.project);
+  const cullingRuleItem = resources.block_culling_rules.get(cullingId, diagnoser.project);
 
-export function check_geo_and_rules(geoId: string, culling: string, diagnoser: DiagnosticsBuilder) {
-  const projectData = diagnoser.context.getCache();
-  const model = projectData.resourcePacks.models.get(geoId);
-  if (!model) return;
+  if (!modelItem || DefinitionItem.is(modelItem)) return;
+  if (!cullingRuleItem || DefinitionItem.is(cullingRuleItem)) return;
+  const model = modelItem.item;
+  const cullingRule = cullingRuleItem.item;
 
-  const cullingRule = projectData.resourcePacks.block_culling_rules.get(culling);
-  if (!cullingRule) return;
-
-  for (let i = 0; i < cullingRule.affected_bones.length; i++) {
-    const bone = cullingRule.affected_bones[i];
-    if (model.bones.includes(bone)) continue;
+  // Affected bones need to be defined
+  cullingRule.affected_bones.forEach((bone) => {
+    if (model.bones.includes(bone)) return;
 
     diagnoser.add(
-      culling,
-      `The geometry '${geoId}' does not contain the bone '${bone}' as defined in the culling rule '${culling}'`,
+      cullingId,
+      `The geometry '${geoId}' does not contain the bone '${bone}' as defined in the culling rule '${cullingId}'`,
       DiagnosticSeverity.warning,
       "resourcepack.block_culling.missing_bone"
     );
-  }
+  });
 }
