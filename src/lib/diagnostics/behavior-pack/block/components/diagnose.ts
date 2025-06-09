@@ -8,6 +8,7 @@ import { behaviorpack_loot_table_diagnose } from "../../loot-table";
 import { is_block_defined } from "../diagnose";
 import { Internal } from "bc-minecraft-bedrock-project";
 import { FormatVersion } from 'bc-minecraft-bedrock-types/lib/minecraft';
+import { Vanilla } from 'bc-minecraft-bedrock-vanilla-data';
 
 /**
  *
@@ -119,7 +120,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
 
     Object.keys(component).forEach((value) => {
       const textureId = component[value].texture;
-      if (!diagnoser.context.getProjectData().projectData.resourcePacks.terrainTextures.find((val) => val.id == textureId))
+      if (!diagnoser.context.getProjectData().projectData.resourcePacks.terrainTextures.find((val) => val.id == textureId) && !Vanilla.ResourcePack.TextureTerrain.includes(textureId))
         diagnoser.add(
           textureId,
           `Texture reference "${textureId}" was not defined in terrain_texture.json`,
