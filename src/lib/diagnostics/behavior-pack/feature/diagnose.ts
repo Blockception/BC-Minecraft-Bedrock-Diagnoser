@@ -8,5 +8,5 @@ export function behaviorpack_feature_diagnose(id: string, diagnoser: Diagnostics
     return false;
   }
 
-  return false;
+  return true;
 }
