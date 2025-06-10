@@ -633,36 +633,36 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   },
   "minecraft:loot": check_loot_table,
   "minecraft:on_death": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.filters, diagnoser)
+    diagnose_event_trigger(name, component, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:on_friendly_anger": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.filters, diagnoser)
+    diagnose_event_trigger(name, component, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:on_hurt": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.filters, diagnoser)
+    diagnose_event_trigger(name, component, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:on_hurt_by_player": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.filters, diagnoser)
+    diagnose_event_trigger(name, component, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:on_ignite": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.filters, diagnoser)
+    diagnose_event_trigger(name, component, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:on_start_landing": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.filters, diagnoser)
     canOnlyBeUsedBySpecificMob(context.source, 'minecraft:ender_dragon')
+    diagnose_event_trigger(name, component, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:on_start_takeoff": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.filters, diagnoser)
     canOnlyBeUsedBySpecificMob(context.source, 'minecraft:ender_dragon')
+    diagnose_event_trigger(name, component, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:on_target_acquired": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.filters, diagnoser)
+    diagnose_event_trigger(name, component, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:on_target_escape": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.filters, diagnoser)
+    diagnose_event_trigger(name, component, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:on_wake_with_owner": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.filters, diagnoser)
+    diagnose_event_trigger(name, component, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:input_air_controlled": (name, component, context, diagnoser) => {
   },
