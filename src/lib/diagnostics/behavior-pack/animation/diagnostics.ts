@@ -1,7 +1,7 @@
 import { ProjectItem } from "bc-minecraft-bedrock-project";
 import { MolangDataSetKey } from "bc-minecraft-molang";
 import { Errors } from "../..";
-import { DiagnosticsBuilder, EntityAnimationMolangCarrier, EventCarrier } from "../../../types";
+import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier, EventCarrier } from "../../../types";
 import { diagnose_molang_implementation } from "../../molang/diagnostics";
 
 type User = EntityAnimationMolangCarrier & EventCarrier;
@@ -26,6 +26,11 @@ export function diagnose_animation_implementation(
   if (!ProjectItem.is(anim)) {
     return; // Skip anything but a project defined item
   }
+
+  const entityEvents = diagnoser.context.getProjectData().projectData.behaviorPacks.entities.get(user.id)?.events
+  anim.item.events.forEach(id => {
+    if (!entityEvents?.includes(id)) diagnoser.add(`${user.id}/${anim.item.id}`, `Entity does not have event ${id}`, DiagnosticSeverity.warning, "behaviorpack.entity.event.missing")
+  })
 
   diagnose_molang_implementation(anim.item, user, ownerType, diagnoser);
 }

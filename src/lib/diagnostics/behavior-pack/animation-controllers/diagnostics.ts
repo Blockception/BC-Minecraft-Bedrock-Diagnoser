@@ -25,5 +25,10 @@ export function diagnose_animation_controller_implementation(
     return; // Skip anything but a project defined item
   }
 
+  const entityEvents = diagnoser.context.getProjectData().projectData.behaviorPacks.entities.get(user.id)?.events
+  anim.item.events.forEach(id => {
+    if (!entityEvents?.includes(id)) diagnoser.add(`${user.id}/${anim.item.id}`, `Entity does not have event ${id}`, DiagnosticSeverity.warning, "behaviorpack.entity.event.missing")
+  })
+
   general_animation_controllers_implementation(anim.item, user, ownerType, diagnoser);
 }
