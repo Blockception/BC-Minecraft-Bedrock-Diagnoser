@@ -9,6 +9,7 @@ import * as FeatureRule from "./feature-rule/entry";
 import * as Feature from "./feature/entry";
 import * as Tick from "./functions/tick/entry";
 import * as Item from "./item/entry";
+import * as ItemCatalog from "./item-catalog/entry";
 import * as LootTable from "./loot-table/entry";
 import * as Manifest from "./manifest/entry";
 import * as Mcfunction from "./mcfunction/entry";
@@ -87,6 +88,10 @@ export namespace BehaviorPack {
 
       case FileType.feature_rule:
         FeatureRule.diagnose_feature_rules_document(diagnoser);
+        break;
+
+      case FileType.item_catalog:
+        ItemCatalog.diagnose_item_catalog_document(diagnoser);
         break;
 
       default:
