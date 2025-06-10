@@ -51,6 +51,8 @@ export function diagnose_block_document(diagnoser: DocumentDiagnosticsBuilder): 
   const group = (block['minecraft:block'].description as any).menu_category?.group
   if (typeof group != 'string') return;
 
+  //TODO: Check if group name is valid
+
   try {
     const greaterThan = FormatVersion.isGreaterThan(FormatVersion.parse(context.source.format_version), [1, 21, 50])
     if (greaterThan && group.startsWith('itemGroup')) diagnoser.add(group,
