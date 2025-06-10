@@ -522,7 +522,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     });
   },
   "minecraft:projectile": (name, component, context, diagnoser) => {
-    minecraft_diagnose_filters(component.on_hit?.definition_event?.event_trigger?.filters, diagnoser)
+    diagnose_event_trigger(name, component.on_hit?.definition_event?.event_trigger, context.source['minecraft:entity'].description.identifier, diagnoser)
     if (typeof component.on_hit?.spawn_chance?.spawn_definition == 'string') behaviorpack_entityid_diagnose(component.on_hit.spawn_chance.spawn_definition, diagnoser)
   },
   "minecraft:rail_sensor": (name, component, context, diagnoser) => {
