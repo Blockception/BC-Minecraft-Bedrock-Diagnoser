@@ -17,16 +17,7 @@ exports[`Files test testing file: {/test-bp/entities/sample.json} expect specifi
 
 exports[`Files test testing file: {/test-bp/functions/test.mcfunction} expect specific errors 1`] = `[]`;
 
-exports[`Files test testing file: {/test-bp/items/apple.json} expect specific errors 1`] = `
-[
-  {
-    "code": "behaviorpack.item.components.texture_not_found",
-    "message": "Texture reference "apple" was not defined in item_texture.json",
-    "position": "apple",
-    "severity": 3,
-  },
-]
-`;
+exports[`Files test testing file: {/test-bp/items/apple.json} expect specific errors 1`] = `[]`;
 
 exports[`Files test testing file: {/test-bp/manifest.json} expect specific errors 1`] = `
 [

@@ -9,6 +9,7 @@ import { particle_is_defined } from '../../../resource-pack/particle';
 import { is_block_defined } from "../../block";
 import { behaviorpack_entityid_diagnose } from "../../entity";
 import { behaviorpack_item_diagnose } from "../diagnose";
+import { Vanilla } from 'bc-minecraft-bedrock-vanilla-data';
 
 /**
  *
@@ -93,7 +94,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Item>>
     if (typeof component == 'string') textureId = component
     else if (typeof component.texture == 'string') textureId = component.texture
     if (textureId !== undefined) {
-      if (!diagnoser.context.getProjectData().projectData.resourcePacks.itemTextures.find(val => val.id == textureId))
+      if (!diagnoser.context.getProjectData().projectData.resourcePacks.itemTextures.find(val => val.id == textureId) && !Vanilla.ResourcePack.TextureItems.includes(textureId))
         diagnoser.add(textureId,
           `Texture reference "${textureId}" was not defined in item_texture.json`,
           DiagnosticSeverity.error,
@@ -101,7 +102,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Item>>
     } else {
       Object.keys(component.textures)?.forEach(value => {
         const textureId = component.textures[value];
-        if (!diagnoser.context.getProjectData().projectData.resourcePacks.itemTextures.find(val => val.id == textureId))
+        if (!diagnoser.context.getProjectData().projectData.resourcePacks.itemTextures.find(val => val.id == textureId) && !Vanilla.ResourcePack.TextureItems.includes(textureId))
           diagnoser.add(textureId,
             `Texture reference "${textureId}" was not defined in item_texture.json`,
             DiagnosticSeverity.error,

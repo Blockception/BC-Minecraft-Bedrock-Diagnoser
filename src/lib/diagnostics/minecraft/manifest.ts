@@ -32,7 +32,7 @@ export function minecraft_manifest_required_module(
     for (let I = 0; I < modules.length; I++) {
       const module = modules[I];
 
-      if (required_type.includes(module.type)) return true;
+      if (typeof module.type === 'string' && required_type.includes(module.type)) return true;
     }
   }
 
