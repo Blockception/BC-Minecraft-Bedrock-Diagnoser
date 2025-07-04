@@ -40,7 +40,7 @@ const component_test: Record<string, ComponentCheck<Internal.ResourcePack.Partic
     });
   },
   "minecraft:particle_motion_collision": (name, component, context, diagnoser) => {
-    if (component.radius === undefined) diagnoser.add(
+    if (component.collision_radius === undefined) diagnoser.add(
       name,
       "Required property 'collision_radius' is missing",
       DiagnosticSeverity.error,
