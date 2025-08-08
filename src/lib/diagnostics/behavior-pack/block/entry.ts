@@ -57,7 +57,7 @@ export function diagnose_block_document(diagnoser: DocumentDiagnosticsBuilder): 
     const greaterThan = FormatVersion.isGreaterThan(FormatVersion.parse(context.source.format_version), [1, 21, 50])
     if (greaterThan && group.startsWith('itemGroup')) diagnoser.add(group,
       `Item groups must be namespaced in versions > 1.21.50`,
-      DiagnosticSeverity.error,
+      DiagnosticSeverity.warning,
       'behaviorpack.block.namespace_group')
     if (!greaterThan && group.includes(':')) diagnoser.add(group,
         `Item groups cannot be namespaced in versions <= 1.21.50`,
