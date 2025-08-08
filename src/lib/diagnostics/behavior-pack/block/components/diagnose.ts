@@ -157,6 +157,9 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
   "minecraft:replaceable": (name, component, context, diagnoser) => {
     minimumVersionRequired(context.source, name, [1, 21, 60], diagnoser)
   },
+  "minecraft:movable": (name, component, context, diagnoser) => {
+    minimumVersionRequired(context.source, name, [1, 21, 100], diagnoser)
+  },
 };
 
 function minimumVersionRequired(block: Internal.BehaviorPack.Block, name: string, version: [number, number, number], diagnoser: DocumentDiagnosticsBuilder) {
