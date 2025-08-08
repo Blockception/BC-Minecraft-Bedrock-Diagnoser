@@ -47,15 +47,24 @@ export function diagnose_item_document(diagnoser: DocumentDiagnosticsBuilder): v
   //TODO: Check if group name is valid
 
   try {
-    const greaterThan = FormatVersion.isGreaterThan(FormatVersion.parse(context.source.format_version), [1, 21, 50])
+
+    const parsedVersion = FormatVersion.parse(context.source.format_version)
+    const greaterThan = FormatVersion.isGreaterThan(parsedVersion, [1, 21, 50])
+
     if (greaterThan && group.startsWith('itemGroup')) diagnoser.add(group,
       `Item groups must be namespaced in versions > 1.21.50`,
-      DiagnosticSeverity.error,
-      'behaviorpack.block.namespace_group')
+      DiagnosticSeverity.warning,
+      'behaviorpack.item.namespace_group')
     if (!greaterThan && group.includes(':')) diagnoser.add(group,
       `Item groups cannot be namespaced in versions <= 1.21.50`,
       DiagnosticSeverity.warning,
-      'behaviorpack.block.namespace_group')
+      'behaviorpack.item.namespace_group')
+
+    if (FormatVersion.isLessThan(parsedVersion, [1, 21, 90]) && context.components.some(name => !name.startsWith('minecraft:'))) diagnoser.add('format_version',
+      `To use custom components, a format version <= 1.21.90 is required`,
+      DiagnosticSeverity.warning,
+      'behaviorpack.item.custom_component_v2.min_version')
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {
     // Leaving empty as the base diagnoser should flag an invalid format version
