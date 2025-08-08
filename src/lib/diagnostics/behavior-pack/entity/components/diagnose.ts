@@ -125,10 +125,10 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     diagnose_event_trigger(name, component.on_done, context.source['minecraft:entity'].description.identifier, diagnoser)
   },
   "minecraft:behavior.enderman_leave_block": (name, component, context) => {
-    canOnlyBeUsedBySpecificMob(context.source, 'minecraft:enderman')
+    deprecated_component("minecraft:behavior.place_block")
   },
   "minecraft:behavior.enderman_take_block": (name, component, context) => {
-    canOnlyBeUsedBySpecificMob(context.source, 'minecraft:enderman')
+    deprecated_component("minecraft:behavior.take_block")
   },
   "minecraft:behavior.fire_at_target": (name, component, context, diagnoser) => {
     minecraft_diagnose_filters(component.filters, diagnoser)
@@ -208,6 +208,18 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
       behaviorpack_item_diagnose(minecraft_get_item(item, diagnoser.document), diagnoser);
     });
   },
+  "minecraft:behavior.place_block": (name, component, context, diagnoser) => {
+    minecraft_diagnose_filters(component.can_place, diagnoser)
+    diagnose_event_trigger(name, component.on_place, context.source['minecraft:entity'].description.identifier, diagnoser)
+    component.placeable_carried_blocks?.forEach((entry: any) => {
+      if (typeof entry == 'string') is_block_defined(entry, diagnoser);
+      else if (typeof entry.name == 'string') is_block_defined(entry.name, diagnoser);
+    });
+    component.randomly_placeable_blocks?.forEach((entry: [any, number]) => {
+      if (typeof entry[0] == 'string') is_block_defined(entry[0], diagnoser);
+      else if (typeof entry[0].name == 'string') is_block_defined(entry[0].name, diagnoser);
+    });
+  },
   "minecraft:behavior.play_dead": (name, component, context, diagnoser) => {
     minecraft_diagnose_filters(component.filters, diagnoser)
   },
@@ -282,6 +294,14 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
       "behaviorpack.entity.components.swoop_attack"
     )
   },
+  "minecraft:behavior.take_block": (name, component, context, diagnoser) => {
+    minecraft_diagnose_filters(component.can_take, diagnoser)
+    diagnose_event_trigger(name, component.on_take, context.source['minecraft:entity'].description.identifier, diagnoser)
+    component.blocks?.forEach((entry: any) => {
+      if (typeof entry == 'string') is_block_defined(entry, diagnoser);
+      else if (typeof entry.name == 'string') is_block_defined(entry.name, diagnoser);
+    });
+  },
   "minecraft:behavior.take_flower": (name, component, context, diagnoser) => {
     minecraft_diagnose_filters(component.filters, diagnoser)
   },
@@ -304,6 +324,39 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
   "minecraft:behavior.timer_flag_3": (name, component, context, diagnoser) => {
     diagnose_event_trigger(name, component.on_start, context.source['minecraft:entity'].description.identifier, diagnoser)
     diagnose_event_trigger(name, component.on_end, context.source['minecraft:entity'].description.identifier, diagnoser)
+  },
+  "minecraft:behavior.transport_items": (name, component, context, diagnoser) => {
+    component.source_container_types?.forEach((reference: any) => {
+      let element = typeof reference == 'string' ? reference : reference.name;
+      if (typeof reference !== 'string') return;
+
+      if (!element.startsWith('minecraft:') || (!element.includes('chest') && !element.includes('barrel') && !element.includes('shulker'))) diagnoser.add(
+        element,
+        `Chests, Copper Chests, Barrels, and Shulker Boxes are the only supported containers: ${element}`,
+        DiagnosticSeverity.error,
+        `behaviorpack.entity.component.transport_items.invalid_container`
+      );
+    });
+
+    component.destination_container_types?.forEach((reference: any) => {
+      let element = typeof reference == 'string' ? reference : reference.name;
+      if (typeof reference !== 'string') return;
+      
+      if (!element.startsWith('minecraft:') || (!element.includes('chest') && !element.includes('barrel') && !element.includes('shulker'))) diagnoser.add(
+        element,
+        `Chests, Copper Chests, Barrels, and Shulker Boxes are the only supported containers: ${element}`,
+        DiagnosticSeverity.error,
+        `behaviorpack.entity.component.transport_items.invalid_container`
+      );
+    });
+
+    component.allowed_items?.forEach((item: string) => {
+      behaviorpack_item_diagnose(item, diagnoser)
+    });
+
+    component.disallowed_items?.forEach((item: string) => {
+      behaviorpack_item_diagnose(item, diagnoser)
+    });
   },
   "minecraft:behavior.wither_random_attack_pos_goal": (name, component, context) => {
     canOnlyBeUsedBySpecificMob(context.source, 'minecraft:wither')
@@ -358,6 +411,9 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     component.sources?.forEach((entry: any) => {
       minecraft_diagnose_filters(entry, diagnoser)
     });
+  },
+  "minecraft:body_rotation_axis_aligned": (name, component, context, diagnoser) => {
+    deprecated_component("minecraft:rotation_axis_aligned")
   },
   "minecraft:boostable": (name, component, context, diagnoser) => {
     component.boost_items?.forEach((entry: any) => {
@@ -427,14 +483,14 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
         `To use "minecraft:entity_sensor/subsensors", you need a "format_version" of 1.21.0 or higher`,
         DiagnosticSeverity.error,
         'behaviorpack.entity.component.entity_sensor')
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      } catch (err) { 
-        // Leaving empty as the base diagnoser should flag an invalid format version
-      }
-      component.subsensors.forEach((sensor: any) => {
-        minecraft_diagnose_filters(sensor.event_filters, diagnoser)
-        if (typeof sensor.event == 'string') behaviorpack_entity_event_diagnose(sensor.event, component + '/' + sensor.event, Object.keys(context.source['minecraft:entity'].events || {}), diagnoser)
-      })
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err) {
+      // Leaving empty as the base diagnoser should flag an invalid format version
+    }
+    component.subsensors.forEach((sensor: any) => {
+      minecraft_diagnose_filters(sensor.event_filters, diagnoser)
+      if (typeof sensor.event == 'string') behaviorpack_entity_event_diagnose(sensor.event, component + '/' + sensor.event, Object.keys(context.source['minecraft:entity'].events || {}), diagnoser)
+    })
   },
   "minecraft:environment_sensor": (name, component, context, diagnoser) => {
     processEntries(component.triggers, entry => {
@@ -688,6 +744,14 @@ function canOnlyBeUsedBySpecificMob(source: any, id: string | string[]) {
   );
 }
 
+function deprecated_component(replacement?: string) {
+  const str = replacement ? ", replace with " + replacement : "";
+  return component_error(
+    "This component is no longer supported" + str + ". You are recommended to use the latest format version.",
+    "behaviorpack.entity.components.deprecated"
+  );
+}
+
 function diagnose_event_trigger(componentName: string, component: any, entityId: string, diagnoser: DocumentDiagnosticsBuilder) {
   if (!component) return;
   minecraft_diagnose_filters(component.filters, diagnoser)
@@ -701,11 +765,11 @@ function processEntries<T>(data: T | T[], callback: (entry: T) => void) {
 
 function findValue(obj: any, targetKey: string): any {
   for (const key in obj) {
-      if (key === targetKey) return obj[key];
-      if (typeof obj[key] === 'object' && obj[key] !== null) {
-          const result = findValue(obj[key], targetKey);
-          if (result !== undefined) return result;
-      }
+    if (key === targetKey) return obj[key];
+    if (typeof obj[key] === 'object' && obj[key] !== null) {
+      const result = findValue(obj[key], targetKey);
+      if (result !== undefined) return result;
+    }
   }
   return undefined;
 }
