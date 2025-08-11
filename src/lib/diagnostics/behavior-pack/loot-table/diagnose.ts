@@ -57,5 +57,5 @@ function has_loot_table(id: string, diagnoser: DiagnosticsBuilder): boolean {
     return false;
   }
 
-  return false;
+  return true;
 }
