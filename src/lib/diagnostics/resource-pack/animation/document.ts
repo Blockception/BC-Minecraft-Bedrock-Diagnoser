@@ -1,10 +1,9 @@
 import { Internal, SMap } from "bc-minecraft-bedrock-project";
-import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
-import { diagnose_molang } from "../../molang/diagnostics";
-import { Json } from "../../json/json";
 import { BoneAnimation } from "bc-minecraft-bedrock-project/lib/src/internal/resource-pack";
-import { BoneUsage, model_bones_must_exist } from "../model";
+import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
+import { Json } from "../../json/json";
 import { diagnose_molang_syntax_current_document } from '../../molang';
+import { BoneUsage, model_bones_must_exist } from "../model";
 
 /**Diagnoses the given document as an animation
  * @param doc The text document to diagnose

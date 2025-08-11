@@ -3,13 +3,12 @@ import { EntityProperty as DefinedEP } from "bc-minecraft-bedrock-project/lib/sr
 import { EntityProperty as ProjectEP } from "bc-minecraft-bedrock-project/lib/src/project/behavior-pack/entity";
 import { Types } from "bc-minecraft-bedrock-types";
 import { getUsedComponents } from "bc-minecraft-bedrock-types/lib/minecraft/components";
-import { DefinedUsing, Molang } from "bc-minecraft-molang";
+import { Molang } from "bc-minecraft-molang";
 import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
 import { Context } from "../../../utility/components";
 import { Json } from "../../json";
 import { AnimationUsage } from "../../minecraft";
 import { diagnose_script } from "../../minecraft/script";
-import { diagnose_molang } from "../../molang/diagnostics";
 import { diagnose_molang_syntax_current_document } from '../../molang';
 import { no_other_duplicates } from "../../packs/duplicate-check";
 import { diagnose_animation_or_controller_implementation } from "../anim-or-controller";

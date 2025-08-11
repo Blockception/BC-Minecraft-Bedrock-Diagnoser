@@ -2,10 +2,9 @@ import { Internal, SMap } from "bc-minecraft-bedrock-project";
 import { DocumentDiagnosticsBuilder } from "../../../types";
 import { Json } from "../../json";
 import { general_animation_controllers } from "../../minecraft/animation-controllers";
-import { diagnose_molang } from "../../molang/diagnostics";
+import { diagnose_molang_syntax_current_document } from '../../molang';
 import { no_other_duplicates } from "../../packs/duplicate-check";
 import { json_commandsCheck } from "../mcfunction/commands";
-import { diagnose_molang_syntax_current_document } from '../../molang';
 
 /**Diagnoses the given document as an animation controller
  * @param doc The text document to diagnose

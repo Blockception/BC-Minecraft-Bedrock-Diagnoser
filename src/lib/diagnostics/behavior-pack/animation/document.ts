@@ -1,8 +1,7 @@
 import { Internal, SMap } from "bc-minecraft-bedrock-project";
 import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
 import { Json } from "../../json/json";
-import { diagnose_molang } from "../../molang/diagnostics";
-import { diagnose_molang_syntax_current_document, diagnose_molang_syntax_document } from '../../molang';
+import { diagnose_molang_syntax_current_document } from '../../molang';
 import { no_other_duplicates } from "../../packs/duplicate-check";
 import { json_commandsCheck } from "../mcfunction/commands";
 

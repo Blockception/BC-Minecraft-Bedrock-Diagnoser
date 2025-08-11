@@ -6,7 +6,7 @@ import { behaviorpack_item_diagnose } from "../../behavior-pack/item";
 import { Json } from "../../json/json";
 import { AnimationUsage } from "../../minecraft";
 import { diagnose_script } from "../../minecraft/script";
-import { diagnose_molang } from "../../molang/diagnostics";
+import { diagnose_molang_syntax_current_document } from '../../molang';
 import { animation_or_controller_diagnose_implementation } from "../anim-or-controller";
 import { resourcepack_animation_used } from "../animation/usage";
 import { model_is_defined } from "../model/diagnose";
@@ -14,7 +14,6 @@ import { particle_is_defined } from "../particle/diagnose";
 import { render_controller_diagnose_implementation } from "../render-controller/diagnostics";
 import { diagnose_resourcepack_sounds } from "../sounds/diagnostics";
 import { texture_files_diagnose } from "../texture-atlas/entry";
-import { diagnose_molang_syntax_current_document } from '../../molang';
 
 /**
  * Diagnoses the given document as an attachable

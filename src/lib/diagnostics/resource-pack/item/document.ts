@@ -1,6 +1,5 @@
 import { DocumentDiagnosticsBuilder } from "../../../types";
 import { diagnose_molang_syntax_current_document } from '../../molang';
-import { diagnose_molang } from "../../molang/diagnostics";
 
 /**
  * Diagnoses the given document as an rp item

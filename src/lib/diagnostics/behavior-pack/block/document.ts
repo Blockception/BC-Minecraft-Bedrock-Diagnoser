@@ -4,11 +4,10 @@ import { getUsedComponents } from "bc-minecraft-bedrock-types/lib/minecraft/comp
 import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
 import { Context } from "../../../utility/components";
 import { Json } from "../../json";
-import { diagnose_molang } from "../../molang/diagnostics";
+import { diagnose_molang_syntax_current_document } from '../../molang';
 import { no_other_duplicates } from "../../packs/duplicate-check";
 import { behaviorpack_block_components_dependencies } from "./components/dependencies";
 import { behaviorpack_diagnose_block_components } from "./components/diagnose";
-import { diagnose_molang_syntax_current_document } from '../../molang';
 
 /**Diagnoses the given document as an bp block
  * @param doc The text document to diagnose
