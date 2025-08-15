@@ -4,6 +4,12 @@ import { Text } from "bc-minecraft-bedrock-project";
 import { check_definition_value } from "../definitions";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 
+/**
+ * 
+ * @param value 
+ * @param diagnoser 
+ * @returns True if the family was found in an entity
+ */
 export function minecraft_family_diagnose(value: Types.OffsetWord | string, diagnoser: DiagnosticsBuilder): boolean {
   const id = Text.UnQuote(typeof value === "string" ? value : value.text);
 
@@ -15,7 +21,7 @@ export function minecraft_family_diagnose(value: Types.OffsetWord | string, diag
   const data = diagnoser.context.getProjectData().projectData;
   //Project has defined
   data.behaviorPacks.entities.forEach((entity) => {
-    if (entity.families.includes(id)) out = true;
+    if (entity.families.defined.has(id)) out = true;
   });
 
   if (out) return true;

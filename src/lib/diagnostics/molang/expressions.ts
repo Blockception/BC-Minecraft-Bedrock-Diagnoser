@@ -1,6 +1,6 @@
 import { TextDocument } from "bc-minecraft-bedrock-project";
-import { ExpressionNode, MolangSet, MolangSyntaxError, NodeType } from "bc-minecraft-molang/lib/src/Molang";
 import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../types";
+import { MolangSet, MolangSyntaxError, ExpressionNode, NodeType } from "bc-minecraft-molang/lib/src/molang";
 
 export function diagnose_molang_syntax_current_document(diagnoser: DocumentDiagnosticsBuilder, obj?: object) {
   return diagnose_molang_syntax_document(diagnoser.document, diagnoser, obj);

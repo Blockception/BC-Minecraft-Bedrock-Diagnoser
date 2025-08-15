@@ -1,9 +1,8 @@
 import { ProjectItem } from "bc-minecraft-bedrock-project";
 import { Definition } from "bc-minecraft-bedrock-types/lib/types/definition";
-import { MolangDataSetKey } from "bc-minecraft-molang";
 import { Errors } from "../..";
-import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier } from "../../../types";
-import { diagnose_molang_implementation } from "../../molang";
+import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier, WithMetadata } from "../../../types";
+import { diagnose_molang_implementation, MolangMetadata } from "../../molang";
 
 /**
  *
@@ -18,8 +17,7 @@ import { diagnose_molang_implementation } from "../../molang";
 export function diagnose_animation_implementation(
   id: string,
   user: EntityAnimationMolangCarrier,
-  ownerType: MolangDataSetKey,
-  diagnoser: DiagnosticsBuilder,
+  diagnoser: WithMetadata<DiagnosticsBuilder, MolangMetadata>,
   particles?: Definition,
   sounds?: Definition
 ): void {
@@ -33,7 +31,7 @@ export function diagnose_animation_implementation(
   }
   const anim = anim_item.item;
 
-  diagnose_molang_implementation(anim, user, ownerType, diagnoser);
+  diagnose_molang_implementation(anim, user, diagnoser);
 
   //Particle check
   anim.particles.using.forEach((particle) => {

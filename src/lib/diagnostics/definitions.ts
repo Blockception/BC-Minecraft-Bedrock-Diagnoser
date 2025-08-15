@@ -21,7 +21,7 @@ export function check_definition_value(
 ): boolean {
   if (Definition.is(container)) {
     //Is defined
-    if (container.defined.includes(value)) return true;
+    if (container.defined.has(value)) return true;
 
     //Is excluded
     if (container.excluded.includes(value)) {

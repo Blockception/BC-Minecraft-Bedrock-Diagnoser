@@ -2,26 +2,26 @@ import { Types } from "bc-minecraft-bedrock-types";
 import { Definition } from "bc-minecraft-bedrock-types/lib/types/definition";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { MolangDataSetKey } from "bc-minecraft-molang";
-import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier } from "../../types";
+import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier, WithMetadata } from "../../types";
 import { diagnose_animation_controller_implementation } from "./animation-controllers/diagnostics";
 import { diagnose_animation_implementation } from "./animation/diagnostics";
+import { MolangMetadata } from "../molang";
 
 const whiteList = ["animation.humanoid.fishing_rod"];
 
 export function animation_or_controller_diagnose_implementation(
   id: string,
   user: EntityAnimationMolangCarrier,
-  ownerType: MolangDataSetKey,
-  diagnoser: DiagnosticsBuilder,
+  diagnoser: WithMetadata<DiagnosticsBuilder, MolangMetadata>,
   particles?: Definition,
   sounds?: Definition
 ): void {
   switch (is_animation_or_controller(id, diagnoser)) {
     case anim_or_contr.animation:
-      return diagnose_animation_implementation(id, user, ownerType, diagnoser, particles, sounds);
+      return diagnose_animation_implementation(id, user, diagnoser, particles, sounds);
 
     case anim_or_contr.controller:
-      return diagnose_animation_controller_implementation(id, user, ownerType, diagnoser, { particles, sounds });
+      return diagnose_animation_controller_implementation(id, user, diagnoser, { particles, sounds });
 
     case anim_or_contr.neither:
       if (whiteList.includes(id)) return;
@@ -56,7 +56,7 @@ export function animation_reference_diagnose(value: Types.OffsetWord, diagnoser:
   const id = value.text;
 
   //Project in entity
-  if (data.resourcePacks.entities.find((entity) => entity.animations.defined.includes(id)) !== undefined) {
+  if (data.resourcePacks.entities.find((entity) => entity.animations.defined.has(id)) !== undefined) {
     return;
   }
   if (data.resourcePacks.animations.find((anim) => anim.id === id) !== undefined) {

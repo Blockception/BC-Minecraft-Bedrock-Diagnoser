@@ -1,21 +1,9 @@
-import {
-  AnimationCarrier,
-  BehaviorPack,
-  Defined,
-  Internal,
-  MolangCarrier,
-  References,
-  ResourcePack,
-  SMap,
-  Using,
-} from "bc-minecraft-bedrock-project";
+import { BehaviorPack, Defined, Internal, References, ResourcePack, Using } from "bc-minecraft-bedrock-project";
 import { State } from "bc-minecraft-bedrock-project/lib/src/internal/behavior-pack";
 import { Types } from "bc-minecraft-bedrock-types";
-import { DiagnosticsBuilder, DiagnosticSeverity, WithMetadata } from "../../types";
-import { forEach } from "../../utility/references";
-import { diagnose_molang_implementation, MolangMetadata, User } from "../molang/diagnostics";
-import { MolangDataSetKey } from "bc-minecraft-molang";
 import { Conditional } from "bc-minecraft-bedrock-types/lib/types";
+import { DiagnosticsBuilder, DiagnosticSeverity, WithMetadata } from "../../types";
+import { diagnose_molang_implementation, MolangMetadata, User } from "../molang/diagnostics";
 
 export type animation_controllers =
   | Internal.BehaviorPack.AnimationControllers
@@ -23,7 +11,7 @@ export type animation_controllers =
 export type animation_controller =
   | Internal.BehaviorPack.AnimationController
   | Internal.ResourcePack.AnimationController;
-export type animationsOwner = Types.Identifiable & MolangCarrier & AnimationCarrier<Pick<References, "defined">>;
+export type animationsOwner = Types.Identifiable & AnimationCarrier<Pick<References, "defined">>;
 
 /**
  *
@@ -31,9 +19,9 @@ export type animationsOwner = Types.Identifiable & MolangCarrier & AnimationCarr
  * @param diagnoser
  */
 export function general_animation_controllers(data: animation_controllers, diagnoser: DiagnosticsBuilder): void {
-  Object.values<animation_controller>(data.animation_controllers, (controller, controller_id) => {
-    general_animation_controller(controller, controller_id, diagnoser);
-  });
+  Object.entries(data.animation_controllers).forEach(([controller_id, controller]) =>
+    general_animation_controller(controller_id, controller, diagnoser)
+  );
 }
 
 /**
@@ -43,8 +31,8 @@ export function general_animation_controllers(data: animation_controllers, diagn
  * @param diagnoser
  */
 export function general_animation_controller(
-  controller: animation_controller,
   controller_id: string,
+  controller: animation_controller,
   diagnoser: DiagnosticsBuilder
 ): void {
   //Check if initial_state points to existing state
@@ -131,7 +119,7 @@ export function general_animation_controllers_implementation(
 ) {
   //for each animation, check if the defined animation is also used
   controller?.animations.using?.forEach((anim_id) => {
-    if (user.animations?.defined.includes(anim_id)) return;
+    if (user.animations?.defined.has(anim_id)) return;
 
     diagnoser.add(
       `${user.id}/${controller.id}`,
