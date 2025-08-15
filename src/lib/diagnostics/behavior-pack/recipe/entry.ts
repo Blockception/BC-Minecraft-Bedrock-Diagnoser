@@ -4,7 +4,7 @@ import { Json } from '../../json';
 import { behaviorpack_item_diagnose } from '../item';
 import { FormatVersion } from 'bc-minecraft-bedrock-types/lib/minecraft';
 
-const allowedFurnaceTags = ["furnace", "smoker", "campfire", "soul_campfire"];
+const allowedFurnaceTags = ["furnace", "smoker", "campfire", "soul_campfire", "blast_furnace"];
 const allowedBrewingTags = ["brewing_stand"];
 const allowedSmithingTags = ["smithing_table"];
 
