@@ -1,4 +1,4 @@
-import { Internal, SMap } from "bc-minecraft-bedrock-project";
+import { Internal } from "bc-minecraft-bedrock-project";
 import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
 import { Json } from "../../json/json";
 import { diagnose_molang_syntax_current_document } from '../../molang';
@@ -14,14 +14,14 @@ export function diagnose_animation_document(diagnoser: DocumentDiagnosticsBuilde
   diagnose_molang_syntax_current_document(diagnoser, anims);
 
   //foreach animation,
-  SMap.forEach(anims.animations, (anim, id) => {
+  Object.entries(anims.animations).forEach(([id, anim]) => {
     const length = anim.animation_length;
 
     // check that no other exists with this id
     no_other_duplicates("behaviorpack.animation", diagnoser.context.getProjectData().projectData.behaviorPacks.animations, id, diagnoser);
 
     //foreach time
-    SMap.forEach(anim.timeline, (data, time) => {
+    Object.entries(anim.timeline ?? {}).forEach(([time, data]) => {
       json_commandsCheck(data, diagnoser);
 
       if (length) {

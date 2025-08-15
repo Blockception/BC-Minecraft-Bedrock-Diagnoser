@@ -3,15 +3,15 @@ import {
   BehaviorPack,
   Internal,
   MolangCarrier,
+  References,
   ResourcePack,
   SMap,
 } from "bc-minecraft-bedrock-project";
 import { State } from "bc-minecraft-bedrock-project/lib/src/internal/behavior-pack";
 import { Types } from "bc-minecraft-bedrock-types";
-import { Defined, Molang, MolangDataSetKey } from "bc-minecraft-molang";
 import { DiagnosticsBuilder, DiagnosticSeverity } from '../../types';
-import { forEach } from "../../utility/using-defined";
-import { diagnose_molang_implementation } from "../molang/diagnostics";
+import { forEach } from "../../utility/references";
+import { diagnose_molang_implementation, User } from "../molang/diagnostics";
 
 export type animation_controllers =
   | Internal.BehaviorPack.AnimationControllers
@@ -19,7 +19,10 @@ export type animation_controllers =
 export type animation_controller =
   | Internal.BehaviorPack.AnimationController
   | Internal.ResourcePack.AnimationController;
-export type animationsOwner = Types.Identifiable & MolangCarrier<Molang.MolangSet> & AnimationCarrier<Defined<string>>;
+export type animationsOwner =
+  Types.Identifiable &
+  MolangCarrier &
+  AnimationCarrier<Pick<References, "defined">>;
 
 /**
  *
@@ -27,7 +30,7 @@ export type animationsOwner = Types.Identifiable & MolangCarrier<Molang.MolangSe
  * @param diagnoser
  */
 export function general_animation_controllers(data: animation_controllers, diagnoser: DiagnosticsBuilder): void {
-  SMap.forEach<animation_controller>(data.animation_controllers, (controller, controller_id) => {
+  Object.values<animation_controller>(data.animation_controllers, (controller, controller_id) => {
     general_animation_controller(controller, controller_id, diagnoser);
   });
 }
@@ -58,13 +61,13 @@ export function general_animation_controller(
   }
 
   const states = Object.keys(controller.states);
-  const transitionedStates = new Set()
+  const transitionedStates = new Set();
 
   //Check states
-  SMap.forEach(controller.states, (state) => {
+  Object.values(controller.states, (state) => {
     //Check transitions
     if (state.transitions) {
-      CheckTransition(controller_id, state.transitions, controller.states, diagnoser).forEach(transition => transitionedStates.add(transition))
+      checkTransition(controller_id, state.transitions, controller.states, diagnoser).forEach(transition => transitionedStates.add(transition));
     }
   });
 
@@ -75,7 +78,7 @@ export function general_animation_controller(
       DiagnosticSeverity.info,
       "minecraft.animation_controller.state.never_reached"
     );
-  })  
+  });
 
 }
 
@@ -86,13 +89,13 @@ export function general_animation_controller(
  * @param States
  * @param Builder
  */
-function CheckTransition(
+function checkTransition(
   controller: string,
   Transitions: Types.Conditional[],
-  States: SMap<State>,
+  States: Map<string, State>,
   diagnoser: DiagnosticsBuilder
 ): string[] {
-  const transitionedStates: string[] = []
+  const transitionedStates: string[] = [];
   //Loop over the transitions
   for (let I = 0; I < Transitions.length; I++) {
     const trans = Transitions[I];
@@ -107,9 +110,9 @@ function CheckTransition(
         DiagnosticSeverity.error,
         "minecraft.animation_controller.state.missing"
       );
-    } else transitionedStates.push(state)
+    } else transitionedStates.push(state);
   }
-  return transitionedStates
+  return transitionedStates;
 }
 
 export type Controller =
@@ -117,14 +120,13 @@ export type Controller =
   | BehaviorPack.AnimationController.AnimationController;
 
 export function general_animation_controllers_implementation(
+  user: User & Partial<AnimationCarrier<References>>,
   controller: Controller,
-  user: Types.Identifiable & AnimationCarrier<Defined<string>> & MolangCarrier<Molang.MolangSet>,
-  ownerType: MolangDataSetKey,
   diagnoser: DiagnosticsBuilder
 ) {
   //for each animation, check if the defined animation is also used
   forEach(controller?.animations.using, (anim_id) => {
-    if (user.animations.defined.includes(anim_id)) return;
+    if (user.animations?.defined.includes(anim_id)) return;
 
     diagnoser.add(
       `${user.id}/${controller.id}`,
@@ -135,5 +137,5 @@ export function general_animation_controllers_implementation(
   });
 
   //Molang
-  diagnose_molang_implementation(controller, user, ownerType, diagnoser);
+  diagnose_molang_implementation(user, controller, diagnoser);
 }

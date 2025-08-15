@@ -40,7 +40,7 @@ export function diagnose_atlas_document(diagnoser: DocumentDiagnosticsBuilder): 
     texture_files_diagnose(texture_id, item, texture_files, diagnoser);
   };
 
-  SMap.forEach(texture_data, (data, texture_id) => {
+  Object.values(texture_data, (data, texture_id) => {
     //If texture
     if (typeof data.textures === "string") {
       check_file_string(texture_id, data.textures);
@@ -87,7 +87,7 @@ export function texture_files_diagnose(
 interface TextureAtlas {
   resource_pack_name?: string;
   texture_name?: string;
-  texture_data: SMap<TextureSpec>;
+  texture_data: Map<string, TextureSpec>;
 }
 
 namespace TextureAtlas {

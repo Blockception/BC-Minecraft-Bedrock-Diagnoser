@@ -22,7 +22,7 @@ export function diagnose_sound_definitions_document(diagnoser: DocumentDiagnosti
     .map((item) => item.replace(/\\/gi, "/"));
 
   //For each sound definition
-  SMap.forEach(sounds, (sound, sound_id) => {
+  Object.values(sounds, (sound, sound_id) => {
     //For each file reference
     sound.sounds.forEach((soundSpec) => {
       if (typeof soundSpec === "string") {

@@ -3,8 +3,9 @@ import { Definition } from "bc-minecraft-bedrock-types/lib/types/definition";
 import { MolangDataSetKey } from "bc-minecraft-molang";
 import { Errors } from "../..";
 import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier } from "../../../types";
-import { forEach } from "../../../utility/using-defined";
+import { forEach } from "../../../utility/references";
 import { general_animation_controllers_implementation } from "../../minecraft/animation-controllers";
+import { User } from '../../molang';
 
 /**
  *
@@ -14,8 +15,7 @@ import { general_animation_controllers_implementation } from "../../minecraft/an
  */
 export function diagnose_animation_controller_implementation(
   id: string,
-  user: EntityAnimationMolangCarrier,
-  ownerType: MolangDataSetKey,
+  user: User,
   diagnoser: DiagnosticsBuilder,
   definitions: {
     particles?: Definition;
@@ -32,7 +32,7 @@ export function diagnose_animation_controller_implementation(
   }
   const controller = anim.item;
 
-  general_animation_controllers_implementation(controller, user, ownerType, diagnoser);
+  general_animation_controllers_implementation(user, controller, diagnoser);
 
   //Particle check
   const particles = definitions.particles || {};

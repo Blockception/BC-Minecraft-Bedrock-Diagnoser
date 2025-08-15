@@ -18,7 +18,7 @@ export function diagnose_animation_controller_document(diagnoser: DocumentDiagno
   general_animation_controllers(controllers, diagnoser);
 
   //foreach animation,
-  SMap.forEach(controllers.animation_controllers, (controller, id) => {
+  Object.values(controllers.animation_controllers, (controller, id) => {
     // check that no other exists with this id
     no_other_duplicates(
       "behaviorpack.animation_controllers",
@@ -27,7 +27,7 @@ export function diagnose_animation_controller_document(diagnoser: DocumentDiagno
       diagnoser
     );
 
-    SMap.forEach(controller.states, (state) => {
+    Object.values(controller.states, (state) => {
       state.on_entry?.forEach((item) => json_commandsCheck(item, diagnoser));
       state.on_exit?.forEach((item) => json_commandsCheck(item, diagnoser));
     });

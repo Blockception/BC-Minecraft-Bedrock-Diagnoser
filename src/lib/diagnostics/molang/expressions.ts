@@ -43,6 +43,8 @@ export function diagnose_molang_syntax_set(set: MolangSet, diagnoser: Diagnostic
       diagnose_molang_syntax_optimizations(exp, diagnoser);
     });
   }
+
+  return set;
 }
 
 export function diagnose_molang_syntax(expression: ExpressionNode, diagnoser: DiagnosticsBuilder) {

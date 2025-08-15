@@ -9,16 +9,16 @@ import { diagnose_entity_property_usage } from "./properties";
 type EntityEvent = Internal.BehaviorPack.EntityEvent;
 
 export function behaviorpack_entity_check_events(
-  events: SMap<EntityEvent> | EntityEvent[],
+  events: Map<string, EntityEvent> | EntityEvent[],
   diagnoser: DocumentDiagnosticsBuilder,
   properties: EntityProperty[],
-  component_groups?: SMap<Internal.BehaviorPack.EntityComponentContainer>
+  component_groups?: Map<string, Internal.BehaviorPack.EntityComponentContainer>
 ) {
   if (Array.isArray(events)) {
     events.forEach((event) => behaviorpack_entity_check_event(event, "", diagnoser, properties, component_groups));
   } else {
     const eventIds = Object.keys(events)
-    SMap.forEach(events, (event, key) =>
+    Object.values(events, (event, key) =>
       behaviorpack_entity_check_event(event, key, diagnoser, properties, component_groups, eventIds)
     );
   }
@@ -119,7 +119,7 @@ function has_groups(
   diagnoser: DiagnosticsBuilder,
   id: string,
   groups?: string[],
-  component_groups?: SMap<Internal.BehaviorPack.EntityComponentContainer>
+  component_groups?: Map<string, Internal.BehaviorPack.EntityComponentContainer>
 ): void {
   if (groups === undefined) return;
 

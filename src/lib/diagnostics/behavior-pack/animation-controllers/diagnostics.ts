@@ -1,8 +1,8 @@
-import { MolangDataSetKey } from "bc-minecraft-molang";
-import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier, EventCarrier } from "../../../types";
-import { general_animation_controllers_implementation } from "../../minecraft/animation-controllers";
+import { AnimationCarrier, ProjectItem, References } from "bc-minecraft-bedrock-project";
 import { Errors } from "../..";
-import { ProjectItem } from "bc-minecraft-bedrock-project";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../types";
+import { general_animation_controllers_implementation } from "../../minecraft/animation-controllers";
+import { User } from '../../molang';
 
 /**
  *
@@ -11,9 +11,8 @@ import { ProjectItem } from "bc-minecraft-bedrock-project";
  * @param diagnoser
  */
 export function diagnose_animation_controller_implementation(
+  user: User & Partial<AnimationCarrier<References>>,
   id: string,
-  user: EntityAnimationMolangCarrier & EventCarrier,
-  ownerType: MolangDataSetKey,
   diagnoser: DiagnosticsBuilder
 ): void {
   //Project has animation controller
@@ -25,10 +24,10 @@ export function diagnose_animation_controller_implementation(
     return; // Skip anything but a project defined item
   }
 
-  const entityEvents = diagnoser.context.getProjectData().projectData.behaviorPacks.entities.get(user.id)?.events
+  const entityEvents = diagnoser.context.getProjectData().projectData.behaviorPacks.entities.get(user.id)?.events;
   anim.item.events.forEach(id => {
-    if (!entityEvents?.includes(id)) diagnoser.add(`${user.id}/${anim.item.id}`, `Entity does not have event ${id}`, DiagnosticSeverity.warning, "behaviorpack.entity.event.missing")
-  })
+    if (!entityEvents?.includes(id)) diagnoser.add(`${user.id}/${anim.item.id}`, `Entity does not have event ${id}`, DiagnosticSeverity.warning, "behaviorpack.entity.event.missing");
+  });
 
-  general_animation_controllers_implementation(anim.item, user, ownerType, diagnoser);
+  general_animation_controllers_implementation(user, anim.item, diagnoser);
 }

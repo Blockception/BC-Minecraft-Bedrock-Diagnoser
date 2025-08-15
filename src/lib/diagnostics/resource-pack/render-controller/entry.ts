@@ -14,7 +14,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
 
   const bones: BoneUsage[] = [];
 
-  SMap.forEach(model.render_controllers, (controller, id) => {
+  Object.values(model.render_controllers, (controller, id) => {
     controller.part_visibility?.forEach((v) => {
       const key = Object.keys(v)[0];
       if (key) return;
