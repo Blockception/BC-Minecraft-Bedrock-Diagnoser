@@ -1,6 +1,7 @@
 import { Internal, ResourcePack } from "bc-minecraft-bedrock-project";
+import { getUsingResources } from "bc-minecraft-bedrock-project/lib/src/internal/resource-pack/resources";
 import { Types } from "bc-minecraft-bedrock-types";
-import { Molang } from "bc-minecraft-molang";
+import { MolangSet } from "bc-minecraft-molang";
 import { DiagnosticSeverity, DocumentDiagnosticsBuilder, Metadata } from "../../../types";
 import { behaviorpack_entityid_diagnose } from "../../behavior-pack/entity";
 import { Json } from "../../json/json";
@@ -36,7 +37,8 @@ export function diagnose_entity_document(diag: DocumentDiagnosticsBuilder): void
 
   if (!entityGathered) return;
   if (!entityGathered.molang) {
-    entityGathered.molang = Molang.MolangSet.harvest(entity, diagnoser.document.getText());
+    entityGathered.molang = MolangSet.harvest(entity, diagnoser.document.getText());
+    getUsingResources(entityGathered.molang, entity["minecraft:client_entity"].description, diagnoser.document);
   }
 
   // Collect all animations and animation controllers

@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Files test testing file: {/test-bp/animation_controllers/controller.npc.json} expect specific errors 1`] = `[]`;
 

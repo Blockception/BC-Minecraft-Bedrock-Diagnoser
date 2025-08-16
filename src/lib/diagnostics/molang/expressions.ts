@@ -1,29 +1,49 @@
 import { TextDocument } from "bc-minecraft-bedrock-project";
 import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../types";
-import { MolangSet, MolangSyntaxError, ExpressionNode, NodeType } from "bc-minecraft-molang/lib/src/molang";
+import {
+  MolangSet,
+  MolangSyntaxError,
+  ExpressionNode,
+  NodeType,
+  FunctionCallNode,
+} from "bc-minecraft-molang/lib/src/molang";
+import { MolangData, MolangFunction } from "bc-minecraft-molang";
 
-export function diagnose_molang_syntax_current_document(diagnoser: DocumentDiagnosticsBuilder, obj?: object) {
+export function diagnose_molang_syntax_current_document(diagnoser: DocumentDiagnosticsBuilder, obj?: string | Record<string, any>) {
   return diagnose_molang_syntax_document(diagnoser.document, diagnoser, obj);
 }
 
-export function diagnose_molang_syntax_document(doc: TextDocument, diagnoser: DiagnosticsBuilder, obj?: object) {
+export function diagnose_molang_syntax_document(doc: TextDocument, diagnoser: DiagnosticsBuilder, obj?: string | Record<string, any>) {
   const objSet = obj ?? JSON.parse(doc.getText());
-  return diagnose_molang_syntax_text(doc.getText(), diagnoser, objSet);
+
+  return diagnose_molang_set(objSet, diagnoser, doc.getText());
 }
 
-export function diagnose_molang_syntax_text(text: string, diagnoser: DiagnosticsBuilder, obj?: object) {
+export function diagnose_molang_syntax_text(text: string, diagnoser: DiagnosticsBuilder, obj?: string | Record<string, any>) {
   const objSet = obj ?? JSON.parse(text);
+
+  return diagnose_molang_set(objSet, diagnoser, text);
+}
+
+export function diagnose_molang_syntax_line(line: string, diagnoser: DiagnosticsBuilder) {
+  return diagnose_molang_set(line, diagnoser, line);
+}
+
+function diagnose_molang_set(obj: string | Record<string, any>, diagnoser: DiagnosticsBuilder, text: string) {
   const set = new MolangSet();
   try {
-    set.harvest(objSet, text);
-  } catch (err) {
+    set.harvest(obj, text);
+  } catch (err: any) {
     if (err instanceof MolangSyntaxError) {
       diagnoser.add(err.position, err.message, DiagnosticSeverity.error, `molang.${err.code}`);
     } else {
       diagnoser.add(
         0,
         `unknown error was thrown during parsing of molang, please submit an github issue.\n${JSON.stringify(
-          err,
+          {
+            message: err.message,
+            stack: err.stack,
+          },
           null,
           2
         )}`,
@@ -38,22 +58,8 @@ export function diagnose_molang_syntax_text(text: string, diagnoser: Diagnostics
 }
 
 export function diagnose_molang_syntax_set(set: MolangSet, diagnoser: DiagnosticsBuilder) {
-  // Check using
-  set.using.forEach((using) => {
-    for (let item of set.assigned.values()) {
-      if (item.scope == using.scope && item.names === using.names) return;
-    }
-
-    diagnoser.add(
-      using.position,
-      `couldn't find the definition of ${using.scope}.${using.names.join(".")}`,
-      DiagnosticSeverity.error,
-      "molang.undefined"
-    );
-  });
-
   // Check functions parameters
-  set.functions;
+  set.functions.forEach((fn) => diagnose_molang_function(fn, diagnoser));
 
   // Check syntax
   for (let exps of set.cache.expressions()) {
@@ -93,6 +99,8 @@ export function diagnose_molang_syntax(expression: ExpressionNode, diagnoser: Di
           case "geometry":
           case "material":
           case "texture":
+          case "v":
+          case "variable":
             break;
           default:
             diagnoser.add(
@@ -149,4 +157,48 @@ export function diagnose_molang_syntax(expression: ExpressionNode, diagnoser: Di
 
 export function diagnose_molang_syntax_optimizations(expression: ExpressionNode, diagnoser: DiagnosticsBuilder) {
   // TODO: optimizations
+}
+
+export function diagnose_molang_function(fn: FunctionCallNode, diagnoser: DiagnosticsBuilder) {
+  const id = fn.names.join(".");
+  let fnData: MolangFunction | undefined;
+  switch (fn.scope) {
+    case "math":
+      fnData = MolangData.General.getMath(id);
+      break;
+    case "q":
+    case "query":
+      fnData = MolangData.General.getQuery(id);
+      break;
+  }
+
+  if (fnData === undefined) {
+    diagnoser.add(
+      fn.position,
+      `Unknown function molang caller scope: ${fn.scope}, expected: math, q, or query`,
+      DiagnosticSeverity.error,
+      "molang.function.scope"
+    );
+    return;
+  }
+
+  if (fnData.deprecated) {
+    diagnoser.add(
+      fn.position,
+      `molang function has been deprecated: ${fnData.deprecated}`,
+      DiagnosticSeverity.error,
+      "molang.function.deprecated"
+    );
+  }
+
+  if (fnData.parameters) {
+    if (fnData.parameters.length != fn.arguments.length) {
+      diagnoser.add(
+        fn.position,
+        `wrong amount of arguments, expected ${fnData.parameters.length} but got ${fn.arguments.length}`,
+        DiagnosticSeverity.error,
+        "molang.function.arguments"
+      );
+    }
+  }
 }

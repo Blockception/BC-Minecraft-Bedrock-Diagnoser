@@ -1,4 +1,4 @@
-import { Molang } from "bc-minecraft-molang";
+import { MolangSet, NodeType } from "bc-minecraft-molang/lib/src/molang";
 import { diagnose_molang_implementation, MolangMetadata } from "../../../../src/lib/diagnostics/molang/diagnostics";
 import { Metadata } from "../../../../src/lib/types";
 import { TestDiagnoser } from "../../../diagnoser";
@@ -8,14 +8,17 @@ describe("Molang", () => {
     it("no errors", () => {
       const diagnoser = Metadata.withMetadata(TestDiagnoser.create(), { userType: "Entities" } as MolangMetadata);
 
-      const using = new Molang.MolangSet();
-      const owner = new Molang.MolangSet();
+      const using = new MolangSet();
+      const resource = new MolangSet();
 
       diagnose_molang_implementation(
         { id: "animation.example.walk", molang: using },
-        { id: "minecraft:sheep", molang: owner },
+        { id: "minecraft:sheep", molang: resource },
         diagnoser
       );
+
+      using.assigned.add({ scope: "variable", names: ["foo"], position: 0, type: NodeType.Variable });
+      resource.using.add({ scope: "variable", names: ["foo"], position: 0, type: NodeType.Variable });
 
       diagnoser.expectEmpty();
     });
@@ -23,12 +26,15 @@ describe("Molang", () => {
     it("1 error", () => {
       const diagnoser = Metadata.withMetadata(TestDiagnoser.create(), { userType: "Entities" } as MolangMetadata);
 
-      const using = new Molang.MolangSet();
-      const owner = new Molang.MolangSet();
+      const using = new MolangSet();
+      const resource = new MolangSet();
+
+      using.assigned.add({ scope: "variable", names: ["bar"], position: 0, type: NodeType.Variable });
+      resource.using.add({ scope: "variable", names: ["foo"], position: 0, type: NodeType.Variable });
 
       diagnose_molang_implementation(
         { id: "animation.example.walk", molang: using },
-        { id: "minecraft:sheep", molang: owner },
+        { id: "minecraft:sheep", molang: resource },
         diagnoser
       );
 
@@ -38,12 +44,15 @@ describe("Molang", () => {
     it("1 error", () => {
       const diagnoser = Metadata.withMetadata(TestDiagnoser.create(), { userType: "Entities" } as MolangMetadata);
 
-      const using = new Molang.MolangSet();
-      const owner = new Molang.MolangSet();
+      const using = new MolangSet();
+      const resource = new MolangSet();
+
+      using.assigned.add({ scope: "variable", names: ["bar"], position: 0, type: NodeType.Variable });
+      resource.using.add({ scope: "variable", names: ["foo"], position: 0, type: NodeType.Variable });
 
       diagnose_molang_implementation(
         { id: "animation.example.walk", molang: using },
-        { id: "minecraft:sheep", molang: owner },
+        { id: "minecraft:sheep", molang: resource },
         diagnoser
       );
 

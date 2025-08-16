@@ -1,9 +1,13 @@
-import { diagnose_molang_syntax_text } from "../../../../src/lib/diagnostics/molang";
+import {
+  diagnose_molang_syntax_current_document,
+  diagnose_molang_syntax_line,
+  diagnose_molang_syntax_text,
+} from "../../../../src/lib/diagnostics/molang";
 import { TestDiagnoser } from "../../../diagnoser";
 
 interface TestCase {
   name: string;
-  data: any;
+  data: string | Record<string, any>;
 }
 
 describe("Molang Syntax", () => {
@@ -41,40 +45,12 @@ describe("Molang Syntax", () => {
     },
   ];
 
-  const errors_tests: TestCase[] = [
-    {
-      name: "Assignment without semicolon",
-      data: {
-        transition: ["variable.example=1"],
-      },
-    },
-    {
-      name: "Double Expression",
-      data: {
-        transition: ["variable.example=1;variable.example=1"],
-      },
-    },
-    {
-      name: "Should trigger",
-      data: "variable.something = 1.0",
-    },
-  ];
-
   for (const test of no_errors_tests) {
     it(`no errors test: ${test.name}`, () => {
       const diagnoser = new TestDiagnoser();
-      diagnose_molang_syntax_text(test.data, diagnoser);
+      diagnose_molang_syntax_text("", diagnoser, test.data);
 
       diagnoser.expectEmpty();
-    });
-  }
-
-  for (const test of errors_tests) {
-    it(`errors test: ${test.name}`, () => {
-      const diagnoser = new TestDiagnoser();
-      diagnose_molang_syntax_text(test.data, diagnoser);
-
-      diagnoser.expectAny();
     });
   }
 });

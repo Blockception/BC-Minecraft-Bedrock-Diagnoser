@@ -1,6 +1,6 @@
 import { Internal, ResourcePack } from "bc-minecraft-bedrock-project";
 import { Types } from "bc-minecraft-bedrock-types";
-import { Molang } from "bc-minecraft-molang";
+import { MolangSet } from "bc-minecraft-molang";
 import { DocumentDiagnosticsBuilder, Metadata } from "../../../types";
 import { behaviorpack_item_diagnose } from "../../behavior-pack/item";
 import { Json } from "../../json/json";
@@ -14,7 +14,7 @@ import { particle_is_defined } from "../particle/diagnose";
 import { render_controller_diagnose_implementation } from "../render-controller/diagnostics";
 import { diagnose_resourcepack_sounds } from "../sounds/diagnostics";
 import { texture_files_diagnose } from "../texture-atlas/entry";
-import { MolangSet } from "bc-minecraft-molang/lib/src/molang";
+import { getUsingResources } from "bc-minecraft-bedrock-project/lib/src/internal/resource-pack/resources";
 
 /**
  * Diagnoses the given document as an attachable
@@ -32,8 +32,10 @@ export function diagnose_attachable_document(diag: DocumentDiagnosticsBuilder): 
   behaviorpack_item_diagnose(description.identifier, diagnoser);
 
   if (!attachableGathered) return;
-  if (!attachableGathered.molang)
+  if (!attachableGathered.molang) {
     attachableGathered.molang = MolangSet.harvest(attachable, diagnoser.document.getText());
+    getUsingResources(attachableGathered.molang, attachable["minecraft:attachable"].description, diagnoser.document);
+  }
 
   //#region animations
   //Check animations / animation controllers
