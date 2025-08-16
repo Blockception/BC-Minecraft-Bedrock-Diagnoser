@@ -5,9 +5,9 @@ import { check_definition_value } from "../definitions";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 
 /**
- * 
- * @param value 
- * @param diagnoser 
+ *
+ * @param value
+ * @param diagnoser
  * @returns True if the family was found in an entity
  */
 export function minecraft_family_diagnose(value: Types.OffsetWord | string, diagnoser: DiagnosticsBuilder): boolean {

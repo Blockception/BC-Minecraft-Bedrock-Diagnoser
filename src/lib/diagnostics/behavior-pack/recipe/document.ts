@@ -119,16 +119,15 @@ function diagnose_shapeless(recipe: Internal.BehaviorPack.Recipe, diagnoser: Doc
 }
 
 function diagnose_shaped(recipe: Internal.BehaviorPack.Recipe, diagnoser: DocumentDiagnosticsBuilder) {
-  const shaped = recipe['minecraft:recipe_shaped']!;
+  const shaped = recipe["minecraft:recipe_shaped"]!;
   const result = shaped.result;
 
-  Object.values(shaped.key).forEach(item => diagnose_recipe_item(item, diagnoser));
+  Object.values(shaped.key).forEach((item) => diagnose_recipe_item(item, diagnoser));
 
   if (!Array.isArray(result)) {
     diagnose_recipe_item(result, diagnoser);
-  }
-  else {
-    result.forEach(item => diagnose_recipe_item(item, diagnoser));
+  } else {
+    result.forEach((item) => diagnose_recipe_item(item, diagnoser));
   }
 
   diagnose_unlocking(recipe, shaped, diagnoser);
@@ -149,7 +148,11 @@ function diagnose_shaped(recipe: Internal.BehaviorPack.Recipe, diagnoser: Docume
   //TODO: Account for shaped.tags
 }
 
-function diagnose_unlocking(recipe: Internal.BehaviorPack.Recipe, recipeData: any, diagnoser: DocumentDiagnosticsBuilder) {
+function diagnose_unlocking(
+  recipe: Internal.BehaviorPack.Recipe,
+  recipeData: any,
+  diagnoser: DocumentDiagnosticsBuilder
+) {
   try {
     if (
       recipeData.unlock === undefined &&
@@ -171,10 +174,9 @@ function diagnose_unlocking(recipe: Internal.BehaviorPack.Recipe, recipeData: an
 }
 
 function diagnose_recipe_item(item: any, diagnoser: DocumentDiagnosticsBuilder) {
-  if (typeof item == 'string') {
+  if (typeof item == "string") {
     behaviorpack_item_diagnose(item, diagnoser);
-  }
-  else if ('item' in item) {
+  } else if ("item" in item) {
     behaviorpack_item_diagnose(item.item, diagnoser);
   }
 }
