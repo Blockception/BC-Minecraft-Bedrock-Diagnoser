@@ -1,4 +1,4 @@
-import { PackType } from 'bc-minecraft-bedrock-project';
+import { PackType } from "bc-minecraft-bedrock-project";
 import { Types } from "bc-minecraft-bedrock-types";
 import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../types";
 
@@ -96,12 +96,13 @@ export function minecraft_language_line_diagnose(
       diagnoser.add(existingKey, "Duplicate key found", DiagnosticSeverity.error, "minecraft.language.duplicate");
     } else {
       keys.set(key, line.offset);
-      if (packType == PackType.behavior_pack && key != 'pack.name' && key != 'pack.description') diagnoser.add(
-        key,
-        `"key" does not function in the BP and is therefore unnecessary.`,
-        DiagnosticSeverity.info,
-        "minecraft.language.unnecessary"
-      );
+      if (packType == PackType.behavior_pack && key != "pack.name" && key != "pack.description")
+        diagnoser.add(
+          key,
+          `"key" does not function in the BP and is therefore unnecessary.`,
+          DiagnosticSeverity.info,
+          "minecraft.language.unnecessary"
+        );
     }
 
     const value = text.substring(assignIndex + 1);

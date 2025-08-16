@@ -1,5 +1,5 @@
 import { Types } from "bc-minecraft-bedrock-types";
-import { Errors } from '../..';
+import { Errors } from "../..";
 import { DiagnosticsBuilder } from "../../../../main";
 
 export function fog_is_defined(id: string, diagnoser: DiagnosticsBuilder): boolean {

@@ -1,35 +1,34 @@
-import { Internal, SMap } from "bc-minecraft-bedrock-project";
-import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
-import { diagnose_molang } from "../../molang/diagnostics";
-import { Json } from "../../json/json";
+import { Internal } from "bc-minecraft-bedrock-project";
 import { BoneAnimation } from "bc-minecraft-bedrock-project/lib/src/internal/resource-pack";
+import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
+import { Json } from "../../json/json";
+import { diagnose_molang_syntax_current_document } from "../../molang";
 import { BoneUsage, model_bones_must_exist } from "../model";
 
 /**Diagnoses the given document as an animation
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
 export function diagnose_animation_document(diagnoser: DocumentDiagnosticsBuilder): void {
-  //Check molang
-  diagnose_molang(diagnoser.document.getText(), "Animations", diagnoser);
-
   const anims = Json.LoadReport<Internal.ResourcePack.Animations>(diagnoser);
   if (!Internal.ResourcePack.Animations.is(anims)) return;
+  diagnose_molang_syntax_current_document(diagnoser, anims);
 
-  Object.keys(anims.animations).forEach(anim_id => {
-    if (!anim_id.startsWith('animation.')) diagnoser.add(
-      anim_id,
-      `Animation name must begin with "animation."`,
-      DiagnosticSeverity.error,
-      "resourcepack.animation.name"
-    );
-  })
+  Object.keys(anims.animations).forEach((anim_id) => {
+    if (!anim_id.startsWith("animation."))
+      diagnoser.add(
+        anim_id,
+        `Animation name must begin with "animation."`,
+        DiagnosticSeverity.error,
+        "resourcepack.animation.name"
+      );
+  });
 
   const bones: BoneUsage[] = [];
 
-  SMap.forEach(anims.animations, (anim, anim_id) => {
+  Object.entries(anims.animations).forEach(([anim_id, anim]) => {
     const length = anim.animation_length;
 
-    SMap.forEach(anim.bones, (bone, bone_id) => {
+    Object.entries(anim.bones ?? {}).forEach(([bone_id, bone]) => {
       bones.push({ bone_id, parent_id: anim_id });
 
       if (typeof length === "number") {
@@ -41,7 +40,12 @@ export function diagnose_animation_document(diagnoser: DocumentDiagnosticsBuilde
   model_bones_must_exist(bones, diagnoser);
 }
 
-function check_bone_time(parentid: string, bone: BoneAnimation, animation_length: number, diagnoser: DocumentDiagnosticsBuilder) {
+function check_bone_time(
+  parentid: string,
+  bone: BoneAnimation,
+  animation_length: number,
+  diagnoser: DocumentDiagnosticsBuilder
+) {
   check_bone_property_time(parentid, bone.position, animation_length, diagnoser);
   check_bone_property_time(parentid, bone.rotation, animation_length, diagnoser);
   check_bone_property_time(parentid, bone.scale, animation_length, diagnoser);
@@ -49,7 +53,12 @@ function check_bone_time(parentid: string, bone: BoneAnimation, animation_length
 
 type BoneProperties = BoneAnimation["position" | "rotation" | "scale"];
 
-function check_bone_property_time(parentid: string, property: BoneProperties, animation_length: number, diagnoser: DocumentDiagnosticsBuilder) {
+function check_bone_property_time(
+  parentid: string,
+  property: BoneProperties,
+  animation_length: number,
+  diagnoser: DocumentDiagnosticsBuilder
+) {
   if (typeof property !== "object") return;
   if (Array.isArray(property)) return;
 

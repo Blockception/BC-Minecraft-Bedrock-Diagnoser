@@ -4,7 +4,7 @@ import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../types";
 import { check_definition_value, education_enabled } from "../../definitions";
 import { Errors } from "../..";
-import { DefinitionItem } from "bc-minecraft-bedrock-project";
+import { Defined, DefinitionItem } from "bc-minecraft-bedrock-project";
 
 /**
  * Checks if the entities exists in the project or in vanilla, if not then a bug is reported
@@ -60,11 +60,17 @@ export function behaviorpack_entity_spawnegg_diagnose(value: Types.OffsetWord, d
 export function behaviorpack_entity_event_diagnose(
   id: string,
   path: string,
-  events: string[] | undefined,
+  events: Defined | string[] | undefined,
   diagnoser: DiagnosticsBuilder
 ) {
   if (!events) return;
-  if (events.includes(id)) return;
+
+  if (Defined.is(events)) {
+    if (events.defined.has(id)) return;
+  } else if (events.includes(id)) {
+    return;
+  }
+
   diagnoser.add(path, `Entity has no event "${id}"`, DiagnosticSeverity.warning, "behaviorpack.entity.event.missing");
 }
 
@@ -99,7 +105,7 @@ export function command_entity_event_diagnose(
     //Entity found
     if (entity) {
       //Events not found
-      if (!entity.events.includes(data.text)) {
+      if (!entity.events.defined.has(data.text)) {
         diagnoser.add(
           data.offset,
           `Entity: ${entityid} has no event declared: ${data.text}`,

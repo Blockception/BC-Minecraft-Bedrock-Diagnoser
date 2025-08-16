@@ -1,22 +1,19 @@
 import { ProjectItem } from "bc-minecraft-bedrock-project";
-import { MolangDataSetKey } from "bc-minecraft-molang";
 import { Errors } from "../..";
-import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier, EventCarrier } from "../../../types";
-import { diagnose_molang_implementation } from "../../molang/diagnostics";
-
-type User = EntityAnimationMolangCarrier & EventCarrier;
+import { DiagnosticsBuilder, DiagnosticSeverity, WithMetadata } from "../../../types";
+import { diagnose_molang_implementation, MolangMetadata, User } from "../../molang/diagnostics";
+import { filter_not_defined } from "../../resources/using";
 
 /**
  *
- * @param id
- * @param data
+ * @param anim_id The animation id to check if it exists
+ * @param user The resource / entity that is using the animation
  * @param diagnoser
  */
 export function diagnose_animation_implementation(
   anim_id: string,
   user: User,
-  ownerType: MolangDataSetKey,
-  diagnoser: DiagnosticsBuilder
+  diagnoser: WithMetadata<DiagnosticsBuilder, MolangMetadata>
 ): void {
   //Project has animation
   const anim = diagnoser.context.getProjectData().behaviors.animations.get(anim_id, diagnoser.project);
@@ -27,10 +24,16 @@ export function diagnose_animation_implementation(
     return; // Skip anything but a project defined item
   }
 
-  const entityEvents = diagnoser.context.getProjectData().projectData.behaviorPacks.entities.get(user.id)?.events
-  anim.item.events.forEach(id => {
-    if (!entityEvents?.includes(id)) diagnoser.add(`${user.id}/${anim.item.id}`, `Entity does not have event ${id}`, DiagnosticSeverity.warning, "behaviorpack.entity.event.missing")
-  })
+  diagnose_molang_implementation(user, anim.item, diagnoser);
 
-  diagnose_molang_implementation(anim.item, user, ownerType, diagnoser);
+  // Check if entity events are defined
+  const entityEvents = diagnoser.context.getProjectData().projectData.behaviorPacks.entities.get(user.id)?.events;
+  for (const undef of filter_not_defined(anim.item.events, entityEvents)) {
+    diagnoser.add(
+      `${user.id}/${anim.item.id}`,
+      `Entity does not have event ${undef}`,
+      DiagnosticSeverity.warning,
+      "behaviorpack.entity.event.missing"
+    );
+  }
 }

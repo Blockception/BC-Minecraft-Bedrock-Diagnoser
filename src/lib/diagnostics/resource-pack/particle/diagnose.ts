@@ -1,5 +1,5 @@
 import { Types } from "bc-minecraft-bedrock-types";
-import { Errors } from '../..';
+import { Errors } from "../..";
 import { DiagnosticsBuilder } from "../../../../main";
 
 export function particle_is_defined(id: string | Types.OffsetWord, diagnoser: DiagnosticsBuilder): void {

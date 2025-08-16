@@ -1,7 +1,7 @@
-import { Internal, SMap } from "bc-minecraft-bedrock-project";
+import { Internal } from "bc-minecraft-bedrock-project";
 import { EntityProperty } from "bc-minecraft-bedrock-project/lib/src/project/behavior-pack/entity";
-import { ComponentGroups } from "bc-minecraft-bedrock-types/lib/minecraft/components";
-import { DiagnosticSeverity, DiagnosticsBuilder, DocumentDiagnosticsBuilder } from '../../../types';
+import { ComponentContainer, ComponentGroups } from "bc-minecraft-bedrock-types/lib/minecraft/components";
+import { DiagnosticSeverity, DiagnosticsBuilder, DocumentDiagnosticsBuilder } from "../../../types";
 import { commandsCheck } from "../mcfunction";
 import { behaviorpack_entity_components_filters } from "./components/filters";
 import { diagnose_entity_property_usage } from "./properties";
@@ -9,16 +9,17 @@ import { diagnose_entity_property_usage } from "./properties";
 type EntityEvent = Internal.BehaviorPack.EntityEvent;
 
 export function behaviorpack_entity_check_events(
-  events: SMap<EntityEvent> | EntityEvent[],
+  events: Record<string, EntityEvent> | EntityEvent[],
   diagnoser: DocumentDiagnosticsBuilder,
   properties: EntityProperty[],
-  component_groups?: SMap<Internal.BehaviorPack.EntityComponentContainer>
+  component_groups?: ComponentGroups
 ) {
   if (Array.isArray(events)) {
     events.forEach((event) => behaviorpack_entity_check_event(event, "", diagnoser, properties, component_groups));
   } else {
-    const eventIds = Object.keys(events)
-    SMap.forEach(events, (event, key) =>
+    const eventIds = Object.keys(events);
+
+    Object.entries(events).forEach(([key, event]) =>
       behaviorpack_entity_check_event(event, key, diagnoser, properties, component_groups, eventIds)
     );
   }
@@ -38,26 +39,57 @@ export function behaviorpack_entity_check_event(
   component_groups?: ComponentGroups,
   eventIds?: string[]
 ): void {
-  has_groups(diagnoser, event_id, typeof event.add?.component_groups == 'string' ? [event.add?.component_groups] : event.add?.component_groups, component_groups);
-  has_groups(diagnoser, event_id, typeof event.remove?.component_groups == 'string' ? [event.remove?.component_groups] : event.remove?.component_groups, component_groups);
+  has_groups(
+    diagnoser,
+    event_id,
+    typeof event.add?.component_groups == "string" ? [event.add?.component_groups] : event.add?.component_groups,
+    component_groups
+  );
+  has_groups(
+    diagnoser,
+    event_id,
+    typeof event.remove?.component_groups == "string"
+      ? [event.remove?.component_groups]
+      : event.remove?.component_groups,
+    component_groups
+  );
 
   event.randomize?.forEach((item) => {
     behaviorpack_entity_check_event(item, event_id, diagnoser, properties, component_groups, eventIds);
   });
 
-  if (event.randomize?.length == 1) diagnoser.add(event_id, "'randomize' only has one entry and can therefore be removed.", DiagnosticSeverity.info, "behaviorpack.entity.event.randomize.length")
+  if (event.randomize?.length == 1)
+    diagnoser.add(
+      event_id,
+      "'randomize' only has one entry and can therefore be removed.",
+      DiagnosticSeverity.info,
+      "behaviorpack.entity.event.randomize.length"
+    );
 
   event.sequence?.forEach((item) => {
     behaviorpack_entity_check_event(item, event_id, diagnoser, properties, component_groups, eventIds);
   });
 
-  if (event.sequence?.length == 1) diagnoser.add(event_id, "'sequence' only has one entry and can therefore be removed.", DiagnosticSeverity.info, "behaviorpack.entity.event.sequence.length");
+  if (event.sequence?.length == 1) {
+    diagnoser.add(
+      event_id,
+      "'sequence' only has one entry and can therefore be removed.",
+      DiagnosticSeverity.info,
+      "behaviorpack.entity.event.sequence.length"
+    );
+  }
 
   (event as any).first_valid?.forEach((item: Internal.BehaviorPack.EntityEvent) => {
     behaviorpack_entity_check_event(item, event_id, diagnoser, properties, component_groups, eventIds);
   });
 
-  if ((event as any).first_valid?.length == 1) diagnoser.add(event_id, "'first_valid' only has one entry and can therefore be removed.", DiagnosticSeverity.info, "behaviorpack.entity.event.first_valid.length")
+  if ((event as any).first_valid?.length == 1)
+    diagnoser.add(
+      event_id,
+      "'first_valid' only has one entry and can therefore be removed.",
+      DiagnosticSeverity.info,
+      "behaviorpack.entity.event.first_valid.length"
+    );
 
   behaviorpack_entity_components_filters(event, diagnoser);
 
@@ -76,7 +108,7 @@ export function behaviorpack_entity_check_event(
     );
   }
 
-  if ((event as any)["set_home_position"] && !diagnoser.document.getText().includes('minecraft:home')) {
+  if ((event as any)["set_home_position"] && !diagnoser.document.getText().includes("minecraft:home")) {
     diagnoser.add(
       `events/${event_id}`,
       `To use set_home_position, \`minecraft:home\` is required.`,
@@ -87,12 +119,13 @@ export function behaviorpack_entity_check_event(
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
-  if (event.trigger && !eventIds?.includes(typeof event.trigger == 'string' ? event.trigger : event.trigger.event)) diagnoser.add(
-    `events/${event_id}/trigger`,
-    `Event "${event.trigger}" being triggered not found`,
-    DiagnosticSeverity.warning,
-    "behaviorpack.entity.event.trigger"
-  );
+  if (event.trigger && !eventIds?.includes(typeof event.trigger == "string" ? event.trigger : event.trigger.event))
+    diagnoser.add(
+      `events/${event_id}/trigger`,
+      `Event "${event.trigger}" being triggered not found`,
+      DiagnosticSeverity.warning,
+      "behaviorpack.entity.event.trigger"
+    );
 
   if (event.queue_command) {
     const c = event.queue_command.command;
@@ -119,17 +152,14 @@ function has_groups(
   diagnoser: DiagnosticsBuilder,
   id: string,
   groups?: string[],
-  component_groups?: SMap<Internal.BehaviorPack.EntityComponentContainer>
+  component_groups?: ComponentGroups
 ): void {
   if (groups === undefined) return;
+  component_groups = component_groups ?? {};
 
   for (let I = 0; I < groups.length; I++) {
     const group = groups[I];
-
-    if (component_groups) {
-      //If there is an item, continue
-      if (component_groups[group] !== undefined) continue;
-    }
+    if (group in component_groups) continue;
 
     diagnoser.add(
       `events/${id}/${group}`,

@@ -2,4 +2,4 @@
 
 export * from "./commands";
 export * from "./diagnose";
-export * from "./entry";
+export * from "./document";

@@ -2,5 +2,5 @@
 
 export * from "./conditions";
 export * from "./diagnose";
-export * from "./entry";
+export * from "./document";
 export * from "./functions";

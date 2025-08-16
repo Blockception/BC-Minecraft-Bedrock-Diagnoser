@@ -1,15 +1,16 @@
 import { ResourcePackCollection } from "bc-minecraft-bedrock-project/lib/src/project/resource-pack";
-import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from '../../../types';
-import { is_block_defined } from '../../behavior-pack/block';
+import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
+import { is_block_defined } from "../../behavior-pack/block";
 import { Json } from "../../json/json";
+import { diagnose_molang_syntax_current_document } from "../../molang";
 
 /**Diagnoses the given document as a block.json
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
 export function diagnose_block_document(diagnoser: DocumentDiagnosticsBuilder): void {
   const blocks = Json.LoadReport<Blocks>(diagnoser);
-
   if (!Json.TypeCheck(blocks, diagnoser, "blocks.json", "resourcepack.blocks.invalid", is)) return;
+  diagnose_molang_syntax_current_document(diagnoser, blocks);
 
   const keys = Object.keys(blocks);
   const rp = diagnoser.context.getProjectData().projectData.resourcePacks;
@@ -38,18 +39,18 @@ export function diagnose_block_document(diagnoser: DocumentDiagnosticsBuilder): 
         if (texture.east) hasDefinition(key, texture.east, rp, diagnoser);
       }
 
-      is_block_defined(key, diagnoser) 
+      is_block_defined(key, diagnoser);
 
-      const blockFile = diagnoser.context.getProjectData().projectData.behaviorPacks.blocks.get(key)?.location.uri
+      const blockFile = diagnoser.context.getProjectData().projectData.behaviorPacks.blocks.get(key)?.location.uri;
       if (!blockFile) return;
 
-      if (diagnoser.context.getDocument(blockFile)?.getText().includes('minecraft:material_instances')) diagnoser.add(
-        `${key}`,
-        "Only one \"blocks.json\" or \"minecraft:material_instances\" may be used",
-        DiagnosticSeverity.error,
-        "behaviorpack.block.components.material_instance_clash"
-      )
-
+      if (diagnoser.context.getDocument(blockFile)?.getText().includes("minecraft:material_instances"))
+        diagnoser.add(
+          `${key}`,
+          'Only one "blocks.json" or "minecraft:material_instances" may be used',
+          DiagnosticSeverity.error,
+          "behaviorpack.block.components.material_instance_clash"
+        );
     }
   }
 }

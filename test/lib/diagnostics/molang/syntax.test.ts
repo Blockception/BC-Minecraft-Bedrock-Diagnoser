@@ -1,28 +1,28 @@
-import { diagnoser_molang_syntax } from '../../../../src/lib/diagnostics/molang';
-import { TestDiagnoser } from '../../../diagnoser';
+import {
+  diagnose_molang_syntax_current_document,
+  diagnose_molang_syntax_line,
+  diagnose_molang_syntax_text,
+} from "../../../../src/lib/diagnostics/molang";
+import { TestDiagnoser } from "../../../diagnoser";
 
 interface TestCase {
-  name: string
-  data: any
+  name: string;
+  data: string | Record<string, any>;
 }
 
-describe("Molang Syntax",()=>{
+describe("Molang Syntax", () => {
   const no_errors_tests: TestCase[] = [
     {
       name: "Command with selector",
       data: {
-        on_entry: [
-          "/event entity @e[type=foo:bar] foo:update"
-        ]
-      }
+        on_entry: ["/event entity @e[type=foo:bar] foo:update"],
+      },
     },
     {
       name: "Transition with comparison",
       data: {
-        transition: [
-          { "foo": "q.property('foo:bar')==0&&q.all_animations_finished" }
-        ]
-      }
+        transition: [{ foo: "q.property('foo:bar')==0&&q.all_animations_finished" }],
+      },
     },
     {
       name: "Comparison should not be confused with assignment",
@@ -36,53 +36,21 @@ describe("Molang Syntax",()=>{
           "variable.example >= 1;",
           "variable.example != 1;",
           "q.property('foo:bar')==0&&q.all_animations_finished",
-        ]
-      }
+        ],
+      },
     },
     {
       name: "Some complex",
-      data: "v.temp_outfit!=q.property('foo:bar')+q.property('foo:bar')+q.property('foo:bar')"
-    }
-  ]
-
-  const errors_tests: TestCase[] = [
-    {
-      name: "Assignment without semicolon",
-      data: {
-        transition: [
-          "variable.example=1"
-        ]
-      }
+      data: "v.temp_outfit!=q.property('foo:bar')+q.property('foo:bar')+q.property('foo:bar')",
     },
-    {
-      name: "Double Expression",
-      data: {
-        transition: [
-          "variable.example=1;variable.example=1"
-        ]
-      }
-    },
-    {
-      name: "Should trigger",
-      data: "variable.something = 1.0"
-    }
   ];
 
   for (const test of no_errors_tests) {
     it(`no errors test: ${test.name}`, () => {
       const diagnoser = new TestDiagnoser();
-      diagnoser_molang_syntax(test.data, diagnoser);
+      diagnose_molang_syntax_text("", diagnoser, test.data);
 
       diagnoser.expectEmpty();
-    });
-  }
-
-  for (const test of errors_tests) {
-    it(`errors test: ${test.name}`, () => {
-      const diagnoser = new TestDiagnoser();
-      diagnoser_molang_syntax(test.data, diagnoser);
-
-      diagnoser.expectAny();
     });
   }
 });

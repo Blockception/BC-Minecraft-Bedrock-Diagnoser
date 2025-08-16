@@ -3,7 +3,7 @@ import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../types";
 import { check_definition_value, education_enabled } from "../../definitions";
 import { behaviorpack_check_blockstates } from "../block-state/diagnose";
-import { Errors } from '../..';
+import { Errors } from "../..";
 
 /**
  *

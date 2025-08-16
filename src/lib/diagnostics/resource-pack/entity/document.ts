@@ -1,11 +1,13 @@
 import { Internal, ResourcePack } from "bc-minecraft-bedrock-project";
+import { getUsingResources } from "bc-minecraft-bedrock-project/lib/src/internal/resource-pack/resources";
 import { Types } from "bc-minecraft-bedrock-types";
-import { Molang } from "bc-minecraft-molang";
-import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
+import { MolangSet } from "bc-minecraft-molang";
+import { DiagnosticSeverity, DocumentDiagnosticsBuilder, Metadata } from "../../../types";
+import { behaviorpack_entityid_diagnose } from "../../behavior-pack/entity";
 import { Json } from "../../json/json";
 import { AnimationUsage } from "../../minecraft";
 import { diagnose_script } from "../../minecraft/script";
-import { diagnose_molang } from "../../molang/diagnostics";
+import { diagnose_molang_syntax_current_document, MolangMetadata } from "../../molang";
 import { animation_or_controller_diagnose_implementation } from "../anim-or-controller";
 import { diagnose_animation_controller_implementation } from "../animation-controllers/diagnostics";
 import { resourcepack_animation_used } from "../animation/usage";
@@ -14,28 +16,30 @@ import { particle_is_defined } from "../particle/diagnose";
 import { render_controller_diagnose_implementation } from "../render-controller/diagnostics";
 import { diagnose_resourcepack_sounds } from "../sounds/diagnostics";
 import { texture_files_diagnose } from "../texture-atlas/entry";
-import { behaviorpack_entityid_diagnose } from "../../behavior-pack/entity";
 
-/**Diagnoses the given document as an RP entity
+/**
+ * Diagnoses the given document as an RP entity
  * @param doc The text document to diagnose
- * @param diagnoser The diagnoser builder to receive the errors*/
-export function diagnose_entity_document(diagnoser: DocumentDiagnosticsBuilder): void {
+ * @param diag The diagnoser builder to receive the errors
+ */
+export function diagnose_entity_document(diag: DocumentDiagnosticsBuilder): void {
+  const diagnoser = Metadata.withMetadata(diag, { userType: "Entities" } as MolangMetadata);
   //No behaviorpack check, entities can exist without their bp side (for servers)
-
-  //Check molang math functions
-  diagnose_molang(diagnoser.document.getText(), "Entities", diagnoser);
-
   //Load entity
   const entity = Json.LoadReport<Internal.ResourcePack.Entity>(diagnoser);
   if (!Internal.ResourcePack.Entity.is(entity)) return;
 
   const description = entity["minecraft:client_entity"].description;
-  const entityGathered = ResourcePack.Entity.Process(diagnoser.document);
+  const entityGathered = ResourcePack.Entity.process(diagnoser.document);
 
+  diagnose_molang_syntax_current_document(diagnoser, entity);
   behaviorpack_entityid_diagnose(description.identifier, diagnoser);
 
   if (!entityGathered) return;
-  if (!entityGathered.molang) entityGathered.molang = Molang.MolangFullSet.harvest(diagnoser.document.getText());
+  if (!entityGathered.molang) {
+    entityGathered.molang = MolangSet.harvest(entity, diagnoser.document.getText());
+    getUsingResources(entityGathered.molang, entity["minecraft:client_entity"].description, diagnoser.document);
+  }
 
   // Collect all animations and animation controllers
   const anim_data: AnimationUsage = {
@@ -58,7 +62,6 @@ export function diagnose_entity_document(diagnoser: DocumentDiagnosticsBuilder):
     animation_or_controller_diagnose_implementation(
       anim_id,
       entityGathered,
-      "Entities",
       diagnoser,
       description.particle_effects,
       description.sound_effects
@@ -68,7 +71,6 @@ export function diagnose_entity_document(diagnoser: DocumentDiagnosticsBuilder):
     animation_or_controller_diagnose_implementation(
       anim_id,
       entityGathered,
-      "Entities",
       diagnoser,
       description.particle_effects,
       description.sound_effects
@@ -80,24 +82,22 @@ export function diagnose_entity_document(diagnoser: DocumentDiagnosticsBuilder):
   //#endregion
 
   //Check animation controllers
-  description.animation_controllers?.forEach((controller) => {
-    const temp = flatten(controller);
-    if (temp) diagnose_animation_controller_implementation(temp, entityGathered, "Entities", diagnoser, {});
-  });
+  description.animation_controllers
+    ?.map((controller) => flatten(controller))
+    .filter((id) => id !== undefined)
+    .forEach((id) => diagnose_animation_controller_implementation(id, entityGathered, diagnoser, {}));
 
   //Check render controllers
-  description.render_controllers?.forEach((controller) => {
-    const temp = getKey(controller);
-    if (temp) render_controller_diagnose_implementation(temp, entityGathered, "Entities", diagnoser);
-  });
+  description.render_controllers
+    ?.map((controller) => getKey(controller))
+    .filter((key) => key !== undefined)
+    .forEach((key) => render_controller_diagnose_implementation(key, entityGathered, diagnoser));
 
   //Check models
   Types.Definition.forEach(description.geometry, (ref, modelId) => model_is_defined(modelId, diagnoser));
 
   //check particles
-  Types.Definition.forEach(description.particle_effects, (ref, part_id) =>
-    particle_is_defined(part_id, diagnoser)
-  );
+  Types.Definition.forEach(description.particle_effects, (ref, part_id) => particle_is_defined(part_id, diagnoser));
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
@@ -106,13 +106,14 @@ export function diagnose_entity_document(diagnoser: DocumentDiagnosticsBuilder):
   if (
     typeof textureId == "string" &&
     !diagnoser.context.getProjectData().projectData.resourcePacks.itemTextures.find((val) => val.id == textureId)
-  )
+  ) {
     diagnoser.add(
       `description/spawn_egg/${textureId}`,
       `Texture reference "${textureId}" was not defined in item_texture.json`,
       DiagnosticSeverity.error,
       "behaviorpack.item.components.texture_not_found"
     );
+  }
 
   //Get pack
   const pack = diagnoser.context.getProjectData().projectData.resourcePacks.get(diagnoser.document.uri);

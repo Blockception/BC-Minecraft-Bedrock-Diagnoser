@@ -8,7 +8,11 @@ const component_dependents_all: DependedMap = {
   "minecraft:boostable": ["minecraft:rideable"],
   "minecraft:behavior.admire_item": ["minecraft:admire_item"],
   "minecraft:behavior.barter": ["minecraft:barter"],
-  "minecraft:behavior.controlled_by_player": ["minecraft:movement", "minecraft:rideable", "minecraft:item_controllable"],
+  "minecraft:behavior.controlled_by_player": [
+    "minecraft:movement",
+    "minecraft:rideable",
+    "minecraft:item_controllable",
+  ],
   "minecraft:behavior.drop_item_for": [/^minecraft:navigation.*/gim],
   "minecraft:behavior.leap_at_target": [/^minecraft:behavior.*target.*/gim],
   "minecraft:behavior.slime_attack": ["minecraft:attack"],
@@ -28,10 +32,10 @@ const component_dependents_all: DependedMap = {
   "minecraft:behavior.attack_damage": ["minecraft:ocelotattack"],
   "minecraft:behavior.ranged_attack": ["minecraft:shooter"],
   "minecraft:behavior.roar": ["minecraft:anger_level"],
-  "minecraft:behavior.sniff": ['minecraft:suspect_tracking'],
-  "minecraft:behavior.swim_up_for_breath": ['minecraft:breathable'],
+  "minecraft:behavior.sniff": ["minecraft:suspect_tracking"],
+  "minecraft:behavior.swim_up_for_breath": ["minecraft:breathable"],
   "minecraft:behavior.float_tempt": ["minecraft:navigation.float"],
-  "minecraft:annotation.break_door": [/^minecraft:navigation.*/gim]
+  "minecraft:annotation.break_door": [/^minecraft:navigation.*/gim],
 };
 
 //Map of components that are depended on one of the other specified components
@@ -46,10 +50,7 @@ const component_dependents_any: DependedMap = {
     "minecraft:behavior.hurt_by_target",
   ],
   "minecraft:giveable": ["minecraft:inventory"],
-  "minecraft:behavior.pickup_items": [
-    "minecraft:inventory",
-    "minecraft:behavior.equip_item"
-  ]
+  "minecraft:behavior.pickup_items": ["minecraft:inventory", "minecraft:behavior.equip_item"],
 };
 
 /**Checks if components dependencies are present, a component might need others to be present
@@ -68,20 +69,25 @@ export function behaviorpack_entity_components_dependencies(
   components_dependencies("entity", context, diagnoser, component_dependents_all, component_dependents_any);
 }
 
-export function checkMovements(diagnoser: DiagnosticsBuilder, components: string[], entity: Internal.BehaviorPack.Entity): void {
+export function checkMovements(
+  diagnoser: DiagnosticsBuilder,
+  components: string[],
+  entity: Internal.BehaviorPack.Entity
+): void {
   const movementComps = components.filter((comp) => comp.startsWith("minecraft:movement."));
   const navigationComps = components.filter((comp) => comp.startsWith("minecraft:navigation."));
-  const runtimeId = entity['minecraft:entity'].description.runtime_identifier || ''
-  const id = entity['minecraft:entity'].description.identifier || ''
+  const runtimeId = entity["minecraft:entity"].description.runtime_identifier || "";
+  const id = entity["minecraft:entity"].description.identifier || "";
 
   // Check for dolphin runtime
-  if (runtimeId === 'minecraft:dolphin' || id === 'minecraft:dolphin') {
-    if (movementComps.length >= 1) diagnoser.add(
-      "runtime_identifier",
-      `Entity runtime 'minecraft:dolphin' is not compatible with ${movementComps[0]}`,
-      DiagnosticSeverity.error,
-      "behaviorpack.entity.incompatible_runtime"
-    )
+  if (runtimeId === "minecraft:dolphin" || id === "minecraft:dolphin") {
+    if (movementComps.length >= 1)
+      diagnoser.add(
+        "runtime_identifier",
+        `Entity runtime 'minecraft:dolphin' is not compatible with ${movementComps[0]}`,
+        DiagnosticSeverity.error,
+        "behaviorpack.entity.incompatible_runtime"
+      );
     else return;
   }
 
@@ -95,7 +101,14 @@ export function checkMovements(diagnoser: DiagnosticsBuilder, components: string
     return;
   }
 
-  if (movementComps.length === 0 && (runtimeId === 'minecraft:ghast' || runtimeId === 'minecraft:dolphin' || id === 'minecraft:ghast' || id === 'minecraft:dolphin')) return;
+  if (
+    movementComps.length === 0 &&
+    (runtimeId === "minecraft:ghast" ||
+      runtimeId === "minecraft:dolphin" ||
+      id === "minecraft:ghast" ||
+      id === "minecraft:dolphin")
+  )
+    return;
 
   // Accounting for ghastruntime
   if (movementComps.length === 0) {

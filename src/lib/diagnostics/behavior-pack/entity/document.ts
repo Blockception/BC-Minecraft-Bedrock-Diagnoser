@@ -1,15 +1,15 @@
-import { Internal } from "bc-minecraft-bedrock-project";
+import { Internal, References } from "bc-minecraft-bedrock-project";
 import { EntityProperty as DefinedEP } from "bc-minecraft-bedrock-project/lib/src/internal/behavior-pack/entity";
 import { EntityProperty as ProjectEP } from "bc-minecraft-bedrock-project/lib/src/project/behavior-pack/entity";
 import { Types } from "bc-minecraft-bedrock-types";
 import { getUsedComponents } from "bc-minecraft-bedrock-types/lib/minecraft/components";
-import { DefinedUsing, Molang } from "bc-minecraft-molang";
-import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
+import { MolangSet } from "bc-minecraft-molang";
+import { DiagnosticSeverity, DocumentDiagnosticsBuilder, Metadata } from "../../../types";
 import { Context } from "../../../utility/components";
 import { Json } from "../../json";
 import { AnimationUsage } from "../../minecraft";
 import { diagnose_script } from "../../minecraft/script";
-import { diagnose_molang } from "../../molang/diagnostics";
+import { diagnose_molang_syntax_current_document, MolangMetadata } from "../../molang";
 import { no_other_duplicates } from "../../packs/duplicate-check";
 import { diagnose_animation_or_controller_implementation } from "../anim-or-controller";
 import { behaviorpack_animation_used } from "../animation/usage";
@@ -20,17 +20,26 @@ import { diagnose_entity_properties_definition } from "./properties";
 
 /**Diagnoses the given document as an bp entity
  * @param doc The text document to diagnose
- * @param diagnoser The diagnoser builder to receive the errors*/
-export function diagnose_entity_document(diagnoser: DocumentDiagnosticsBuilder): void {
-  //Check molang
-  diagnose_molang(diagnoser.document.getText(), "Entities", diagnoser);
-
+ * @param diag The diagnoser builder to receive the errors*/
+export function diagnose_entity_document(diag: DocumentDiagnosticsBuilder): void {
+  const diagnoser = Metadata.withMetadata<DocumentDiagnosticsBuilder, MolangMetadata>(diag, { userType: "Entities" });
   const entity = Json.LoadReport<Internal.BehaviorPack.Entity>(diagnoser);
   if (!Internal.BehaviorPack.Entity.is(entity)) return;
 
-  //No resource-pack check, entities can exist without their rp side
+  const container = entity["minecraft:entity"];
+  const identifier = container.description.identifier;
+  const molangData = MolangSet.harvest(container, diagnoser.document.getText());
+  //check components
+  const context: Context<Internal.BehaviorPack.Entity> = {
+    source: entity,
+    components: getUsedComponents(entity["minecraft:entity"]),
+  };
 
-  const identifier = entity["minecraft:entity"].description.identifier;
+  diagnose_molang_syntax_current_document(diagnoser, entity);
+  behaviorpack_entity_components_dependencies(entity, context, diagnoser);
+  behaviorpack_entity_components_check(entity, context, diagnoser);
+
+  //No resource-pack check, entities can exist without their rp side
   // check that no other exists with this id
   no_other_duplicates(
     "behaviorpack.entity",
@@ -39,22 +48,10 @@ export function diagnose_entity_document(diagnoser: DocumentDiagnosticsBuilder):
     diagnoser
   );
 
-  //check components
-  const context: Context<Internal.BehaviorPack.Entity> = {
-    source: entity,
-    components: getUsedComponents(entity["minecraft:entity"]),
-  };
-
-  behaviorpack_entity_components_dependencies(entity, context, diagnoser);
-  behaviorpack_entity_components_check(entity, context, diagnoser);
-
-  const container = entity["minecraft:entity"];
-  const MolangData = Molang.MolangFullSet.harvest(container);
-
   const owner = {
     id: identifier,
-    molang: MolangData,
-    animations: DefinedUsing.create<string>(),
+    molang: molangData,
+    animations: References.create(),
   };
   const properties = Object.entries(container.description.properties ?? {})?.map(([name, value]) =>
     propertyToProjectProperty(name, value)
@@ -62,13 +59,13 @@ export function diagnose_entity_document(diagnoser: DocumentDiagnosticsBuilder):
 
   //Convert animations / controllers
   Types.Definition.forEach(container.description.animations, (ref, anim_id) => {
-    owner.animations.defined.push(ref);
-    owner.animations.using.push(anim_id);
+    owner.animations.defined.add(ref);
+    owner.animations.using.add(anim_id);
   });
 
   //Check animations / animation controllers implements
   owner.animations.using.forEach((anim_id) =>
-    diagnose_animation_or_controller_implementation(anim_id, owner, "Entities", diagnoser)
+    diagnose_animation_or_controller_implementation(anim_id, owner, diagnoser)
   );
 
   if ("permutations" in container)
@@ -88,8 +85,9 @@ export function diagnose_entity_document(diagnoser: DocumentDiagnosticsBuilder):
     );
 
   //Script check
-  if (container.description.scripts)
+  if (container.description.scripts) {
     diagnose_script(diagnoser, container.description.scripts, container.description.animations);
+  }
 
   //Check used animations
   const anim_data: AnimationUsage = {
@@ -99,12 +97,12 @@ export function diagnose_entity_document(diagnoser: DocumentDiagnosticsBuilder):
   };
 
   behaviorpack_animation_used(anim_data, diagnoser);
-
   diagnose_entity_properties_definition(properties, diagnoser, diagnoser.document.getText());
 
   //Check events
-  if (container.events)
+  if (container.events) {
     behaviorpack_entity_check_events(container.events, diagnoser, properties, container.component_groups);
+  }
 }
 
 function propertyToProjectProperty(name: string, value: DefinedEP): ProjectEP {

@@ -31,7 +31,7 @@ export function missing<T extends PackType>(
       p = pack;
   }
 
-  if (typeof id === "string" && !id.includes('/')) {
+  if (typeof id === "string" && !id.includes("/")) {
     id = `"${id}"`;
   }
 

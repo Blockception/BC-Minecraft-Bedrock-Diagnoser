@@ -11,15 +11,13 @@
   },
 
   "[typescript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.insertSpaces": true
   },
 
   "[markdown]": {
     "editor.wordWrap": "off"
   },
-
-  "prettier.printWidth": 150,
   "cSpell.words": [
     "behaviorpack",
     "entityid",
@@ -29,5 +27,8 @@
     "selectorattributes",
     "slotid",
     "slottype"
-  ]
+  ],
+  "typescript.tsserver.enableTracing": false,
+  "typescript.tsserver.watchOptions": "vscode",
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true
 }

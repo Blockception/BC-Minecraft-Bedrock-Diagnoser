@@ -1,7 +1,10 @@
-import { MolangDataSetKey } from "bc-minecraft-molang";
-import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier, EventCarrier } from "../../types";
+import { References } from "bc-minecraft-bedrock-project";
+import { DiagnosticsBuilder, DiagnosticSeverity, WithMetadata } from "../../types";
+import { AnimationCarrier } from "../minecraft/animation-controllers";
+import { MolangMetadata, User } from "../molang";
 import { diagnose_animation_implementation } from "./animation";
 import { diagnose_animation_controller_implementation } from "./animation-controllers/diagnostics";
+import { MolangDataSetKey } from "bc-minecraft-molang";
 
 /**
  * @param id
@@ -12,16 +15,15 @@ import { diagnose_animation_controller_implementation } from "./animation-contro
  */
 export function diagnose_animation_or_controller_implementation(
   id: string,
-  user: EntityAnimationMolangCarrier & EventCarrier,
-  ownerType: MolangDataSetKey,
-  diagnoser: DiagnosticsBuilder
+  user: User & Partial<AnimationCarrier<References>>,
+  diagnoser: WithMetadata<DiagnosticsBuilder, MolangMetadata>
 ): void {
   switch (is_animation_or_controller(id, diagnoser)) {
     case anim_or_contr.animation:
-      return diagnose_animation_implementation(id, user, ownerType, diagnoser);
+      return diagnose_animation_implementation(id, user, diagnoser);
 
     case anim_or_contr.controller:
-      return diagnose_animation_controller_implementation(id, user, ownerType, diagnoser);
+      return diagnose_animation_controller_implementation(id, user, diagnoser);
 
     case anim_or_contr.neither:
       diagnoser.add(

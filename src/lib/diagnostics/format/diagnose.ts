@@ -17,12 +17,8 @@ export function format_diagnose_path(pack: Pack, uri: string, diagnoser: Diagnos
 
   const relpath = uri.slice(index + length);
 
-  if (relpath.startsWith('volumes/')) diagnoser.add(
-    0,
-    `Volume files have been removed`,
-    DiagnosticSeverity.error,
-    "behaviorpack.volumes.deprecated"
-  );
+  if (relpath.startsWith("volumes/"))
+    diagnoser.add(0, `Volume files have been removed`, DiagnosticSeverity.error, "behaviorpack.volumes.deprecated");
 
   if (relpath.length > LengthFromRoot) {
     diagnoser.add(

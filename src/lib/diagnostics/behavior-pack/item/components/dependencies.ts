@@ -1,6 +1,6 @@
 import { Internal } from "bc-minecraft-bedrock-project";
-import { DiagnosticsBuilder } from '../../../../types';
-import { components_dependencies, Context, DependedMap } from '../../../../utility/components';
+import { DiagnosticsBuilder } from "../../../../types";
+import { components_dependencies, Context, DependedMap } from "../../../../utility/components";
 
 //Map of components that are depended on all other specified components
 const component_dependents_all: DependedMap = {
@@ -8,12 +8,11 @@ const component_dependents_all: DependedMap = {
   "minecraft:shooter": ["minecraft:projectile"],
   "minecraft:throwable": ["minecraft:projectile"],
   "minecraft:bundle_interaction": ["minecraft:storage_item"],
-  "minecraft:storage_item": ["minecraft:bundle_interaction"]
+  "minecraft:storage_item": ["minecraft:bundle_interaction"],
 };
 
 //Map of components that are depended on one of the other specified components
-const component_dependents_any: DependedMap = {
-};
+const component_dependents_any: DependedMap = {};
 
 /**
  * Checks if components dependencies are present, a component might need others to be present

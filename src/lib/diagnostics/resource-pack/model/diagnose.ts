@@ -1,5 +1,5 @@
-import { Errors } from '../..';
-import { DiagnosticsBuilder } from '../../../types';
+import { Errors } from "../..";
+import { DiagnosticsBuilder } from "../../../types";
 
 export function model_is_defined(modelId: string, diagnoser: DiagnosticsBuilder): boolean {
   //Project has model

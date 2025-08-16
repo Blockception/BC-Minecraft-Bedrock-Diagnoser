@@ -1,15 +1,15 @@
 import { Internal } from "bc-minecraft-bedrock-project";
-import { FormatVersion } from 'bc-minecraft-bedrock-types/lib/minecraft';
+import { FormatVersion } from "bc-minecraft-bedrock-types/lib/minecraft";
 import { ComponentBehavior } from "bc-minecraft-bedrock-types/lib/minecraft/components";
 import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../../types";
 import { Context } from "../../../../utility/components";
 import { component_error, ComponentCheck, components_check } from "../../../../utility/components/checks";
 import { minecraft_get_item } from "../../../minecraft/items";
-import { particle_is_defined } from '../../../resource-pack/particle';
+import { particle_is_defined } from "../../../resource-pack/particle";
 import { is_block_defined } from "../../block";
 import { behaviorpack_entityid_diagnose } from "../../entity";
 import { behaviorpack_item_diagnose } from "../diagnose";
-import { Vanilla } from 'bc-minecraft-bedrock-vanilla-data';
+import { Vanilla } from "bc-minecraft-bedrock-vanilla-data";
 
 /**
  *
@@ -52,29 +52,33 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Item>>
   "minecraft:entity_placer": (name, component, context, diagnoser) => {
     if (Array.isArray(component.dispense_on))
       component.dispense_on.forEach((block: string | { name: string }) => {
-        if (typeof block == 'object' && 'name' in block) is_block_defined(block.name, diagnoser)
-        else if (typeof block == 'string') is_block_defined(block, diagnoser);
+        if (typeof block == "object" && "name" in block) is_block_defined(block.name, diagnoser);
+        else if (typeof block == "string") is_block_defined(block, diagnoser);
       });
     if (Array.isArray(component.use_on))
       component.use_on.forEach((block: string | { name: string }) => {
-        if (typeof block == 'object' && 'name' in block) is_block_defined(block.name, diagnoser)
-        else if (typeof block == 'string') is_block_defined(block, diagnoser);
+        if (typeof block == "object" && "name" in block) is_block_defined(block.name, diagnoser);
+        else if (typeof block == "string") is_block_defined(block, diagnoser);
       });
     if (component.entity) behaviorpack_entityid_diagnose(component.entity, diagnoser);
   },
   "minecraft:block_placer": (name, component, context, diagnoser) => {
     if (Array.isArray(component.use_on))
       component.use_on.forEach((block: string | { name: string }) => {
-        if (typeof block == 'object' && 'name' in block) is_block_defined(block.name, diagnoser)
-        else if (typeof block == 'string') is_block_defined(block, diagnoser);
+        if (typeof block == "object" && "name" in block) is_block_defined(block.name, diagnoser);
+        else if (typeof block == "string") is_block_defined(block, diagnoser);
       });
-    if (component.replace_block_item && context.source['minecraft:item'].description.identifier != component.block) diagnoser.add(`minecraft:block_placer/block/${component.block}`,
-      `${component.block} and ${context.source['minecraft:item'].description.identifier} need to match when trying to replace the block item`,
-      DiagnosticSeverity.error,
-      'behaviorpack.item.components.replace_block_ids_dont_match')
+    if (component.replace_block_item && context.source["minecraft:item"].description.identifier != component.block)
+      diagnoser.add(
+        `minecraft:block_placer/block/${component.block}`,
+        `${component.block} and ${context.source["minecraft:item"].description.identifier} need to match when trying to replace the block item`,
+        DiagnosticSeverity.error,
+        "behaviorpack.item.components.replace_block_ids_dont_match"
+      );
     if (component.block) {
-      if (typeof component.block == 'object' && 'name' in component.block) is_block_defined((component.block as { name: string }).name, diagnoser)
-      else if (typeof component.block == 'string') is_block_defined(component.block, diagnoser);
+      if (typeof component.block == "object" && "name" in component.block)
+        is_block_defined((component.block as { name: string }).name, diagnoser);
+      else if (typeof component.block == "string") is_block_defined(component.block, diagnoser);
     }
   },
   "minecraft:projectile": (name, component, context, diagnoser) => {
@@ -85,58 +89,79 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Item>>
       component.repair_items.forEach((repairEntry: any) => {
         if (Array.isArray(repairEntry.items))
           repairEntry.items.forEach((item: string) => {
-            if (typeof item == 'string') behaviorpack_item_diagnose(minecraft_get_item(item, diagnoser.document), diagnoser);
+            if (typeof item == "string")
+              behaviorpack_item_diagnose(minecraft_get_item(item, diagnoser.document), diagnoser);
           });
       });
   },
   "minecraft:icon": (name, component, context, diagnoser) => {
     let textureId: string | undefined = undefined;
-    if (typeof component == 'string') textureId = component
-    else if (typeof component.texture == 'string') textureId = component.texture
+    if (typeof component == "string") textureId = component;
+    else if (typeof component.texture == "string") textureId = component.texture;
     if (textureId !== undefined) {
-      if (!diagnoser.context.getProjectData().projectData.resourcePacks.itemTextures.find(val => val.id == textureId) && !Vanilla.ResourcePack.TextureItems.includes(textureId))
-        diagnoser.add(textureId,
+      if (
+        !diagnoser.context.getProjectData().projectData.resourcePacks.itemTextures.find((val) => val.id == textureId) &&
+        !Vanilla.ResourcePack.TextureItems.includes(textureId)
+      )
+        diagnoser.add(
+          textureId,
           `Texture reference "${textureId}" was not defined in item_texture.json`,
           DiagnosticSeverity.error,
-          'behaviorpack.item.components.texture_not_found')
+          "behaviorpack.item.components.texture_not_found"
+        );
     } else {
-      Object.keys(component.textures)?.forEach(value => {
+      Object.keys(component.textures)?.forEach((value) => {
         const textureId = component.textures[value];
-        if (!diagnoser.context.getProjectData().projectData.resourcePacks.itemTextures.find(val => val.id == textureId) && !Vanilla.ResourcePack.TextureItems.includes(textureId))
-          diagnoser.add(textureId,
+        if (
+          !diagnoser.context
+            .getProjectData()
+            .projectData.resourcePacks.itemTextures.find((val) => val.id == textureId) &&
+          !Vanilla.ResourcePack.TextureItems.includes(textureId)
+        )
+          diagnoser.add(
+            textureId,
             `Texture reference "${textureId}" was not defined in item_texture.json`,
             DiagnosticSeverity.error,
-            'behaviorpack.item.components.texture_not_found')
-      })
+            "behaviorpack.item.components.texture_not_found"
+          );
+      });
     }
-
   },
   "minecraft:custom_components": (name, component, context, diagnoser) => {
     try {
-      if (FormatVersion.isLessThan(FormatVersion.parse(context.source.format_version), [1,21,10])) diagnoser.add(context.source.format_version,
-        `To use custom components, a minimum format version of 1.21.10 is required`,
-        DiagnosticSeverity.error,
-        'behaviorpack.item.components.custom_components_min_version')
-      
-      if (FormatVersion.isGreaterThan(FormatVersion.parse(context.source.format_version), [1,21,90])) diagnoser.add(context.source.format_version,
-        `'minecraft:custom_components' is deprecated in versions after 1.21.80`,
-        DiagnosticSeverity.warning,
-        'behaviorpack.item.components.custom_components_deprecation')
+      if (FormatVersion.isLessThan(FormatVersion.parse(context.source.format_version), [1, 21, 10]))
+        diagnoser.add(
+          context.source.format_version,
+          `To use custom components, a minimum format version of 1.21.10 is required`,
+          DiagnosticSeverity.error,
+          "behaviorpack.item.components.custom_components_min_version"
+        );
+
+      if (FormatVersion.isGreaterThan(FormatVersion.parse(context.source.format_version), [1, 21, 90]))
+        diagnoser.add(
+          context.source.format_version,
+          `'minecraft:custom_components' is deprecated in versions after 1.21.80`,
+          DiagnosticSeverity.warning,
+          "behaviorpack.item.components.custom_components_deprecation"
+        );
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       // Leaving empty as the base diagnoser should flag an invalid format version
     }
   },
   "minecraft:durability_sensor": (name, component, context, diagnoser) => {
-    if (!component.particle_type || !(typeof component.particle_type == 'string')) return;
-    particle_is_defined(component.particle_type, diagnoser)
+    if (!component.particle_type || !(typeof component.particle_type == "string")) return;
+    particle_is_defined(component.particle_type, diagnoser);
   },
   "minecraft:rarity": (name, component, context, diagnoser) => {
     try {
-      if (FormatVersion.isLessThan(FormatVersion.parse(context.source.format_version), [1,21,30])) diagnoser.add(context.source.format_version,
-        `To use "minecraft:rarity", a minimum format version of 1.21.30 is required`,
-        DiagnosticSeverity.warning,
-        'behaviorpack.item.components.rarity')
+      if (FormatVersion.isLessThan(FormatVersion.parse(context.source.format_version), [1, 21, 30]))
+        diagnoser.add(
+          context.source.format_version,
+          `To use "minecraft:rarity", a minimum format version of 1.21.30 is required`,
+          DiagnosticSeverity.warning,
+          "behaviorpack.item.components.rarity"
+        );
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       // Leaving empty as the base diagnoser should flag an invalid format version

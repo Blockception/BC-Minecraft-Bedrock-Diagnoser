@@ -2,7 +2,7 @@ import { BehaviorPack, DataSetConnector, ResourcePack } from "bc-minecraft-bedro
 import { Script } from "bc-minecraft-bedrock-project/lib/src/internal/types";
 import { Types } from "bc-minecraft-bedrock-types";
 import { Vanilla } from "bc-minecraft-bedrock-vanilla-data";
-import { DiagnosticsBuilder, DiagnosticSeverity } from '../../types';
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../types";
 
 // Vanilla animations and controllers that aren't played via the typical means; the controllers aren't under scripts.animate and the animations aren't in controllers. Vanilla player stuff so no point in flagging it
 const whitelist = [
@@ -12,7 +12,7 @@ const whitelist = [
   "controller.animation.persona.blink",
   "animation.humanoid.fishing_rod",
   "animation.player.first_person.attack_rotation_item",
-  "animation.player.first_person.crossbow_hold"
+  "animation.player.first_person.crossbow_hold",
 ];
 
 export interface AnimationUsage {
@@ -33,12 +33,14 @@ export function minecraft_animation_used(
   const refsUsed: Record<string, boolean> = {};
   const { animation_controllers, animations, script } = data;
 
-  const controllersUsed = Object.values(animation_controllers).concat(Object.values(animations)).filter(id => id.startsWith('controller.'))
+  const controllersUsed = Object.values(animation_controllers)
+    .concat(Object.values(animations))
+    .filter((id) => id.startsWith("controller."));
 
   // Check against vanilla controllers
   Vanilla.ResourcePack.AnimationControllers.forEach((controller) => {
     if (!controllersUsed.includes(controller.id)) return;
-    controller.animations.forEach((anim) => (refsUsed[anim] = true))
+    controller.animations.forEach((anim) => (refsUsed[anim] = true));
   });
 
   // Animations field is to be used by script and animations controllers

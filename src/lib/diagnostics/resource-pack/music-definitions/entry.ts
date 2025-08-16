@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { DocumentDiagnosticsBuilder} from "../../../types";
+import { DocumentDiagnosticsBuilder } from "../../../types";
 
 /**Diagnoses the given document as a `music_definitions` file
  * @param doc The text document to diagnose

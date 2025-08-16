@@ -1,4 +1,4 @@
-import { Defined, Using } from "bc-minecraft-molang";
+import { References } from "bc-minecraft-bedrock-project";
 
 /**
  * Iterates over the given data
@@ -7,16 +7,16 @@ import { Defined, Using } from "bc-minecraft-molang";
  * @returns void
  * @example forEach(Using.create(["a", "b", "c"]), (v)=>console.log(v));
  */
-export function forEach<T>(data: Using<T> | Defined<T> | T[] | undefined, callback: (key: T) => void): void {
+export function forEach(data: Partial<References> | string[] | undefined, callback: (key: string) => void): void {
   if (data === undefined) return;
 
   if (Array.isArray(data)) {
     return data.forEach((v) => callback(v));
   }
-  if (Using.is(data)) {
+  if (Array.isArray(data.using)) {
     data.using.forEach((v) => callback(v));
   }
-  if (Defined.is(data)) {
+  if (Array.isArray(data.defined)) {
     data.defined.forEach((v) => callback(v));
   }
 }

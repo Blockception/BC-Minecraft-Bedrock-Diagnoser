@@ -1,9 +1,8 @@
-import { SMap } from "bc-minecraft-bedrock-project";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
-import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from '../../../types';
+import path from "path";
+import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
 import { education_enabled } from "../../definitions";
 import { Json } from "../../json/json";
-import path from 'path';
 
 /**Diagnoses the given document as a texture atlas
  * @param doc The text document to diagnose
@@ -36,17 +35,14 @@ export function diagnose_atlas_document(diagnoser: DocumentDiagnosticsBuilder): 
     }
   };
 
-  const check_file_string: (texture_id: string, item: string) => void = (texture_id, item) => {
-    texture_files_diagnose(texture_id, item, texture_files, diagnoser);
-  };
-
-  SMap.forEach(texture_data, (data, texture_id) => {
+  Object.entries(texture_data).forEach(([texture_id, data]) => {
+    const textures = data.textures;
     //If texture
-    if (typeof data.textures === "string") {
-      check_file_string(texture_id, data.textures);
+    if (typeof textures === "string") {
+      texture_files_diagnose(texture_id, textures, texture_files, diagnoser);
       //If array of items
-    } else if (Array.isArray(data.textures)) {
-      data.textures.forEach((texture) => {
+    } else if (Array.isArray(textures)) {
+      textures.forEach((texture) => {
         if (typeof texture === "string") {
           texture_files_diagnose(texture_id, texture, texture_files, diagnoser);
         } else {
@@ -65,8 +61,10 @@ export function texture_files_diagnose(
   files: string[],
   diagnoser: DiagnosticsBuilder
 ): void {
-  files = files.map(location => location.includes('.') ? location.slice(0,-path.extname(location).length) : location)
-  if (file.includes('.')) file = file.slice(0,-path.extname(file).length)
+  files = files.map((location) =>
+    location.includes(".") ? location.slice(0, -path.extname(location).length) : location
+  );
+  if (file.includes(".")) file = file.slice(0, -path.extname(file).length);
   for (let I = 0; I < files.length; I++) {
     if (files[I].endsWith(file)) {
       //Found then return
@@ -87,7 +85,7 @@ export function texture_files_diagnose(
 interface TextureAtlas {
   resource_pack_name?: string;
   texture_name?: string;
-  texture_data: SMap<TextureSpec>;
+  texture_data: Map<string, TextureSpec>;
 }
 
 namespace TextureAtlas {
