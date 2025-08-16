@@ -84,8 +84,8 @@ export function diagnose_entity_document(diag: DocumentDiagnosticsBuilder): void
   //Check animation controllers
   description.animation_controllers
     ?.map((controller) => flatten(controller))
-    .filter((temp) => temp !== undefined)
-    .forEach((temp) => diagnose_animation_controller_implementation(temp, entityGathered, diagnoser, {}));
+    .filter((id) => id !== undefined)
+    .forEach((id) => diagnose_animation_controller_implementation(id, entityGathered, diagnoser, {}));
 
   //Check render controllers
   description.render_controllers

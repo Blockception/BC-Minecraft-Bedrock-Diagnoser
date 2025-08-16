@@ -12,8 +12,8 @@ import { filter_not_defined } from "../../resources/using";
  * @param diagnoser
  */
 export function diagnose_animation_controller_implementation(
-  user: User & Partial<AnimationCarrier<References>>,
   id: string,
+  user: User & Partial<AnimationCarrier<References>>,
   diagnoser: WithMetadata<DiagnosticsBuilder, MolangMetadata>
 ): void {
   //Project has animation controller

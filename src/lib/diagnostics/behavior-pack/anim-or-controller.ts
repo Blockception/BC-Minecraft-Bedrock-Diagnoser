@@ -23,7 +23,7 @@ export function diagnose_animation_or_controller_implementation(
       return diagnose_animation_implementation(id, user, diagnoser);
 
     case anim_or_contr.controller:
-      return diagnose_animation_controller_implementation(user, id, diagnoser);
+      return diagnose_animation_controller_implementation(id, user, diagnoser);
 
     case anim_or_contr.neither:
       diagnoser.add(
