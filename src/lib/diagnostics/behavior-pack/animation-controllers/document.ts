@@ -13,8 +13,8 @@ import { json_commandsCheck } from "../mcfunction/commands";
 export function diagnose_animation_controller_document(diagnoser: DocumentDiagnosticsBuilder): void {
   const controllers = Json.LoadReport<Internal.BehaviorPack.AnimationControllers>(diagnoser);
   if (!Internal.BehaviorPack.AnimationControllers.is(controllers)) return;
-  diagnose_molang_syntax_current_document(diagnoser, controllers);
 
+  diagnose_molang_syntax_current_document(diagnoser, controllers);
   //Transition check
   general_animation_controllers(controllers, diagnoser);
 
