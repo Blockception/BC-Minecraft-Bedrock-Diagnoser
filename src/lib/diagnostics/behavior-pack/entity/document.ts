@@ -53,7 +53,7 @@ export function diagnose_entity_document(diag: DocumentDiagnosticsBuilder): void
     molang: molangData,
     animations: References.create(),
   };
-  const properties = Object.entries(container.description.properties ?? {})?.map(([name, value]) =>
+  const properties = Object.entries(container.description.properties ?? {}).map(([name, value]) =>
     propertyToProjectProperty(name, value)
   );
 

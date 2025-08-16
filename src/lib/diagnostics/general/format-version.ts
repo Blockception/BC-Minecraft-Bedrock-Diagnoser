@@ -1,9 +1,9 @@
-import { FormatVersion } from "bc-minecraft-bedrock-types/lib/minecraft";
+import { FormatVersion, Version } from "bc-minecraft-bedrock-types/lib/minecraft";
 import { Versions } from "bc-minecraft-bedrock-vanilla-data/lib/src/Lib";
 import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../types";
 
 interface FormatVersionContainer {
-  format_version: FormatVersion;
+  format_version: FormatVersion | string;
 }
 
 namespace FormatVersionContainer {
@@ -18,7 +18,7 @@ namespace FormatVersionContainer {
 
 const latestVersion = FormatVersion.parse(Versions.latest);
 
-export function diagnoseFormatVersionIf(
+export function diagnose_format_version(
   data: Partial<FormatVersionContainer>,
   diagnoser: DocumentDiagnosticsBuilder
 ): void {
@@ -41,6 +41,7 @@ export function diagnoseFormatVersion(data: FormatVersionContainer, diagnoser: D
   try {
     v = FormatVersion.parse(data.format_version);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   } catch (err) {
     return diagnoser.add(
       "Format version is not a valid number",
@@ -62,4 +63,9 @@ export function diagnoseFormatVersion(data: FormatVersionContainer, diagnoser: D
       );
     }
   }
+}
+
+
+export function has_minimum_version(version: FormatVersion | Version, minimum: FormatVersion | Version): boolean {
+  return FormatVersion.isGreaterOrEqualThan(version, minimum)
 }

@@ -25,37 +25,41 @@ export function behaviorpack_diagnose_block_components(
 }
 
 const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>> = {
-  "minecraft:destroy_time": deprecated_component("minecraft:destructible_by_mining"),
-  "minecraft:block_light_emission": deprecated_component("minecraft:light_emission"),
-  "minecraft:block_light_absorption": deprecated_component("minecraft:light_dampening"),
-  "minecraft:block_light_filter": deprecated_component("minecraft:light_dampening"),
-  "minecraft:explosion_resistance": deprecated_component("minecraft:destructible_by_explosion"),
-  "minecraft:entity_collision": deprecated_component("minecraft:collision_box"),
-  "minecraft:block_collision": deprecated_component("minecraft:selection_box"),
-  "minecraft:pick_collision": deprecated_component("minecraft:selection_box"),
+  // deprecated
   "minecraft:aim_collision": deprecated_component("minecraft:selection_box"),
-  "minecraft:rotation": deprecated_component("minecraft:transformation"),
+  "minecraft:block_collision": deprecated_component("minecraft:selection_box"),
+  "minecraft:block_light_absorption": deprecated_component("minecraft:light_dampening"),
+  "minecraft:block_light_emission": deprecated_component("minecraft:light_emission"),
+  "minecraft:block_light_filter": deprecated_component("minecraft:light_dampening"),
+  "minecraft:breakonpush": deprecated_component(),
   "minecraft:breathability": deprecated_component(),
-  "minecraft:partial_visibility": deprecated_component("minecraft:geometry.bone_visibility"),
   "minecraft:creative_category": deprecated_component("description.menu_category"),
+  "minecraft:destroy_time": deprecated_component("minecraft:destructible_by_mining"),
+  "minecraft:entity_collision": deprecated_component("minecraft:collision_box"),
+  "minecraft:explosion_resistance": deprecated_component("minecraft:destructible_by_explosion"),
+  "minecraft:immovable": deprecated_component(),
+  "minecraft:on_fall_on": deprecated_component("minecraft:custom_components"),
+  "minecraft:on_interact": deprecated_component("minecraft:custom_components"),
+  "minecraft:on_placed": deprecated_component("minecraft:custom_components"),
+  "minecraft:on_player_destroyed": deprecated_component("minecraft:custom_components"),
+  "minecraft:on_player_placing": deprecated_component("minecraft:custom_components"),
+  "minecraft:on_step_off": deprecated_component("minecraft:custom_components"),
+  "minecraft:on_step_on": deprecated_component("minecraft:custom_components"),
+  "minecraft:onlypistonpush": deprecated_component(),
+  "minecraft:partial_visibility": deprecated_component("minecraft:geometry.bone_visibility"),
+  "minecraft:pick_collision": deprecated_component("minecraft:selection_box"),
+  "minecraft:preventsjumping": deprecated_component(),
   "minecraft:queued_ticking": deprecated_component("minecraft:custom_components"),
   "minecraft:random_ticking": deprecated_component("minecraft:custom_components"),
-  "minecraft:on_step_on": deprecated_component("minecraft:custom_components"),
-  "minecraft:on_step_off": deprecated_component("minecraft:custom_components"),
-  "minecraft:on_player_destroyed": deprecated_component("minecraft:custom_components"),
-  "minecraft:on_fall_on": deprecated_component("minecraft:custom_components"),
-  "minecraft:on_placed": deprecated_component("minecraft:custom_components"),
-  "minecraft:on_player_placing": deprecated_component("minecraft:custom_components"),
-  "minecraft:on_interact": deprecated_component("minecraft:custom_components"),
+  "minecraft:rotation": deprecated_component("minecraft:transformation"),
   "minecraft:unit_cube": deprecated_component("geometry.minecraft:full_block"),
-  "minecraft:breakonpush": deprecated_component(),
-  "minecraft:immovable": deprecated_component(),
-  "minecraft:onlypistonpush": deprecated_component(),
-  "minecraft:preventsjumping": deprecated_component(),
   "minecraft:unwalkable": deprecated_component(),
+
+  // General
   "minecraft:destructible_by_mining": (name, component, context, diagnoser) => {
     const destroyTime = component.seconds_to_destroy;
     if (!destroyTime) return;
+
     component.item_specific_speeds?.forEach((specific_speed: any) => {
       if (specific_speed.destroy_speed && specific_speed.destroy_speed > destroyTime) {
         diagnoser.add(
@@ -64,24 +68,21 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
           DiagnosticSeverity.error,
           "behaviorpack.block.components.fast_break_speed"
         );
-        return false;
       }
     });
   },
   "minecraft:placement_filter": (name, component, context, diagnoser) => {
     for (const condition of component.conditions) {
-      condition.block_filter?.forEach((block: string | { name: string }) => {
-        if (typeof block == "object" && "name" in block) is_block_defined(block.name, diagnoser);
-        else if (typeof block == "string") is_block_defined(block, diagnoser);
-      });
+      condition.block_filter
+        ?.map((block: string | { name: string }) => (typeof block === "string" ? block : block.name))
+        .forEach((block: string) => is_block_defined(block, diagnoser));
     }
   },
   "minecraft:geometry": (name, component, context, diagnoser) => {
     try {
-      const formatVersion = FormatVersion.parse(context.source.format_version);
       if (
         !context.components.includes("minecraft:material_instances") &&
-        (FormatVersion.isGreaterThan(formatVersion, [1, 21, 80]) || FormatVersion.isEqual(formatVersion, [1, 21, 80]))
+        FormatVersion.isGreaterOrEqualThan(context.source.format_version as FormatVersion, [1, 21, 80])
       )
         diagnoser.add(
           name,
@@ -108,10 +109,9 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
   },
   "minecraft:material_instances": (name, component, context, diagnoser) => {
     try {
-      const formatVersion = FormatVersion.parse(context.source.format_version);
       if (
         !context.components.includes("minecraft:geometry") &&
-        (FormatVersion.isGreaterThan(formatVersion, [1, 21, 80]) || FormatVersion.isEqual(formatVersion, [1, 21, 80]))
+        FormatVersion.isGreaterOrEqualThan(context.source.format_version as FormatVersion, [1, 21, 80])
       )
         diagnoser.add(
           name,
@@ -124,25 +124,27 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
       // Leaving empty as the base diagnoser should flag an invalid format version
     }
 
-    Object.keys(component).forEach((value) => {
-      const textureId = component[value].texture;
-      if (
-        !diagnoser.context
-          .getProjectData()
-          .projectData.resourcePacks.terrainTextures.find((val) => val.id == textureId) &&
-        !Vanilla.ResourcePack.TextureTerrain.includes(textureId)
-      )
-        diagnoser.add(
-          textureId,
-          `Texture reference "${textureId}" was not defined in terrain_texture.json`,
-          DiagnosticSeverity.error,
-          "behaviorpack.block.components.texture_not_found"
-        );
-    });
+    Object.keys(component)
+      .map((value) => component[value].texture)
+      .forEach((textureId) => {
+        if (
+          !diagnoser.context
+            .getProjectData()
+            .projectData.resourcePacks.terrainTextures.find((val) => val.id == textureId) &&
+          !Vanilla.ResourcePack.TextureTerrain.includes(textureId)
+        ) {
+          diagnoser.add(
+            textureId,
+            `Texture reference "${textureId}" was not defined in terrain_texture.json`,
+            DiagnosticSeverity.error,
+            "behaviorpack.block.components.texture_not_found"
+          );
+        }
+      });
   },
   "minecraft:custom_components": (name, component, context, diagnoser) => {
     try {
-      if (FormatVersion.isGreaterThan(FormatVersion.parse(context.source.format_version), [1, 21, 90]))
+      if (FormatVersion.isGreaterThan(context.source.format_version as FormatVersion, [1, 21, 90]))
         diagnoser.add(
           context.source.format_version,
           `'minecraft:custom_components' is deprecated in versions after 1.21.80`,
@@ -155,30 +157,30 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
     }
   },
   "minecraft:item_visual": (name, component, context, diagnoser) => {
-    minimumVersionRequired(context.source, name, [1, 21, 50], diagnoser);
+    minimum_version_required(context.source, name, [1, 21, 50], diagnoser);
   },
   "minecraft:liquid_detection": (name, component, context, diagnoser) => {
-    minimumVersionRequired(context.source, name, [1, 21, 50], diagnoser);
+    minimum_version_required(context.source, name, [1, 21, 50], diagnoser);
   },
   "minecraft:redstone_conductivity": (name, component, context, diagnoser) => {
-    minimumVersionRequired(context.source, name, [1, 21, 30], diagnoser);
+    minimum_version_required(context.source, name, [1, 21, 30], diagnoser);
   },
   "minecraft:replaceable": (name, component, context, diagnoser) => {
-    minimumVersionRequired(context.source, name, [1, 21, 60], diagnoser);
+    minimum_version_required(context.source, name, [1, 21, 60], diagnoser);
   },
   "minecraft:movable": (name, component, context, diagnoser) => {
-    minimumVersionRequired(context.source, name, [1, 21, 100], diagnoser);
+    minimum_version_required(context.source, name, [1, 21, 100], diagnoser);
   },
 };
 
-function minimumVersionRequired(
+function minimum_version_required(
   block: Internal.BehaviorPack.Block,
   name: string,
   version: [number, number, number],
   diagnoser: DocumentDiagnosticsBuilder
 ) {
   try {
-    if (FormatVersion.isLessThan(FormatVersion.parse(block.format_version), version)) {
+    if (FormatVersion.isLessThan(block.format_version as FormatVersion, version)) {
       diagnoser.add(
         name,
         `${name} requires a format version of ${version.join(".")} or greater to use.`,

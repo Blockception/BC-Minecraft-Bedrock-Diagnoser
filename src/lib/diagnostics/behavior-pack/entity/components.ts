@@ -15,12 +15,9 @@ export function behaviorpack_entity_components_check(
 
   if (desc.component_groups === undefined) return;
 
-  const groups = Object.getOwnPropertyNames(desc.component_groups);
-
-  for (let I = 0; I < groups.length; I++) {
-    const group = groups[I];
-    behaviorpack_entity_componentscontainer_check(desc.component_groups[group], context, diagnoser);
-  }
+  Object.entries(desc.component_groups).forEach(([, group]) =>
+    behaviorpack_entity_componentscontainer_check(group, context, diagnoser)
+  );
 }
 
 function behaviorpack_entity_componentscontainer_check(

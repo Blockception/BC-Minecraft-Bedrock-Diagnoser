@@ -11,5 +11,6 @@ export function check_loot_table<T>(
   if (component === undefined) return;
   if (typeof component.table !== "string") return;
   const table = component.table;
+
   behaviorpack_loot_table_diagnose(table, diagnoser);
 }

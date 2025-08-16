@@ -23,16 +23,12 @@ export function behaviorpack_entity_components_filters(
 
   // Component groups
   if (container.component_groups) {
-    Object.values(container.component_groups).forEach((group) => {
-      traverse_object(group, diagnoser);
-    });
+    Object.values(container.component_groups).forEach((group) => traverse_object(group, diagnoser));
   }
 
   // Events
   if (container.events) {
-    Object.values(container.events).forEach((event) => {
-      traverse_object(event, diagnoser);
-    });
+    Object.values(container.events).forEach((event) => traverse_object(event, diagnoser));
   }
 
   if (container.filters) {
@@ -41,9 +37,7 @@ export function behaviorpack_entity_components_filters(
 }
 
 function traverse_object(data: ComponentContainer, diagnoser: DiagnosticsBuilder) {
-  const properties = Object.getOwnPropertyNames(data);
-
-  properties.forEach((property_key) => {
+  Object.keys(data).forEach((property_key) => {
     const property = data[property_key];
     if (typeof property === "object") {
       if (property_key.includes("filter")) {
