@@ -6,7 +6,7 @@ import { DefinedUsing, Molang } from "bc-minecraft-molang";
  * The type that is used to store the animation data & molang data
  */
 export type EntityAnimationMolangCarrier = Types.Identifiable &
-  MolangCarrier<Molang.MolangSetOptional> &
+  MolangCarrier<Molang.MolangSet> &
   AnimationCarrier<DefinedUsing<string>>;
 
 export interface EventCarrier {

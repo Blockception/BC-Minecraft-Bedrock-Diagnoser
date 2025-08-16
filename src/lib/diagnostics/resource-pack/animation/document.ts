@@ -4,16 +4,15 @@ import { diagnose_molang } from "../../molang/diagnostics";
 import { Json } from "../../json/json";
 import { BoneAnimation } from "bc-minecraft-bedrock-project/lib/src/internal/resource-pack";
 import { BoneUsage, model_bones_must_exist } from "../model";
+import { diagnose_molang_syntax_current_document } from '../../molang';
 
 /**Diagnoses the given document as an animation
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
 export function diagnose_animation_document(diagnoser: DocumentDiagnosticsBuilder): void {
-  //Check molang
-  diagnose_molang(diagnoser.document.getText(), "Animations", diagnoser);
-
   const anims = Json.LoadReport<Internal.ResourcePack.Animations>(diagnoser);
   if (!Internal.ResourcePack.Animations.is(anims)) return;
+  diagnose_molang_syntax_current_document(diagnoser, anims);
 
   Object.keys(anims.animations).forEach(anim_id => {
     if (!anim_id.startsWith('animation.')) diagnoser.add(
@@ -22,7 +21,7 @@ export function diagnose_animation_document(diagnoser: DocumentDiagnosticsBuilde
       DiagnosticSeverity.error,
       "resourcepack.animation.name"
     );
-  })
+  });
 
   const bones: BoneUsage[] = [];
 

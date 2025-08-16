@@ -1,43 +1,41 @@
 import { Internal, ResourcePack } from "bc-minecraft-bedrock-project";
 import { Types } from "bc-minecraft-bedrock-types";
 import { Molang } from "bc-minecraft-molang";
-import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
+import { DocumentDiagnosticsBuilder } from "../../../types";
+import { behaviorpack_item_diagnose } from "../../behavior-pack/item";
 import { Json } from "../../json/json";
 import { AnimationUsage } from "../../minecraft";
 import { diagnose_script } from "../../minecraft/script";
 import { diagnose_molang } from "../../molang/diagnostics";
 import { animation_or_controller_diagnose_implementation } from "../anim-or-controller";
-import { diagnose_animation_controller_implementation } from "../animation-controllers/diagnostics";
 import { resourcepack_animation_used } from "../animation/usage";
 import { model_is_defined } from "../model/diagnose";
 import { particle_is_defined } from "../particle/diagnose";
 import { render_controller_diagnose_implementation } from "../render-controller/diagnostics";
 import { diagnose_resourcepack_sounds } from "../sounds/diagnostics";
 import { texture_files_diagnose } from "../texture-atlas/entry";
-import { behaviorpack_entityid_diagnose } from "../../behavior-pack/entity";
+import { diagnose_molang_syntax_current_document } from '../../molang';
 
-/**Diagnoses the given document as an RP entity
+/**
+ * Diagnoses the given document as an attachable
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
-export function diagnose_entity_document(diagnoser: DocumentDiagnosticsBuilder): void {
-  //No behaviorpack check, entities can exist without their bp side (for servers)
+export function diagnose_attachable_document(diagnoser: DocumentDiagnosticsBuilder): void {
+  const attachable = Json.LoadReport<Internal.ResourcePack.Attachable>(diagnoser);
+  if (!Internal.ResourcePack.Attachable.is(attachable)) return;
+  diagnose_molang_syntax_current_document(diagnoser, attachable);
 
-  //Check molang math functions
-  diagnose_molang(diagnoser.document.getText(), "Entities", diagnoser);
+  const description = attachable["minecraft:attachable"].description;
+  const attachableGathered = ResourcePack.Attachable.Process(diagnoser.document);
 
-  //Load entity
-  const entity = Json.LoadReport<Internal.ResourcePack.Entity>(diagnoser);
-  if (!Internal.ResourcePack.Entity.is(entity)) return;
+  behaviorpack_item_diagnose(description.identifier, diagnoser);
 
-  const description = entity["minecraft:client_entity"].description;
-  const entityGathered = ResourcePack.Entity.Process(diagnoser.document);
+  if (!attachableGathered) return;
+  if (!attachableGathered.molang)
+    attachableGathered.molang = Molang.MolangSet.harvest(diagnoser.document.getText());
 
-  behaviorpack_entityid_diagnose(description.identifier, diagnoser);
-
-  if (!entityGathered) return;
-  if (!entityGathered.molang) entityGathered.molang = Molang.MolangFullSet.harvest(diagnoser.document.getText());
-
-  // Collect all animations and animation controllers
+  //#region animations
+  //Check animations / animation controllers
   const anim_data: AnimationUsage = {
     animation_controllers: {},
     animations: description.animations ?? {},
@@ -52,13 +50,11 @@ export function diagnose_entity_document(diagnoser: DocumentDiagnosticsBuilder):
     Types.Definition.forEach(controller, (ref, anim_id) => (anim_data.animation_controllers[ref] = anim_id));
   });
 
-  //#region animations
-  //Check animations / animation controllers
-  Types.Definition.forEach(anim_data.animations, (ref, anim_id) =>
+  Types.Definition.forEach(anim_data.animations, (reference, anim_id) =>
     animation_or_controller_diagnose_implementation(
       anim_id,
-      entityGathered,
-      "Entities",
+      attachableGathered,
+      "Attachables",
       diagnoser,
       description.particle_effects,
       description.sound_effects
@@ -67,28 +63,21 @@ export function diagnose_entity_document(diagnoser: DocumentDiagnosticsBuilder):
   Types.Definition.forEach(anim_data.animation_controllers, (ref, anim_id) =>
     animation_or_controller_diagnose_implementation(
       anim_id,
-      entityGathered,
-      "Entities",
+      attachableGathered,
+      "Attachables",
       diagnoser,
       description.particle_effects,
       description.sound_effects
     )
   );
-
   //Check used animations
   resourcepack_animation_used(anim_data, diagnoser);
   //#endregion
 
-  //Check animation controllers
-  description.animation_controllers?.forEach((controller) => {
-    const temp = flatten(controller);
-    if (temp) diagnose_animation_controller_implementation(temp, entityGathered, "Entities", diagnoser, {});
-  });
-
   //Check render controllers
   description.render_controllers?.forEach((controller) => {
     const temp = getKey(controller);
-    if (temp) render_controller_diagnose_implementation(temp, entityGathered, "Entities", diagnoser);
+    if (temp) render_controller_diagnose_implementation(temp, attachableGathered, "Attachables", diagnoser);
   });
 
   //Check models
@@ -99,21 +88,6 @@ export function diagnose_entity_document(diagnoser: DocumentDiagnosticsBuilder):
     particle_is_defined(part_id, diagnoser)
   );
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //@ts-ignore
-  const textureId = description["spawn_egg"]?.["texture"];
-
-  if (
-    typeof textureId == "string" &&
-    !diagnoser.context.getProjectData().projectData.resourcePacks.itemTextures.find((val) => val.id == textureId)
-  )
-    diagnoser.add(
-      `description/spawn_egg/${textureId}`,
-      `Texture reference "${textureId}" was not defined in item_texture.json`,
-      DiagnosticSeverity.error,
-      "behaviorpack.item.components.texture_not_found"
-    );
-
   //Get pack
   const pack = diagnoser.context.getProjectData().projectData.resourcePacks.get(diagnoser.document.uri);
   if (pack === undefined) return;
@@ -122,26 +96,16 @@ export function diagnose_entity_document(diagnoser: DocumentDiagnosticsBuilder):
     .getFiles(pack.folder, ["**/textures/**/*.{tga,png,jpg,jpeg}"], pack.context.ignores)
     .map((item) => item.replace(/\\/gi, "/"));
 
-  //Check if entity has textures defined
+  //Check if attachable has textures defined
   Types.Definition.forEach(description.textures, (ref, id) => {
     texture_files_diagnose(description.identifier, id, rp_files, diagnoser);
   });
 
-  //Check if entity has sounds defined
+  //Check if attachable has sounds defined
   diagnose_resourcepack_sounds(description.sound_effects, diagnoser);
 
   //Script check
   if (description.scripts) diagnose_script(diagnoser, description.scripts, description.animations);
-}
-
-function flatten(data: string | Types.Definition): string | undefined {
-  if (typeof data === "string") return data;
-
-  const key = Object.getOwnPropertyNames(data)[0];
-
-  if (key) return data[key];
-
-  return undefined;
 }
 
 function getKey(data: string | Types.Definition): string | undefined {

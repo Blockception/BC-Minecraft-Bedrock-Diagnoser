@@ -7,16 +7,8 @@ describe("Molang", () => {
     it("no errors", () => {
       const diagnoser = TestDiagnoser.create();
 
-      const using = Molang.MolangFullSet.create();
-      const owner = Molang.MolangFullSet.create();
-
-      using.queries.using.push("is_jumping");
-      using.temps.using.push("foo");
-      using.variables.using.push("spleef", "state");
-      using.variables.defined.push("state");
-
-      owner.temps.defined.push("foo");
-      owner.variables.defined.push("spleef");
+      const using = new Molang.MolangSet();
+      const owner = new Molang.MolangSet();
 
       diagnose_molang_implementation(
         { id: "animation.example.walk", molang: using },
@@ -31,15 +23,8 @@ describe("Molang", () => {
     it("1 error", () => {
       const diagnoser = TestDiagnoser.create();
 
-      const using = Molang.MolangFullSet.create();
-      const owner = Molang.MolangFullSet.create();
-
-      using.queries.using.push("is_jumping");
-      using.temps.using.push("foo");
-      using.variables.using.push("spleef", "state");
-      using.variables.defined.push("state");
-
-      owner.variables.defined.push("spleef");
+      const using = new Molang.MolangSet();
+      const owner = new Molang.MolangSet();
 
       diagnose_molang_implementation(
         { id: "animation.example.walk", molang: using },
@@ -54,15 +39,8 @@ describe("Molang", () => {
     it("1 error", () => {
       const diagnoser = TestDiagnoser.create();
 
-      const using = Molang.MolangFullSet.create();
-      const owner = Molang.MolangFullSet.create();
-
-      using.queries.using.push("is_jumping");
-      using.temps.using.push("foo");
-      using.variables.using.push("spleef", "state");
-      using.variables.defined.push("state");
-
-      owner.temps.defined.push("foo");
+      const using = new Molang.MolangSet();
+      const owner = new Molang.MolangSet();
 
       diagnose_molang_implementation(
         { id: "animation.example.walk", molang: using },

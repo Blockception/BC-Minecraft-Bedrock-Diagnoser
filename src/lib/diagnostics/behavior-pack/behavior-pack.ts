@@ -1,23 +1,23 @@
 import { FileType } from "bc-minecraft-bedrock-project/lib/src/project/behavior-pack";
 import { DocumentDiagnosticsBuilder } from "../../types/diagnostics-builder";
 
-import * as AnimationController from "./animation-controllers/entry";
-import * as Animation from "./animation/entry";
-import * as Block from "./block/entry";
-import * as Entity from "./entity/entry";
-import * as FeatureRule from "./feature-rule/entry";
-import * as Feature from "./feature/entry";
-import * as Tick from "./functions/tick/entry";
-import * as Item from "./item/entry";
-import * as ItemCatalog from "./item-catalog/entry";
-import * as LootTable from "./loot-table/entry";
-import * as Manifest from "./manifest/entry";
-import * as Mcfunction from "./mcfunction/entry";
-import * as Recipe from "./recipe/entry";
-import * as Script from "./script/entry";
-import * as SpawnRule from "./spawn-rule/entry";
-import * as Structure from "./structure/entry";
-import * as Trading from "./trading/entry";
+import * as AnimationController from "./animation-controllers/document";
+import * as Animation from "./animation/document";
+import * as Block from "./block/document";
+import * as Entity from "./entity/document";
+import * as FeatureRule from "./feature-rule/document";
+import * as Feature from "./feature/document";
+import * as Tick from "./functions/tick/document";
+import * as Item from "./item/document";
+import * as ItemCatalog from "./item-catalog/document";
+import * as LootTable from "./loot-table/document";
+import * as Manifest from "./manifest/document";
+import * as Mcfunction from "./mcfunction/document";
+import * as Recipe from "./recipe/document";
+import * as Script from "./script/document";
+import * as SpawnRule from "./spawn-rule/document";
+import * as Structure from "./structure/document";
+import * as Trading from "./trading/document";
 
 export namespace BehaviorPack {
   /**

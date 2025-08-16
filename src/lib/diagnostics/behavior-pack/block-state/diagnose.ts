@@ -1,10 +1,7 @@
-import { BehaviorPack, DefinitionItem, ProjectItem } from "bc-minecraft-bedrock-project";
+import { BehaviorPack, ProjectItem } from "bc-minecraft-bedrock-project";
 import { Minecraft, Types } from "bc-minecraft-bedrock-types";
 import { DocumentLocation, Location } from "bc-minecraft-bedrock-types/lib/types";
-import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
-import { MolangSet } from "bc-minecraft-molang/lib/src/Molang";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../types";
-import { education_enabled } from "../../definitions";
 
 /** Checks if the blocks exists in the project or in vanilla, if not then a bug is reported
  * @param id
@@ -186,32 +183,4 @@ function check_state(
     DiagnosticSeverity.error,
     "behaviorpack.block.states.missing"
   );
-}
-
-function vanilla_block(diagnoser: DiagnosticsBuilder, blockId: string): BehaviorPack.Block.Block | undefined {
-  if (!blockId.startsWith("minecraft:")) {
-    blockId = `minecraft:${blockId}`;
-  }
-
-  const edu = education_enabled(diagnoser);
-  const block = MinecraftData.BehaviorPack.getBlock(blockId, edu);
-
-  if (block) {
-    const result: BehaviorPack.Block.Block = {
-      id: block.id,
-      molang: MolangSet.create(),
-      location: Types.Location.empty(),
-
-      states: [],
-    };
-
-    for (const prop of block.properties) {
-      const state = MinecraftData.BehaviorPack.getBlockState(prop);
-      if (state) result.states.push(state);
-    }
-
-    return result;
-  }
-
-  return undefined;
 }

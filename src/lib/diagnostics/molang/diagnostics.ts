@@ -4,8 +4,9 @@ import { Defined, DefinedUsing, Molang, MolangData, MolangDataSetKey, Using } fr
 import { DiagnosticsBuilder, DiagnosticSeverity } from '../../types';
 import { Json } from '../json';
 import { diagnoser_molang_syntax } from './syntax';
+import { References } from 'bc-minecraft-bedrock-project';
 
-type MCarrier = Types.Identifiable & MolangCarrier<Molang.MolangSetOptional>;
+type MCarrier = Types.Identifiable & MolangCarrier<Molang.MolangSet>;
 
 /**Diagnoses the given molang sets, the using party checks upon the definer if they have setup properly
  * @param using The set of molang data that is being used
@@ -23,14 +24,9 @@ export function diagnose_molang_implementation(
   const definerId = owner.id;
 
   //Is full set?
-  if (Molang.MolangFullSet.isEither(using)) {
-    //Upgrade if necessary and check
-    const temp = Molang.MolangFullSet.upgrade(definer);
-
-    diagnose_molang_using(userId, using.geometries, definerId, temp.geometries, diagnoser, "geometry");
-    diagnose_molang_using(userId, using.materials, definerId, temp.materials, diagnoser, "material");
-    diagnose_molang_using(userId, using.textures, definerId, temp.textures, diagnoser, "texture");
-  }
+  diagnose_molang_using(userId, using, definerId, temp.geometries, diagnoser, "geometry");
+  diagnose_molang_using(userId, using, definerId, temp.materials, diagnoser, "material");
+  diagnose_molang_using(userId, using, definerId, temp.textures, diagnoser, "texture");
 
   //Check variable vs variables and such
   diagnose_molang_variable_using(userId, using.variables, definerId, definer.variables, diagnoser, ownerType);
@@ -62,9 +58,9 @@ export function diagnose_molang(using: string, owner: MolangDataSetKey, diagnose
  * @param name The name of the data set such as `variable` or `query`*/
 function diagnose_molang_using(
   userId: string,
-  using: DefinedUsing<string>,
+  using: References,
   definerId: string,
-  definer: Defined<string>,
+  definer: Pick<References, "defined">,
   diagnoser: DiagnosticsBuilder,
   name: string
 ): void {
@@ -92,7 +88,7 @@ function diagnose_molang_using(
 function diagnose_molang_allowed(using: string, owner: MolangDataSetKey, diagnoser: DiagnosticsBuilder): void {
   if (!(owner === "Animations" || owner === "AnimationsControllers")) return;
 
-  const set = Molang.MolangFullSet.harvest(using);
+  const set = Molang.MolangSet.harvest(using);
 
   if (has_any(set.textures))
     diagnoser.add(

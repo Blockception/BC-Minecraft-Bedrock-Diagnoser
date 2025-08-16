@@ -1,16 +1,16 @@
 import { DocumentDiagnosticsBuilder } from "../../types";
 import { FileType } from "bc-minecraft-bedrock-project/lib/src/project/resource-pack";
 
-import * as Animation from "./animation/entry";
-import * as AnimationController from "./animation-controllers/entry";
-import * as Attachable from "./attachable/entry";
-import * as BlockCulling from "./block-culling/entry";
-import * as BiomesClient from "./biomes-client/entry";
-import * as Block from "./block/entry";
-import * as Blocks from "./block/entry";
-import * as Entity from "./entity/entry";
-import * as Fog from "./fog/entry";
-import * as Item from "./item/entry";
+import * as Animation from "./animation/document";
+import * as AnimationController from "./animation-controllers/document";
+import * as Attachable from "./attachable/document";
+import * as BlockCulling from "./block-culling/document";
+import * as BiomesClient from "./biomes-client/document";
+import * as Block from "./block/document";
+import * as Blocks from "./block/document";
+import * as Entity from "./entity/document";
+import * as Fog from "./fog/document";
+import * as Item from "./item/document";
 import * as Manifest from "./manifest/entry";
 import * as Material from "./material/entry";
 import * as Model from "./model/entry";

@@ -1,4 +1,4 @@
-import { Internal } from "bc-minecraft-bedrock-project";
+import { Internal, References } from "bc-minecraft-bedrock-project";
 import { EntityProperty as DefinedEP } from "bc-minecraft-bedrock-project/lib/src/internal/behavior-pack/entity";
 import { EntityProperty as ProjectEP } from "bc-minecraft-bedrock-project/lib/src/project/behavior-pack/entity";
 import { Types } from "bc-minecraft-bedrock-types";
@@ -10,6 +10,7 @@ import { Json } from "../../json";
 import { AnimationUsage } from "../../minecraft";
 import { diagnose_script } from "../../minecraft/script";
 import { diagnose_molang } from "../../molang/diagnostics";
+import { diagnose_molang_syntax_current_document } from '../../molang';
 import { no_other_duplicates } from "../../packs/duplicate-check";
 import { diagnose_animation_or_controller_implementation } from "../anim-or-controller";
 import { behaviorpack_animation_used } from "../animation/usage";
@@ -22,11 +23,9 @@ import { diagnose_entity_properties_definition } from "./properties";
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
 export function diagnose_entity_document(diagnoser: DocumentDiagnosticsBuilder): void {
-  //Check molang
-  diagnose_molang(diagnoser.document.getText(), "Entities", diagnoser);
-
   const entity = Json.LoadReport<Internal.BehaviorPack.Entity>(diagnoser);
   if (!Internal.BehaviorPack.Entity.is(entity)) return;
+  diagnose_molang_syntax_current_document(diagnoser, entity);
 
   //No resource-pack check, entities can exist without their rp side
 
@@ -49,12 +48,12 @@ export function diagnose_entity_document(diagnoser: DocumentDiagnosticsBuilder):
   behaviorpack_entity_components_check(entity, context, diagnoser);
 
   const container = entity["minecraft:entity"];
-  const MolangData = Molang.MolangFullSet.harvest(container);
+  const MolangData = Molang.MolangSet.harvest(container, diagnoser.document.getText());
 
   const owner = {
     id: identifier,
     molang: MolangData,
-    animations: DefinedUsing.create<string>(),
+    animations: References.empty(),
   };
   const properties = Object.entries(container.description.properties ?? {})?.map(([name, value]) =>
     propertyToProjectProperty(name, value)

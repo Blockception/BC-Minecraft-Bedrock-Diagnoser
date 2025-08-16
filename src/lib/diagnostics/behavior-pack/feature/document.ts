@@ -5,6 +5,7 @@ import { no_other_duplicates } from "../../packs/duplicate-check";
 import { behaviorpack_feature_diagnose } from "./diagnose";
 import { is_block_defined } from "../block";
 import { diagnose_structure_implementation } from "../structure";
+import { diagnose_molang_syntax_current_document } from '../../molang';
 
 /**
  * Diagnoses the given document as an item
@@ -12,6 +13,7 @@ import { diagnose_structure_implementation } from "../structure";
 export function diagnose_feature_document(diagnoser: DocumentDiagnosticsBuilder): void {
   const feature = Json.LoadReport<Internal.BehaviorPack.Feature>(diagnoser);
   if (!Internal.BehaviorPack.Feature.is(feature)) return;
+  diagnose_molang_syntax_current_document(diagnoser, feature);
 
   const identifier = findFeatureIdentifier(feature);
   if (!identifier) return;

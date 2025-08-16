@@ -1,6 +1,7 @@
 import { DocumentDiagnosticsBuilder } from "../../../types";
 import { Json } from "../../json/json";
 import { minecraft_get_item } from "../../minecraft/items";
+import { diagnose_molang_syntax_current_document } from '../../molang';
 import { behaviorpack_item_diagnose } from "../item/diagnose";
 import { LootCondition } from "./conditions";
 import { behaviorpack_loot_table_diagnose } from "./diagnose";
@@ -12,6 +13,7 @@ import { behaviorpack_loot_table_function_diagnose, LootFunction } from "./funct
 export function diagnose_loot_table_document(diagnoser: DocumentDiagnosticsBuilder): void {
   const table = Json.LoadReport<LootTable>(diagnoser);
   if (typeof table !== "object") return;
+  diagnose_molang_syntax_current_document(diagnoser, table);
 
   table.pools?.forEach((pool) => {
     pool.entries?.forEach((entry) => {

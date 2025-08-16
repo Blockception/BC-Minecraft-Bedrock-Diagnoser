@@ -2,19 +2,17 @@ import { Internal, SMap } from "bc-minecraft-bedrock-project";
 import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
 import { Json } from "../../json/json";
 import { diagnose_molang } from "../../molang/diagnostics";
-import { json_commandsCheck } from "../mcfunction/commands";
+import { diagnose_molang_syntax_current_document, diagnose_molang_syntax_document } from '../../molang';
 import { no_other_duplicates } from "../../packs/duplicate-check";
+import { json_commandsCheck } from "../mcfunction/commands";
 
 /**Diagnoses the given document as an animation
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
 export function diagnose_animation_document(diagnoser: DocumentDiagnosticsBuilder): void {
-  //Check molang
-  const text = diagnoser.document.getText();
-  diagnose_molang(text, "Animations", diagnoser);
-
   const anims = Json.LoadReport<Internal.BehaviorPack.Animations>(diagnoser);
   if (!Internal.BehaviorPack.Animations.is(anims)) return;
+  diagnose_molang_syntax_current_document(diagnoser, anims);
 
   //foreach animation,
   SMap.forEach(anims.animations, (anim, id) => {

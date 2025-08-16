@@ -1,5 +1,5 @@
 /*	Auto generated	*/
 
 export * from "./diagnostics";
-export * from "./entry";
+export * from "./document";
 export * from "./usage";

@@ -118,7 +118,7 @@ export type Controller =
 
 export function general_animation_controllers_implementation(
   controller: Controller,
-  user: Types.Identifiable & AnimationCarrier<Defined<string>> & MolangCarrier<Molang.MolangSetOptional>,
+  user: Types.Identifiable & AnimationCarrier<Defined<string>> & MolangCarrier<Molang.MolangSet>,
   ownerType: MolangDataSetKey,
   diagnoser: DiagnosticsBuilder
 ) {
