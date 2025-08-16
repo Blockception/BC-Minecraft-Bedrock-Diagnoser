@@ -12,8 +12,12 @@ export function diagnose_block_culling_geo_and_rules(geoId: string, cullingId: s
   const cullingRule = cullingRuleItem.item;
 
   // Affected bones need to be defined
-  cullingRule.affected_bones.forEach((bone) => {
-    if (model.bones.includes(bone)) return;
+  cullingRule.affected_bones.defined.forEach((bone) => {
+    if (Array.isArray(model.bones)) {
+      if (model.bones.includes(bone)) return;
+    } else {
+      if (model.bones.defined.has(bone)) return;
+    }
 
     diagnoser.add(
       cullingId,

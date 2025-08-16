@@ -1,12 +1,12 @@
 import { Internal, ResourcePack } from "bc-minecraft-bedrock-project";
 import { Types } from "bc-minecraft-bedrock-types";
 import { Molang } from "bc-minecraft-molang";
-import { DocumentDiagnosticsBuilder } from "../../../types";
+import { DocumentDiagnosticsBuilder, Metadata } from "../../../types";
 import { behaviorpack_item_diagnose } from "../../behavior-pack/item";
 import { Json } from "../../json/json";
 import { AnimationUsage } from "../../minecraft";
 import { diagnose_script } from "../../minecraft/script";
-import { diagnose_molang_syntax_current_document } from "../../molang";
+import { diagnose_molang_syntax_current_document, MolangMetadata } from "../../molang";
 import { animation_or_controller_diagnose_implementation } from "../anim-or-controller";
 import { resourcepack_animation_used } from "../animation/usage";
 import { model_is_defined } from "../model/diagnose";
@@ -14,23 +14,26 @@ import { particle_is_defined } from "../particle/diagnose";
 import { render_controller_diagnose_implementation } from "../render-controller/diagnostics";
 import { diagnose_resourcepack_sounds } from "../sounds/diagnostics";
 import { texture_files_diagnose } from "../texture-atlas/entry";
+import { MolangSet } from "bc-minecraft-molang/lib/src/molang";
 
 /**
  * Diagnoses the given document as an attachable
  * @param doc The text document to diagnose
- * @param diagnoser The diagnoser builder to receive the errors*/
-export function diagnose_attachable_document(diagnoser: DocumentDiagnosticsBuilder): void {
+ * @param diag The diagnoser builder to receive the errors*/
+export function diagnose_attachable_document(diag: DocumentDiagnosticsBuilder): void {
+  const diagnoser = Metadata.withMetadata(diag, { userType: "Attachables" } as MolangMetadata);
   const attachable = Json.LoadReport<Internal.ResourcePack.Attachable>(diagnoser);
   if (!Internal.ResourcePack.Attachable.is(attachable)) return;
-  diagnose_molang_syntax_current_document(diagnoser, attachable);
 
   const description = attachable["minecraft:attachable"].description;
-  const attachableGathered = ResourcePack.Attachable.Process(diagnoser.document);
+  const attachableGathered = ResourcePack.Attachable.process(diagnoser.document);
 
+  diagnose_molang_syntax_current_document(diagnoser, attachable);
   behaviorpack_item_diagnose(description.identifier, diagnoser);
 
   if (!attachableGathered) return;
-  if (!attachableGathered.molang) attachableGathered.molang = Molang.MolangSet.harvest(diagnoser.document.getText());
+  if (!attachableGathered.molang)
+    attachableGathered.molang = MolangSet.harvest(attachable, diagnoser.document.getText());
 
   //#region animations
   //Check animations / animation controllers
@@ -52,7 +55,6 @@ export function diagnose_attachable_document(diagnoser: DocumentDiagnosticsBuild
     animation_or_controller_diagnose_implementation(
       anim_id,
       attachableGathered,
-      "Attachables",
       diagnoser,
       description.particle_effects,
       description.sound_effects
@@ -62,7 +64,6 @@ export function diagnose_attachable_document(diagnoser: DocumentDiagnosticsBuild
     animation_or_controller_diagnose_implementation(
       anim_id,
       attachableGathered,
-      "Attachables",
       diagnoser,
       description.particle_effects,
       description.sound_effects
@@ -73,10 +74,10 @@ export function diagnose_attachable_document(diagnoser: DocumentDiagnosticsBuild
   //#endregion
 
   //Check render controllers
-  description.render_controllers?.forEach((controller) => {
-    const temp = getKey(controller);
-    if (temp) render_controller_diagnose_implementation(temp, attachableGathered, "Attachables", diagnoser);
-  });
+  description.render_controllers
+    ?.map((controller) => getKey(controller))
+    .filter((temp) => temp !== undefined)
+    .forEach((key) => render_controller_diagnose_implementation(key, attachableGathered, diagnoser));
 
   //Check models
   Types.Definition.forEach(description.geometry, (ref, modelId) => model_is_defined(modelId, diagnoser));

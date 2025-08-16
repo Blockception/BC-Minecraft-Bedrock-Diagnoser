@@ -23,7 +23,7 @@ export class Diagnoser<T extends TextDocument = TextDocument> {
     this.context = context;
   }
 
-  /** Process and diagnoses the given document
+  /** process and diagnoses the given document
    * @param doc The textdocument to process or the uri to the document
    * @returns `true` or `false` if the diagnostics was successfully*/
   process(doc: T | string): boolean {
@@ -108,7 +108,7 @@ export class Diagnoser<T extends TextDocument = TextDocument> {
     return out;
   }
 
-  /**Process the entire given pack
+  /**process the entire given pack
    * @param pack The pack to process
    * @returns True or false is something was processed*/
   processPack(pack: Pack): boolean {

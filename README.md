@@ -16,9 +16,9 @@ const context: DiagnoserContext = {
 
 const diagnoser = new Diagnoser(context);
 
-diagnoser.Process(doc): boolean;
-diagnoser.ProcessFolder(folder, ignores): void;
-diagnoser.ProcessPack(pack): void;
+diagnoser.process(doc): boolean;
+diagnoser.processFolder(folder, ignores): void;
+diagnoser.processPack(pack): void;
 ```
 
 ## Contributing

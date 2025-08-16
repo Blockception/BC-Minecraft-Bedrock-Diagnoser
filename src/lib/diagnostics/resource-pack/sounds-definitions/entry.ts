@@ -22,7 +22,7 @@ export function diagnose_sound_definitions_document(diagnoser: DocumentDiagnosti
     .map((item) => item.replace(/\\/gi, "/"));
 
   //For each sound definition
-  Object.values(sounds, (sound, sound_id) => {
+  Object.entries(sounds).forEach(([sound_id, sound]) => {
     //For each file reference
     sound.sounds.forEach((soundSpec) => {
       if (typeof soundSpec === "string") {
@@ -43,8 +43,8 @@ export function sound_files_diagnose(
   files: string[],
   diagnoser: DiagnosticsBuilder
 ): void {
-  for (let I = 0; I < files.length; I++) {
-    if (files[I].includes(file)) {
+  for (let i = 0; i < files.length; i++) {
+    if (files[i].includes(file)) {
       //Found then return out
       return;
     }

@@ -8,9 +8,14 @@ export function diagnose_molang_syntax_current_document(diagnoser: DocumentDiagn
 
 export function diagnose_molang_syntax_document(doc: TextDocument, diagnoser: DiagnosticsBuilder, obj?: object) {
   const objSet = obj ?? JSON.parse(doc.getText());
+  return diagnose_molang_syntax_text(doc.getText(), diagnoser, objSet);
+}
+
+export function diagnose_molang_syntax_text(text: string, diagnoser: DiagnosticsBuilder, obj?: object) {
+  const objSet = obj ?? JSON.parse(text);
   const set = new MolangSet();
   try {
-    set.harvest(objSet, doc.getText());
+    set.harvest(objSet, text);
   } catch (err) {
     if (err instanceof MolangSyntaxError) {
       diagnoser.add(err.position, err.message, DiagnosticSeverity.error, `molang.${err.code}`);

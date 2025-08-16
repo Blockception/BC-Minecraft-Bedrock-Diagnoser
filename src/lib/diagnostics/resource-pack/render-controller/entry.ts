@@ -4,7 +4,8 @@ import { Json } from "../../json";
 import { diagnose_molang_syntax_current_document } from "../../molang";
 import { BoneUsage, model_bones_must_exist } from "../model";
 
-/**Diagnoses the given document as a render controller
+/**
+ * Diagnoses the given document as a render controller
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
 export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
@@ -14,7 +15,7 @@ export function Diagnose(diagnoser: DocumentDiagnosticsBuilder): void {
 
   const bones: BoneUsage[] = [];
 
-  Object.values(model.render_controllers, (controller, id) => {
+  Object.entries(model.render_controllers).forEach(([id, controller]) => {
     controller.part_visibility?.forEach((v) => {
       const key = Object.keys(v)[0];
       if (key) return;

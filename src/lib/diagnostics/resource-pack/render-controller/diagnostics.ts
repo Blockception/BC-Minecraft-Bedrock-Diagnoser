@@ -1,8 +1,8 @@
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { MolangDataSetKey } from "bc-minecraft-molang";
-import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier } from "../../../types";
+import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier, WithMetadata } from "../../../types";
 import { education_enabled } from "../../definitions";
-import { diagnose_molang_implementation } from "../../molang/diagnostics";
+import { diagnose_molang_implementation, MolangMetadata } from "../../molang/diagnostics";
 import { Errors } from "../..";
 import { ProjectItem } from "bc-minecraft-bedrock-project";
 
@@ -15,8 +15,7 @@ import { ProjectItem } from "bc-minecraft-bedrock-project";
 export function render_controller_diagnose_implementation(
   id: string,
   user: EntityAnimationMolangCarrier,
-  ownerType: MolangDataSetKey,
-  diagnoser: DiagnosticsBuilder
+  diagnoser: WithMetadata<DiagnosticsBuilder, MolangMetadata>
 ): void {
   const controller = diagnoser.context.getProjectData().resources.render_controllers.get(id, diagnoser.project);
   if (controller === undefined) {
@@ -25,6 +24,6 @@ export function render_controller_diagnose_implementation(
   }
 
   if (ProjectItem.is(controller)) {
-    diagnose_molang_implementation(controller.item, user, ownerType, diagnoser);
+    diagnose_molang_implementation(user, controller.item, diagnoser);
   }
 }

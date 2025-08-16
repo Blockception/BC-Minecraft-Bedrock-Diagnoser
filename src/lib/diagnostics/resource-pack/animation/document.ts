@@ -25,10 +25,10 @@ export function diagnose_animation_document(diagnoser: DocumentDiagnosticsBuilde
 
   const bones: BoneUsage[] = [];
 
-  Object.values(anims.animations, (anim, anim_id) => {
+  Object.entries(anims.animations).forEach(([anim_id, anim]) => {
     const length = anim.animation_length;
 
-    Object.values(anim.bones, (bone, bone_id) => {
+    Object.entries(anim.bones ?? {}).forEach(([bone_id, bone]) => {
       bones.push({ bone_id, parent_id: anim_id });
 
       if (typeof length === "number") {

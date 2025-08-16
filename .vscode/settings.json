@@ -27,5 +27,8 @@
     "selectorattributes",
     "slotid",
     "slottype"
-  ]
+  ],
+  "typescript.tsserver.enableTracing": false,
+  "typescript.tsserver.watchOptions": "vscode",
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true
 }
