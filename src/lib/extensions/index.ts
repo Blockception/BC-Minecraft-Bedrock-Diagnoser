@@ -1,1 +1,1 @@
-export * from './sets';
+export * as XSet from "./sets";

@@ -1,6 +1,6 @@
-import { TextDocument } from 'bc-minecraft-bedrock-project';
-import { ExpressionNode, MolangSet, MolangSyntaxError, NodeType } from 'bc-minecraft-molang/lib/src/Molang';
-import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from '../../types';
+import { TextDocument } from "bc-minecraft-bedrock-project";
+import { ExpressionNode, MolangSet, MolangSyntaxError, NodeType } from "bc-minecraft-molang/lib/src/Molang";
+import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../types";
 
 export function diagnose_molang_syntax_current_document(diagnoser: DocumentDiagnosticsBuilder, obj?: object) {
   return diagnose_molang_syntax_document(diagnoser.document, diagnoser, obj);
@@ -15,7 +15,16 @@ export function diagnose_molang_syntax_document(doc: TextDocument, diagnoser: Di
     if (err instanceof MolangSyntaxError) {
       diagnoser.add(err.position, err.message, DiagnosticSeverity.error, `molang.${err.code}`);
     } else {
-      diagnoser.add(0, `unknown error was thrown during parsing of molang, please submit an github issue.\n${JSON.stringify(err, null, 2)}`, DiagnosticSeverity.error, "molang.error.unknown");
+      diagnoser.add(
+        0,
+        `unknown error was thrown during parsing of molang, please submit an github issue.\n${JSON.stringify(
+          err,
+          null,
+          2
+        )}`,
+        DiagnosticSeverity.error,
+        "molang.error.unknown"
+      );
     }
   } finally {
   }
@@ -30,7 +39,12 @@ export function diagnose_molang_syntax_set(set: MolangSet, diagnoser: Diagnostic
       if (item.scope == using.scope && item.names === using.names) return;
     }
 
-    diagnoser.add(using.position, `couldn't find the definition of ${using.scope}.${using.names.join('.')}`, DiagnosticSeverity.error, "molang.undefined");
+    diagnoser.add(
+      using.position,
+      `couldn't find the definition of ${using.scope}.${using.names.join(".")}`,
+      DiagnosticSeverity.error,
+      "molang.undefined"
+    );
   });
 
   // Check functions parameters
@@ -55,8 +69,20 @@ export function diagnose_molang_syntax(expression: ExpressionNode, diagnoser: Di
     switch (n.type) {
       case NodeType.ResourceReference:
       case NodeType.Variable:
-        if ((n.names as string[]).length === 0) diagnoser.add(n.position, `expected something after '${n.scope}.' but found nothing`, DiagnosticSeverity.error, "molang.identifier.invalid");
-        if ((n.names as string[]).length > 2) diagnoser.add(n.position, `found to many nesting in '${n.scope}.${n.names.join(',')}'`, DiagnosticSeverity.error, "molang.identifier.invalid");
+        if ((n.names as string[]).length === 0)
+          diagnoser.add(
+            n.position,
+            `expected something after '${n.scope}.' but found nothing`,
+            DiagnosticSeverity.error,
+            "molang.identifier.invalid"
+          );
+        if ((n.names as string[]).length > 2)
+          diagnoser.add(
+            n.position,
+            `found to many nesting in '${n.scope}.${n.names.join(",")}'`,
+            DiagnosticSeverity.error,
+            "molang.identifier.invalid"
+          );
 
         switch (n.scope.toLowerCase()) {
           case "geometry":
@@ -64,7 +90,12 @@ export function diagnose_molang_syntax(expression: ExpressionNode, diagnoser: Di
           case "texture":
             break;
           default:
-            diagnoser.add(n.position, `unknown variable/resource starting identifier: '${n.scope}' for '${n.scope}.${n.names.join('.')}'`, DiagnosticSeverity.error, "molang.identifier.scope");
+            diagnoser.add(
+              n.position,
+              `unknown variable/resource starting identifier: '${n.scope}' for '${n.scope}.${n.names.join(".")}'`,
+              DiagnosticSeverity.error,
+              "molang.identifier.scope"
+            );
         }
 
         break;
@@ -101,11 +132,16 @@ export function diagnose_molang_syntax(expression: ExpressionNode, diagnoser: Di
 
       case NodeType.Marker:
       default:
-        diagnoser.add(n.position, `unknown piece of molang syntax: ${JSON.stringify(n)}`, DiagnosticSeverity.error, "molang.diagnoser.syntax");
+        diagnoser.add(
+          n.position,
+          `unknown piece of molang syntax: ${JSON.stringify(n)}`,
+          DiagnosticSeverity.error,
+          "molang.diagnoser.syntax"
+        );
     }
   }
-};
+}
 
 export function diagnose_molang_syntax_optimizations(expression: ExpressionNode, diagnoser: DiagnosticsBuilder) {
   // TODO: optimizations
-};
+}

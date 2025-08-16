@@ -10,7 +10,7 @@ export function model_bones_must_exist(bones: BoneUsage[], diagnoser: Diagnostic
 
   for (let I = 0; I < bones.length; I++) {
     const bone = bones[I];
-    if (bone.bone_id.includes('*')) continue;
+    if (bone.bone_id.includes("*")) continue;
 
     // Find a bone that is not in the project
     if (!projectData.resourcePacks.models.find((m) => m.bones?.includes(bone.bone_id))) {

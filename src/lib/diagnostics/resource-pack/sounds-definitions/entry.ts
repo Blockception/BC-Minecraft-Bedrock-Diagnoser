@@ -1,4 +1,4 @@
-import { Internal, SMap } from "bc-minecraft-bedrock-project";
+import { Internal } from "bc-minecraft-bedrock-project";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
 import { education_enabled } from "../../definitions";

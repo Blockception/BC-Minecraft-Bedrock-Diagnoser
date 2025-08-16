@@ -32,7 +32,7 @@ export function minecraft_manifest_required_module(
     for (let I = 0; I < modules.length; I++) {
       const module = modules[I];
 
-      if (typeof module.type === 'string' && required_type.includes(module.type)) return true;
+      if (typeof module.type === "string" && required_type.includes(module.type)) return true;
     }
   }
 
@@ -47,18 +47,26 @@ export function minecraft_manifest_required_module(
   return false;
 }
 
-export function minecraft_manifest_version(version: number[] | string, diagnoser: DiagnosticsBuilder, path: string): void {
-  
-  if (typeof version == 'string') {
-    if (!(/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/).test(version)) diagnoser.add(
-      path,
-      "Version string needs to match semver",
-      DiagnosticSeverity.error,
-      "minecraft.manifest.version.invalid"
-    );
+export function minecraft_manifest_version(
+  version: number[] | string,
+  diagnoser: DiagnosticsBuilder,
+  path: string
+): void {
+  if (typeof version == "string") {
+    if (
+      !/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/.test(
+        version
+      )
+    )
+      diagnoser.add(
+        path,
+        "Version string needs to match semver",
+        DiagnosticSeverity.error,
+        "minecraft.manifest.version.invalid"
+      );
     return;
   }
-  
+
   if (version.length != 3) {
     diagnoser.add(
       path,

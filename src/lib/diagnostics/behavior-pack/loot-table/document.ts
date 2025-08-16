@@ -1,7 +1,7 @@
 import { DocumentDiagnosticsBuilder } from "../../../types";
 import { Json } from "../../json/json";
 import { minecraft_get_item } from "../../minecraft/items";
-import { diagnose_molang_syntax_current_document } from '../../molang';
+import { diagnose_molang_syntax_current_document } from "../../molang";
 import { behaviorpack_item_diagnose } from "../item/diagnose";
 import { LootCondition } from "./conditions";
 import { behaviorpack_loot_table_diagnose } from "./diagnose";
@@ -24,7 +24,8 @@ export function diagnose_loot_table_document(diagnoser: DocumentDiagnosticsBuild
           break;
 
         case "loot_table":
-          if (entry.name) behaviorpack_loot_table_diagnose(minecraft_get_item(entry.name, diagnoser.document), diagnoser);
+          if (entry.name)
+            behaviorpack_loot_table_diagnose(minecraft_get_item(entry.name, diagnoser.document), diagnoser);
           break;
       }
 

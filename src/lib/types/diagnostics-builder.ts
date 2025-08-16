@@ -40,3 +40,17 @@ export interface DocumentDiagnosticsBuilder<T extends TextDocument = TextDocumen
   /**The document to add the diagnostics to*/
   document: T;
 }
+
+export interface Metadata<T> {
+  metadata: T;
+}
+
+export type WithMetadata<T extends object, M> = T & Metadata<M>;
+
+export namespace Metadata {
+  export function withMetadata<T extends object, M>(source: T, metadata: M): WithMetadata<T, M> {
+    const result = source as WithMetadata<T, M>;
+    result["metadata"] = metadata;
+    return result;
+  }
+}

@@ -6,7 +6,7 @@ import { behaviorpack_entityid_diagnose } from "../../behavior-pack/entity";
 import { Json } from "../../json/json";
 import { AnimationUsage } from "../../minecraft";
 import { diagnose_script } from "../../minecraft/script";
-import { diagnose_molang_syntax_current_document } from '../../molang';
+import { diagnose_molang_syntax_current_document } from "../../molang";
 import { animation_or_controller_diagnose_implementation } from "../anim-or-controller";
 import { diagnose_animation_controller_implementation } from "../animation-controllers/diagnostics";
 import { resourcepack_animation_used } from "../animation/usage";
@@ -94,9 +94,7 @@ export function diagnose_entity_document(diagnoser: DocumentDiagnosticsBuilder):
   Types.Definition.forEach(description.geometry, (ref, modelId) => model_is_defined(modelId, diagnoser));
 
   //check particles
-  Types.Definition.forEach(description.particle_effects, (ref, part_id) =>
-    particle_is_defined(part_id, diagnoser)
-  );
+  Types.Definition.forEach(description.particle_effects, (ref, part_id) => particle_is_defined(part_id, diagnoser));
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore

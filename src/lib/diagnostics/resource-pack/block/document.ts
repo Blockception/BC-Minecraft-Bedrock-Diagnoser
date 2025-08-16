@@ -1,8 +1,8 @@
 import { ResourcePackCollection } from "bc-minecraft-bedrock-project/lib/src/project/resource-pack";
-import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from '../../../types';
-import { is_block_defined } from '../../behavior-pack/block';
+import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
+import { is_block_defined } from "../../behavior-pack/block";
 import { Json } from "../../json/json";
-import { diagnose_molang_syntax_current_document } from '../../molang';
+import { diagnose_molang_syntax_current_document } from "../../molang";
 
 /**Diagnoses the given document as a block.json
  * @param doc The text document to diagnose
@@ -44,13 +44,13 @@ export function diagnose_block_document(diagnoser: DocumentDiagnosticsBuilder): 
       const blockFile = diagnoser.context.getProjectData().projectData.behaviorPacks.blocks.get(key)?.location.uri;
       if (!blockFile) return;
 
-      if (diagnoser.context.getDocument(blockFile)?.getText().includes('minecraft:material_instances')) diagnoser.add(
-        `${key}`,
-        "Only one \"blocks.json\" or \"minecraft:material_instances\" may be used",
-        DiagnosticSeverity.error,
-        "behaviorpack.block.components.material_instance_clash"
-      );
-
+      if (diagnoser.context.getDocument(blockFile)?.getText().includes("minecraft:material_instances"))
+        diagnoser.add(
+          `${key}`,
+          'Only one "blocks.json" or "minecraft:material_instances" may be used',
+          DiagnosticSeverity.error,
+          "behaviorpack.block.components.material_instance_clash"
+        );
     }
   }
 }
@@ -70,16 +70,16 @@ interface Blocks {
   [block_id: string]: {
     sound?: string;
     textures:
-    | string
-    | {
-      down?: string;
-      up?: string;
-      side?: string;
-      east?: string;
-      north?: string;
-      south?: string;
-      west?: string;
-    };
+      | string
+      | {
+          down?: string;
+          up?: string;
+          side?: string;
+          east?: string;
+          north?: string;
+          south?: string;
+          west?: string;
+        };
   };
 }
 

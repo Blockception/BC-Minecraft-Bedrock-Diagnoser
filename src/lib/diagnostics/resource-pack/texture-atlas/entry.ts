@@ -1,9 +1,9 @@
 import { SMap } from "bc-minecraft-bedrock-project";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
-import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from '../../../types';
+import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
 import { education_enabled } from "../../definitions";
 import { Json } from "../../json/json";
-import path from 'path';
+import path from "path";
 
 /**Diagnoses the given document as a texture atlas
  * @param doc The text document to diagnose
@@ -65,8 +65,10 @@ export function texture_files_diagnose(
   files: string[],
   diagnoser: DiagnosticsBuilder
 ): void {
-  files = files.map(location => location.includes('.') ? location.slice(0,-path.extname(location).length) : location)
-  if (file.includes('.')) file = file.slice(0,-path.extname(file).length)
+  files = files.map((location) =>
+    location.includes(".") ? location.slice(0, -path.extname(location).length) : location
+  );
+  if (file.includes(".")) file = file.slice(0, -path.extname(file).length);
   for (let I = 0; I < files.length; I++) {
     if (files[I].endsWith(file)) {
       //Found then return

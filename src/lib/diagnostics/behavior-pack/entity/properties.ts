@@ -6,7 +6,11 @@ import {
 } from "bc-minecraft-bedrock-project/lib/src/project/behavior-pack/entity";
 import { DiagnosticSeverity, DiagnosticsBuilder } from "../../../types";
 
-export function diagnose_entity_properties_definition(property: EntityProperty[], diagnoser: DiagnosticsBuilder, text: string) {
+export function diagnose_entity_properties_definition(
+  property: EntityProperty[],
+  diagnoser: DiagnosticsBuilder,
+  text: string
+) {
   for (const prop of property) {
     diagnose_entity_property_definition(prop, diagnoser, text);
   }
@@ -56,7 +60,11 @@ function diagnose_entity_bool_property_definition(property: EntityProperty, diag
   );
 }
 
-function diagnose_entity_float_property_definition(property: EntityFloatProperty, diagnoser: DiagnosticsBuilder, text: string) {
+function diagnose_entity_float_property_definition(
+  property: EntityFloatProperty,
+  diagnoser: DiagnosticsBuilder,
+  text: string
+) {
   const { name, default: def } = property;
 
   // Default value needs to be a number and within the range
@@ -75,8 +83,8 @@ function diagnose_entity_float_property_definition(property: EntityFloatProperty
 
   if ((typeof def === "number" && !Number.isInteger(def)) || typeof def === "string") return;
 
-  const regexMatch = text.match(new RegExp(`"${name}"\\s*:\\s*\\{[^{}]*\\}`, 'gm'))?.[0]
-  
+  const regexMatch = text.match(new RegExp(`"${name}"\\s*:\\s*\\{[^{}]*\\}`, "gm"))?.[0];
+
   if (regexMatch && regexMatch.match(new RegExp(`"default"\\s*:\\s*${def}\\.[0-9]`))) return;
 
   diagnoser.add(
@@ -124,7 +132,18 @@ function diagnose_entity_enum_property_definition(
 
   // default needs to be in the list
   if (def !== undefined) {
-    if (property.values?.indexOf(def) === -1 && !(def.includes('q.') || def.includes('query.') || def.includes('math.') || def.includes('v.') || def.includes('variable.') || def.includes('c.') || def.includes('context.'))) {
+    if (
+      property.values?.indexOf(def) === -1 &&
+      !(
+        def.includes("q.") ||
+        def.includes("query.") ||
+        def.includes("math.") ||
+        def.includes("v.") ||
+        def.includes("variable.") ||
+        def.includes("c.") ||
+        def.includes("context.")
+      )
+    ) {
       diagnoser.add(
         `properties/${name}/${def}`,
         `Default value is not in the list of values: ${def}`,
@@ -191,7 +210,7 @@ export function diagnose_entity_property_usage(
   parent: "events" | "filter",
   diagnoser: DiagnosticsBuilder
 ): void {
-  const names = definitions.map(def => def.name)
+  const names = definitions.map((def) => def.name);
 
   if (!names.includes(name)) {
     diagnoser.add(
@@ -199,7 +218,7 @@ export function diagnose_entity_property_usage(
       `Entity property definition for "${name}" not found`,
       DiagnosticSeverity.error,
       "behaviorpack.entity.property.unknown_property"
-    )
+    );
   }
 
   for (const def of definitions) {

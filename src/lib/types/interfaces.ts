@@ -1,13 +1,11 @@
-import { AnimationCarrier, MolangCarrier, SMap } from "bc-minecraft-bedrock-project";
+import { AnimationCarrier, MolangCarrier } from "bc-minecraft-bedrock-project";
 import { Types } from "bc-minecraft-bedrock-types";
-import { DefinedUsing, Molang } from "bc-minecraft-molang";
+import { DefinedUsing } from "bc-minecraft-molang";
 
 /**
  * The type that is used to store the animation data & molang data
  */
-export type EntityAnimationMolangCarrier = Types.Identifiable &
-  MolangCarrier &
-  AnimationCarrier<DefinedUsing<string>>;
+export type EntityAnimationMolangCarrier = Types.Identifiable & MolangCarrier & AnimationCarrier<DefinedUsing<string>>;
 
 export interface EventCarrier {
   events?: Map<string, any>;

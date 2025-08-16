@@ -5,7 +5,7 @@ import { Errors } from "../..";
 import { DiagnosticsBuilder, DiagnosticSeverity, EntityAnimationMolangCarrier } from "../../../types";
 import { forEach } from "../../../utility/references";
 import { general_animation_controllers_implementation } from "../../minecraft/animation-controllers";
-import { User } from '../../molang';
+import { User } from "../../molang";
 
 /**
  *

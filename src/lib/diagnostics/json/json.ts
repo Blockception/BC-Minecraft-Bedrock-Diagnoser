@@ -1,5 +1,5 @@
 import { jsonc } from "jsonc";
-import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from '../../types';
+import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../types";
 import { handle_json_error } from "./errors";
 
 export namespace Json {
@@ -14,7 +14,7 @@ export namespace Json {
 
       //get object
       const temp = parse(text);
-      
+
       // Format version
       // diagnoseFormatVersionIf(temp, diagnoser);
 

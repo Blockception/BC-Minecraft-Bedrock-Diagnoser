@@ -6,7 +6,7 @@ import { behaviorpack_item_diagnose } from "../../behavior-pack/item";
 import { Json } from "../../json/json";
 import { AnimationUsage } from "../../minecraft";
 import { diagnose_script } from "../../minecraft/script";
-import { diagnose_molang_syntax_current_document } from '../../molang';
+import { diagnose_molang_syntax_current_document } from "../../molang";
 import { animation_or_controller_diagnose_implementation } from "../anim-or-controller";
 import { resourcepack_animation_used } from "../animation/usage";
 import { model_is_defined } from "../model/diagnose";
@@ -30,8 +30,7 @@ export function diagnose_attachable_document(diagnoser: DocumentDiagnosticsBuild
   behaviorpack_item_diagnose(description.identifier, diagnoser);
 
   if (!attachableGathered) return;
-  if (!attachableGathered.molang)
-    attachableGathered.molang = Molang.MolangSet.harvest(diagnoser.document.getText());
+  if (!attachableGathered.molang) attachableGathered.molang = Molang.MolangSet.harvest(diagnoser.document.getText());
 
   //#region animations
   //Check animations / animation controllers
@@ -83,9 +82,7 @@ export function diagnose_attachable_document(diagnoser: DocumentDiagnosticsBuild
   Types.Definition.forEach(description.geometry, (ref, modelId) => model_is_defined(modelId, diagnoser));
 
   //check particles
-  Types.Definition.forEach(description.particle_effects, (ref, part_id) =>
-    particle_is_defined(part_id, diagnoser)
-  );
+  Types.Definition.forEach(description.particle_effects, (ref, part_id) => particle_is_defined(part_id, diagnoser));
 
   //Get pack
   const pack = diagnoser.context.getProjectData().projectData.resourcePacks.get(diagnoser.document.uri);

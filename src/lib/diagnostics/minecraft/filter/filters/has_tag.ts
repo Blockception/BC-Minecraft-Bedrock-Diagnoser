@@ -1,5 +1,5 @@
 import { Minecraft } from "bc-minecraft-bedrock-types";
-import { DiagnosticsBuilder, DiagnosticSeverity } from '../../../../types';
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../../types";
 import { minecraft_tag_diagnose } from "../../tag";
 
 export function diagnose_filter_has_tag(filter: Minecraft.Filter.Filter, diagnoser: DiagnosticsBuilder) {

@@ -1,8 +1,8 @@
-import { Internal, SMap } from "bc-minecraft-bedrock-project";
+import { Internal } from "bc-minecraft-bedrock-project";
 import { BoneAnimation } from "bc-minecraft-bedrock-project/lib/src/internal/resource-pack";
 import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
 import { Json } from "../../json/json";
-import { diagnose_molang_syntax_current_document } from '../../molang';
+import { diagnose_molang_syntax_current_document } from "../../molang";
 import { BoneUsage, model_bones_must_exist } from "../model";
 
 /**Diagnoses the given document as an animation
@@ -13,13 +13,14 @@ export function diagnose_animation_document(diagnoser: DocumentDiagnosticsBuilde
   if (!Internal.ResourcePack.Animations.is(anims)) return;
   diagnose_molang_syntax_current_document(diagnoser, anims);
 
-  Object.keys(anims.animations).forEach(anim_id => {
-    if (!anim_id.startsWith('animation.')) diagnoser.add(
-      anim_id,
-      `Animation name must begin with "animation."`,
-      DiagnosticSeverity.error,
-      "resourcepack.animation.name"
-    );
+  Object.keys(anims.animations).forEach((anim_id) => {
+    if (!anim_id.startsWith("animation."))
+      diagnoser.add(
+        anim_id,
+        `Animation name must begin with "animation."`,
+        DiagnosticSeverity.error,
+        "resourcepack.animation.name"
+      );
   });
 
   const bones: BoneUsage[] = [];
@@ -39,7 +40,12 @@ export function diagnose_animation_document(diagnoser: DocumentDiagnosticsBuilde
   model_bones_must_exist(bones, diagnoser);
 }
 
-function check_bone_time(parentid: string, bone: BoneAnimation, animation_length: number, diagnoser: DocumentDiagnosticsBuilder) {
+function check_bone_time(
+  parentid: string,
+  bone: BoneAnimation,
+  animation_length: number,
+  diagnoser: DocumentDiagnosticsBuilder
+) {
   check_bone_property_time(parentid, bone.position, animation_length, diagnoser);
   check_bone_property_time(parentid, bone.rotation, animation_length, diagnoser);
   check_bone_property_time(parentid, bone.scale, animation_length, diagnoser);
@@ -47,7 +53,12 @@ function check_bone_time(parentid: string, bone: BoneAnimation, animation_length
 
 type BoneProperties = BoneAnimation["position" | "rotation" | "scale"];
 
-function check_bone_property_time(parentid: string, property: BoneProperties, animation_length: number, diagnoser: DocumentDiagnosticsBuilder) {
+function check_bone_property_time(
+  parentid: string,
+  property: BoneProperties,
+  animation_length: number,
+  diagnoser: DocumentDiagnosticsBuilder
+) {
   if (typeof property !== "object") return;
   if (Array.isArray(property)) return;
 

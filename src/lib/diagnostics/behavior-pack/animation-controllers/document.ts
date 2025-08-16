@@ -1,12 +1,13 @@
-import { Internal, SMap } from "bc-minecraft-bedrock-project";
+import { Internal } from "bc-minecraft-bedrock-project";
 import { DocumentDiagnosticsBuilder } from "../../../types";
 import { Json } from "../../json";
 import { general_animation_controllers } from "../../minecraft/animation-controllers";
-import { diagnose_molang_syntax_current_document } from '../../molang';
+import { diagnose_molang_syntax_current_document } from "../../molang";
 import { no_other_duplicates } from "../../packs/duplicate-check";
 import { json_commandsCheck } from "../mcfunction/commands";
 
-/**Diagnoses the given document as an animation controller
+/**
+ * Diagnoses the given document as an animation controller
  * @param doc The text document to diagnose
  * @param diagnoser The diagnoser builder to receive the errors*/
 export function diagnose_animation_controller_document(diagnoser: DocumentDiagnosticsBuilder): void {
@@ -18,7 +19,7 @@ export function diagnose_animation_controller_document(diagnoser: DocumentDiagno
   general_animation_controllers(controllers, diagnoser);
 
   //foreach animation,
-  Object.values(controllers.animation_controllers, (controller, id) => {
+  Object.entries(controllers.animation_controllers).forEach(([id, controller]) => {
     // check that no other exists with this id
     no_other_duplicates(
       "behaviorpack.animation_controllers",
@@ -27,7 +28,7 @@ export function diagnose_animation_controller_document(diagnoser: DocumentDiagno
       diagnoser
     );
 
-    Object.values(controller.states, (state) => {
+    Object.values(controller.states).forEach((state) => {
       state.on_entry?.forEach((item) => json_commandsCheck(item, diagnoser));
       state.on_exit?.forEach((item) => json_commandsCheck(item, diagnoser));
     });

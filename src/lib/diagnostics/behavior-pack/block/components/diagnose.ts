@@ -7,8 +7,8 @@ import { model_is_defined } from "../../../resource-pack/model/diagnose";
 import { behaviorpack_loot_table_diagnose } from "../../loot-table";
 import { is_block_defined } from "../diagnose";
 import { Internal } from "bc-minecraft-bedrock-project";
-import { FormatVersion } from 'bc-minecraft-bedrock-types/lib/minecraft';
-import { Vanilla } from 'bc-minecraft-bedrock-vanilla-data';
+import { FormatVersion } from "bc-minecraft-bedrock-types/lib/minecraft";
+import { Vanilla } from "bc-minecraft-bedrock-vanilla-data";
 
 /**
  *
@@ -77,15 +77,18 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
     }
   },
   "minecraft:geometry": (name, component, context, diagnoser) => {
-
     try {
       const formatVersion = FormatVersion.parse(context.source.format_version);
-      if (!context.components.includes('minecraft:material_instances') && (FormatVersion.isGreaterThan(formatVersion, [1, 21, 80]) || FormatVersion.isEqual(formatVersion, [1, 21, 80]))) diagnoser.add(
-        name,
-        `"minecraft:geometry" requires "minecraft:material_instances" in format versions >= 1.21.80`,
-        DiagnosticSeverity.error,
-        "behaviorpack.block.components.material_instances_x_geometry"
+      if (
+        !context.components.includes("minecraft:material_instances") &&
+        (FormatVersion.isGreaterThan(formatVersion, [1, 21, 80]) || FormatVersion.isEqual(formatVersion, [1, 21, 80]))
       )
+        diagnoser.add(
+          name,
+          `"minecraft:geometry" requires "minecraft:material_instances" in format versions >= 1.21.80`,
+          DiagnosticSeverity.error,
+          "behaviorpack.block.components.material_instances_x_geometry"
+        );
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       // Leaving empty as the base diagnoser should flag an invalid format version
@@ -104,15 +107,18 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
     if (typeof component === "string") behaviorpack_loot_table_diagnose(component, diagnoser);
   },
   "minecraft:material_instances": (name, component, context, diagnoser) => {
-
     try {
       const formatVersion = FormatVersion.parse(context.source.format_version);
-      if (!context.components.includes('minecraft:geometry') && (FormatVersion.isGreaterThan(formatVersion, [1, 21, 80]) || FormatVersion.isEqual(formatVersion, [1, 21, 80]))) diagnoser.add(
-        name,
-        `"minecraft:material_instances" requires "minecraft:geometry" in format versions >= 1.21.80`,
-        DiagnosticSeverity.error,
-        "behaviorpack.block.components.material_instances_x_geometry"
+      if (
+        !context.components.includes("minecraft:geometry") &&
+        (FormatVersion.isGreaterThan(formatVersion, [1, 21, 80]) || FormatVersion.isEqual(formatVersion, [1, 21, 80]))
       )
+        diagnoser.add(
+          name,
+          `"minecraft:material_instances" requires "minecraft:geometry" in format versions >= 1.21.80`,
+          DiagnosticSeverity.error,
+          "behaviorpack.block.components.material_instances_x_geometry"
+        );
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       // Leaving empty as the base diagnoser should flag an invalid format version
@@ -120,7 +126,12 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
 
     Object.keys(component).forEach((value) => {
       const textureId = component[value].texture;
-      if (!diagnoser.context.getProjectData().projectData.resourcePacks.terrainTextures.find((val) => val.id == textureId) && !Vanilla.ResourcePack.TextureTerrain.includes(textureId))
+      if (
+        !diagnoser.context
+          .getProjectData()
+          .projectData.resourcePacks.terrainTextures.find((val) => val.id == textureId) &&
+        !Vanilla.ResourcePack.TextureTerrain.includes(textureId)
+      )
         diagnoser.add(
           textureId,
           `Texture reference "${textureId}" was not defined in terrain_texture.json`,
@@ -131,41 +142,49 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
   },
   "minecraft:custom_components": (name, component, context, diagnoser) => {
     try {
-      if (FormatVersion.isGreaterThan(FormatVersion.parse(context.source.format_version), [1,21,90])) diagnoser.add(context.source.format_version,
-        `'minecraft:custom_components' is deprecated in versions after 1.21.80`,
-        DiagnosticSeverity.warning,
-        'behaviorpack.block.components.custom_components_deprecation')
+      if (FormatVersion.isGreaterThan(FormatVersion.parse(context.source.format_version), [1, 21, 90]))
+        diagnoser.add(
+          context.source.format_version,
+          `'minecraft:custom_components' is deprecated in versions after 1.21.80`,
+          DiagnosticSeverity.warning,
+          "behaviorpack.block.components.custom_components_deprecation"
+        );
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       // Leaving empty as the base diagnoser should flag an invalid format version
     }
   },
   "minecraft:item_visual": (name, component, context, diagnoser) => {
-    minimumVersionRequired(context.source, name, [1, 21, 50], diagnoser)
+    minimumVersionRequired(context.source, name, [1, 21, 50], diagnoser);
   },
   "minecraft:liquid_detection": (name, component, context, diagnoser) => {
-    minimumVersionRequired(context.source, name, [1, 21, 50], diagnoser)
+    minimumVersionRequired(context.source, name, [1, 21, 50], diagnoser);
   },
   "minecraft:redstone_conductivity": (name, component, context, diagnoser) => {
-    minimumVersionRequired(context.source, name, [1, 21, 30], diagnoser)
+    minimumVersionRequired(context.source, name, [1, 21, 30], diagnoser);
   },
   "minecraft:replaceable": (name, component, context, diagnoser) => {
-    minimumVersionRequired(context.source, name, [1, 21, 60], diagnoser)
+    minimumVersionRequired(context.source, name, [1, 21, 60], diagnoser);
   },
   "minecraft:movable": (name, component, context, diagnoser) => {
-    minimumVersionRequired(context.source, name, [1, 21, 100], diagnoser)
+    minimumVersionRequired(context.source, name, [1, 21, 100], diagnoser);
   },
 };
 
-function minimumVersionRequired(block: Internal.BehaviorPack.Block, name: string, version: [number, number, number], diagnoser: DocumentDiagnosticsBuilder) {
+function minimumVersionRequired(
+  block: Internal.BehaviorPack.Block,
+  name: string,
+  version: [number, number, number],
+  diagnoser: DocumentDiagnosticsBuilder
+) {
   try {
     if (FormatVersion.isLessThan(FormatVersion.parse(block.format_version), version)) {
       diagnoser.add(
         name,
-        `${name} requires a format version of ${version.join('.')} or greater to use.`,
+        `${name} requires a format version of ${version.join(".")} or greater to use.`,
         DiagnosticSeverity.error,
-        "behaviorpack.block.components." + name.split(':')[1]
-      )
+        "behaviorpack.block.components." + name.split(":")[1]
+      );
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {

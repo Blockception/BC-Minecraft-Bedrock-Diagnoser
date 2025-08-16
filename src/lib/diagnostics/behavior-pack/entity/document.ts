@@ -4,12 +4,12 @@ import { EntityProperty as ProjectEP } from "bc-minecraft-bedrock-project/lib/sr
 import { Types } from "bc-minecraft-bedrock-types";
 import { getUsedComponents } from "bc-minecraft-bedrock-types/lib/minecraft/components";
 import { Molang } from "bc-minecraft-molang";
-import { DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../../types";
+import { DiagnosticSeverity, DocumentDiagnosticsBuilder, Metadata } from "../../../types";
 import { Context } from "../../../utility/components";
 import { Json } from "../../json";
 import { AnimationUsage } from "../../minecraft";
 import { diagnose_script } from "../../minecraft/script";
-import { diagnose_molang_syntax_current_document } from '../../molang';
+import { diagnose_molang_syntax_current_document, MolangMetadata } from "../../molang";
 import { no_other_duplicates } from "../../packs/duplicate-check";
 import { diagnose_animation_or_controller_implementation } from "../anim-or-controller";
 import { behaviorpack_animation_used } from "../animation/usage";
@@ -20,10 +20,12 @@ import { diagnose_entity_properties_definition } from "./properties";
 
 /**Diagnoses the given document as an bp entity
  * @param doc The text document to diagnose
- * @param diagnoser The diagnoser builder to receive the errors*/
-export function diagnose_entity_document(diagnoser: DocumentDiagnosticsBuilder): void {
-  const entity = Json.LoadReport<Internal.BehaviorPack.Entity>(diagnoser);
+ * @param diag The diagnoser builder to receive the errors*/
+export function diagnose_entity_document(diag: DocumentDiagnosticsBuilder): void {
+  const entity = Json.LoadReport<Internal.BehaviorPack.Entity>(diag);
   if (!Internal.BehaviorPack.Entity.is(entity)) return;
+  const diagnoser = Metadata.withMetadata<DocumentDiagnosticsBuilder, MolangMetadata>(diag, { userType: "Entities" });
+
   diagnose_molang_syntax_current_document(diagnoser, entity);
 
   //No resource-pack check, entities can exist without their rp side
@@ -47,12 +49,12 @@ export function diagnose_entity_document(diagnoser: DocumentDiagnosticsBuilder):
   behaviorpack_entity_components_check(entity, context, diagnoser);
 
   const container = entity["minecraft:entity"];
-  const MolangData = Molang.MolangSet.harvest(container, diagnoser.document.getText());
+  const molangData = Molang.MolangSet.harvest(container, diagnoser.document.getText());
 
   const owner = {
     id: identifier,
-    molang: MolangData,
-    animations: References.empty(),
+    molang: molangData,
+    animations: References.create(),
   };
   const properties = Object.entries(container.description.properties ?? {})?.map(([name, value]) =>
     propertyToProjectProperty(name, value)
@@ -60,13 +62,13 @@ export function diagnose_entity_document(diagnoser: DocumentDiagnosticsBuilder):
 
   //Convert animations / controllers
   Types.Definition.forEach(container.description.animations, (ref, anim_id) => {
-    owner.animations.defined.push(ref);
-    owner.animations.using.push(anim_id);
+    owner.animations.defined.add(ref);
+    owner.animations.using.add(anim_id);
   });
 
   //Check animations / animation controllers implements
   owner.animations.using.forEach((anim_id) =>
-    diagnose_animation_or_controller_implementation(anim_id, owner, "Entities", diagnoser)
+    diagnose_animation_or_controller_implementation(anim_id, owner, diagnoser)
   );
 
   if ("permutations" in container)

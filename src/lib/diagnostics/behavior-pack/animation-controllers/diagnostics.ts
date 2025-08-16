@@ -1,8 +1,9 @@
-import { AnimationCarrier, ProjectItem, References } from "bc-minecraft-bedrock-project";
+import { ProjectItem, References } from "bc-minecraft-bedrock-project";
 import { Errors } from "../..";
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../types";
-import { general_animation_controllers_implementation } from "../../minecraft/animation-controllers";
-import { User } from '../../molang';
+import { DiagnosticsBuilder, DiagnosticSeverity, WithMetadata } from "../../../types";
+import { AnimationCarrier, general_animation_controllers_implementation } from "../../minecraft/animation-controllers";
+import { MolangMetadata, User } from "../../molang";
+import { filter_not_defined } from "../../resources/using";
 
 /**
  *
@@ -13,7 +14,7 @@ import { User } from '../../molang';
 export function diagnose_animation_controller_implementation(
   user: User & Partial<AnimationCarrier<References>>,
   id: string,
-  diagnoser: DiagnosticsBuilder
+  diagnoser: WithMetadata<DiagnosticsBuilder, MolangMetadata>
 ): void {
   //Project has animation controller
   const anim = diagnoser.context.getProjectData().behaviors.animation_controllers.get(id, diagnoser.project);
@@ -25,9 +26,14 @@ export function diagnose_animation_controller_implementation(
   }
 
   const entityEvents = diagnoser.context.getProjectData().projectData.behaviorPacks.entities.get(user.id)?.events;
-  anim.item.events.forEach(id => {
-    if (!entityEvents?.includes(id)) diagnoser.add(`${user.id}/${anim.item.id}`, `Entity does not have event ${id}`, DiagnosticSeverity.warning, "behaviorpack.entity.event.missing");
-  });
+  for (const undef of filter_not_defined(anim.item.events, entityEvents)) {
+    diagnoser.add(
+      `${user.id}/${anim.item.id}`,
+      `Entity does not have event ${undef}`,
+      DiagnosticSeverity.warning,
+      "behaviorpack.entity.event.missing"
+    );
+  }
 
   general_animation_controllers_implementation(user, anim.item, diagnoser);
 }

@@ -1,8 +1,10 @@
-import { AnimationCarrier, References } from 'bc-minecraft-bedrock-project';
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../types";
-import { User } from '../molang';
+import { References } from "bc-minecraft-bedrock-project";
+import { DiagnosticsBuilder, DiagnosticSeverity, WithMetadata } from "../../types";
+import { AnimationCarrier } from "../minecraft/animation-controllers";
+import { MolangMetadata, User } from "../molang";
 import { diagnose_animation_implementation } from "./animation";
 import { diagnose_animation_controller_implementation } from "./animation-controllers/diagnostics";
+import { MolangDataSetKey } from "bc-minecraft-molang";
 
 /**
  * @param id
@@ -14,7 +16,7 @@ import { diagnose_animation_controller_implementation } from "./animation-contro
 export function diagnose_animation_or_controller_implementation(
   id: string,
   user: User & Partial<AnimationCarrier<References>>,
-  diagnoser: DiagnosticsBuilder
+  diagnoser: WithMetadata<DiagnosticsBuilder, MolangMetadata>
 ): void {
   switch (is_animation_or_controller(id, diagnoser)) {
     case anim_or_contr.animation:

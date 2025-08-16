@@ -1,25 +1,24 @@
 import { ProjectItem } from "bc-minecraft-bedrock-project";
 import { Errors } from "../..";
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../types";
-import { diagnose_molang_implementation, User } from "../../molang/diagnostics";
-import { filter_not_defined } from '../../resources/using';
-
+import { DiagnosticsBuilder, DiagnosticSeverity, WithMetadata } from "../../../types";
+import { diagnose_molang_implementation, MolangMetadata, User } from "../../molang/diagnostics";
+import { filter_not_defined } from "../../resources/using";
 
 /**
  *
- * @param id
- * @param data
+ * @param anim_id The animation id to check if it exists
+ * @param user The resource / entity that is using the animation
  * @param diagnoser
  */
 export function diagnose_animation_implementation(
-  id: string,
+  anim_id: string,
   user: User,
-  diagnoser: DiagnosticsBuilder
+  diagnoser: WithMetadata<DiagnosticsBuilder, MolangMetadata>
 ): void {
   //Project has animation
-  const anim = diagnoser.context.getProjectData().behaviors.animations.get(id, diagnoser.project);
+  const anim = diagnoser.context.getProjectData().behaviors.animations.get(anim_id, diagnoser.project);
   if (anim === undefined) {
-    return Errors.missing("behaviors", "animations", id, diagnoser);
+    return Errors.missing("behaviors", "animations", anim_id, diagnoser);
   }
   if (!ProjectItem.is(anim)) {
     return; // Skip anything but a project defined item
@@ -37,5 +36,4 @@ export function diagnose_animation_implementation(
       "behaviorpack.entity.event.missing"
     );
   }
-
 }

@@ -52,7 +52,7 @@ import {
   mode_slotid_diagnose,
   mode_structure_animation_diagnose,
   mode_teleport_rules_diagnose,
-  mode_time_diagnose
+  mode_time_diagnose,
 } from "../../mode/diagnose";
 import { animation_reference_diagnose } from "../../resource-pack/anim-or-controller";
 import { particle_is_defined } from "../../resource-pack/particle/diagnose";

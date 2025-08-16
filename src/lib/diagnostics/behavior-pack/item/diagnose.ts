@@ -3,25 +3,25 @@ import { check_definition_value, education_enabled } from "../../definitions";
 import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../types";
 import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { Types } from "bc-minecraft-bedrock-types";
-import { Errors } from '../..';
+import { Errors } from "../..";
 
 interface Item extends Types.OffsetWord {
   data?: number;
 }
 
-export function behaviorpack_item_diagnose(value: Item|string, diagnoser: DiagnosticsBuilder): boolean {
-  let id = typeof value == 'string' ? value : value.text;
+export function behaviorpack_item_diagnose(value: Item | string, diagnoser: DiagnosticsBuilder): boolean {
+  let id = typeof value == "string" ? value : value.text;
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.item, id, diagnoser)) return true;
 
   //If it is an spawn egg, treat it as an entity
   if (id.endsWith("_spawn_egg")) {
-    const entity = { offset: typeof value == 'string' ? 0 : value.offset, text: id.slice(0, id.length - 10) };
+    const entity = { offset: typeof value == "string" ? 0 : value.offset, text: id.slice(0, id.length - 10) };
     return behaviorpack_entityid_diagnose(entity, diagnoser);
   }
 
   if (hasAny(id, diagnoser)) {
-    if (typeof value == 'string') return true;
+    if (typeof value == "string") return true;
     else return checkData(value, diagnoser);
   }
 
@@ -31,7 +31,7 @@ export function behaviorpack_item_diagnose(value: Item|string, diagnoser: Diagno
     id = "minecraft:" + id;
 
     if (hasAny(id, diagnoser)) {
-      value = { offset: typeof value == 'string' ? 0 : value.offset, text: id };
+      value = { offset: typeof value == "string" ? 0 : value.offset, text: id };
       return checkData(value, diagnoser);
     }
   }

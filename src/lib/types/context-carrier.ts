@@ -1,4 +1,4 @@
-import { TextDocument } from 'bc-minecraft-bedrock-project';
+import { TextDocument } from "bc-minecraft-bedrock-project";
 import { DiagnoserContext } from "./diagnoser-context";
 
 /**An object that carriers Diagnoser context*/
