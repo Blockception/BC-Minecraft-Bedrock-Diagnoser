@@ -1,25 +1,37 @@
 import { TextDocument } from "bc-minecraft-bedrock-project";
-import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../types";
+import { OffsetWord } from "bc-minecraft-bedrock-types/lib/types";
+import { MolangData, MolangFunction } from "bc-minecraft-molang";
 import {
+  ExpressionNode,
+  FunctionCallNode,
   MolangSet,
   MolangSyntaxError,
-  ExpressionNode,
   NodeType,
-  FunctionCallNode,
 } from "bc-minecraft-molang/lib/src/molang";
-import { MolangData, MolangFunction } from "bc-minecraft-molang";
+import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../types";
 
-export function diagnose_molang_syntax_current_document(diagnoser: DocumentDiagnosticsBuilder, obj?: string | Record<string, any>) {
+export function diagnose_molang_syntax_current_document(
+  diagnoser: DocumentDiagnosticsBuilder,
+  obj?: string | Record<string, any>
+) {
   return diagnose_molang_syntax_document(diagnoser.document, diagnoser, obj);
 }
 
-export function diagnose_molang_syntax_document(doc: TextDocument, diagnoser: DiagnosticsBuilder, obj?: string | Record<string, any>) {
+export function diagnose_molang_syntax_document(
+  doc: TextDocument,
+  diagnoser: DiagnosticsBuilder,
+  obj?: string | Record<string, any>
+) {
   const objSet = obj ?? JSON.parse(doc.getText());
 
   return diagnose_molang_set(objSet, diagnoser, doc.getText());
 }
 
-export function diagnose_molang_syntax_text(text: string, diagnoser: DiagnosticsBuilder, obj?: string | Record<string, any>) {
+export function diagnose_molang_syntax_text(
+  text: string,
+  diagnoser: DiagnosticsBuilder,
+  obj?: string | Record<string, any>
+) {
   const objSet = obj ?? JSON.parse(text);
 
   return diagnose_molang_set(objSet, diagnoser, text);
@@ -101,6 +113,10 @@ export function diagnose_molang_syntax(expression: ExpressionNode, diagnoser: Di
           case "texture":
           case "v":
           case "variable":
+          case "c":
+          case "context":
+          case "t":
+          case "temp":
             break;
           default:
             diagnoser.add(
@@ -170,21 +186,29 @@ export function diagnose_molang_function(fn: FunctionCallNode, diagnoser: Diagno
     case "query":
       fnData = MolangData.General.getQuery(id);
       break;
+    default:
+      diagnoser.add(
+        OffsetWord.create(`${fn.scope}.${fn.names.join(".")}`, fn.position),
+        `Unknown function molang scope: ${fn.scope}, expected math or query`,
+        DiagnosticSeverity.error,
+        `molang.function.scope`
+      );
+      return;
   }
 
   if (fnData === undefined) {
     diagnoser.add(
-      fn.position,
-      `Unknown function molang caller scope: ${fn.scope}, expected: math, q, or query`,
+      OffsetWord.create(`${fn.scope}.${fn.names.join(".")}`, fn.position),
+      `Unknown function ${fn.scope}.${id}, doesn't seem to exist`,
       DiagnosticSeverity.error,
-      "molang.function.scope"
+      `molang.function.${fn.scope}.${id}`
     );
     return;
   }
 
   if (fnData.deprecated) {
     diagnoser.add(
-      fn.position,
+      OffsetWord.create(`${fn.scope}.${fn.names.join(".")}`, fn.position),
       `molang function has been deprecated: ${fnData.deprecated}`,
       DiagnosticSeverity.error,
       "molang.function.deprecated"
@@ -194,7 +218,7 @@ export function diagnose_molang_function(fn: FunctionCallNode, diagnoser: Diagno
   if (fnData.parameters) {
     if (fnData.parameters.length != fn.arguments.length) {
       diagnoser.add(
-        fn.position,
+        OffsetWord.create(`${fn.scope}.${fn.names.join(".")}`, fn.position),
         `wrong amount of arguments, expected ${fnData.parameters.length} but got ${fn.arguments.length}`,
         DiagnosticSeverity.error,
         "molang.function.arguments"

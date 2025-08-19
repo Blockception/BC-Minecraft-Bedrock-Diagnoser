@@ -61,7 +61,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
       context.source["minecraft:entity"].description.identifier,
       diagnoser
     );
-    component.target_blocks?.forEach((block: string) => is_block_defined(block, diagnoser));
+    component?.target_blocks?.forEach((block: string) => is_block_defined(block, diagnoser));
   },
   "minecraft:behavior.avoid_mob_type": (name, component, context, diagnoser) => {
     diagnose_event_trigger(
@@ -72,7 +72,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     );
   },
   "minecraft:behavior.beg": (name, component, context, diagnoser) => {
-    component.items?.forEach((item: string) =>
+    component?.items?.forEach((item: string) =>
       behaviorpack_item_diagnose(minecraft_get_item(item, diagnoser.document), diagnoser)
     );
   },
@@ -93,7 +93,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     );
   },
   "minecraft:behavior.charge_held_item": (name, component, context, diagnoser) => {
-    component.items?.forEach((item: string) =>
+    component?.items?.forEach((item: string) =>
       behaviorpack_item_diagnose(minecraft_get_item(item, diagnoser.document), diagnoser)
     );
   },
@@ -153,7 +153,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     minecraft_diagnose_filters(component.filters, diagnoser);
   },
   "minecraft:behavior.drink_potion": (name, component, context, diagnoser) => {
-    component.potions?.forEach((obj: any) => minecraft_diagnose_filters(obj.filters, diagnoser));
+    component?.potions?.forEach((obj: any) => minecraft_diagnose_filters(obj.filters, diagnoser));
   },
   "minecraft:behavior.drop_item_for": (name, component, context, diagnoser) => {
     if (typeof component.loot_table === "string") {
@@ -168,7 +168,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     );
   },
   "minecraft:behavior.eat_block": (name, component, context, diagnoser) => {
-    component.eat_and_replace_block_pairs?.forEach((obj: any) => {
+    component?.eat_and_replace_block_pairs?.forEach((obj: any) => {
       if (obj.eat_block) is_block_defined(obj.eat_block, diagnoser);
       if (obj.replace_block) is_block_defined(obj.replace_block, diagnoser);
     });
@@ -223,10 +223,10 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     minecraft_diagnose_filters(component.filters, diagnoser);
   },
   "minecraft:behavior.jump_to_block": (name, component, context, diagnoser) => {
-    component.forbidden_blocks?.forEach((block: string) => {
+    component?.forbidden_blocks?.forEach((block: string) => {
       if (typeof block == "string") is_block_defined(block, diagnoser);
     });
-    component.preferred_blocks?.forEach((block: string) => {
+    component?.preferred_blocks?.forEach((block: string) => {
       if (typeof block == "string") is_block_defined(block, diagnoser);
     });
   },
@@ -248,7 +248,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
       context.source["minecraft:entity"].description.identifier,
       diagnoser
     );
-    component.target_blocks
+    component?.target_blocks
       ?.filter((block: any) => typeof block === "string")
       .forEach((block: string) => is_block_defined(block, diagnoser));
   },
@@ -272,7 +272,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     if (typeof component.mingle_partner_type == "string") {
       behaviorpack_entityid_diagnose(component.mingle_partner_type, diagnoser);
     } else if (Array.isArray(component.mingle_partner_type)) {
-      component.mingle_partner_type.forEach((id: string) => behaviorpack_entityid_diagnose(id, diagnoser));
+      component?.mingle_partner_type?.forEach((id: string) => behaviorpack_entityid_diagnose(id, diagnoser));
     }
   },
   "minecraft:behavior.move_around_target": (name, component, context, diagnoser) => {
@@ -290,7 +290,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     minecraft_diagnose_filters(component.filters, diagnoser);
   },
   "minecraft:behavior.pickup_items": (name, component, context, diagnoser) => {
-    component.excluded_items?.forEach((item: string) => {
+    component?.excluded_items?.forEach((item: string) => {
       behaviorpack_item_diagnose(minecraft_get_item(item, diagnoser.document), diagnoser);
     });
   },
@@ -302,14 +302,14 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
       context.source["minecraft:entity"].description.identifier,
       diagnoser
     );
-    component.placeable_carried_blocks?.forEach((entry: any) => {
+    component?.placeable_carried_blocks?.forEach((entry: any) => {
       if (typeof entry == "string") {
         is_block_defined(entry, diagnoser);
       } else if (typeof entry.name == "string") {
         is_block_defined(entry.name, diagnoser);
       }
     });
-    component.randomly_placeable_blocks?.forEach((entry: [any, number]) => {
+    component?.randomly_placeable_blocks?.forEach((entry: [any, number]) => {
       if (typeof entry[0] == "string") is_block_defined(entry[0], diagnoser);
       else if (typeof entry[0].name == "string") is_block_defined(entry[0].name, diagnoser);
     });
@@ -758,7 +758,9 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     });
   },
   "minecraft:interact": (name, component, context, diagnoser) => {
-    component.interactions.forEach((entry: any) => {
+    const interactions = Array.isArray(component.interactions) ? component.interactions : [component.interactions]
+
+    interactions?.forEach((entry: any) => {
       diagnose_event_trigger(
         name,
         component.on_interact,
@@ -996,7 +998,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     if (component.into) behaviorpack_entityid_diagnose(component.into, diagnoser);
   },
   "minecraft:trusting": (name, component, context, diagnoser) => {
-    component.trust_items?.forEach((item: string) => {
+    component?.trust_items?.forEach((item: string) => {
       behaviorpack_item_diagnose(minecraft_get_item(item, diagnoser.document), diagnoser);
     });
     diagnose_event_trigger(
@@ -1011,7 +1013,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     minecraft_diagnose_filters(component.filters, diagnoser);
   },
   "minecraft:item_controllable": (name, component, context, diagnoser) => {
-    component.control_items?.forEach((item: string) => {
+    component?.control_items?.forEach((item: string) => {
       behaviorpack_item_diagnose(minecraft_get_item(item, diagnoser.document), diagnoser);
     });
   },

@@ -1,4 +1,3 @@
-import { Types } from "bc-minecraft-bedrock-types";
 import { Errors } from "../..";
 import { DiagnosticsBuilder } from "../../../../main";
 
