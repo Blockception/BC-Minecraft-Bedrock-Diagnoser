@@ -29,17 +29,17 @@ export function components_check<T>(
 ): void {
   if (data === undefined) return;
 
-  compContainerCheck(data.components, context, diagnoser, component_test);
-  compContainerCheck(data, context, diagnoser, component_test);
+  comp_container_check(data.components, context, diagnoser, component_test);
+  comp_container_check(data, context, diagnoser, component_test);
 
   if (data.component_groups) {
-    Object.entries(data.component_groups).forEach(([, group]) => {
-      compContainerCheck(group, context, diagnoser, component_test);
+    Object.entries(data.component_groups)?.forEach(([, group]) => {
+      comp_container_check(group, context, diagnoser, component_test);
     });
   }
 }
 
-function compContainerCheck<T>(
+function comp_container_check<T>(
   container: ComponentContainer | undefined,
   context: Context<T>,
   diagnoser: DocumentDiagnosticsBuilder,
@@ -47,9 +47,7 @@ function compContainerCheck<T>(
 ): void {
   if (container === undefined) return;
 
-  const keys = Object.getOwnPropertyNames(container);
-
-  keys.forEach((key) => {
+  Object.keys(container)?.forEach((key) => {
     const callbackfn = component_test[key];
 
     if (callbackfn) {
