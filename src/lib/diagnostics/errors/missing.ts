@@ -16,8 +16,9 @@ type SubType<T extends PackType> = keyof MinecraftData[T];
 export function missing<T extends PackType>(
   pack: T,
   subtype: SubType<T>,
-  id: string | Types.DocumentLocation,
-  diagnoser: DiagnosticsBuilder
+  id: string,
+  diagnoser: DiagnosticsBuilder,
+  location?: Types.DocumentLocation
 ) {
   let p: string;
   switch (pack) {
@@ -36,7 +37,7 @@ export function missing<T extends PackType>(
   }
 
   diagnoser.add(
-    id,
+    location ?? id,
     `Cannot find ${p} ${String(subtype)} definition: ${id}`,
     DiagnosticSeverity.error,
     `${p}.${String(subtype)}.missing`

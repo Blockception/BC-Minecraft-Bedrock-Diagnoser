@@ -30,7 +30,7 @@ export function behaviorpack_entityid_diagnose(id: Types.OffsetWord | string, di
 
   const entityItem = diagnoser.context.getProjectData().behaviors.entities.get(strId, diagnoser.project);
   if (entityItem === undefined) {
-    Errors.missing("behaviors", "entities", id, diagnoser);
+    Errors.missing("behaviors", "entities", strId, diagnoser, id);
     return false;
   }
   if (DefinitionItem.is(entityItem)) {

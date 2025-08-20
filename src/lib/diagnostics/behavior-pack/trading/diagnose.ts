@@ -8,7 +8,7 @@ export function diagnose_trading_implementation(id: Types.OffsetWord | string, d
   //Project has trading
   const anim = diagnoser.context.getProjectData().behaviors.trading.get(strId, diagnoser.project);
   if (anim === undefined) {
-    Errors.missing("behaviors", "trading", id, diagnoser);
+    Errors.missing("behaviors", "trading", strId, diagnoser, id);
     return false;
   }
 

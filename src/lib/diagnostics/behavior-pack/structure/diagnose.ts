@@ -42,6 +42,6 @@ export function diagnose_structure_implementation(
   }
 
   //Nothing then report error
-  Errors.missing("behaviors", "structures", id, diagnoser);
+  Errors.missing("behaviors", "structures", strId, diagnoser, id);
   return false;
 }
