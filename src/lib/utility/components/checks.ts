@@ -51,7 +51,20 @@ function comp_container_check<T>(
     const callbackfn = component_test[key];
 
     if (callbackfn) {
-      callbackfn(key, container[key], context, diagnoser);
+      try {
+        callbackfn(key, container[key], context, diagnoser);
+      } catch (err: any) {
+        diagnoser.add(
+          key,
+          `the diagnoser encountered an error checking the '${key}' component: ${JSON.stringify(
+            { ...err },
+            undefined,
+            2
+          )}`,
+          DiagnosticSeverity.error,
+          "diagnostics.components.internal.error"
+        );
+      }
     }
   });
 }
