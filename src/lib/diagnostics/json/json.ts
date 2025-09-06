@@ -1,6 +1,7 @@
 import { jsonc } from "jsonc";
 import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../types";
 import { handle_json_error } from "./errors";
+import { TextDocument } from "bc-minecraft-bedrock-project";
 
 export namespace Json {
   /**Loads the object and casts it to the specified thandle_json_errorype, if it fails then undefined is loaded and the error message is send to the diagnoser
@@ -55,4 +56,8 @@ export namespace Json {
     diagnoser.add(0, "Json cannot be casted to: " + type, DiagnosticSeverity.error, code);
     return false;
   }
+}
+
+function isDiagnoser(diag: DocumentDiagnosticsBuilder | TextDocument): diag is DocumentDiagnosticsBuilder {
+  return (diag as DocumentDiagnosticsBuilder).document !== undefined;
 }

@@ -1,5 +1,5 @@
 import { TextDocument } from "bc-minecraft-bedrock-project";
-import { Types } from "bc-minecraft-bedrock-types";
+import { General, Types } from "bc-minecraft-bedrock-types";
 
 interface Item extends Types.OffsetWord {
   data?: number;
@@ -7,11 +7,15 @@ interface Item extends Types.OffsetWord {
 
 export function minecraft_get_item(value: string, doc: TextDocument): Item {
   const offset = doc.getText().indexOf(value);
-  const index = value.indexOf(":");
-  if (index === -1) return { offset: offset, text: value };
 
-  const second = value.indexOf(":", index + 1);
-  if (second === -1) return { offset: offset, text: value };
+  // Remove number from item
+  const i = value.lastIndexOf(":");
+  if (i > 0) {
+    const last = value.slice(i + 1);
+    if (General.Integer.is(last)) {
+      value = value.slice(0, i);
+    }
+  }
 
-  return { offset: offset, text: value.substring(0, second) };
+  return { offset: offset, text: value };
 }

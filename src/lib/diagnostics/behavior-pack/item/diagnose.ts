@@ -1,9 +1,10 @@
-import { behaviorpack_entityid_diagnose } from "../entity";
-import { check_definition_value, education_enabled } from "../../definitions";
-import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../types";
-import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { Types } from "bc-minecraft-bedrock-types";
+import { MinecraftData } from "bc-minecraft-bedrock-vanilla-data";
 import { Errors } from "../..";
+import { DiagnosticsBuilder, DiagnosticSeverity } from "../../../types";
+import { check_definition_value, education_enabled } from "../../definitions";
+import { behaviorpack_entityid_diagnose } from "../entity";
+
 
 interface Item extends Types.OffsetWord {
   data?: number;
@@ -11,6 +12,7 @@ interface Item extends Types.OffsetWord {
 
 export function behaviorpack_item_diagnose(value: Item | string, diagnoser: DiagnosticsBuilder): boolean {
   let id = typeof value == "string" ? value : value.text;
+
   //Defined in McProject
   if (check_definition_value(diagnoser.project.definitions.item, id, diagnoser)) return true;
 

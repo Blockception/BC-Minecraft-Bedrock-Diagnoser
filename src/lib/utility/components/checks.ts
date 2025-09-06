@@ -57,7 +57,7 @@ function comp_container_check<T>(
         diagnoser.add(
           key,
           `the diagnoser encountered an error checking the '${key}' component: ${JSON.stringify(
-            { ...err },
+            { message: err.message, stack: err.stack, ...err },
             undefined,
             2
           )}`,

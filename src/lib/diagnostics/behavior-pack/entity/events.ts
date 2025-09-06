@@ -60,7 +60,7 @@ export function behaviorpack_entity_check_event(
 
   if (event.randomize?.length == 1)
     diagnoser.add(
-      event_id,
+      `events/${event_id}/randomize`,
       "'randomize' only has one entry and can therefore be removed.",
       DiagnosticSeverity.info,
       "behaviorpack.entity.event.randomize.length"
@@ -72,7 +72,7 @@ export function behaviorpack_entity_check_event(
 
   if (event.sequence?.length == 1) {
     diagnoser.add(
-      event_id,
+      `events/${event_id}/sequence`,
       "'sequence' only has one entry and can therefore be removed.",
       DiagnosticSeverity.info,
       "behaviorpack.entity.event.sequence.length"

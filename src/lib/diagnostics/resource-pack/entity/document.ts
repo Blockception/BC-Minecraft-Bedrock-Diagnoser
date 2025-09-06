@@ -16,6 +16,7 @@ import { particle_is_defined } from "../particle/diagnose";
 import { render_controller_diagnose_implementation } from "../render-controller/diagnostics";
 import { diagnose_resourcepack_sounds } from "../sounds/diagnostics";
 import { texture_files_diagnose } from "../texture-atlas/entry";
+import { harvestMolang } from 'bc-minecraft-bedrock-project/lib/src/project/molang';
 
 /**
  * Diagnoses the given document as an RP entity
@@ -37,7 +38,7 @@ export function diagnose_entity_document(diag: DocumentDiagnosticsBuilder): void
 
   if (!entityGathered) return;
   if (!entityGathered.molang) {
-    entityGathered.molang = MolangSet.harvest(entity, diagnoser.document.getText());
+    entityGathered.molang = harvestMolang(diagnoser.document.getText(), entity);
     getUsingResources(entityGathered.molang, entity["minecraft:client_entity"].description, diagnoser.document);
   }
 

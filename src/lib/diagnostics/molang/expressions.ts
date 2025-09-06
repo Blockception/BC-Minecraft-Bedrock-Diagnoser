@@ -9,6 +9,7 @@ import {
   NodeType,
 } from "bc-minecraft-molang/lib/src/molang";
 import { DiagnosticsBuilder, DiagnosticSeverity, DocumentDiagnosticsBuilder } from "../../types";
+import { Json } from "../json";
 
 export function diagnose_molang_syntax_current_document(
   diagnoser: DocumentDiagnosticsBuilder,
@@ -22,7 +23,7 @@ export function diagnose_molang_syntax_document(
   diagnoser: DiagnosticsBuilder,
   obj?: string | Record<string, any>
 ) {
-  const objSet = obj ?? JSON.parse(doc.getText());
+  const objSet = obj ?? Json.LoadReport(DocumentDiagnosticsBuilder.wrap(diagnoser, doc));
 
   return diagnose_molang_set(objSet, diagnoser, doc.getText());
 }
@@ -41,8 +42,10 @@ export function diagnose_molang_syntax_line(line: string, diagnoser: Diagnostics
   return diagnose_molang_set(line, diagnoser, line);
 }
 
-function diagnose_molang_set(obj: string | Record<string, any>, diagnoser: DiagnosticsBuilder, text: string) {
+function diagnose_molang_set(obj: string | Record<string, any> | undefined, diagnoser: DiagnosticsBuilder, text: string) {
   const set = new MolangSet();
+  if (obj === undefined) return set;
+
   try {
     set.harvest(obj, text);
   } catch (err: any) {

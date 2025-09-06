@@ -1,6 +1,7 @@
 import { Internal, ResourcePack } from "bc-minecraft-bedrock-project";
+import { getUsingResources } from "bc-minecraft-bedrock-project/lib/src/internal/resource-pack/resources";
+import { harvestMolang } from "bc-minecraft-bedrock-project/lib/src/project/molang";
 import { Types } from "bc-minecraft-bedrock-types";
-import { MolangSet } from "bc-minecraft-molang";
 import { DocumentDiagnosticsBuilder, Metadata } from "../../../types";
 import { behaviorpack_item_diagnose } from "../../behavior-pack/item";
 import { Json } from "../../json/json";
@@ -14,7 +15,6 @@ import { particle_is_defined } from "../particle/diagnose";
 import { render_controller_diagnose_implementation } from "../render-controller/diagnostics";
 import { diagnose_resourcepack_sounds } from "../sounds/diagnostics";
 import { texture_files_diagnose } from "../texture-atlas/entry";
-import { getUsingResources } from "bc-minecraft-bedrock-project/lib/src/internal/resource-pack/resources";
 
 /**
  * Diagnoses the given document as an attachable
@@ -33,7 +33,7 @@ export function diagnose_attachable_document(diag: DocumentDiagnosticsBuilder): 
 
   if (!attachableGathered) return;
   if (!attachableGathered.molang) {
-    attachableGathered.molang = MolangSet.harvest(attachable, diagnoser.document.getText());
+    attachableGathered.molang = harvestMolang(diagnoser.document.getText(), attachable);
     getUsingResources(attachableGathered.molang, attachable["minecraft:attachable"].description, diagnoser.document);
   }
 

@@ -17,6 +17,7 @@ import { behaviorpack_entity_components_check } from "./components";
 import { behaviorpack_entity_components_dependencies } from "./components/dependencies";
 import { behaviorpack_entity_check_events } from "./events";
 import { diagnose_entity_properties_definition } from "./properties";
+import { harvestMolang } from "bc-minecraft-bedrock-project/lib/src/project/molang";
 
 /**Diagnoses the given document as an bp entity
  * @param doc The text document to diagnose
@@ -28,7 +29,7 @@ export function diagnose_entity_document(diag: DocumentDiagnosticsBuilder): void
 
   const container = entity["minecraft:entity"];
   const identifier = container.description.identifier;
-  const molangData = MolangSet.harvest(container, diagnoser.document.getText());
+  const molangData = harvestMolang(diagnoser.document.getText(), container);
   //check components
   const context: Context<Internal.BehaviorPack.Entity> = {
     source: entity,

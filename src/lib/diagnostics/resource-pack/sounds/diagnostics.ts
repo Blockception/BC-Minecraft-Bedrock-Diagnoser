@@ -14,7 +14,7 @@ export function diagnose_resourcepack_sounds(data: Types.Definition | undefined,
   });
 }
 
-export function diagnose_resourcepack_sound(id: string, diagnoser: DiagnosticsBuilder): void {
+export function diagnose_resourcepack_sound(id: string | undefined, diagnoser: DiagnosticsBuilder): void {
   if (id === undefined) return;
 
   const pdata = diagnoser.context.getProjectData().resources.sounds.get(id, diagnoser.project);

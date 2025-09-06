@@ -342,7 +342,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
       behaviorpack_loot_table_diagnose(component.item_table, diagnoser);
     }
     component.target_blocks
-      ?.map((block: string) => typeof block === "string")
+      ?.filter((block: string) => typeof block === "string")
       .forEach((block: string) => is_block_defined(block, diagnoser));
   },
   "minecraft:behavior.receive_love": (name, component, context, diagnoser) => {
@@ -758,7 +758,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     });
   },
   "minecraft:interact": (name, component, context, diagnoser) => {
-    const interactions = Array.isArray(component.interactions) ? component.interactions : [component.interactions]
+    const interactions = Array.isArray(component.interactions) ? component.interactions : [component.interactions];
 
     interactions?.forEach((entry: any) => {
       diagnose_event_trigger(
@@ -942,7 +942,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     });
   },
   "minecraft:tameable": (name, component, context, diagnoser) => {
-    component.tame_items?.forEach((item: string) => {
+    normalizeToArray(component.tame_items).forEach((item: string) => {
       behaviorpack_item_diagnose(minecraft_get_item(item, diagnoser.document), diagnoser);
     });
     diagnose_event_trigger(
@@ -1013,7 +1013,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
     minecraft_diagnose_filters(component.filters, diagnoser);
   },
   "minecraft:item_controllable": (name, component, context, diagnoser) => {
-    component?.control_items?.forEach((item: string) => {
+    normalizeToArray(component?.control_items).forEach((item: string) => {
       behaviorpack_item_diagnose(minecraft_get_item(item, diagnoser.document), diagnoser);
     });
   },
@@ -1129,4 +1129,11 @@ function findValue(obj: any, targetKey: string): any {
     }
   }
   return undefined;
+}
+
+function normalizeToArray<T>(data: T[] | T | undefined): T[] {
+  if (data === undefined) return [];
+  if (Array.isArray(data)) return data;
+
+  return [data];
 }

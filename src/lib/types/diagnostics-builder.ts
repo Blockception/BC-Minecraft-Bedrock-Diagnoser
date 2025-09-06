@@ -41,6 +41,17 @@ export interface DocumentDiagnosticsBuilder<T extends TextDocument = TextDocumen
   document: T;
 }
 
+export namespace DocumentDiagnosticsBuilder {
+  export function wrap<T extends TextDocument = TextDocument>(
+    diagnoser: DiagnosticsBuilder<T>,
+    document: T
+  ): DocumentDiagnosticsBuilder<T> {
+    let diag = diagnoser as DocumentDiagnosticsBuilder<T>;
+    diag.document = document;
+    return diag;
+  }
+}
+
 export interface Metadata<T> {
   metadata: T;
 }
