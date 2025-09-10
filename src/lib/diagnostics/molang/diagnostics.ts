@@ -40,6 +40,7 @@ export function diagnose_molang_implementation(
   getAssignedIds(assigned, user.molang);
 
   for (let res of resource.molang.using.values()) {
+    if (res.scope === "this") return;
     const identifier = `${res.scope}.${res.names.join(".")}`;
     if (assigned.has(identifier)) continue;
 
