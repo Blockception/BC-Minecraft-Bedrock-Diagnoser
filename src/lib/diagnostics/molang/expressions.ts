@@ -115,6 +115,8 @@ export function diagnose_molang_syntax(expression: ExpressionNode, diagnoser: Di
           );
 
         switch (n.scope.toLowerCase()) {
+          case "array":
+          case "this":
           case "geometry":
           case "material":
           case "texture":
