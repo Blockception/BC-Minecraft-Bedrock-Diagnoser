@@ -42,7 +42,11 @@ export function diagnose_molang_syntax_line(line: string, diagnoser: Diagnostics
   return diagnose_molang_set(line, diagnoser, line);
 }
 
-function diagnose_molang_set(obj: string | Record<string, any> | undefined, diagnoser: DiagnosticsBuilder, text: string) {
+function diagnose_molang_set(
+  obj: string | Record<string, any> | undefined,
+  diagnoser: DiagnosticsBuilder,
+  text: string
+) {
   const set = new MolangSet();
   if (obj === undefined) return set;
 
@@ -95,7 +99,7 @@ export function diagnose_molang_syntax(expression: ExpressionNode, diagnoser: Di
     switch (n.type) {
       case NodeType.ResourceReference:
       case NodeType.Variable:
-        if ((n.names as string[]).length === 0)
+        if (n.scope !== "this" && (n.names as string[]).length === 0)
           diagnoser.add(
             n.position,
             `expected something after '${n.scope}.' but found nothing`,
