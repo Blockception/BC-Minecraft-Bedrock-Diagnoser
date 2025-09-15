@@ -216,6 +216,11 @@ export function diagnose_molang_function(fn: FunctionCallNode, diagnoser: Diagno
   }
 
   if (fnData.deprecated) {
+    let msg = fnData.deprecated;
+    if (msg.startsWith("query") || msg.startsWith("math")) {
+      msg = `\n\treplace it with: ${fnData.deprecated}`;
+    }
+
     diagnoser.add(
       OffsetWord.create(`${fn.scope}.${fn.names.join(".")}`, fn.position),
       `molang function has been deprecated: ${fnData.deprecated}`,

@@ -61,7 +61,7 @@ export function checkAll(
     if (!isMatch(need, components)) {
       diagnoser.add(
         dependent,
-        `Component: '${dependent}' requires a ${need} component to be present`,
+        `Component: '${dependent}' requires a '${need}' component to be present`,
         DiagnosticSeverity.error,
         `behaviorpack.${owner}.component.missing`
       );

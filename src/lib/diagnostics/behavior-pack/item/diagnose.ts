@@ -36,7 +36,7 @@ export function behaviorpack_item_diagnose(value: Item | string, diagnoser: Diag
   }
 
   //Nothing then report error
-  Errors.missing("behaviors", "items", id, diagnoser, value);
+  Errors.missing("behaviors", "items", `${namespace}:${id}`, diagnoser, value);
   return false;
 }
 
