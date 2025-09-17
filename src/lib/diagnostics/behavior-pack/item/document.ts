@@ -37,7 +37,7 @@ export function diagnose_item_document(diagnoser: DocumentDiagnosticsBuilder): v
   )
     diagnoser.add(
       "components",
-      "`minecraft:icon` or ()`minecraft:block_placer`.`replace_block_item` == `true`) is required.",
+      "`minecraft:icon` or `minecraft:block_placer`.`replace_block_item` == `true`) is required.",
       DiagnosticSeverity.error,
       "behaviorpack.item.components.icon"
     );
