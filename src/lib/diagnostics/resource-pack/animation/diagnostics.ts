@@ -31,7 +31,7 @@ export function diagnose_animation_implementation(
   }
   const anim = anim_item.item;
 
-  diagnose_molang_implementation(anim, user, diagnoser);
+  diagnose_molang_implementation(user, anim, diagnoser);
 
   //Particle check
   anim.particles.using.forEach((particle) => {
