@@ -109,7 +109,7 @@ export function diagnose_molang_syntax(expression: ExpressionNode, diagnoser: Di
         if ((n.names as string[]).length > 2)
           diagnoser.add(
             n.position,
-            `found to many nesting in '${n.scope}.${n.names.join(",")}'`,
+            `found to many nesting in '${n.scope}.${n.names.join(".")}'`,
             DiagnosticSeverity.error,
             "molang.identifier.invalid"
           );
