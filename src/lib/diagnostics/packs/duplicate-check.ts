@@ -9,6 +9,9 @@ export function no_other_duplicates<T extends Types.Identifiable & Types.Locatab
   id: string,
   diagnoser: DocumentDiagnosticsBuilder
 ) {
+
+  return; //TODO: Renable someday if/when refactoring happens 
+
   const uri = diagnoser.document.uri;
 
   set.forEach((current) => {
