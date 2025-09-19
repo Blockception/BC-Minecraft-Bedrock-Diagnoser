@@ -141,6 +141,11 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
           );
         }
       });
+
+    if (new Set(Object.keys(component).map(value => component[value].render_method)).size > 1) diagnoser.add(name,
+      "Custom blocks were never intended to support multiple different render_method inside this component",
+      DiagnosticSeverity.error,
+      "behaviorpack.block.components.multiple_render_methods");
   },
   "minecraft:custom_components": (name, component, context, diagnoser) => {
     try {
