@@ -669,6 +669,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
       minecraft_diagnose_filters(entry.on_damage?.filters, diagnoser);
     });
   },
+  "minecraft:dash": deprecated_component('minecraft:dash_action'),
   "minecraft:despawn": (name, component, context, diagnoser) => {
     minecraft_diagnose_filters(component.filters, diagnoser);
   },
@@ -751,6 +752,7 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Entity
       is_block_defined(block, diagnoser);
     });
   },
+  "minecraft:input_air_controlled": deprecated_component('minecraft:free_camera_controlled'),
   "minecraft:inside_block_notifier": (name, component, context, diagnoser) => {
     component.block_list?.forEach((entry: any) => {
       if (typeof entry.block == "string") is_block_defined(entry.block, diagnoser);
