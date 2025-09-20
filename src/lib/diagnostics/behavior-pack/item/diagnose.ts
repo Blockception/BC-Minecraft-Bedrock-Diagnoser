@@ -118,10 +118,16 @@ export namespace ItemDefinition {
       };
     }
 
-    return {
+    if (!Number.isNaN(parseInt(second))) return {
       namespace: "minecraft",
       id: first,
       variant: second,
     };
+    
+    return {
+        namespace: first,
+        id: second,
+        variant: "",
+    }
   }
 }

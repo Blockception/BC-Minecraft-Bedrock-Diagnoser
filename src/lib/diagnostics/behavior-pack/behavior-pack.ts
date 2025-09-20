@@ -3,6 +3,7 @@ import { DocumentDiagnosticsBuilder } from "../../types/diagnostics-builder";
 
 import * as AnimationController from "./animation-controllers/document";
 import * as Animation from "./animation/document";
+import * as Biome from "./biome/document";
 import * as Block from "./block/document";
 import * as Entity from "./entity/document";
 import * as FeatureRule from "./feature-rule/document";
@@ -97,6 +98,10 @@ export namespace BehaviorPack {
 
       case FileType.recipe:
         Recipe.diagnose_recipe_document(diagnoser);
+        break;
+
+      case FileType.biome:
+        Biome.diagnose_biome_document(diagnoser); 
         break;
 
       default:

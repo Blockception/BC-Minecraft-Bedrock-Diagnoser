@@ -74,8 +74,8 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
   "minecraft:placement_filter": (name, component, context, diagnoser) => {
     for (const condition of component.conditions) {
       condition.block_filter
-        ?.map((block: string | { name: string }) => (typeof block === "string" ? block : block.name))
-        .forEach((block: string) => is_block_defined(block, diagnoser));
+        ?.map((block: string | { name: string } | {tags: string}) => (typeof block === "string" ? block : ("name" in block ? block.name : undefined)))
+        .forEach((block: string | undefined) => { if (typeof block == 'string') is_block_defined(block, diagnoser) });
     }
   },
   "minecraft:geometry": (name, component, context, diagnoser) => {
@@ -141,6 +141,11 @@ const component_test: Record<string, ComponentCheck<Internal.BehaviorPack.Block>
           );
         }
       });
+
+    if (new Set(Object.keys(component).map(value => component[value].render_method)).size > 1) diagnoser.add(name,
+      "Custom blocks were never intended to support multiple different render_method inside this component",
+      DiagnosticSeverity.error,
+      "behaviorpack.block.components.multiple_render_methods");
   },
   "minecraft:custom_components": (name, component, context, diagnoser) => {
     try {

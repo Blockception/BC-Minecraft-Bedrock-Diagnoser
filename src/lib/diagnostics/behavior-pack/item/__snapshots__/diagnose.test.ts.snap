@@ -10,9 +10,9 @@ exports[`ItemDefinition can be parsed correctly: minecraft:stick 1`] = `
 
 exports[`ItemDefinition can be parsed correctly: namespace:item 1`] = `
 {
-  "id": "namespace",
-  "namespace": "minecraft",
-  "variant": "item",
+  "id": "item",
+  "namespace": "namespace",
+  "variant": "",
 }
 `;
 
@@ -37,13 +37,5 @@ exports[`ItemDefinition can be parsed correctly: stick:0 1`] = `
   "id": "stick",
   "namespace": "minecraft",
   "variant": "0",
-}
-`;
-
-exports[`ItemDefinition can be parsed correctly: stick:variant 1`] = `
-{
-  "id": "stick",
-  "namespace": "minecraft",
-  "variant": "variant",
 }
 `;

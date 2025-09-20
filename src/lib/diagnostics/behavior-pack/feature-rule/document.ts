@@ -4,6 +4,7 @@ import { Json } from "../../json";
 import { no_other_duplicates } from "../../packs/duplicate-check";
 import { behaviorpack_feature_diagnose } from "../feature/diagnose";
 import { diagnose_molang_syntax_current_document } from "../../molang";
+import { minecraft_diagnose_filters } from '../../minecraft/filter';
 
 /**
  * Diagnoses the given document as an feature rule
@@ -38,5 +39,5 @@ export function diagnose_feature_rules_document(diagnoser: DocumentDiagnosticsBu
       );
   }
 
-  //TODO: Check filters after setting up biomes
+  minecraft_diagnose_filters(featureRule['minecraft:feature_rules'].conditions['minecraft:biome_filter'], diagnoser);
 }
